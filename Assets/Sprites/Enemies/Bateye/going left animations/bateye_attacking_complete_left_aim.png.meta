@@ -1,0 +1,546 @@
+fileFormatVersion: 2
+guid: b4d921fe88bdcf444acf68744067e4cc
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7312203432336302802
+    second: bateye_attacking_complete_left_aim_0
+  - first:
+      213: 5372314226247248480
+    second: bateye_attacking_complete_left_aim_1
+  - first:
+      213: -423212775411824911
+    second: bateye_attacking_complete_left_aim_2
+  - first:
+      213: 8968087107394006418
+    second: bateye_attacking_complete_left_aim_3
+  - first:
+      213: 395362913527112669
+    second: bateye_attacking_complete_left_aim_4
+  - first:
+      213: 5277986954127266943
+    second: bateye_attacking_complete_left_aim_5
+  - first:
+      213: -2350199646413677341
+    second: bateye_attacking_complete_left_aim_6
+  - first:
+      213: -5544215161960897386
+    second: bateye_attacking_complete_left_aim_7
+  - first:
+      213: 5092852776677697537
+    second: bateye_attacking_complete_left_aim_8
+  - first:
+      213: 6607737677294153425
+    second: bateye_attacking_complete_left_aim_9
+  - first:
+      213: -4547925305437744093
+    second: bateye_attacking_complete_left_aim_10
+  - first:
+      213: 606651972370806755
+    second: bateye_attacking_complete_left_aim_11
+  - first:
+      213: 4306065856918363743
+    second: bateye_attacking_complete_left_aim_12
+  - first:
+      213: 3949514989490290114
+    second: bateye_attacking_complete_left_aim_13
+  - first:
+      213: -362957705503649774
+    second: bateye_attacking_complete_left_aim_14
+  - first:
+      213: 7376190454936138833
+    second: bateye_attacking_complete_left_aim_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: bateye_attacking_complete_left_aim_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 3
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d22ccda74a2a7560800000000000000
+      internalID: 7312203432336302802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bateye_attacking_complete_left_aim_1
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 3
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06aae35335b4e8a40800000000000000
+      internalID: 5372314226247248480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bateye_attacking_complete_left_aim_2
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 3
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f6cb291932702af0800000000000000
+      internalID: -423212775411824911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bateye_attacking_complete_left_aim_3
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 3
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29deafe85bb057c70800000000000000
+      internalID: 8968087107394006418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bateye_attacking_complete_left_aim_4
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 3
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd3a522a97c9c7500800000000000000
+      internalID: 395362913527112669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bateye_attacking_complete_left_aim_5
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 3
+        width: 14
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f74d6e9bb2d2f3940800000000000000
+      internalID: 5277986954127266943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bateye_attacking_complete_left_aim_6
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 3
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ec934c9fd9626fd0800000000000000
+      internalID: -2350199646413677341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bateye_attacking_complete_left_aim_7
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 3
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6946cf84fadfe03b0800000000000000
+      internalID: -5544215161960897386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bateye_attacking_complete_left_aim_8
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 3
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1086c370e927da640800000000000000
+      internalID: 5092852776677697537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bateye_attacking_complete_left_aim_9
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 3
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1de2510886663bb50800000000000000
+      internalID: 6607737677294153425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bateye_attacking_complete_left_aim_10
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 3
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3249f58d70682e0c0800000000000000
+      internalID: -4547925305437744093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bateye_attacking_complete_left_aim_11
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 3
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e7b37331c24b6800800000000000000
+      internalID: 606651972370806755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bateye_attacking_complete_left_aim_12
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 1
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5e9e05151832cb30800000000000000
+      internalID: 4306065856918363743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bateye_attacking_complete_left_aim_13
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 1
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cd36af15fe7fc630800000000000000
+      internalID: 3949514989490290114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bateye_attacking_complete_left_aim_14
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 1
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 210d6fec3e386faf0800000000000000
+      internalID: -362957705503649774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bateye_attacking_complete_left_aim_15
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 1
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1547816532e7d5660800000000000000
+      internalID: 7376190454936138833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      bateye_attacking_complete_left_aim_0: 7312203432336302802
+      bateye_attacking_complete_left_aim_1: 5372314226247248480
+      bateye_attacking_complete_left_aim_10: -4547925305437744093
+      bateye_attacking_complete_left_aim_11: 606651972370806755
+      bateye_attacking_complete_left_aim_12: 4306065856918363743
+      bateye_attacking_complete_left_aim_13: 3949514989490290114
+      bateye_attacking_complete_left_aim_14: -362957705503649774
+      bateye_attacking_complete_left_aim_15: 7376190454936138833
+      bateye_attacking_complete_left_aim_2: -423212775411824911
+      bateye_attacking_complete_left_aim_3: 8968087107394006418
+      bateye_attacking_complete_left_aim_4: 395362913527112669
+      bateye_attacking_complete_left_aim_5: 5277986954127266943
+      bateye_attacking_complete_left_aim_6: -2350199646413677341
+      bateye_attacking_complete_left_aim_7: -5544215161960897386
+      bateye_attacking_complete_left_aim_8: 5092852776677697537
+      bateye_attacking_complete_left_aim_9: 6607737677294153425
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

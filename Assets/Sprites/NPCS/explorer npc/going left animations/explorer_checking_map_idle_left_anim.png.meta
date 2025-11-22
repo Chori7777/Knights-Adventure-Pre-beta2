@@ -1,0 +1,650 @@
+fileFormatVersion: 2
+guid: 1b7496a452dc36a42abc781a62bcccd3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8365410281062346141
+    second: explorer_checking_map_idle_left_anim_0
+  - first:
+      213: -4535056685230609531
+    second: explorer_checking_map_idle_left_anim_1
+  - first:
+      213: 3890520264732681705
+    second: explorer_checking_map_idle_left_anim_2
+  - first:
+      213: 5871883488974658695
+    second: explorer_checking_map_idle_left_anim_3
+  - first:
+      213: -659952235424859024
+    second: explorer_checking_map_idle_left_anim_4
+  - first:
+      213: 1543320542901182740
+    second: explorer_checking_map_idle_left_anim_5
+  - first:
+      213: 893951985845300381
+    second: explorer_checking_map_idle_left_anim_6
+  - first:
+      213: -5762154334686255475
+    second: explorer_checking_map_idle_left_anim_7
+  - first:
+      213: -9078357712635369544
+    second: explorer_checking_map_idle_left_anim_8
+  - first:
+      213: 7901680394266368642
+    second: explorer_checking_map_idle_left_anim_9
+  - first:
+      213: -7817372773298015654
+    second: explorer_checking_map_idle_left_anim_10
+  - first:
+      213: -2559148716576958191
+    second: explorer_checking_map_idle_left_anim_11
+  - first:
+      213: -8305091056762552008
+    second: explorer_checking_map_idle_left_anim_12
+  - first:
+      213: -3437397976854542886
+    second: explorer_checking_map_idle_left_anim_13
+  - first:
+      213: 2173736573573355565
+    second: explorer_checking_map_idle_left_anim_14
+  - first:
+      213: -976347242968912646
+    second: explorer_checking_map_idle_left_anim_15
+  - first:
+      213: -4850296172843049071
+    second: explorer_checking_map_idle_left_anim_16
+  - first:
+      213: 5515355319092658220
+    second: explorer_checking_map_idle_left_anim_17
+  - first:
+      213: -9199159342477733024
+    second: explorer_checking_map_idle_left_anim_18
+  - first:
+      213: -5166118904203057663
+    second: explorer_checking_map_idle_left_anim_19
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: explorer_checking_map_idle_left_anim_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9d2f1b2458e71470800000000000000
+      internalID: 8365410281062346141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explorer_checking_map_idle_left_anim_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58ba198f8fd3011c0800000000000000
+      internalID: -4535056685230609531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explorer_checking_map_idle_left_anim_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e5a9d26197edf530800000000000000
+      internalID: 3890520264732681705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explorer_checking_map_idle_left_anim_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78cd0d23cee1d7150800000000000000
+      internalID: 5871883488974658695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explorer_checking_map_idle_left_anim_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07cb6ce30f067d6f0800000000000000
+      internalID: -659952235424859024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explorer_checking_map_idle_left_anim_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 411203e5bd9fa6510800000000000000
+      internalID: 1543320542901182740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explorer_checking_map_idle_left_anim_6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9c60924894f76c00800000000000000
+      internalID: 893951985845300381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explorer_checking_map_idle_left_anim_7
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d866c0c6927b800b0800000000000000
+      internalID: -5762154334686255475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explorer_checking_map_idle_left_anim_8
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b7e07272c1330280800000000000000
+      internalID: -9078357712635369544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explorer_checking_map_idle_left_anim_9
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28a5ae4247868ad60800000000000000
+      internalID: 7901680394266368642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explorer_checking_map_idle_left_anim_10
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a52f2c281ec138390800000000000000
+      internalID: -7817372773298015654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explorer_checking_map_idle_left_anim_11
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 119980d1dc31c7cd0800000000000000
+      internalID: -2559148716576958191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explorer_checking_map_idle_left_anim_12
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8310566afa36ebc80800000000000000
+      internalID: -8305091056762552008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explorer_checking_map_idle_left_anim_13
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad540fd80c8eb40d0800000000000000
+      internalID: -3437397976854542886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explorer_checking_map_idle_left_anim_14
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d285d1f85e9aa2e10800000000000000
+      internalID: 2173736573573355565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explorer_checking_map_idle_left_anim_15
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afce76dfa515372f0800000000000000
+      internalID: -976347242968912646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explorer_checking_map_idle_left_anim_16
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19fd04a245940bcb0800000000000000
+      internalID: -4850296172843049071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explorer_checking_map_idle_left_anim_17
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c20449ce07a7a8c40800000000000000
+      internalID: 5515355319092658220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explorer_checking_map_idle_left_anim_18
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06316673155065080800000000000000
+      internalID: -9199159342477733024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explorer_checking_map_idle_left_anim_19
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 106eb875a324e48b0800000000000000
+      internalID: -5166118904203057663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      explorer_checking_map_idle_left_anim_0: 8365410281062346141
+      explorer_checking_map_idle_left_anim_1: -4535056685230609531
+      explorer_checking_map_idle_left_anim_10: -7817372773298015654
+      explorer_checking_map_idle_left_anim_11: -2559148716576958191
+      explorer_checking_map_idle_left_anim_12: -8305091056762552008
+      explorer_checking_map_idle_left_anim_13: -3437397976854542886
+      explorer_checking_map_idle_left_anim_14: 2173736573573355565
+      explorer_checking_map_idle_left_anim_15: -976347242968912646
+      explorer_checking_map_idle_left_anim_16: -4850296172843049071
+      explorer_checking_map_idle_left_anim_17: 5515355319092658220
+      explorer_checking_map_idle_left_anim_18: -9199159342477733024
+      explorer_checking_map_idle_left_anim_19: -5166118904203057663
+      explorer_checking_map_idle_left_anim_2: 3890520264732681705
+      explorer_checking_map_idle_left_anim_3: 5871883488974658695
+      explorer_checking_map_idle_left_anim_4: -659952235424859024
+      explorer_checking_map_idle_left_anim_5: 1543320542901182740
+      explorer_checking_map_idle_left_anim_6: 893951985845300381
+      explorer_checking_map_idle_left_anim_7: -5762154334686255475
+      explorer_checking_map_idle_left_anim_8: -9078357712635369544
+      explorer_checking_map_idle_left_anim_9: 7901680394266368642
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
