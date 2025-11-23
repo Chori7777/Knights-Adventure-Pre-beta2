@@ -54,12 +54,12 @@ public class playerLife : MonoBehaviour
 
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
     }
-
     private IEnumerator Start()
     {
-        // Intentar vincular con el HUD durante unos frames
-        float timeout = 1.0f;
+        // ✅ Esperar a que el HUD esté listo (solo si no está)
+        float timeout = 2.0f;
         float t = 0f;
+
         while (PlayerHealthUI.Instance == null && t < timeout)
         {
             t += Time.deltaTime;
@@ -69,51 +69,67 @@ public class playerLife : MonoBehaviour
         if (PlayerHealthUI.Instance != null)
         {
             healthUI = PlayerHealthUI.Instance;
+
+            // ✅ Inicializar SOLO si NO está ya inicializado
+            if (!healthUI.IsInitialized)
+            {
+                Debug.Log("🔄 [playerLife] Inicializando HUD por primera vez");
+                InitializeHealthUI();
+            }
+            else
+            {
+                Debug.Log("✅ [playerLife] HUD ya inicializado, solo actualizando");
+                healthUI.UpdateDisplay(); // Solo actualizar, no reinicializar
+            }
         }
         else
         {
-            Debug.LogWarning("[playerLife] No se encontró PlayerHealthUI (continuando sin HUD).");
+            Debug.LogWarning("⚠️ [playerLife] No se encontró PlayerHealthUI");
         }
 
-        // ✅ NUEVO: Cargar vida máxima desde datos guardados
+        // ✅ Cargar datos ANTES de mostrar en el HUD
         if (ControladorDatosJuego.Instance != null)
         {
             var datos = ControladorDatosJuego.Instance.datosjuego;
 
-            // Restaurar vida máxima
             if (datos.vidaMaxima > 0)
             {
                 SetMaxHealth(datos.vidaMaxima);
-                Debug.Log($"💾 [playerLife] Vida máxima cargada: {datos.vidaMaxima}");
+                Debug.Log($"💾 Vida máxima cargada: {datos.vidaMaxima}");
             }
 
-            // Restaurar vida actual
             if (datos.vidaActual > 0)
             {
                 SetHealth(datos.vidaActual);
-                Debug.Log($"💾 [playerLife] Vida actual cargada: {datos.vidaActual}");
+                Debug.Log($"💾 Vida actual cargada: {datos.vidaActual}");
+            }
+            else
+            {
+                SetHealth(maxHealth);
             }
 
-            // Restaurar pociones
             if (datos.maxPotions > 0)
             {
                 SetMaxPotions(datos.maxPotions);
                 SetPotions(datos.cantidadpociones);
-                Debug.Log($"💾 [playerLife] Pociones cargadas: {datos.cantidadpociones}/{datos.maxPotions}");
+                Debug.Log($"💾 Pociones cargadas: {datos.cantidadpociones}/{datos.maxPotions}");
             }
-        }
-
-        // Inicializar UI con los valores cargados
-        if (healthUI != null)
-        {
-            healthUI.Initialize(this);
         }
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         isInitialized = true;
+
+        // ✅ Actualizar HUD con los datos finales
         UpdateUI();
     }
 
+    private void InitializeHealthUI()
+    {
+        if (healthUI == null) return;
+
+        healthUI.Initialize(this);
+        Debug.Log("✅ [playerLife] HUD inicializado completamente");
+    }
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -121,11 +137,16 @@ public class playerLife : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (PlayerHealthUI.Instance != null)
+        Debug.Log($"🔄 [playerLife] Escena cargada: {scene.name}");
+
+        // ✅ Solo reconectar si perdimos la referencia
+        if (healthUI == null && PlayerHealthUI.Instance != null)
         {
             healthUI = PlayerHealthUI.Instance;
-            healthUI.Initialize(this);
+            Debug.Log("🔗 [playerLife] Reconectado al HUD existente");
         }
+
+        // ✅ Actualizar display (NO reinicializar)
         UpdateUI();
     }
 

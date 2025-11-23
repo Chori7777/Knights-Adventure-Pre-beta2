@@ -242,6 +242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocidadMovimiento: {x: 0.3, y: 0}
+  resetOnLoop: 1
 --- !u!212 &198068453
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -353,6 +354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocidadMovimiento: {x: 0.2, y: 0}
+  resetOnLoop: 1
 --- !u!212 &247510214
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -454,6 +456,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocidadMovimiento: {x: 0.3, y: 0}
+  resetOnLoop: 1
 --- !u!212 &288721624
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -612,6 +615,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocidadMovimiento: {x: 0.2, y: 0}
+  resetOnLoop: 1
 --- !u!212 &404876200
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -928,6 +932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocidadMovimiento: {x: 0.1, y: 0}
+  resetOnLoop: 1
 --- !u!212 &443595103
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1239,6 +1244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocidadMovimiento: {x: 0.1, y: 0}
+  resetOnLoop: 1
 --- !u!212 &629123417
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1463,6 +1469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocidadMovimiento: {x: 0.1, y: 0}
+  resetOnLoop: 1
 --- !u!212 &707248258
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1569,6 +1576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocidadMovimiento: {x: 0.4, y: 0}
+  resetOnLoop: 1
 --- !u!212 &781916353
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -22490,6 +22498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocidadMovimiento: {x: 0.4, y: 0}
+  resetOnLoop: 1
 --- !u!212 &1028418144
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -23025,6 +23034,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocidadMovimiento: {x: 0.4, y: 0}
+  resetOnLoop: 1
 --- !u!212 &1225477875
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -23321,6 +23331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocidadMovimiento: {x: 0.2, y: 0}
+  resetOnLoop: 1
 --- !u!212 &1398217650
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -23519,17 +23530,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ae3fe31d21cbd04cb57f81b29dc32e9, type: 3}
---- !u!114 &1518495400 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4137978423230979865, guid: 465f4c16947d83641b43cdebd5e2de0b, type: 3}
-  m_PrefabInstance: {fileID: 1099073379}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1527933844 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9210925217902634886, guid: bf5120562dfa0774aa7920329fe131b9, type: 3}
@@ -23545,17 +23545,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8206778952272183858, guid: dd98ae5cf0775954288cb916dd450fd9, type: 3}
   m_PrefabInstance: {fileID: 368295653}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1557209772 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7394974519821492756, guid: 465f4c16947d83641b43cdebd5e2de0b, type: 3}
-  m_PrefabInstance: {fileID: 1099073379}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1568966500
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23717,6 +23706,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocidadMovimiento: {x: 0.3, y: 0}
+  resetOnLoop: 1
 --- !u!212 &1705071038
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -23828,6 +23818,34 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1025664087502656049, guid: dc0dfb65d9dc32d4dbdcf70da0a95762, type: 3}
+      propertyPath: sceneSpawns.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1025664087502656049, guid: dc0dfb65d9dc32d4dbdcf70da0a95762, type: 3}
+      propertyPath: sceneSpawns.Array.data[5].sceneName
+      value: FinalBoss
+      objectReference: {fileID: 0}
+    - target: {fileID: 1025664087502656049, guid: dc0dfb65d9dc32d4dbdcf70da0a95762, type: 3}
+      propertyPath: sceneSpawns.Array.data[4].spawnPosition.x
+      value: -35.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1025664087502656049, guid: dc0dfb65d9dc32d4dbdcf70da0a95762, type: 3}
+      propertyPath: sceneSpawns.Array.data[4].spawnPosition.y
+      value: 7.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 1025664087502656049, guid: dc0dfb65d9dc32d4dbdcf70da0a95762, type: 3}
+      propertyPath: sceneSpawns.Array.data[5].spawnPosition.x
+      value: -35.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1025664087502656049, guid: dc0dfb65d9dc32d4dbdcf70da0a95762, type: 3}
+      propertyPath: sceneSpawns.Array.data[5].spawnPosition.y
+      value: 7.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 1025664087502656049, guid: dc0dfb65d9dc32d4dbdcf70da0a95762, type: 3}
+      propertyPath: sceneSpawns.Array.data[5].spawnPosition.z
+      value: 0.82
+      objectReference: {fileID: 0}
     - target: {fileID: 1776710345640356568, guid: dc0dfb65d9dc32d4dbdcf70da0a95762, type: 3}
       propertyPath: m_LocalPosition.x
       value: -35.9
@@ -23895,15 +23913,15 @@ PrefabInstance:
     - target: {fileID: 3639976318873108436, guid: dc0dfb65d9dc32d4dbdcf70da0a95762, type: 3}
       propertyPath: 'swordMiddleParts.Array.data[0]'
       value: 
-      objectReference: {fileID: 1557209772}
+      objectReference: {fileID: 0}
     - target: {fileID: 3639976318873108436, guid: dc0dfb65d9dc32d4dbdcf70da0a95762, type: 3}
       propertyPath: 'swordMiddleParts.Array.data[1]'
       value: 
-      objectReference: {fileID: 1518495400}
+      objectReference: {fileID: 0}
     - target: {fileID: 3639976318873108436, guid: dc0dfb65d9dc32d4dbdcf70da0a95762, type: 3}
       propertyPath: 'swordMiddleParts.Array.data[2]'
       value: 
-      objectReference: {fileID: 2019956451}
+      objectReference: {fileID: 0}
     - target: {fileID: 5671156133088508336, guid: dc0dfb65d9dc32d4dbdcf70da0a95762, type: 3}
       propertyPath: m_Name
       value: Hero
@@ -24146,17 +24164,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30ef241437f58624eb14f699427be5e4, type: 3}
---- !u!114 &2019956451 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8523235385214761107, guid: 465f4c16947d83641b43cdebd5e2de0b, type: 3}
-  m_PrefabInstance: {fileID: 1099073379}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2041924570
 GameObject:
   m_ObjectHideFlags: 0
@@ -24679,6 +24686,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8276145735685219154, guid: d29dbade545c6ce4eabf6a0ab3ce2c20, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8276145735685219154, guid: d29dbade545c6ce4eabf6a0ab3ce2c20, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8276145735685219154, guid: d29dbade545c6ce4eabf6a0ab3ce2c20, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8276145735685219154, guid: d29dbade545c6ce4eabf6a0ab3ce2c20, type: 3}
+      propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8276145735685219154, guid: d29dbade545c6ce4eabf6a0ab3ce2c20, type: 3}

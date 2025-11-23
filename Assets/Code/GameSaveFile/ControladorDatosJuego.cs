@@ -13,6 +13,7 @@ public class ControladorDatosJuego : MonoBehaviour
     private Vector3 checkpointPos;
     private Vector3 checkpointCamara;
 
+    public bool IsLoadingFromCheckpoint { get; private set; }
     private void Awake()
     {
         if (Instance == null)
@@ -116,74 +117,70 @@ public class ControladorDatosJuego : MonoBehaviour
 
         if (!string.IsNullOrEmpty(datosjuego.escenaActual))
         {
-            Debug.Log($" Cargando escena: '{datosjuego.escenaActual}'");
-            Debug.Log($" Posición guardada: {datosjuego.posicion}");
-            Debug.Log($" Cámara guardada: {datosjuego.posicionCamara}");
+            Debug.Log($"📂 Cargando escena: '{datosjuego.escenaActual}'");
+            Debug.Log($"📍 Posición guardada: {datosjuego.posicion}");
+            Debug.Log($"📷 Cámara guardada: {datosjuego.posicionCamara}");
+
+            // ✅ Marcar que estamos cargando desde checkpoint
+            IsLoadingFromCheckpoint = true;
 
             SceneManager.sceneLoaded += OnContinueSceneLoaded;
-
-
             SceneManager.LoadScene(datosjuego.escenaActual);
         }
         else
         {
-            Debug.LogWarning(" No hay escena guardada para continuar");
+            Debug.LogWarning("⚠️ No hay escena guardada para continuar");
         }
     }
 
-
     private void OnContinueSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-
         SceneManager.sceneLoaded -= OnContinueSceneLoaded;
-
-        Debug.Log(" Escena cargada correctamente");
-
-
+        Debug.Log("✅ Escena cargada correctamente");
         StartCoroutine(RecolocarJugadorDespuesDeContinuar());
     }
 
-
     private IEnumerator RecolocarJugadorDespuesDeContinuar()
     {
-
         yield return new WaitForSeconds(0.3f);
 
- 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
             player.transform.position = datosjuego.posicion;
-            Debug.Log("Jugador recolocado");
+            Debug.Log($"✅ Jugador recolocado en: {datosjuego.posicion}");
         }
         else
         {
-            Debug.LogError(" No se encontró jugador con tag Player");
+            Debug.LogError("❌ No se encontró jugador con tag Player");
         }
 
-        // Recolocamos la cámara
+        // Recolocar cámara
         Camera cam = Camera.main;
         if (cam != null)
         {
             cam.transform.position = datosjuego.posicionCamara;
         }
 
-
+        // Restaurar vida
         if (player != null)
         {
-            // Restaurar vida
             playerLife vida = player.GetComponent<playerLife>();
             if (vida != null)
             {
-                Debug.Log("Vida restaurada");
+                Debug.Log("✅ Vida restaurada");
             }
         }
 
+        // Restaurar UI
         if (PlayerHealthUI.Instance != null)
         {
             PlayerHealthUI.Instance.ActualizarMonedas(datosjuego.cantidadMonedas);
-            Debug.Log(" Monedas restauradas en UI");
+            Debug.Log("✅ Monedas restauradas en UI");
         }
+
+        // ✅ IMPORTANTE: Resetear la flag
+        IsLoadingFromCheckpoint = false;
     }
     private void OnSceneLoadedContinue(Scene scene, LoadSceneMode mode)
     {
@@ -236,25 +233,27 @@ public class ControladorDatosJuego : MonoBehaviour
     }
 
 
-
     public void RespawnearJugadorEnCheckpoint()
     {
         if (datosjuego == null)
         {
-            Debug.LogWarning("No hay datos guardados. Recargando escena actual...");
+            Debug.LogWarning("⚠️ No hay datos guardados. Recargando escena actual...");
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             return;
         }
 
         if (datosjuego.posicion == Vector3.zero)
         {
-            Debug.Log("No hay posición de checkpoint guardada. Recargando escena...");
+            Debug.Log("⚠️ No hay posición de checkpoint guardada. Recargando escena...");
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             return;
         }
 
         if (!string.IsNullOrEmpty(datosjuego.escenaActual))
         {
+            // ✅ Marcar que estamos cargando desde checkpoint
+            IsLoadingFromCheckpoint = true;
+
             SceneManager.LoadScene(datosjuego.escenaActual);
             Instance.StartCoroutine(RecolocarJugador());
         }
@@ -272,17 +271,19 @@ public class ControladorDatosJuego : MonoBehaviour
         if (player != null)
         {
             player.transform.position = datosjuego.posicion;
-            Debug.Log("[ControladorDatosJuego] Jugador recolocado en checkpoint.");
+            Debug.Log($"✅ Jugador recolocado en checkpoint: {datosjuego.posicion}");
         }
 
         Camera cam = Camera.main;
         if (cam != null)
         {
             cam.transform.position = datosjuego.posicionCamara;
-            Debug.Log("[ControladorDatosJuego] Cámara recolocada en checkpoint.");
+            Debug.Log("✅ Cámara recolocada en checkpoint");
         }
-    }
 
+        // ✅ Resetear la flag
+        IsLoadingFromCheckpoint = false;
+    }
     public void ResetearDatos()
     {
         datosjuego = new DatosJuego(); 

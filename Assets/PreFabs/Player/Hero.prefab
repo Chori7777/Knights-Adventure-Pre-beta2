@@ -50,6 +50,7 @@ GameObject:
   - component: {fileID: 3935386594159636164}
   - component: {fileID: 4940565007422423204}
   - component: {fileID: 1657270733753478340}
+  - component: {fileID: 1025664087502656049}
   m_Layer: 7
   m_Name: Hero
   m_TagString: Player
@@ -413,6 +414,30 @@ MonoBehaviour:
   blockEffectDuration: 0.3
   blockKnockback: 2
   canParry: 0
+--- !u!114 &1025664087502656049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5671156133088508336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e52f3827a23baa4c90e8a845006aa20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneSpawns:
+  - sceneName: MainMenu
+    spawnPosition: {x: -970.9914, y: 1204.08, z: 0.08}
+  - sceneName: TheForest
+    spawnPosition: {x: -69.31, y: 17.59, z: 0.82}
+  - sceneName: TheTown
+    spawnPosition: {x: -69.31, y: 17.59, z: 0.82}
+  - sceneName: TheTower
+    spawnPosition: {x: -8.819817, y: -5.985241, z: 0.82}
+  - sceneName: ForestBoss
+    spawnPosition: {x: -8.819817, y: -5.985241, z: 0.82}
+  defaultSpawn: {x: 0, y: 0, z: 0}
 --- !u!1 &6035785815265924650
 GameObject:
   m_ObjectHideFlags: 0

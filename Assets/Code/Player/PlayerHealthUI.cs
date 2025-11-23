@@ -68,14 +68,17 @@ public class PlayerHealthUI : MonoBehaviour
     private List<Image> allSwordMiddleParts = new List<Image>();
 
     private Vector2 targetHeadPosition;
-    private Tweener headTween;   
+    private Tweener headTween;
 
+    public bool IsInitialized { get; private set; }
 
     void Awake()
     {
+        // Singleton persistente
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject); // ✅ Hacer persistente TODO el HUD
         }
         else
         {
@@ -83,12 +86,29 @@ public class PlayerHealthUI : MonoBehaviour
             return;
         }
 
-        // Orden: Deabajo a arriba (se vacían de arriba hacia abajo)
-        if (swordMiddle0 != null) allSwordMiddleParts.Add(swordMiddle0); // Inferior
-        if (swordMiddle1 != null) allSwordMiddleParts.Add(swordMiddle1); // Medio
-        if (swordMiddle2 != null) allSwordMiddleParts.Add(swordMiddle2); // Superior
+        // ✅ Cachear referencias UNA SOLA VEZ al inicio
+        CacheReferences();
+    }
 
-        Debug.Log($"[PlayerHealthUI] Inicializado con {allSwordMiddleParts.Count} segmentos base");
+    private void CacheReferences()
+    {
+        // Validación CRÍTICA
+        if (swordMiddle0 == null || swordMiddle1 == null || swordMiddle2 == null)
+        {
+            Debug.LogError("❌ [PlayerHealthUI] FALTAN REFERENCIAS en el Inspector:");
+            Debug.LogError($"   swordMiddle0: {(swordMiddle0 != null ? "✅" : "❌")}");
+            Debug.LogError($"   swordMiddle1: {(swordMiddle1 != null ? "✅" : "❌")}");
+            Debug.LogError($"   swordMiddle2: {(swordMiddle2 != null ? "✅" : "❌")}");
+            return;
+        }
+
+        // ✅ Guardar referencias PERMANENTEMENTE
+        allSwordMiddleParts.Clear();
+        allSwordMiddleParts.Add(swordMiddle0);
+        allSwordMiddleParts.Add(swordMiddle1);
+        allSwordMiddleParts.Add(swordMiddle2);
+
+        Debug.Log($"✅ [PlayerHealthUI] {allSwordMiddleParts.Count} segmentos cacheados permanentemente");
     }
 
     public void Initialize(playerLife p)
@@ -108,7 +128,7 @@ public class PlayerHealthUI : MonoBehaviour
             // Ajustar segmentos según vida máxima
             AdjustSwordSegments(player.MaxHealth);
 
-            // FORZAR actualización completa
+            // Actualización completa
             UpdateDisplay();
 
             var controlador = ControladorDatosJuego.Instance;
@@ -117,19 +137,18 @@ public class PlayerHealthUI : MonoBehaviour
                 ActualizarMonedas(controlador.ObtenerMonedas());
                 ActualizarHachas(controlador.datosjuego.cantidadHachas);
             }
-            else
-            {
-                if (coinText != null) coinText.text = "0";
-                if (axeText != null) axeText.text = "0";
-            }
 
-            Debug.Log("HUD  Iniciado  correctamente");
+            // ✅ Marcar como inicializado
+            IsInitialized = true;
+
+            Debug.Log("✅ HUD inicializado correctamente");
         }
         catch (System.Exception ex)
         {
-
+            Debug.LogError($"❌ Error en Initialize: {ex.Message}");
         }
     }
+
     public void ForceRefresh()
     {
         if (player == null)
@@ -285,7 +304,11 @@ public class PlayerHealthUI : MonoBehaviour
 
     public void UpdateDisplay()
     {
-        if (player == null) return;
+        if (player == null)
+        {
+            Debug.LogWarning("⚠️ [PlayerHealthUI] No hay player asignado para actualizar");
+            return;
+        }
 
         UpdatePotionText();
         UpdateKnightSprite();
@@ -294,7 +317,8 @@ public class PlayerHealthUI : MonoBehaviour
         UpdateKnightPosition();
     }
 
-    void UpdatePotionText()
+
+void UpdatePotionText()
     {
         if (potionText != null && player != null)
         {
