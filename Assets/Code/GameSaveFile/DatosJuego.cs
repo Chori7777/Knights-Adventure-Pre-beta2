@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -34,6 +34,9 @@ public class DatosJuego
 
   
     public List<string> jefesDerrotados = new List<string>();
+
+    public List<string> npcsRecompensaEntregada = new List<string>();
+    public List<string> objetosDestruidos = new List<string>();
 
     // HABILIDADES DESBLOQUEADAS 
     public bool hasShield = false;

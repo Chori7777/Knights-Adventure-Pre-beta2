@@ -43,14 +43,12 @@ GameObject:
   - component: {fileID: 988187615517789785}
   - component: {fileID: 8063530325838669568}
   - component: {fileID: 7134106177684360171}
-  - component: {fileID: 3639976318873108436}
   - component: {fileID: 5419059314384228200}
   - component: {fileID: 1388570725669603576}
   - component: {fileID: 7234856735944502852}
   - component: {fileID: 3935386594159636164}
   - component: {fileID: 4940565007422423204}
   - component: {fileID: 1657270733753478340}
-  - component: {fileID: 1025664087502656049}
   m_Layer: 7
   m_Name: Hero
   m_TagString: Player
@@ -218,53 +216,7 @@ MonoBehaviour:
   inputDeadzone: 0.1
   cameraShakeIntensity: 0.3
   cameraShakeDuration: 0.2
-  isTakingDamage: 0
   cameraHolder: {fileID: 0}
---- !u!114 &3639976318873108436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5671156133088508336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9b2667ee0a09fd40acaf199e335a9a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  potionText: {fileID: 0}
-  coinText: {fileID: 0}
-  axeText: {fileID: 0}
-  swordHandlePrefab: {fileID: 4110326821919640912, guid: d9665a24f9bff99439fbfcefba5c0939, type: 3}
-  swordMiddlePrefab: {fileID: 6105240678636302828, guid: a01cb0575617f3d4797e3ead01097f3e, type: 3}
-  swordTipPrefab: {fileID: 6051084396272405096, guid: 956d2e08937dc87458c817e39e203c73, type: 3}
-  swordHandle: {fileID: 0}
-  swordMiddle0: {fileID: 0}
-  swordMiddle1: {fileID: 0}
-  swordMiddle2: {fileID: 0}
-  swordTip: {fileID: 0}
-  swordContainer: {fileID: 0}
-  handleFullSprite: {fileID: 8637241276000059570, guid: 2bb9c450dfa2c684d864703b201acc3c, type: 3}
-  middleFullSprite: {fileID: -513770020, guid: 2bb9c450dfa2c684d864703b201acc3c, type: 3}
-  tipFullSprite: {fileID: 154358765, guid: 2bb9c450dfa2c684d864703b201acc3c, type: 3}
-  handleEmptySprite: {fileID: 6272732809257836685, guid: e26acde59792e7945a690c465c85c075, type: 3}
-  middleEmptySprite: {fileID: 94815371, guid: e26acde59792e7945a690c465c85c075, type: 3}
-  tipEmptySprite: {fileID: -2024096495, guid: e26acde59792e7945a690c465c85c075, type: 3}
-  knightImage: {fileID: 0}
-  knightHeadImage: {fileID: 0}
-  knight5HealthSprite: {fileID: 7145198348311737387, guid: 54bfecb9a47a16b428cd0c0c9525dae2, type: 3}
-  knight4HealthSprite: {fileID: -3708508325519384304, guid: 54bfecb9a47a16b428cd0c0c9525dae2, type: 3}
-  knight3HealthSprite: {fileID: 3106341853739790030, guid: 54bfecb9a47a16b428cd0c0c9525dae2, type: 3}
-  knight2HealthSprite: {fileID: 94058731202090889, guid: 54bfecb9a47a16b428cd0c0c9525dae2, type: 3}
-  knight1HealthSprite: {fileID: 1222221480408444849, guid: 54bfecb9a47a16b428cd0c0c9525dae2, type: 3}
-  knightMoveDistancePerHealth: 0
-  headOffsetX: 0
-  headOffsetY: 15
-  segmentSpacing: 100
-  smoothHeadMovement: 1
-  headMoveSpeed: 5
-  damageParticles: {fileID: 0}
-  particleSpawnPoint: {fileID: 0}
 --- !u!50 &5419059314384228200
 Rigidbody2D:
   serializedVersion: 5
@@ -414,30 +366,6 @@ MonoBehaviour:
   blockEffectDuration: 0.3
   blockKnockback: 2
   canParry: 0
---- !u!114 &1025664087502656049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5671156133088508336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e52f3827a23baa4c90e8a845006aa20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneSpawns:
-  - sceneName: MainMenu
-    spawnPosition: {x: -970.9914, y: 1204.08, z: 0.08}
-  - sceneName: TheForest
-    spawnPosition: {x: -69.31, y: 17.59, z: 0.82}
-  - sceneName: TheTown
-    spawnPosition: {x: -69.31, y: 17.59, z: 0.82}
-  - sceneName: TheTower
-    spawnPosition: {x: -8.819817, y: -5.985241, z: 0.82}
-  - sceneName: ForestBoss
-    spawnPosition: {x: -8.819817, y: -5.985241, z: 0.82}
-  defaultSpawn: {x: 0, y: 0, z: 0}
 --- !u!1 &6035785815265924650
 GameObject:
   m_ObjectHideFlags: 0

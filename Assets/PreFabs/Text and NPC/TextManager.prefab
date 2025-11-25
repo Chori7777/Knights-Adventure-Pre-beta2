@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1545026427149819685}
-  - component: {fileID: 4480011368147890501}
+  - component: {fileID: 5915833992138521566}
   m_Layer: 5
   m_Name: OptionsContainer
   m_TagString: Untagged
@@ -36,7 +36,7 @@ RectTransform:
   m_AnchoredPosition: {x: -725.7002, y: -655.5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4480011368147890501
+--- !u!114 &5915833992138521566
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,13 +45,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 24802722202157258}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 745cd911d8e7d7e4bbe4b5c3c1299fbc, type: 3}
+  m_Script: {fileID: 11500000, guid: 5bdeb1ecde47a4645b6de55db3f9cea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialoguePanel: {fileID: 7822146015663365449}
-  dialogueText: {fileID: 4214561902672346519}
-  closeButton: {fileID: 7998143504902660915, guid: e4b2f5aac86584647a6f87e7adb217f3, type: 3}
-  typeSpeed: 0.011
+  dialoguePanel: {fileID: 0}
+  dialogueText: {fileID: 0}
+  closeButton: {fileID: 0}
+  typeSpeed: 0.05
 --- !u!1 &3552192133759356699
 GameObject:
   m_ObjectHideFlags: 0

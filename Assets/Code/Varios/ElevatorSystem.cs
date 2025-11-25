@@ -8,14 +8,14 @@ public class ElevatorSystem : MonoBehaviour
     [SerializeField] private Transform pointB; // Punto B
     [SerializeField] private bool startAtPointA = true;
 
-    [Header("Configuración")]
+    [Header("Configuraciï¿½n")]
     [SerializeField] private float moveSpeed = 2f; // Velocidad en unidades/segundo
-    [SerializeField] private Ease easeType = Ease.InOutSine; // Tipo de interpolación
+    [SerializeField] private Ease easeType = Ease.InOutSine; // Tipo de interpolaciï¿½n
     [SerializeField] private float waitTimeAtFloor = 1f; // Tiempo de espera en cada piso
 
-    [Header("Activación")]
+    [Header("Activaciï¿½n")]
     [SerializeField] private bool moveOnPlayerEnter = true; // Activar movimiento al subir el jugador
-    [SerializeField] private bool canCallWithButton = true; // Puede llamarse con botón
+    [SerializeField] private bool canCallWithButton = true; // Puede llamarse con botï¿½n
     [SerializeField] private LayerMask playerLayer; // Layer del jugador
 
     [Header("Audio (Opcional)")]
@@ -30,9 +30,11 @@ public class ElevatorSystem : MonoBehaviour
     private Tween currentTween;
 
     private Transform playerTransform;
+    private Rigidbody2D rb;
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         // Posicionar ascensor en punto inicial
         if (startAtPointA && pointA != null)
         {
@@ -59,7 +61,7 @@ public class ElevatorSystem : MonoBehaviour
         {
             foreach (ContactPoint2D contact in collision.contacts)
             {
-                if (contact.normal.y < -0.5f) // El jugador está encima
+                if (contact.normal.y < -0.5f) // El jugador estï¿½ encima
                 {
                     playerOnElevator = true;
                     playerTransform = collision.transform;
@@ -68,9 +70,9 @@ public class ElevatorSystem : MonoBehaviour
                     if (playerTransform != null)
                         playerTransform.SetParent(transform);
 
-                    Debug.Log("Jugador subió al ascensor");
+                    Debug.Log("Jugador subiï¿½ al ascensor");
 
-                    // Mover automáticamente si está configurado
+                    // Mover automï¿½ticamente si estï¿½ configurado
                     if (moveOnPlayerEnter && !isMoving)
                         MoveToOppositeFloor();
 
@@ -126,9 +128,18 @@ public class ElevatorSystem : MonoBehaviour
         if (audioSource != null && moveSound != null)
             audioSource.PlayOneShot(moveSound);
 
-        currentTween = transform.DOMove(targetPosition, duration)
-            .SetEase(easeType)
-            .OnComplete(() => OnArriveAtFloor(movingToA));
+        if (rb != null)
+        {
+            currentTween = rb.DOMove(targetPosition, duration)
+                .SetEase(easeType)
+                .OnComplete(() => OnArriveAtFloor(movingToA));
+        }
+        else
+        {
+            currentTween = transform.DOMove(targetPosition, duration)
+                .SetEase(easeType)
+                .OnComplete(() => OnArriveAtFloor(movingToA));
+        }
     }
 
     private void OnArriveAtFloor(bool arrivedAtA)
@@ -175,7 +186,7 @@ public class ElevatorSystem : MonoBehaviour
         Gizmos.DrawWireCube(transform.position, transform.localScale);
     }
 
-    // Getters públicos
+    // Getters pï¿½blicos
     public bool IsMoving => isMoving;
     public bool IsAtPointA => isAtPointA;
     public bool PlayerOnElevator => playerOnElevator;

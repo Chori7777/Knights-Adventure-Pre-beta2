@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -40,8 +40,7 @@ public class playerLife : MonoBehaviour
     [SerializeField] private string deathAnimationName = "Death";
     [SerializeField] private float deathFallbackDuration = 1f;
 
-    private bool isInitialized = false;
-    public bool IsInitialized => isInitialized;
+    public bool IsInitialized { get; private set; }
 
     private void Awake()
     {
@@ -54,15 +53,16 @@ public class playerLife : MonoBehaviour
 
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
     }
+
     private IEnumerator Start()
     {
-        // ✅ Esperar a que el HUD esté listo (solo si no está)
+        // ✅ Esperar a que el HUD esté disponible
         float timeout = 2.0f;
-        float t = 0f;
+        float elapsed = 0f;
 
-        while (PlayerHealthUI.Instance == null && t < timeout)
+        while (PlayerHealthUI.Instance == null && elapsed < timeout)
         {
-            t += Time.deltaTime;
+            elapsed += Time.deltaTime;
             yield return null;
         }
 
@@ -70,83 +70,55 @@ public class playerLife : MonoBehaviour
         {
             healthUI = PlayerHealthUI.Instance;
 
-            // ✅ Inicializar SOLO si NO está ya inicializado
-            if (!healthUI.IsInitialized)
-            {
-                Debug.Log("🔄 [playerLife] Inicializando HUD por primera vez");
-                InitializeHealthUI();
-            }
-            else
-            {
-                Debug.Log("✅ [playerLife] HUD ya inicializado, solo actualizando");
-                healthUI.UpdateDisplay(); // Solo actualizar, no reinicializar
-            }
+            // ✅ El HUD se encarga de reconectar, solo inicializamos
+            healthUI.Initialize(this);
+
+            Debug.Log("✅ [playerLife] Conectado al HUD");
         }
         else
         {
-            Debug.LogWarning("⚠️ [playerLife] No se encontró PlayerHealthUI");
+            Debug.LogWarning("⚠️ [playerLife] No se encontró PlayerHealthUI después de timeout");
         }
 
-        // ✅ Cargar datos ANTES de mostrar en el HUD
-        if (ControladorDatosJuego.Instance != null)
+        // ✅ Cargar datos guardados
+        LoadGameData();
+
+        IsInitialized = true;
+    }
+
+    private void LoadGameData()
+    {
+        if (ControladorDatosJuego.Instance == null) return;
+
+        var datos = ControladorDatosJuego.Instance.datosjuego;
+
+        // Cargar vida máxima
+        if (datos.vidaMaxima > 0)
         {
-            var datos = ControladorDatosJuego.Instance.datosjuego;
-
-            if (datos.vidaMaxima > 0)
-            {
-                SetMaxHealth(datos.vidaMaxima);
-                Debug.Log($"💾 Vida máxima cargada: {datos.vidaMaxima}");
-            }
-
-            if (datos.vidaActual > 0)
-            {
-                SetHealth(datos.vidaActual);
-                Debug.Log($"💾 Vida actual cargada: {datos.vidaActual}");
-            }
-            else
-            {
-                SetHealth(maxHealth);
-            }
-
-            if (datos.maxPotions > 0)
-            {
-                SetMaxPotions(datos.maxPotions);
-                SetPotions(datos.cantidadpociones);
-                Debug.Log($"💾 Pociones cargadas: {datos.cantidadpociones}/{datos.maxPotions}");
-            }
+            SetMaxHealth(datos.vidaMaxima);
+            Debug.Log($"💾 Vida máxima cargada: {datos.vidaMaxima}");
         }
 
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        isInitialized = true;
-
-        // ✅ Actualizar HUD con los datos finales
-        UpdateUI();
-    }
-
-    private void InitializeHealthUI()
-    {
-        if (healthUI == null) return;
-
-        healthUI.Initialize(this);
-        Debug.Log("✅ [playerLife] HUD inicializado completamente");
-    }
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        Debug.Log($"🔄 [playerLife] Escena cargada: {scene.name}");
-
-        // ✅ Solo reconectar si perdimos la referencia
-        if (healthUI == null && PlayerHealthUI.Instance != null)
+        // Cargar vida actual
+        if (datos.vidaActual > 0)
         {
-            healthUI = PlayerHealthUI.Instance;
-            Debug.Log("🔗 [playerLife] Reconectado al HUD existente");
+            SetHealth(datos.vidaActual);
+            Debug.Log($"💾 Vida actual cargada: {datos.vidaActual}");
+        }
+        else
+        {
+            SetHealth(maxHealth);
         }
 
-        // ✅ Actualizar display (NO reinicializar)
+        // Cargar pociones
+        if (datos.maxPotions > 0)
+        {
+            SetMaxPotions(datos.maxPotions);
+            SetPotions(datos.cantidadpociones);
+            Debug.Log($"💾 Pociones cargadas: {datos.cantidadpociones}/{datos.maxPotions}");
+        }
+
+        // ✅ Actualizar HUD final
         UpdateUI();
     }
 
@@ -169,7 +141,6 @@ public class playerLife : MonoBehaviour
         currentHealth = Mathf.Min(currentHealth + potionHealAmount, maxHealth);
         lastPotionTime = Time.time;
 
-  
         if (potionCooldownIndicator != null)
         {
             potionCooldownIndicator.StartCooldown(potionCooldown);
@@ -177,6 +148,7 @@ public class playerLife : MonoBehaviour
 
         UpdateUI();
     }
+
     private bool CanUsePotion()
     {
         if (Time.time - lastPotionTime < potionCooldown) return false;
@@ -200,14 +172,9 @@ public class playerLife : MonoBehaviour
         currentHealth = Mathf.Max(currentHealth, 0);
         UpdateUI();
 
-        // ✅ ARREGLADO: Verificar que controller existe
         if (controller != null)
         {
             controller.TakeDamage(attackerPosition);
-        }
-        else
-        {
-            Debug.LogError("[playerLife] PlayerMovement no encontrado");
         }
 
         if (animController != null)
@@ -288,7 +255,6 @@ public class playerLife : MonoBehaviour
         OnDeathComplete();
     }
 
-    // ✅ ARREGLADO: Eliminada duplicación
     private void OnDeathComplete()
     {
         if (AudioManager.Instance != null)
@@ -296,9 +262,9 @@ public class playerLife : MonoBehaviour
 
         if (ControladorDatosJuego.Instance != null)
         {
-            ControladorDatosJuego.Instance.datosjuego.escenaActual =
-                SceneManager.GetActiveScene().name;
-            ControladorDatosJuego.Instance.GuardarDatos();
+            ControladorDatosJuego.Instance.datosjuego.escenaActual = SceneManager.GetActiveScene().name;
+            // No sobreescribir la posición del último checkpoint al morir
+            ControladorDatosJuego.Instance.GuardarDatos(false);
             SceneManager.LoadScene("GameOver");
         }
         else
@@ -360,23 +326,20 @@ public class playerLife : MonoBehaviour
         UpdateUI();
     }
 
-    // En playerLife.cs, reemplaza la función SetMaxHealth con esto:
-
     public void SetMaxHealth(int max)
     {
         maxHealth = max;
         currentHealth = Mathf.Min(currentHealth, maxHealth);
 
-        // ✅ IMPORTANTE: Forzar actualización de los segmentos de la espada
+        // ✅ Forzar actualización de segmentos
         if (healthUI != null)
         {
-            healthUI.ForceRefresh();  // Esto reajusta los segmentos
+            healthUI.ForceRefresh();
         }
 
         UpdateUI();
     }
 
-   
     public void SetPotions(int potions)
     {
         currentPotions = Mathf.Clamp(potions, 0, maxPotions);

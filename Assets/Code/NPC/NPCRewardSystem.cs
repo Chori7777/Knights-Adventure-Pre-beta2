@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 /// <summary>
@@ -247,9 +247,9 @@ public class NPCRewardSystem : MonoBehaviour
 
     private void ShowDialogue(string text)
     {
-        if (DialogueManager.Instance != null)
+        if (TextManager.Instance != null)
         {
-            DialogueManager.Instance.ShowDialogue(text);
+            TextManager.Instance.ShowDialogue(text);
         }
         else
         {

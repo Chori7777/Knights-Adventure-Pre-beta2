@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class BossTrigger : MonoBehaviour
@@ -20,6 +20,12 @@ public class BossTrigger : MonoBehaviour
     [SerializeField] private AudioClip sfxInicioBatalla;
     [SerializeField] private Animator cameraAnimator;
     [SerializeField] private string nombreJefe;
+    [SerializeField] private string[] introLines;
+
+    [Header("Modo Trial")]
+    [SerializeField] private bool useTrialMode = true;
+    [SerializeField] private FirstEncounterTrialManager trialManager;
+    [SerializeField] private FirstEncounterTeleportManager teleportManager;
 
     private bool enCooldown = false;
     private bool enPelea = false;
@@ -100,9 +106,24 @@ public class BossTrigger : MonoBehaviour
         if (BossNameUI.Instance != null)
             BossNameUI.Instance.MostrarNombre(nombreJefe);
 
-        yield return new WaitForSeconds(introDuracion);
+        if (introLines != null && introLines.Length > 0 && TextManager.Instance != null)
+        {
+            for (int i = 0; i < introLines.Length; i++)
+            {
+                TextManager.Instance.ShowDialogue(introLines[i]);
+                yield return new WaitForSeconds(2f);
+            }
+            TextManager.Instance.CloseDialogue();
+        }
+        else
+        {
+            yield return new WaitForSeconds(introDuracion);
+        }
 
-        bossObj.SetActive(true);
+        if (!useTrialMode)
+        {
+            bossObj.SetActive(true);
+        }
 
         if (AudioManager.Instance != null && sfxInicioBatalla != null)
         {
@@ -112,6 +133,14 @@ public class BossTrigger : MonoBehaviour
 
         if (AudioManager.Instance != null && musicaJefe != null)
             StartCoroutine(FadeInMusic(musicaJefe, 0.4f));
+
+        if (useTrialMode && trialManager != null)
+        {
+            spawnedBoss.gameObject.SetActive(false);
+            spawnedBoss.trialManager = trialManager;
+            spawnedBoss.trialMode = true;
+            trialManager.BeginSequence(spawnedBoss);
+        }
 
         if (playerController != null)
             playerController.canMove = true;

@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
     public bool canDash = true;
     public bool canWallCling = true;
     public bool canBlock = true;
-    public bool canThrowProjectile = true; 
+    public bool canThrowProjectile = true;
 
     [Header("Detección")]
     [SerializeField] private float groundCheckRay = 0.2f;
@@ -101,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float cameraShakeIntensity = 0.3f;
     [SerializeField] private float cameraShakeDuration = 0.2f;
 
-    [SerializeField] private bool isTakingDamage;
+    private bool isTakingDamage;
 
     [Header("Camera Holder")]
     [SerializeField] private Transform cameraHolder;
@@ -468,11 +468,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void TakeDamage(Vector2 attackerPosition)
     {
-        if (rb == null || animController == null)
-        {
-            InitializeComponents();
-        }
-
         isTakingDamage = true;
         animController?.TriggerDamage();
 
@@ -520,7 +515,7 @@ public class PlayerMovement : MonoBehaviour
         animController.StopDamage();
     }
 
-//propiedades publicas
+    // Propiedades públicas
     public bool IsGrounded => isGrounded;
     public bool IsTouchingWall => isTouchingWall;
     public bool IsAttacking => isAttacking;

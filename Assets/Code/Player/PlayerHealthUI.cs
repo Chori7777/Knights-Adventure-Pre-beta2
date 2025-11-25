@@ -1,12 +1,14 @@
 ﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 public class PlayerHealthUI : MonoBehaviour
 {
     public static PlayerHealthUI Instance;
-
     private playerLife player;
 
     [Header("Texto")]
@@ -14,27 +16,21 @@ public class PlayerHealthUI : MonoBehaviour
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI axeText;
 
-    [Header("Espada - Prefabs (OPCIONAL para expansión dinámica)")]
-    public GameObject swordHandlePrefab;
+    [Header("Espada - Referencias FIJAS")]
+    public Image swordHandle;
+    public Image swordMiddle0;
+    public Image swordMiddle1;
+    public Image swordMiddle2;
+    public Image swordTip;
+
+    [Header("Espada - Prefabs")]
     public GameObject swordMiddlePrefab;
-    public GameObject swordTipPrefab;
-
-    [Header("Espada - Referencias FIJAS (Las 5 partes base)")]
-    public Image swordHandle;           // Mango (abajo)
-    public Image swordMiddle0;          // Segmento inferior
-    public Image swordMiddle1;          // Segmento medio
-    public Image swordMiddle2;          // Segmento superior
-    public Image swordTip;              // Punta (arriba)
-
-    [Header("Espada - Contenedor (para segmentos extra)")]
     public Transform swordContainer;
 
-    [Header("Sprites Espada Llena")]
+    [Header("Sprites Espada")]
     public Sprite handleFullSprite;
     public Sprite middleFullSprite;
     public Sprite tipFullSprite;
-
-    [Header("Sprites Espada Vacía")]
     public Sprite handleEmptySprite;
     public Sprite middleEmptySprite;
     public Sprite tipEmptySprite;
@@ -55,18 +51,13 @@ public class PlayerHealthUI : MonoBehaviour
     public float headOffsetX = 0f;
     public float headOffsetY = 0f;
     public float segmentSpacing = 50f;
-
-    [Header("Animación de Cabeza")]
-    public bool smoothHeadMovement = true;
     public float headMoveSpeed = 5f;
 
-    [Header("Partículas de Daño")]
+    [Header("Partículas")]
     public GameObject damageParticles;
     public Transform particleSpawnPoint;
 
-
     private List<Image> allSwordMiddleParts = new List<Image>();
-
     private Vector2 targetHeadPosition;
     private Tweener headTween;
 
@@ -78,7 +69,12 @@ public class PlayerHealthUI : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // ✅ Hacer persistente TODO el HUD
+            DontDestroyOnLoad(gameObject);
+
+            // ✅ Suscribirse a cambios de escena
+            SceneManager.sceneLoaded += OnSceneLoaded;
+
+            Debug.Log("✅ [PlayerHealthUI] HUD creado y persistente");
         }
         else
         {
@@ -86,143 +82,163 @@ public class PlayerHealthUI : MonoBehaviour
             return;
         }
 
-        // ✅ Cachear referencias UNA SOLA VEZ al inicio
-        CacheReferences();
+        // Cachear referencias FIJAS (las que están en el prefab)
+        CacheFixedReferences();
     }
 
-    private void CacheReferences()
+    private void OnDestroy()
     {
-        // Validación CRÍTICA
+        // ✅ Limpiar eventos
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    // ✅ NUEVO: Se llama cada vez que cambia la escena
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log($"🔄 [PlayerHealthUI] Escena cargada: {scene.name}");
+
+        // Reconectar al jugador de la nueva escena
+        StartCoroutine(ReconnectToPlayer());
+    }
+
+    // ✅ CLAVE: Busca y reconecta al nuevo jugador
+    private IEnumerator ReconnectToPlayer()
+    {
+        // Esperar un frame para que el jugador se inicialice
+        yield return new WaitForEndOfFrame();
+
+        // Buscar el jugador en la nueva escena
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+
+        if (playerObj == null)
+        {
+            Debug.LogWarning("⚠️ [PlayerHealthUI] No se encontró jugador en la escena");
+            yield break;
+        }
+
+        playerLife newPlayer = playerObj.GetComponent<playerLife>();
+
+        if (newPlayer == null)
+        {
+            Debug.LogError("❌ [PlayerHealthUI] El jugador no tiene componente playerLife");
+            yield break;
+        }
+
+        // ✅ Esperar a que el jugador esté inicializado
+        float timeout = 2f;
+        float elapsed = 0f;
+
+        while (!newPlayer.IsInitialized && elapsed < timeout)
+        {
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // ✅ Reconectar
+        player = newPlayer;
+        Debug.Log("🔗 [PlayerHealthUI] Reconectado al nuevo jugador");
+
+        // ✅ Actualizar display completo
+        ForceRefresh();
+    }
+
+    private void CacheFixedReferences()
+    {
         if (swordMiddle0 == null || swordMiddle1 == null || swordMiddle2 == null)
         {
-            Debug.LogError("❌ [PlayerHealthUI] FALTAN REFERENCIAS en el Inspector:");
-            Debug.LogError($"   swordMiddle0: {(swordMiddle0 != null ? "✅" : "❌")}");
-            Debug.LogError($"   swordMiddle1: {(swordMiddle1 != null ? "✅" : "❌")}");
-            Debug.LogError($"   swordMiddle2: {(swordMiddle2 != null ? "✅" : "❌")}");
+            Debug.LogError("❌ [PlayerHealthUI] FALTAN segmentos base en el Inspector");
             return;
         }
 
-        // ✅ Guardar referencias PERMANENTEMENTE
         allSwordMiddleParts.Clear();
         allSwordMiddleParts.Add(swordMiddle0);
         allSwordMiddleParts.Add(swordMiddle1);
         allSwordMiddleParts.Add(swordMiddle2);
 
-        Debug.Log($"✅ [PlayerHealthUI] {allSwordMiddleParts.Count} segmentos cacheados permanentemente");
+        Debug.Log($"✅ [PlayerHealthUI] {allSwordMiddleParts.Count} segmentos base cacheados");
     }
 
     public void Initialize(playerLife p)
     {
         if (p == null)
         {
-            Debug.LogWarning("[PlayerHealthUI] Initialize recibió player null.");
+            Debug.LogWarning("[PlayerHealthUI] Initialize recibió player null");
             return;
         }
 
         player = p;
+        Debug.Log($"[PlayerHealthUI] Inicializando con vida {player.Health}/{player.MaxHealth}");
 
-        try
+        AdjustSwordSegments(player.MaxHealth);
+        UpdateDisplay();
+
+        // Actualizar monedas/hachas si existe el controlador
+        var controlador = ControladorDatosJuego.Instance;
+        if (controlador != null)
         {
-            Debug.Log($"[PlayerHealthUI] Inicializando con vida {player.Health}/{player.MaxHealth}");
-
-            // Ajustar segmentos según vida máxima
-            AdjustSwordSegments(player.MaxHealth);
-
-            // Actualización completa
-            UpdateDisplay();
-
-            var controlador = ControladorDatosJuego.Instance;
-            if (controlador != null)
-            {
-                ActualizarMonedas(controlador.ObtenerMonedas());
-                ActualizarHachas(controlador.datosjuego.cantidadHachas);
-            }
-
-            // ✅ Marcar como inicializado
-            IsInitialized = true;
-
-            Debug.Log("✅ HUD inicializado correctamente");
+            ActualizarMonedas(controlador.ObtenerMonedas());
+            ActualizarHachas(controlador.datosjuego.cantidadHachas);
         }
-        catch (System.Exception ex)
-        {
-            Debug.LogError($"❌ Error en Initialize: {ex.Message}");
-        }
+
+        IsInitialized = true;
+        Debug.Log("✅ [PlayerHealthUI] Inicialización completa");
     }
 
     public void ForceRefresh()
     {
         if (player == null)
         {
-            Debug.LogWarning("El jugador no esta asignado");
+            Debug.LogWarning("⚠️ [PlayerHealthUI] No hay player para refrescar");
             return;
         }
 
-
         AdjustSwordSegments(player.MaxHealth);
         UpdateDisplay();
+
+        Debug.Log("🔄 [PlayerHealthUI] Refresh forzado completado");
     }
 
     private void AdjustSwordSegments(int maxHealth)
     {
         int requiredSegments = Mathf.Max(0, maxHealth - 2);
 
-        // Verificar que la lista base esté inicializada
         if (allSwordMiddleParts.Count == 0)
         {
-            Debug.LogError("allSwordMiddleParts está vacio..");
-            Debug.LogError("Verificarse que swordMiddle0, swordMiddle1, swordMiddle2 estén asignados en Awake(), si no claramente no funcionara");
+            Debug.LogError("❌ allSwordMiddleParts vacío");
             return;
         }
 
-        // Si necesitamos MÁS segmentos (aumentar vida)
+        // Añadir segmentos si es necesario
         int segmentsToAdd = requiredSegments - allSwordMiddleParts.Count;
         if (segmentsToAdd > 0)
         {
-
             for (int i = 0; i < segmentsToAdd; i++)
             {
-                bool success = AddSwordSegmentDynamic();
-                if (!success)
+                if (!AddSwordSegmentDynamic())
                 {
-                    Debug.LogError($"falló al añadir segmento {i + 1}/{segmentsToAdd}");
+                    Debug.LogError($"❌ Falló añadir segmento {i + 1}/{segmentsToAdd}");
                     break;
                 }
             }
         }
 
-        // Activar/desactivar segmentos según sea necesario
+        // Activar/desactivar según vida máxima
         for (int i = 0; i < allSwordMiddleParts.Count; i++)
         {
             if (allSwordMiddleParts[i] != null)
             {
                 bool shouldBeActive = i < requiredSegments;
                 allSwordMiddleParts[i].gameObject.SetActive(shouldBeActive);
-
-                if (shouldBeActive)
-                {
-                    Debug.Log($"Segmento {i}: ACTIVO");
-                }
-            }
-            else
-            {
-                Debug.LogWarning($"Segmento {i} es NULL");
             }
         }
-
-        Debug.Log($"Ajuste completado. Total activos: {requiredSegments}");
 
         RepositionSwordSegments();
     }
 
     private bool AddSwordSegmentDynamic()
     {
-        Debug.Log("Intentando añadir segmento...");
-
-
         if (swordMiddlePrefab != null && swordContainer != null)
         {
-            Debug.Log("Usando prefab");
-
             GameObject newSegment = Instantiate(swordMiddlePrefab, swordContainer);
             Image segmentImage = newSegment.GetComponent<Image>();
 
@@ -230,47 +246,23 @@ public class PlayerHealthUI : MonoBehaviour
             {
                 allSwordMiddleParts.Add(segmentImage);
                 segmentImage.sprite = middleFullSprite;
-
-                Debug.Log($"Segmento creado desde PREFAB. Total: {allSwordMiddleParts.Count}");
                 return true;
             }
-            else
-            {
-                Debug.LogError("El prefab no tiene componente Image");
-                Destroy(newSegment);
-                return false;
-            }
         }
-        // OPCIÓN 2: Clonar un segmento existente
         else if (allSwordMiddleParts.Count > 0 && allSwordMiddleParts[0] != null)
         {
-            Debug.Log("Clonando segmento existente");
-
-            GameObject clonedSegment = Instantiate(allSwordMiddleParts[0].gameObject, allSwordMiddleParts[0].transform.parent);
-            Image clonedImage = clonedSegment.GetComponent<Image>();
+            GameObject cloned = Instantiate(allSwordMiddleParts[0].gameObject, allSwordMiddleParts[0].transform.parent);
+            Image clonedImage = cloned.GetComponent<Image>();
 
             if (clonedImage != null)
             {
                 clonedImage.sprite = middleFullSprite;
-                clonedSegment.name = $"SwordHUD_Cloned_{allSwordMiddleParts.Count}";
                 allSwordMiddleParts.Add(clonedImage);
-
-                Debug.Log($"Segmento CLONADO. Total: {allSwordMiddleParts.Count}");
                 return true;
             }
-            else
-            {
-                Debug.LogError("El clon no tiene componente Image");
-                Destroy(clonedSegment);
-                return false;
-            }
         }
-        // OPCIÓN 3: Crear desde cero (último recurso)
-        else
-        {
-            Debug.LogError("Asigna 'swordMiddlePrefab' en el Inspector o verifica que los segmentos base existan");
-            return false;
-        }
+
+        return false;
     }
 
     private void RepositionSwordSegments()
@@ -280,24 +272,18 @@ public class PlayerHealthUI : MonoBehaviour
         RectTransform handleRect = swordHandle.GetComponent<RectTransform>();
         RectTransform tipRect = swordTip.GetComponent<RectTransform>();
 
-        if (handleRect == null || tipRect == null) return;
-
-        // Posicionar cada segmento medio
+        // Posicionar segmentos medios
         for (int i = 0; i < allSwordMiddleParts.Count; i++)
         {
             if (allSwordMiddleParts[i] != null && allSwordMiddleParts[i].gameObject.activeSelf)
             {
                 RectTransform segmentRect = allSwordMiddleParts[i].GetComponent<RectTransform>();
-                if (segmentRect != null)
-                {
-                    // Posición desde el mango hacia arriba
-                    float yPos = handleRect.anchoredPosition.y + ((i + 1) * segmentSpacing);
-                    segmentRect.anchoredPosition = new Vector2(handleRect.anchoredPosition.x, yPos);
-                }
+                float yPos = handleRect.anchoredPosition.y + ((i + 1) * segmentSpacing);
+                segmentRect.anchoredPosition = new Vector2(handleRect.anchoredPosition.x, yPos);
             }
         }
 
-        // Posicionar punta al final
+        // Posicionar punta
         float tipYPos = handleRect.anchoredPosition.y + ((allSwordMiddleParts.Count + 1) * segmentSpacing);
         tipRect.anchoredPosition = new Vector2(handleRect.anchoredPosition.x, tipYPos);
     }
@@ -306,7 +292,7 @@ public class PlayerHealthUI : MonoBehaviour
     {
         if (player == null)
         {
-            Debug.LogWarning("⚠️ [PlayerHealthUI] No hay player asignado para actualizar");
+            Debug.LogWarning("⚠️ [PlayerHealthUI] No hay player para actualizar");
             return;
         }
 
@@ -317,8 +303,7 @@ public class PlayerHealthUI : MonoBehaviour
         UpdateKnightPosition();
     }
 
-
-void UpdatePotionText()
+    void UpdatePotionText()
     {
         if (potionText != null && player != null)
         {
@@ -345,7 +330,7 @@ void UpdatePotionText()
 
     void UpdateKnightSprite()
     {
-        if (player == null || knightImage == null || knightHeadImage == null) return;
+        if (player == null || knightImage == null) return;
 
         Sprite currentSprite = knight1HealthSprite;
         int h = Mathf.Clamp(player.Health, 0, player.MaxHealth);
@@ -354,7 +339,6 @@ void UpdatePotionText()
         else if (h == 4 && knight4HealthSprite != null) currentSprite = knight4HealthSprite;
         else if (h == 3 && knight3HealthSprite != null) currentSprite = knight3HealthSprite;
         else if (h == 2 && knight2HealthSprite != null) currentSprite = knight2HealthSprite;
-        else if (knight1HealthSprite != null) currentSprite = knight1HealthSprite;
 
         if (currentSprite != null)
         {
@@ -370,44 +354,29 @@ void UpdatePotionText()
         int h = player.Health;
         int max = player.MaxHealth;
 
-        // DEBUG
-        Debug.Log($"[UpdateSword] Vida: {h}/{max}");
-
-     
+        // Punta (vida máxima)
         if (swordTip != null)
         {
-            bool tipFull = (h == max); 
-            swordTip.sprite = tipFull ? tipFullSprite : tipEmptySprite;
-            Debug.Log($"Punta: {(tipFull ? "LLENA" : "VACÍA")} (vida {h} == max {max})");
+            swordTip.sprite = (h == max) ? tipFullSprite : tipEmptySprite;
         }
 
- 
+        // Segmentos medios (invertidos)
         for (int i = 0; i < allSwordMiddleParts.Count; i++)
         {
             if (allSwordMiddleParts[i] != null && allSwordMiddleParts[i].gameObject.activeSelf)
             {
-                // Invertir el índice para que el superior (último en el array) se vacíe primero
                 int displayIndex = allSwordMiddleParts.Count - 1 - i;
-
-                // Cada segmento representa 1 punto de vida
-                // Segmento superior (displayIndex = N-1) = vida (max - 1)
-                // Segmento medio (displayIndex = 1) = vida (max - N + 1)
-                // Segmento inferior (displayIndex = 0) = vida 2
                 int healthValue = max - displayIndex - 1;
-                bool isFull = h >= healthValue; 
+                bool isFull = h >= healthValue;
 
                 allSwordMiddleParts[i].sprite = isFull ? middleFullSprite : middleEmptySprite;
-
-                Debug.Log($"Segmento {i} (display {displayIndex}): {(isFull ? "LLENO" : "VACÍO")} (vida {h} >= {healthValue})");
             }
         }
 
-   
+        // Mango (vida >= 1)
         if (swordHandle != null)
         {
-            bool handleFull = (h >= 1); 
-            swordHandle.sprite = handleFull ? handleFullSprite : handleEmptySprite;
-            Debug.Log($"Mango: {(handleFull ? "LLENO" : "VACÍO")} (vida {h} >= 1)");
+            swordHandle.sprite = (h >= 1) ? handleFullSprite : handleEmptySprite;
         }
     }
 
@@ -416,54 +385,33 @@ void UpdatePotionText()
         if (player == null || knightHeadImage == null) return;
 
         RectTransform headRect = knightHeadImage.GetComponent<RectTransform>();
-        if (headRect == null) return;
-
         int h = player.Health;
         int max = player.MaxHealth;
 
         Vector2 target = Vector2.zero;
 
-
         if (h <= 0)
         {
-            RectTransform handleRect = swordHandle.GetComponent<RectTransform>();
-            target = handleRect.anchoredPosition;
+            target = swordHandle.GetComponent<RectTransform>().anchoredPosition;
         }
-
         else if (h >= max)
         {
-            RectTransform tipRect = swordTip.GetComponent<RectTransform>();
-            target = tipRect.anchoredPosition;
+            target = swordTip.GetComponent<RectTransform>().anchoredPosition;
         }
         else
         {
-            // VIDA INTERMEDIA → segmento correspondiente
             int segmentIndex = max - h - 1;
-            int arrayIndex = allSwordMiddleParts.Count - 1 - segmentIndex;
-
-            arrayIndex = Mathf.Clamp(arrayIndex, 0, allSwordMiddleParts.Count - 1);
-
-            Image seg = allSwordMiddleParts[arrayIndex];
-            if (seg != null)
-            {
-                RectTransform segRect = seg.GetComponent<RectTransform>();
-                target = segRect.anchoredPosition;
-            }
+            int arrayIndex = Mathf.Clamp(allSwordMiddleParts.Count - 1 - segmentIndex, 0, allSwordMiddleParts.Count - 1);
+            target = allSwordMiddleParts[arrayIndex].GetComponent<RectTransform>().anchoredPosition;
         }
 
-        // APLICAR OFFSET
         target += new Vector2(headOffsetX, headOffsetY);
-
-        // Guardar destino
         targetHeadPosition = target;
 
-        // CANCELAR tween anterior si existe
         if (headTween != null && headTween.IsActive())
             headTween.Kill();
 
-        // ANIMACIÓN SUAVE CON DOTWEEN
-        headTween = headRect.DOAnchorPos(targetHeadPosition, 0.35f)
-                            .SetEase(Ease.OutQuad);
+        headTween = headRect.DOAnchorPos(targetHeadPosition, 0.35f).SetEase(Ease.OutQuad);
     }
 
     void UpdateKnightPosition()
@@ -471,8 +419,6 @@ void UpdatePotionText()
         if (player == null || knightImage == null) return;
 
         RectTransform knightRect = knightImage.GetComponent<RectTransform>();
-        if (knightRect == null) return;
-
         float healthLost = player.MaxHealth - player.Health;
         float moveAmount = healthLost * knightMoveDistancePerHealth;
 

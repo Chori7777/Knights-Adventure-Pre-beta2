@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerSpawnManager : MonoBehaviour
@@ -28,53 +28,75 @@ public class PlayerSpawnManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // ✅ Solo reposicionar si NO estamos cargando desde un checkpoint
-        if (ControladorDatosJuego.Instance != null &&
-            !ControladorDatosJuego.Instance.IsLoadingFromCheckpoint)
+        // ✅ CAMBIO CRÍTICO: Solo reposicionar si NO estamos cargando desde checkpoint
+        if (ControladorDatosJuego.Instance != null)
         {
-            RepositionPlayer(scene.name);
+            bool isFromCheckpoint = ControladorDatosJuego.Instance.IsLoadingFromCheckpoint;
+            bool isFromContinue = ControladorDatosJuego.Instance.IsLoadingFromContinue;
+
+            if (isFromCheckpoint || isFromContinue)
+            {
+                Debug.Log("🔹 [PlayerSpawnManager] Cargando desde checkpoint/continue - NO reposicionar");
+                return; // ✅ Dejar que ControladorDatosJuego maneje el spawn
+            }
         }
-        else
+
+        // Solo llegar aquí si es spawn NORMAL (nueva partida, transición de escena)
+        Debug.Log("🔹 [PlayerSpawnManager] Spawn normal - reposicionando");
+        Vector3 pos = RepositionPlayer(scene.name);
+
+        // Guardar checkpoint de inicio de nivel para 'Restart Level'
+        if (ControladorDatosJuego.Instance != null)
         {
-            Debug.Log("📂 Cargando desde checkpoint, manteniendo posición guardada");
+            ControladorDatosJuego.Instance.GuardarCheckpoint(pos);
+            Debug.Log($"💾 [PlayerSpawnManager] Checkpoint inicial guardado en {scene.name}: {pos}");
         }
     }
-    private void RepositionPlayer(string sceneName)
+
+    private Vector3 RepositionPlayer(string sceneName)
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player == null) return;
+        if (player == null)
+        {
+            Debug.LogWarning("⚠️ [PlayerSpawnManager] No se encontró jugador");
+            return GetSpawnPosition(sceneName);
+        }
 
-        // Buscar spawn específico para esta escena
         Vector3 spawnPos = GetSpawnPosition(sceneName);
-
         player.transform.position = spawnPos;
-        Debug.Log($"🎯 Jugador reposicionado en {sceneName}: {spawnPos}");
+        Debug.Log($"🎯 [PlayerSpawnManager] Jugador reposicionado en {sceneName}: {spawnPos}");
+        return spawnPos;
     }
 
     private Vector3 GetSpawnPosition(string sceneName)
     {
-        // Buscar en el array de spawns
+        // 1. Buscar en el array de spawns
         foreach (var spawn in sceneSpawns)
         {
             if (spawn.sceneName == sceneName)
-            {
                 return spawn.spawnPosition;
-            }
         }
 
-        // Buscar GameObject con tag "PlayerSpawn" en la escena actual
+        // 2. Buscar GameObject con tag "PlayerSpawn"
         GameObject spawnPoint = GameObject.FindGameObjectWithTag("PlayerSpawn");
         if (spawnPoint != null)
-        {
             return spawnPoint.transform.position;
-        }
 
-        // Usar spawn por defecto
-        Debug.LogWarning($"⚠️ No hay spawn definido para {sceneName}, usando default");
+        // 3. Usar spawn por defecto
+        Debug.LogWarning($"⚠️ [PlayerSpawnManager] No hay spawn definido para {sceneName}, usando default");
         return defaultSpawn;
     }
 }

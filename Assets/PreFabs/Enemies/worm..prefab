@@ -132,7 +132,8 @@ MonoBehaviour:
   Dust: {fileID: 8300000, guid: 42ae3beb092d45c4d9349c81570926a3, type: 3}
   knockbackForce: 6
   knockbackRecoveryTime: 0.4
-  deathDelay: 1.5
+  deathDelay: 0.9
+  scoreReward: 10
 --- !u!61 &6522067530093130819
 BoxCollider2D:
   m_ObjectHideFlags: 0

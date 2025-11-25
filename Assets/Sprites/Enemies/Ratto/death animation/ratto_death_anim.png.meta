@@ -61,7 +61,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +75,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -140,9 +140,9 @@ TextureImporter:
       name: ratto_death_anim_0
       rect:
         serializedVersion: 2
-        x: 4
+        x: 0
         y: 0
-        width: 9
+        width: 16
         height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -162,9 +162,9 @@ TextureImporter:
       name: ratto_death_anim_1
       rect:
         serializedVersion: 2
-        x: 20
+        x: 16
         y: 0
-        width: 9
+        width: 16
         height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -184,9 +184,9 @@ TextureImporter:
       name: ratto_death_anim_2
       rect:
         serializedVersion: 2
-        x: 35
+        x: 32
         y: 0
-        width: 10
+        width: 16
         height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -206,10 +206,10 @@ TextureImporter:
       name: ratto_death_anim_3
       rect:
         serializedVersion: 2
-        x: 52
+        x: 48
         y: 0
-        width: 8
-        height: 7
+        width: 16
+        height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -228,10 +228,10 @@ TextureImporter:
       name: ratto_death_anim_4
       rect:
         serializedVersion: 2
-        x: 69
-        y: 1
-        width: 7
-        height: 6
+        x: 64
+        y: 0
+        width: 16
+        height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -250,9 +250,9 @@ TextureImporter:
       name: ratto_death_anim_5
       rect:
         serializedVersion: 2
-        x: 82
+        x: 80
         y: 0
-        width: 12
+        width: 16
         height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -272,9 +272,9 @@ TextureImporter:
       name: ratto_death_anim_6
       rect:
         serializedVersion: 2
-        x: 98
+        x: 96
         y: 0
-        width: 12
+        width: 16
         height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -294,10 +294,10 @@ TextureImporter:
       name: ratto_death_anim_7
       rect:
         serializedVersion: 2
-        x: 117
-        y: 1
-        width: 6
-        height: 6
+        x: 112
+        y: 0
+        width: 16
+        height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -318,7 +318,7 @@ TextureImporter:
         serializedVersion: 2
         x: 128
         y: 0
-        width: 64
+        width: 16
         height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -334,11 +334,77 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: ratto_death_anim_9
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 16
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 669f9a21f6fc8164cb56c1685c1ca5ac
+      internalID: 1166381560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ratto_death_anim_10
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 16
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f19c48803f8eeba478b18827aeb8fc90
+      internalID: -700288303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ratto_death_anim_11
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 0
+        width: 16
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9eb3f65be1fa73341a6b5d539587d20c
+      internalID: 1441640015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: fbad0e808c7d3ef4bb3a0a0c2d52a77d
     internalID: 0
     vertices: []
     indices: 
@@ -350,6 +416,8 @@ TextureImporter:
     nameFileIdTable:
       ratto_death_anim_0: -6753877365765595148
       ratto_death_anim_1: 2641223918285693001
+      ratto_death_anim_10: -700288303
+      ratto_death_anim_11: 1441640015
       ratto_death_anim_2: 6311525698899144204
       ratto_death_anim_3: 6033761611085828780
       ratto_death_anim_4: 5868758376402958189
@@ -357,6 +425,7 @@ TextureImporter:
       ratto_death_anim_6: -7340550981502244489
       ratto_death_anim_7: 4917137491131171142
       ratto_death_anim_8: -2543401459744790742
+      ratto_death_anim_9: 1166381560
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

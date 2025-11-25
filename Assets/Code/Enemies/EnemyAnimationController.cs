@@ -10,10 +10,22 @@ public class EnemyAnimationController : MonoBehaviour
     private bool hasSpeedXParam;
     private bool hasSpeedYParam;
     private bool hasGroundedParam;
-    private bool hasDamageParam;
-    private bool hasDeathParam;
+    private bool hasDamageBoolParam;
+    private bool hasDamageTriggerParam;
+    private bool hasDeathBoolParam;
+    private bool hasDeathTriggerParam;
     private bool hasAttackTrigger;
     private bool hasIsAttackingParam;
+
+    // Nombres reales de parámetros detectados
+    private string movementParamName;
+    private string speedXParamName;
+    private string speedYParamName;
+    private string groundedParamName;
+    private string damageBoolParamName;
+    private string damageTriggerParamName;
+    private string deathBoolParamName;
+    private string deathTriggerParamName;
 
     public void Initialize(EnemyCore enemyCore)
     {
@@ -25,6 +37,7 @@ public class EnemyAnimationController : MonoBehaviour
         // Detectar qué parámetros existen
         DetectAvailableParameters();
     }
+
     //Detecta los parametros que tiene el animator para no tirar errores
     private void DetectAvailableParameters()
     {
@@ -36,24 +49,50 @@ public class EnemyAnimationController : MonoBehaviour
             {
                 case "Movement":
                     hasMovementParam = true;
+                    movementParamName = "Movement";
+                    break;
+                case "Speed":
+                    hasMovementParam = true;
+                    movementParamName = "Speed";
                     break;
                 case "SpeedX":
                     hasSpeedXParam = true;
+                    speedXParamName = "SpeedX";
                     break;
                 case "SpeedY":
                     hasSpeedYParam = true;
+                    speedYParamName = "SpeedY";
                     break;
                 case "Grounded":
                 case "isGrounded":
                     hasGroundedParam = true;
+                    groundedParamName = param.name;
                     break;
                 case "damage":
                 case "Damage":
-                    hasDamageParam = true;
+                    if (param.type == AnimatorControllerParameterType.Bool)
+                    {
+                        hasDamageBoolParam = true;
+                        damageBoolParamName = param.name;
+                    }
+                    else if (param.type == AnimatorControllerParameterType.Trigger)
+                    {
+                        hasDamageTriggerParam = true;
+                        damageTriggerParamName = param.name;
+                    }
                     break;
                 case "Death":
                 case "isDead":
-                    hasDeathParam = true;
+                    if (param.type == AnimatorControllerParameterType.Bool)
+                    {
+                        hasDeathBoolParam = true;
+                        deathBoolParamName = param.name;
+                    }
+                    else if (param.type == AnimatorControllerParameterType.Trigger)
+                    {
+                        hasDeathTriggerParam = true;
+                        deathTriggerParamName = param.name;
+                    }
                     break;
                 case "Attack":
                     hasAttackTrigger = true;
@@ -63,11 +102,21 @@ public class EnemyAnimationController : MonoBehaviour
                     break;
             }
         }
+
+        // ✅ DEBUG: Mostrar qué parámetros de Death se encontraron
+        if (hasDeathBoolParam)
+            Debug.Log($"[{gameObject.name}] Death detectado como BOOL: {deathBoolParamName}");
+        if (hasDeathTriggerParam)
+            Debug.Log($"[{gameObject.name}] Death detectado como TRIGGER: {deathTriggerParamName}");
     }
 
     private void LateUpdate()
     {
         if (anim == null || core == null) return;
+
+        // ✅ NO actualizar animaciones si está muerto
+        if (core.IsDead) return;
+
         UpdateAllAnimations();
     }
 
@@ -78,13 +127,13 @@ public class EnemyAnimationController : MonoBehaviour
         UpdateStateAnimations();
     }
 
-    //Animacinoes de movimiento
+    //Animaciones de movimiento
     private void UpdateMovementAnimation()
     {
         if (!hasMovementParam || core.rb == null) return;
 
         float moveAmount = Mathf.Abs(core.rb.linearVelocity.x);
-        anim.SetFloat("Movement", moveAmount);
+        anim.SetFloat(movementParamName, moveAmount);
     }
 
     private void UpdateVelocityAnimation()
@@ -93,12 +142,12 @@ public class EnemyAnimationController : MonoBehaviour
 
         if (hasSpeedXParam)
         {
-            anim.SetFloat("SpeedX", Mathf.Abs(core.rb.linearVelocity.x));
+            anim.SetFloat(speedXParamName, Mathf.Abs(core.rb.linearVelocity.x));
         }
 
         if (hasSpeedYParam)
         {
-            anim.SetFloat("SpeedY", core.rb.linearVelocity.y);
+            anim.SetFloat(speedYParamName, core.rb.linearVelocity.y);
         }
     }
 
@@ -118,6 +167,7 @@ public class EnemyAnimationController : MonoBehaviour
             anim.SetTrigger("Attack");
         }
     }
+
     public void ResetAttack()
     {
         if (hasAttackTrigger)
@@ -133,17 +183,59 @@ public class EnemyAnimationController : MonoBehaviour
 
     public void SetDamage(bool value)
     {
-        if (hasDamageParam)
+        if (hasDamageBoolParam)
         {
-            anim.SetBool("damage", value);
+            anim.SetBool(damageBoolParamName, value);
+        }
+        if (hasDamageTriggerParam && value)
+        {
+            anim.SetTrigger(damageTriggerParamName);
         }
     }
 
+    // ✅ ARREGLADO: Método mejorado para Death
     public void SetDeath(bool value)
     {
-        if (hasDeathParam)
+        if (!value) return; // Solo procesar cuando value = true
+
+        Debug.Log($"🎬 [{gameObject.name}] SetDeath llamado");
+
+        // ✅ Prioridad 1: Usar Trigger si existe
+        if (hasDeathTriggerParam)
         {
-            anim.SetBool("Death", value);
+            anim.SetTrigger(deathTriggerParamName);
+            Debug.Log($"   ✅ SetTrigger('{deathTriggerParamName}')");
+        }
+        // ✅ Prioridad 2: Usar Bool si no hay Trigger
+        else if (hasDeathBoolParam)
+        {
+            // Primero resetear cualquier otro parámetro que pueda interferir
+            if (hasDamageBoolParam)
+            {
+                anim.SetBool(damageBoolParamName, false);
+            }
+
+            // Luego activar Death
+            anim.SetBool(deathBoolParamName, true);
+            Debug.Log($"   ✅ SetBool('{deathBoolParamName}', true)");
+
+            // ✅ CRÍTICO: Forzar que el Animator actualice inmediatamente
+            anim.Update(0f);
+        }
+        else
+        {
+            Debug.LogWarning($"   ⚠️ No hay parámetro Death (ni Bool ni Trigger)");
+        }
+
+        // ✅ DEBUG: Verificar estado del Animator
+        if (anim != null)
+        {
+            Debug.Log($"   🔍 Animator enabled: {anim.enabled}");
+            Debug.Log($"   🔍 Animator speed: {anim.speed}");
+
+            // Ver estado actual
+            AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+            Debug.Log($"   🔍 Estado actual: {stateInfo.shortNameHash}");
         }
     }
 
@@ -151,14 +243,13 @@ public class EnemyAnimationController : MonoBehaviour
     {
         if (hasGroundedParam)
         {
-            anim.SetBool("Grounded", value);
+            anim.SetBool(groundedParamName, value);
         }
     }
 
     //Para el momento en que el ataque conecta
     public void OnAttackHitFrame()
     {
-  
         if (core.meleeAttack != null)
         {
             core.meleeAttack.DealDamage();

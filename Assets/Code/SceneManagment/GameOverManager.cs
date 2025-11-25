@@ -1,4 +1,4 @@
-﻿using TMPro;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
@@ -59,26 +59,14 @@ public class GameOverManager : MonoBehaviour
     public void CargarCheckpoint()
     {
         Time.timeScale = 1f;
-
         if (ControladorDatosJuego.Instance == null)
         {
             Debug.LogError("❌ No existe instancia de ControladorDatosJuego.");
             return;
         }
 
-        ControladorDatosJuego.Instance.CargarDatos();
-
-        string escena = ControladorDatosJuego.Instance.datosjuego.escenaActual;
-        if (!string.IsNullOrEmpty(escena))
-        {
-            Debug.Log($" Cargando último checkpoint en escena: {escena}");
-            SceneManager.LoadScene(escena);
-        }
-        else
-        {
-            Debug.LogWarning(" No hay checkpoint guardado. Se reiniciará el nivel actual.");
-            ReiniciarNivel();
-        }
+        // Usar el flujo oficial de respawn que activa el flag y reposiciona al cargar
+        ControladorDatosJuego.Instance.RespawnearJugadorEnCheckpoint();
     }
 
     // 🔙 Volver al menú principal (opcional)
@@ -87,5 +75,25 @@ public class GameOverManager : MonoBehaviour
         Time.timeScale = 1f;
         Debug.Log(" Volviendo al menú principal...");
         SceneManager.LoadScene("MainMenu");
+    }
+
+    // Métodos alias para enlazar fácilmente desde UI
+    public void RestartFromCheckpoint()
+    {
+        CargarCheckpoint();
+    }
+
+    public void RestartLevel()
+    {
+        ReiniciarNivel();
+    }
+
+    public void Continue()
+    {
+        if (ControladorDatosJuego.Instance != null)
+        {
+            Time.timeScale = 1f;
+            ControladorDatosJuego.Instance.ContinuarPartida();
+        }
     }
 }

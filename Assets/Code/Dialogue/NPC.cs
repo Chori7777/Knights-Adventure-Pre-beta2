@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
+    [SerializeField] private string npcID = "";
+    [SerializeField] private bool recompensaUnaVez = true;
     [Header("Diálogo")]
     [SerializeField] private float interactionDistance = 2f;
     [SerializeField] private string[] dialogueLines;
@@ -13,6 +15,7 @@ public class NPC : MonoBehaviour
     [Header("Tilemap")]
     [SerializeField] private bool destroyTilemap = false;
     [SerializeField] private GameObject tilemapToDestroy;
+    [SerializeField] private string tilemapID = "";
 
     private Transform player;
     private int currentDialogueLine = 0;
@@ -25,6 +28,14 @@ public class NPC : MonoBehaviour
 
         if (playerObj != null)
             player = playerObj.transform;
+
+        if (destroyTilemap && tilemapToDestroy != null && ControladorDatosJuego.Instance != null)
+        {
+            if (!string.IsNullOrEmpty(tilemapID) && ControladorDatosJuego.Instance.EstaObjetoDestruido(tilemapID))
+            {
+                tilemapToDestroy.SetActive(false);
+            }
+        }
     }
 
     private void Update()
@@ -77,7 +88,7 @@ public class NPC : MonoBehaviour
 
     private void ShowCurrentLine()
     {
-        DialogueManager.Instance.ShowDialogue(dialogueLines[currentDialogueLine]);
+        TextManager.Instance.ShowDialogue(dialogueLines[currentDialogueLine]);
     }
 
     private void EndDialogue()
@@ -85,22 +96,42 @@ public class NPC : MonoBehaviour
         dialogueActive = false;
         currentDialogueLine = 0;
 
-        DialogueManager.Instance.CloseDialogue();
+        TextManager.Instance.CloseDialogue();
 
         // --- ACCIONES POST DIÁLOGO ---
 
         // 1. Dar recompensas (si está activado)
         if (giveRewards && rewards != null)
         {
-            foreach (var r in rewards)
-                r.Apply();
+            bool puedeDar = true;
+            if (recompensaUnaVez && ControladorDatosJuego.Instance != null && !string.IsNullOrEmpty(npcID))
+            {
+                if (ControladorDatosJuego.Instance.EstaNPCRecompensaEntregada(npcID))
+                {
+                    puedeDar = false;
+                }
+            }
+
+            if (puedeDar)
+            {
+                foreach (var r in rewards)
+                    r.Apply();
+
+                if (recompensaUnaVez && ControladorDatosJuego.Instance != null && !string.IsNullOrEmpty(npcID))
+                {
+                    ControladorDatosJuego.Instance.MarcarNPCRecompensaEntregada(npcID);
+                }
+            }
         }
 
         // 2. Destruir tilemap (si está activado)
         if (destroyTilemap && tilemapToDestroy != null)
         {
-            Destroy(tilemapToDestroy);
-            Debug.Log("Tilemap destruido por NPC.");
+            tilemapToDestroy.SetActive(false);
+            if (ControladorDatosJuego.Instance != null && !string.IsNullOrEmpty(tilemapID))
+            {
+                ControladorDatosJuego.Instance.MarcarObjetoDestruido(tilemapID);
+            }
         }
     }
 

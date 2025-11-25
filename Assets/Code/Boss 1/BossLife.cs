@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class BossLife : MonoBehaviour
@@ -28,6 +28,9 @@ public class BossLife : MonoBehaviour
     [Header("Script de ataque del jefe")]
     [SerializeField] private MonoBehaviour scriptAtaque;
     private BossTrigger bossTrigger;
+    public FirstEncounterTrialManager trialManager;
+    public bool trialMode = false;
+    private bool acceleratedApplied = false;
 
     [Header("SCORE - NUEVO")]
     [SerializeField] private int scoreReward = 50; 
@@ -60,7 +63,20 @@ public class BossLife : MonoBehaviour
         if (health <= 0)
             Die();
         else
+        {
             StartCoroutine(RecuperarDeKnockback());
+            if (trialMode && trialManager != null)
+            {
+                if (!acceleratedApplied && health <= maxHealth / 2)
+                {
+                    acceleratedApplied = true;
+                    trialManager.SetAccelerated(true);
+                    trialManager.PauseForDialoguePhase2();
+                }
+                gameObject.SetActive(false);
+                trialManager.NextTrial();
+            }
+        }
     }
 
     public void RecibeDanio(Vector2 direccionAtaque, int cantDanio)
@@ -90,6 +106,17 @@ public class BossLife : MonoBehaviour
         }
 
         StartCoroutine(RecuperarDeKnockback());
+        if (trialMode && trialManager != null)
+        {
+            if (!acceleratedApplied && health <= maxHealth / 2)
+            {
+                acceleratedApplied = true;
+                trialManager.SetAccelerated(true);
+                trialManager.PauseForDialoguePhase2();
+            }
+            gameObject.SetActive(false);
+            trialManager.NextTrial();
+        }
     }
 
     private IEnumerator RecuperarDeKnockback()

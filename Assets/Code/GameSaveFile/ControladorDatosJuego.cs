@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -9,11 +9,15 @@ public class ControladorDatosJuego : MonoBehaviour
     public static ControladorDatosJuego Instance;
     public DatosJuego datosjuego = new DatosJuego();
     private string rutaArchivo;
-    private string checkpointEscena;
-    private Vector3 checkpointPos;
-    private Vector3 checkpointCamara;
 
+    // 🔹 FLAGS DE CONTROL CRÍTICOS
     public bool IsLoadingFromCheckpoint { get; private set; }
+    public bool IsLoadingFromContinue { get; private set; }
+
+    // 🔹 Para evitar reposicionamiento múltiple
+    private bool hasRepositionedThisScene = false;
+    private bool hasSavedInitialCheckpointThisScene = false;
+
     private void Awake()
     {
         if (Instance == null)
@@ -28,71 +32,162 @@ public class ControladorDatosJuego : MonoBehaviour
         }
 
         rutaArchivo = Application.persistentDataPath + "/save.json";
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    // 🔹 EVENTO DE ESCENA CARGADA
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log($"━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        Debug.Log($"📂 Escena cargada: {scene.name}");
+        Debug.Log($"🔹 IsLoadingFromCheckpoint: {IsLoadingFromCheckpoint}");
+        Debug.Log($"🔹 IsLoadingFromContinue: {IsLoadingFromContinue}");
+
+        // Reset flag
+        hasRepositionedThisScene = false;
+        hasSavedInitialCheckpointThisScene = false;
+
+        // Si estamos cargando desde checkpoint O continue, reposicionar
+        if (IsLoadingFromCheckpoint || IsLoadingFromContinue)
+        {
+            StartCoroutine(RepositionPlayerAfterLoad());
+        }
+        else
+        {
+            StartCoroutine(SaveInitialCheckpointAfterLoad(scene.name));
+        }
+
+        Debug.Log($"━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+    }
+
+    // 🔹 REPOSICIONAMIENTO UNIFICADO
+    private IEnumerator RepositionPlayerAfterLoad()
+    {
+        if (hasRepositionedThisScene)
+        {
+            Debug.LogWarning("⚠️ Ya se reposicionó en esta escena, ignorando");
+            yield break;
+        }
+
+        hasRepositionedThisScene = true;
+
+        // Esperar a que el jugador exista
+        yield return new WaitForSeconds(0.1f);
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+        {
+            Debug.LogError("❌ No se encontró jugador");
+            ResetFlags();
+            yield break;
+        }
+
+        // ✅ REPOSICIONAR JUGADOR
+        player.transform.position = datosjuego.posicion;
+        Debug.Log($"✅ Jugador reposicionado en: {datosjuego.posicion}");
+
+        // ✅ REPOSICIONAR CÁMARA
+        Camera cam = Camera.main;
+        if (cam != null)
+        {
+            cam.transform.position = datosjuego.posicionCamara;
+            Debug.Log($"✅ Cámara reposicionada en: {datosjuego.posicionCamara}");
+        }
+
+        // ✅ RESTAURAR VIDA
+        playerLife vida = player.GetComponent<playerLife>();
+        if (vida != null)
+        {
+            vida.SetMaxHealth(datosjuego.vidaMaxima);
+            vida.SetHealth(datosjuego.vidaActual);
+            vida.SetPotions(datosjuego.cantidadpociones);
+            vida.SetMaxPotions(datosjuego.maxPotions);
+            Debug.Log($"✅ Vida restaurada: {datosjuego.vidaActual}/{datosjuego.vidaMaxima}");
+        }
+
+        // ✅ ACTUALIZAR HUD
+        yield return new WaitForSeconds(0.1f); // Esperar a que HUD esté listo
+
+        if (PlayerHealthUI.Instance != null)
+        {
+            PlayerHealthUI.Instance.ActualizarMonedas(datosjuego.cantidadMonedas);
+            PlayerHealthUI.Instance.ActualizarHachas(datosjuego.cantidadHachas);
+            Debug.Log("✅ HUD actualizado");
+        }
+
+        // ✅ RESETEAR FLAGS
+        ResetFlags();
+    }
+    private IEnumerator SaveInitialCheckpointAfterLoad(string sceneName)
+    {
+        if (hasSavedInitialCheckpointThisScene) yield break;
+        yield return new WaitForSeconds(0.1f);
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null) yield break;
+        Vector3 spawnPos = player.transform.position;
+        GameObject spawnPoint = GameObject.FindGameObjectWithTag("PlayerSpawn");
+        if (spawnPoint != null)
+        {
+            spawnPos = spawnPoint.transform.position;
+        }
+        GuardarCheckpoint(spawnPos);
+        hasSavedInitialCheckpointThisScene = true;
+    }
+
+    private void ResetFlags()
+    {
+        IsLoadingFromCheckpoint = false;
+        IsLoadingFromContinue = false;
+        Debug.Log("🔄 Flags reseteados");
+    }
+
+    // ═══════════════════════════════════════════════════
+    //  GUARDAR/CARGAR
+    // ═══════════════════════════════════════════════════
 
     public void GuardarDatos(bool guardarPosicion = true)
     {
-        if (!FindPlayer())
+        GameObject player = FindPlayer();
+        if (player == null)
         {
-            Debug.LogWarning("No se encontró el jugador para guardar");
+            Debug.LogWarning("⚠️ No se encontró jugador para guardar");
             return;
         }
 
         if (guardarPosicion)
-            CapturarDatosJugador();
-        else
-            CapturarDatosBasicos();
-
-        EscribirArchivo();
-        Debug.Log(" Datos guardados correctamente");
-        if (SaveNotification.Instance != null)
-        {
-            SaveNotification.Instance.ShowSaveSuccess();
-        }
-
-    }
-
-    private void CapturarDatosJugador()
-    {
-        GameObject player = FindPlayer();
-        if (player != null)
         {
             datosjuego.posicion = player.transform.position;
+            Camera cam = Camera.main;
+            if (cam != null)
+                datosjuego.posicionCamara = cam.transform.position;
         }
 
-        CapturarDatosBasicos();
+        datosjuego.escenaActual = SceneManager.GetActiveScene().name;
+        EscribirArchivo();
+
+        Debug.Log($"💾 Datos guardados correctamente");
+
+        if (SaveNotification.Instance != null)
+            SaveNotification.Instance.ShowSaveSuccess();
     }
 
-    private void CapturarDatosBasicos()
+    public void GuardarCheckpoint(Vector3 playerPosition)
     {
+        datosjuego.posicion = playerPosition;
         datosjuego.escenaActual = SceneManager.GetActiveScene().name;
 
         Camera cam = Camera.main;
         if (cam != null)
             datosjuego.posicionCamara = cam.transform.position;
+
+        GuardarDatos(false); // Ya capturamos la posición manualmente
+        Debug.Log($"💾 Checkpoint guardado en: {playerPosition}");
     }
-
-    public void GuardarCheckpoint(Vector3 playerPosition)
-    {
-        checkpointPos = playerPosition;
-        checkpointEscena = SceneManager.GetActiveScene().name;
-
-        Debug.Log(" Escena actual guardado"); 
-
-        Camera cam = Camera.main;
-        if (cam != null)
-            checkpointCamara = cam.transform.position;
-
-        datosjuego.posicion = checkpointPos;
-        datosjuego.posicionCamara = checkpointCamara;
-        datosjuego.escenaActual = checkpointEscena;
-
-        GuardarDatos(true);
-        Debug.Log(" Checkpoint guardado en");
-    }
-
-
 
     public void CargarDatos()
     {
@@ -100,103 +195,82 @@ public class ControladorDatosJuego : MonoBehaviour
         {
             string json = File.ReadAllText(rutaArchivo);
             datosjuego = JsonUtility.FromJson<DatosJuego>(json);
-            Debug.Log(" Datos cargados correctamente");
+            Debug.Log("📂 Datos cargados correctamente");
         }
         else
         {
-            Debug.LogWarning(" No hay archivo de guardado existente");
+            Debug.LogWarning("⚠️ No hay archivo de guardado");
         }
+
         if (SaveNotification.Instance != null)
-        {
             SaveNotification.Instance.ShowLoadSuccess();
-        }
     }
+
+    // 🔹 CONTINUAR PARTIDA (desde menú)
     public void ContinuarPartida()
     {
         CargarDatos();
 
-        if (!string.IsNullOrEmpty(datosjuego.escenaActual))
+        if (string.IsNullOrEmpty(datosjuego.escenaActual))
         {
-            Debug.Log($"📂 Cargando escena: '{datosjuego.escenaActual}'");
-            Debug.Log($"📍 Posición guardada: {datosjuego.posicion}");
-            Debug.Log($"📷 Cámara guardada: {datosjuego.posicionCamara}");
-
-            // ✅ Marcar que estamos cargando desde checkpoint
-            IsLoadingFromCheckpoint = true;
-
-            SceneManager.sceneLoaded += OnContinueSceneLoaded;
-            SceneManager.LoadScene(datosjuego.escenaActual);
+            Debug.LogWarning("⚠️ No hay escena guardada");
+            return;
         }
-        else
-        {
-            Debug.LogWarning("⚠️ No hay escena guardada para continuar");
-        }
+
+        Debug.Log($"📂 Continuando partida en: {datosjuego.escenaActual}");
+        Debug.Log($"📍 Posición guardada: {datosjuego.posicion}");
+
+        // ✅ ACTIVAR FLAG
+        IsLoadingFromContinue = true;
+
+        SceneManager.LoadScene(datosjuego.escenaActual);
     }
 
-    private void OnContinueSceneLoaded(Scene scene, LoadSceneMode mode)
+    // 🔹 RESPAWN EN CHECKPOINT (muerte)
+    public void RespawnearJugadorEnCheckpoint()
     {
-        SceneManager.sceneLoaded -= OnContinueSceneLoaded;
-        Debug.Log("✅ Escena cargada correctamente");
-        StartCoroutine(RecolocarJugadorDespuesDeContinuar());
+        if (datosjuego == null || datosjuego.posicion == Vector3.zero)
+        {
+            Debug.LogWarning("⚠️ No hay checkpoint, recargando escena");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            return;
+        }
+
+        if (string.IsNullOrEmpty(datosjuego.escenaActual))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            return;
+        }
+
+        Debug.Log($"💀 Respawneando en checkpoint: {datosjuego.escenaActual}");
+
+        // ✅ ACTIVAR FLAG
+        IsLoadingFromCheckpoint = true;
+
+        SceneManager.LoadScene(datosjuego.escenaActual);
     }
 
-    private IEnumerator RecolocarJugadorDespuesDeContinuar()
+    // ═══════════════════════════════════════════════════
+    //  MONEDAS
+    // ═══════════════════════════════════════════════════
+
+    public int ObtenerMonedas()
     {
-        yield return new WaitForSeconds(0.3f);
+        return datosjuego.cantidadMonedas;
+    }
 
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-        {
-            player.transform.position = datosjuego.posicion;
-            Debug.Log($"✅ Jugador recolocado en: {datosjuego.posicion}");
-        }
-        else
-        {
-            Debug.LogError("❌ No se encontró jugador con tag Player");
-        }
+    public void AgregarMonedas(int cantidad)
+    {
+        datosjuego.cantidadMonedas += cantidad;
+        GuardarDatos(false);
 
-        // Recolocar cámara
-        Camera cam = Camera.main;
-        if (cam != null)
-        {
-            cam.transform.position = datosjuego.posicionCamara;
-        }
-
-        // Restaurar vida
-        if (player != null)
-        {
-            playerLife vida = player.GetComponent<playerLife>();
-            if (vida != null)
-            {
-                Debug.Log("✅ Vida restaurada");
-            }
-        }
-
-        // Restaurar UI
         if (PlayerHealthUI.Instance != null)
-        {
             PlayerHealthUI.Instance.ActualizarMonedas(datosjuego.cantidadMonedas);
-            Debug.Log("✅ Monedas restauradas en UI");
-        }
-
-        // ✅ IMPORTANTE: Resetear la flag
-        IsLoadingFromCheckpoint = false;
     }
-    private void OnSceneLoadedContinue(Scene scene, LoadSceneMode mode)
-    {
-        SceneManager.sceneLoaded -= OnSceneLoadedContinue;
 
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-        {
-            player.transform.position = datosjuego.posicion;
-            Debug.Log("Jugador colocado en checkpoint");
-        }
-
-        if (Camera.main != null)
-            Camera.main.transform.position = datosjuego.posicionCamara;
-    }
- 
+    // ═══════════════════════════════════════════════════
+    //  UTILIDADES
+    // ═══════════════════════════════════════════════════
 
     private GameObject FindPlayer()
     {
@@ -214,94 +288,46 @@ public class ControladorDatosJuego : MonoBehaviour
         if (File.Exists(rutaArchivo))
         {
             File.Delete(rutaArchivo);
-            Debug.Log("Guardado eliminado correctamente");
+            Debug.Log("🗑️ Guardado eliminado");
         }
     }
 
-    public int ObtenerMonedas()
-    {
-        return datosjuego.cantidadMonedas;
-    }
-
-    public void AgregarMonedas(int cantidad)
-    {
-        datosjuego.cantidadMonedas += cantidad;
-        GuardarDatos(false);
-
-        if (PlayerHealthUI.Instance != null)
-            PlayerHealthUI.Instance.ActualizarMonedas(datosjuego.cantidadMonedas);
-    }
-
-
-    public void RespawnearJugadorEnCheckpoint()
-    {
-        if (datosjuego == null)
-        {
-            Debug.LogWarning("⚠️ No hay datos guardados. Recargando escena actual...");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            return;
-        }
-
-        if (datosjuego.posicion == Vector3.zero)
-        {
-            Debug.Log("⚠️ No hay posición de checkpoint guardada. Recargando escena...");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            return;
-        }
-
-        if (!string.IsNullOrEmpty(datosjuego.escenaActual))
-        {
-            // ✅ Marcar que estamos cargando desde checkpoint
-            IsLoadingFromCheckpoint = true;
-
-            SceneManager.LoadScene(datosjuego.escenaActual);
-            Instance.StartCoroutine(RecolocarJugador());
-        }
-        else
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-    }
-
-    private IEnumerator RecolocarJugador()
-    {
-        yield return new WaitForSeconds(0.2f);
-
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-        {
-            player.transform.position = datosjuego.posicion;
-            Debug.Log($"✅ Jugador recolocado en checkpoint: {datosjuego.posicion}");
-        }
-
-        Camera cam = Camera.main;
-        if (cam != null)
-        {
-            cam.transform.position = datosjuego.posicionCamara;
-            Debug.Log("✅ Cámara recolocada en checkpoint");
-        }
-
-        // ✅ Resetear la flag
-        IsLoadingFromCheckpoint = false;
-    }
     public void ResetearDatos()
     {
-        datosjuego = new DatosJuego(); 
-
-
-        checkpointEscena = "";
-        checkpointPos = Vector3.zero;
-        checkpointCamara = Vector3.zero;
-
-
-        string archivo = Application.persistentDataPath + "/save.json";
-        if (File.Exists(archivo))
-        {
-            File.Delete(archivo);
-            Debug.Log(" Guardado anterior eliminado al iniciar nueva partida.");
-        }
-
-        Debug.Log(" Datos del juego reseteados correctamente.");
+        datosjuego = new DatosJuego();
+        EliminarGuardado();
+        Debug.Log("🔄 Datos reseteados");
     }
 
+    public bool EstaNPCRecompensaEntregada(string npcID)
+    {
+        if (string.IsNullOrEmpty(npcID)) return false;
+        return datosjuego.npcsRecompensaEntregada.Contains(npcID);
+    }
+
+    public void MarcarNPCRecompensaEntregada(string npcID)
+    {
+        if (string.IsNullOrEmpty(npcID)) return;
+        if (!datosjuego.npcsRecompensaEntregada.Contains(npcID))
+        {
+            datosjuego.npcsRecompensaEntregada.Add(npcID);
+            GuardarDatos(false);
+        }
+    }
+
+    public bool EstaObjetoDestruido(string objetoID)
+    {
+        if (string.IsNullOrEmpty(objetoID)) return false;
+        return datosjuego.objetosDestruidos.Contains(objetoID);
+    }
+
+    public void MarcarObjetoDestruido(string objetoID)
+    {
+        if (string.IsNullOrEmpty(objetoID)) return;
+        if (!datosjuego.objetosDestruidos.Contains(objetoID))
+        {
+            datosjuego.objetosDestruidos.Add(objetoID);
+            GuardarDatos(false);
+        }
+    }
 }

@@ -4,14 +4,16 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 
-public class DialogueManager : MonoBehaviour
+public class TextManager : MonoBehaviour
 {
+    [Header("UI")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private Button closeButton;
+    [Header("Velocidad de Texto")]
     [SerializeField] private float typeSpeed = 0.05f;
 
-    private static DialogueManager instance;
+    private static TextManager instance;
     private Coroutine typingCoroutine;
 
     private void Awake()
@@ -20,7 +22,7 @@ public class DialogueManager : MonoBehaviour
             instance = this;
     }
 
-    public static DialogueManager Instance => instance;
+    public static TextManager Instance => instance;
 
     private void Start()
     {
@@ -32,11 +34,9 @@ public class DialogueManager : MonoBehaviour
     {
         dialoguePanel.SetActive(true);
 
-        // Si hay una corrutina escribiendo,detener
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);
 
-        // Iniciamos la corrutina de escribir
         typingCoroutine = StartCoroutine(TypeText(text));
     }
 
