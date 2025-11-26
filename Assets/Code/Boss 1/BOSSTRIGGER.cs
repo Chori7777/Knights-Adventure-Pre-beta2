@@ -10,6 +10,9 @@ public class BossTrigger : MonoBehaviour
     [SerializeField] private BossDoor puertaEntrada;
     [SerializeField] private BossDoor[] puertasArena;
 
+    [Header("Trial Mode - Jefe en Escena")]
+    [SerializeField] private BossLife bossInScene; // ✅ NUEVO: Referencia directa
+
     [Header("Opciones")]
     [SerializeField] private float cooldownTiempo = 1f;
     [SerializeField] private GameObject player;
@@ -83,19 +86,39 @@ public class BossTrigger : MonoBehaviour
                 puerta.CerrarPuerta();
         }
 
-        Vector3 spawnPosition = bossSpawnPoint != null
-            ? bossSpawnPoint.position
-            : transform.position + new Vector3(2f, 0, 0);
-
-        GameObject bossObj = Instantiate(bossPrefab, spawnPosition, Quaternion.identity);
-        spawnedBoss = bossObj.GetComponent<BossLife>();
-
-        if (spawnedBoss != null)
-            spawnedBoss.SetBossTrigger(this);
+        // ✅ NUEVO: Decidir entre usar jefe en escena o instanciar uno nuevo
+        if (useTrialMode)
+        {
+            // Modo Trial: Usar el jefe que ya está en la escena
+            if (bossInScene != null)
+            {
+                spawnedBoss = bossInScene;
+                Debug.Log("✅ Usando jefe de la escena para Trial Mode");
+            }
+            else
+            {
+                Debug.LogError("❌ Trial Mode activado pero no hay jefe asignado en 'Boss In Scene'");
+                yield break;
+            }
+        }
         else
-            Debug.LogError("❌ BossLife no encontrado en el prefab del jefe!");
+        {
+            // Modo Normal: Instanciar el prefab
+            Vector3 spawnPosition = bossSpawnPoint != null
+                ? bossSpawnPoint.position
+                : transform.position + new Vector3(2f, 0, 0);
 
-        bossObj.SetActive(false);
+            GameObject bossObj = Instantiate(bossPrefab, spawnPosition, Quaternion.identity);
+            spawnedBoss = bossObj.GetComponent<BossLife>();
+
+            if (spawnedBoss == null)
+            {
+                Debug.LogError("❌ BossLife no encontrado en el prefab del jefe!");
+                yield break;
+            }
+        }
+
+        spawnedBoss.SetBossTrigger(this);
 
         if (AudioManager.Instance != null)
             AudioManager.Instance.StopMusic();
@@ -120,11 +143,6 @@ public class BossTrigger : MonoBehaviour
             yield return new WaitForSeconds(introDuracion);
         }
 
-        if (!useTrialMode)
-        {
-            bossObj.SetActive(true);
-        }
-
         if (AudioManager.Instance != null && sfxInicioBatalla != null)
         {
             AudioManager.Instance.PlaySFX(sfxInicioBatalla);
@@ -134,12 +152,17 @@ public class BossTrigger : MonoBehaviour
         if (AudioManager.Instance != null && musicaJefe != null)
             StartCoroutine(FadeInMusic(musicaJefe, 0.4f));
 
+        // ✅ Iniciar Trial Mode
         if (useTrialMode && trialManager != null)
         {
-            spawnedBoss.gameObject.SetActive(false);
+            spawnedBoss.gameObject.SetActive(true); // Asegurar que esté activo
             spawnedBoss.trialManager = trialManager;
             spawnedBoss.trialMode = true;
             trialManager.BeginSequence(spawnedBoss);
+        }
+        else
+        {
+            spawnedBoss.gameObject.SetActive(true);
         }
 
         if (playerController != null)
@@ -185,6 +208,11 @@ public class BossTrigger : MonoBehaviour
         {
             ControladorDatosJuego.Instance.datosjuego.jefesDerrotados.Add(bossID);
             ControladorDatosJuego.Instance.GuardarDatos();
+        }
+
+        if (trialManager != null)
+        {
+            trialManager.TeleportToInitialArea();
         }
 
         gameObject.SetActive(false);

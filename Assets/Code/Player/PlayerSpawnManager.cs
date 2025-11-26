@@ -56,29 +56,21 @@ public class PlayerSpawnManager : MonoBehaviour
 
         // Solo llegar aquí si es spawn NORMAL (nueva partida, transición de escena)
         Debug.Log("🔹 [PlayerSpawnManager] Spawn normal - reposicionando");
-        Vector3 pos = RepositionPlayer(scene.name);
-
-        // Guardar checkpoint de inicio de nivel para 'Restart Level'
-        if (ControladorDatosJuego.Instance != null)
-        {
-            ControladorDatosJuego.Instance.GuardarCheckpoint(pos);
-            Debug.Log($"💾 [PlayerSpawnManager] Checkpoint inicial guardado en {scene.name}: {pos}");
-        }
+        RepositionPlayer(scene.name);
     }
 
-    private Vector3 RepositionPlayer(string sceneName)
+    private void RepositionPlayer(string sceneName)
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
         {
             Debug.LogWarning("⚠️ [PlayerSpawnManager] No se encontró jugador");
-            return GetSpawnPosition(sceneName);
+            return;
         }
 
         Vector3 spawnPos = GetSpawnPosition(sceneName);
         player.transform.position = spawnPos;
         Debug.Log($"🎯 [PlayerSpawnManager] Jugador reposicionado en {sceneName}: {spawnPos}");
-        return spawnPos;
     }
 
     private Vector3 GetSpawnPosition(string sceneName)

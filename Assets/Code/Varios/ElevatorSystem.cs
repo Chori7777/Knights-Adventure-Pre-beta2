@@ -30,11 +30,9 @@ public class ElevatorSystem : MonoBehaviour
     private Tween currentTween;
 
     private Transform playerTransform;
-    private Rigidbody2D rb;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         // Posicionar ascensor en punto inicial
         if (startAtPointA && pointA != null)
         {
@@ -128,18 +126,9 @@ public class ElevatorSystem : MonoBehaviour
         if (audioSource != null && moveSound != null)
             audioSource.PlayOneShot(moveSound);
 
-        if (rb != null)
-        {
-            currentTween = rb.DOMove(targetPosition, duration)
-                .SetEase(easeType)
-                .OnComplete(() => OnArriveAtFloor(movingToA));
-        }
-        else
-        {
-            currentTween = transform.DOMove(targetPosition, duration)
-                .SetEase(easeType)
-                .OnComplete(() => OnArriveAtFloor(movingToA));
-        }
+        currentTween = transform.DOMove(targetPosition, duration)
+            .SetEase(easeType)
+            .OnComplete(() => OnArriveAtFloor(movingToA));
     }
 
     private void OnArriveAtFloor(bool arrivedAtA)

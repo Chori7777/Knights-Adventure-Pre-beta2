@@ -11,19 +11,16 @@ GameObject:
   - component: {fileID: 5799163405282762881}
   - component: {fileID: 6039950616443329120}
   - component: {fileID: 3233077249390512466}
-  - component: {fileID: 4033363185494731895}
-  - component: {fileID: 5484055948009491484}
-  - component: {fileID: 5291538467010458109}
-  - component: {fileID: 2867374460970489000}
-  - component: {fileID: 7737583643646712092}
   - component: {fileID: 7204285430496838318}
   - component: {fileID: 4148564128654209167}
   - component: {fileID: 7316361765053764207}
   - component: {fileID: 6499045929643680983}
   - component: {fileID: 5581318513901630645}
+  - component: {fileID: 2499935810080274530}
+  - component: {fileID: 7754343852622340422}
   m_Layer: 0
   m_Name: TheTownBoss
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40,7 +37,8 @@ Transform:
   m_LocalPosition: {x: 29.39, y: -4.06, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1986650323925365480}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6039950616443329120
@@ -84,8 +82,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 535337391
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -7705628603804108666, guid: fcfd97adbc123ec42aba0af2b6b8ac38, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -120,88 +118,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4033363185494731895
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3514403228727287170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 520def4752619c141a9100f236169ba3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trials:
-  - playerSpawn: {fileID: 0}
-    bossSpawn: {fileID: 0}
-    cameraTarget: {fileID: 0}
-  - playerSpawn: {fileID: 0}
-    bossSpawn: {fileID: 0}
-    cameraTarget: {fileID: 0}
-  phase1Time: 15
-  phase2Time: 8
-  teleportManager: {fileID: 5484055948009491484}
-  dialogueManager: {fileID: 0}
-  phase2Dialogue: Im... going to take this serious.. this feeling hurts..
---- !u!114 &5484055948009491484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3514403228727287170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc970e098155de44cb2c86033014b792, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  teleportSound: {fileID: 0}
---- !u!114 &5291538467010458109
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3514403228727287170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67a3cfc64f816d1428e1842a194f6e88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  phrases: []
-  spawnPoints: []
-  textPrefab: {fileID: 0}
-  interval: 2
-  maxTexts: 10
---- !u!114 &2867374460970489000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3514403228727287170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b37e10362a24e4c43bf1cf8a8e2884bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bossController: {fileID: 0}
-  introLines:
-  - 
---- !u!114 &7737583643646712092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3514403228727287170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cd63962946f89241bf12dc55b146613, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bossController: {fileID: 7204285430496838318}
 --- !u!114 &7204285430496838318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,14 +130,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15ed628fe5db5ae4d82443ea6adf7c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 6
-  trialManager: {fileID: 4033363185494731895}
-  teleportManager: {fileID: 5484055948009491484}
-  bossAnimator: {fileID: 3233077249390512466}
-  phase1Music: {fileID: 0}
-  phase2Music: {fileID: 0}
-  bossModel: {fileID: 3514403228727287170}
-  bossLife: {fileID: 7316361765053764207}
+  vidaMaxima: 30
+  gestorTrials: {fileID: 0}
+  gestorTeleport: {fileID: 0}
+  animadorJefe: {fileID: 3233077249390512466}
+  musicaFase1: {fileID: 8300000, guid: 76bb2ea45f28e1343a7de3ed06f9b73d, type: 3}
+  musicaFase2: {fileID: 8300000, guid: 558e42c52cd710347ac27848a5516f89, type: 3}
+  modeloJefe: {fileID: 3514403228727287170}
+  vidaJefe: {fileID: 7316361765053764207}
 --- !u!114 &4148564128654209167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,9 +154,9 @@ MonoBehaviour:
   anim: {fileID: 0}
   spriteRenderer: {fileID: 0}
   player: {fileID: 0}
-  animController: {fileID: 0}
-  life: {fileID: 0}
-  movement: {fileID: 0}
+  animController: {fileID: 7754343852622340422}
+  life: {fileID: 7316361765053764207}
+  movement: {fileID: 2499935810080274530}
   IsDead: 0
   IsAttacking: 0
   IsTakingDamage: 0
@@ -267,10 +183,10 @@ MonoBehaviour:
   spawnSavePointOnDeath: 0
   knockbackForce: 6
   knockbackRecoveryTime: 0.4
-  scriptAtaque: {fileID: 4033363185494731895}
-  trialManager: {fileID: 4033363185494731895}
-  trialMode: 0
-  scoreReward: 50
+  scriptAtaque: {fileID: 0}
+  trialManager: {fileID: 0}
+  trialMode: 1
+  scoreReward: 15000
 --- !u!50 &6499045929643680983
 Rigidbody2D:
   serializedVersion: 5
@@ -343,4 +259,122 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Size: {x: 2, y: 2}
+  m_EdgeRadius: 0
+--- !u!114 &2499935810080274530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3514403228727287170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47559525b35cd8b4d8944a47cf9974ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 0
+  alwaysFacePlayer: 1
+--- !u!114 &7754343852622340422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3514403228727287170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b883a58e30144904f8488a932571e288, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &4406865299592626899
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1986650323925365480}
+  - component: {fileID: 6705472232286318175}
+  - component: {fileID: 235088850616673956}
+  m_Layer: 0
+  m_Name: hitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1986650323925365480
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4406865299592626899}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5799163405282762881}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6705472232286318175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4406865299592626899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cd63962946f89241bf12dc55b146613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossController: {fileID: 7204285430496838318}
+--- !u!61 &235088850616673956
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4406865299592626899}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0

@@ -1,5 +1,7 @@
-using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
+using UnityEngine;
+using static FirstEncounterTrialManager;
 
 public class FirstEncounterTrialManager : MonoBehaviour
 {
@@ -21,12 +23,23 @@ public class FirstEncounterTrialManager : MonoBehaviour
     [Header("Diálogo Fase 2")]
     [SerializeField] private TextManager gestorTexto;
     [SerializeField] private string dialogoFase2;
+    [SerializeField] private string[] dialogosFase2;
+    [Header("HUD")]
+    [SerializeField] private TMPro.TextMeshProUGUI hudTimerText;
+    [Header("Área Inicial del Combate")]
+    [SerializeField] private Transform areaInicialPlayerSpawn;
+    [SerializeField] private Transform areaInicialCameraTarget;
+    [Header("Música Fase 2")]
+    [SerializeField] private AudioClip musicaFase2;
+    [SerializeField] private float musicaFase2Volume = 0.5f;
 
     private int index;
     private float timer;
     private bool running;
     private bool accelerated;
+    private bool superAccelerated;
     private BossLife boss;
+    private Coroutine timerRoutine;
 
     private void Awake()
     {
@@ -51,17 +64,52 @@ public class FirstEncounterTrialManager : MonoBehaviour
 
     private float GetTime()
     {
-        return accelerated ? tiempoFase2 : tiempoFase1;
+        float t = accelerated ? tiempoFase2 : tiempoFase1;
+        if (superAccelerated) t = Mathf.Max(1f, tiempoFase2 * 0.75f);
+        return Mathf.Max(1f, t);
     }
 
     private void StartTrial(int i)
     {
-        if (i < 0 || i >= trials.Length) { EndSequenceVictory(); return; }
+        if (i < 0 || i >= trials.Length)
+        {
+            EndSequenceVictory();
+            return;
+        }
+
         Trial t = trials[i];
+        if (timerRoutine != null)
+        {
+            StopCoroutine(timerRoutine);
+            timerRoutine = null;
+        }
         running = true;
         timer = GetTime();
+
+        // ✅ Verificar que gestorTeleport no sea null
+        if (gestorTeleport == null)
+        {
+            Debug.LogError("❌ gestorTeleport es NULL en FirstEncounterTrialManager!");
+            return;
+        }
+
+        // ✅ ASEGURARSE que el jefe esté ACTIVO antes de teletransportar
+        if (boss != null && !boss.gameObject.activeSelf)
+        {
+            boss.gameObject.SetActive(true);
+            Debug.Log("✅ Jefe activado para trial");
+        }
+
         gestorTeleport.TeleportTo(t.playerSpawn, t.cameraTarget);
-        StartCoroutine(TimerRoutine());
+
+        // ✅ NUEVO: Teletransportar al jefe también
+        if (boss != null && t.bossSpawn != null)
+        {
+            boss.transform.position = t.bossSpawn.position;
+            Debug.Log($"✅ Jefe teletransportado a: {t.bossSpawn.position}");
+        }
+
+        timerRoutine = StartCoroutine(TimerRoutine());
     }
 
     private IEnumerator TimerRoutine()
@@ -69,6 +117,10 @@ public class FirstEncounterTrialManager : MonoBehaviour
         while (running)
         {
             timer -= Time.deltaTime;
+            if (hudTimerText != null)
+            {
+                hudTimerText.text = Mathf.CeilToInt(timer).ToString();
+            }
             if (timer <= 0f)
             {
                 TrialFailed();
@@ -83,10 +135,18 @@ public class FirstEncounterTrialManager : MonoBehaviour
         if (!running) return;
         running = false;
         Trial t = trials[index];
+
         if (boss != null)
         {
             boss.transform.position = t.bossSpawn.position;
-            boss.gameObject.SetActive(true);
+
+            // ✅ ASEGURARSE que esté activo
+            if (!boss.gameObject.activeSelf)
+            {
+                boss.gameObject.SetActive(true);
+            }
+
+            Debug.Log($"✅ Jefe aparece en: {t.bossSpawn.position}");
         }
     }
 
@@ -114,14 +174,55 @@ public class FirstEncounterTrialManager : MonoBehaviour
 
     private IEnumerator Phase2PauseRoutine()
     {
-        running = false;
-        if (gestorTexto != null && !string.IsNullOrEmpty(dialogoFase2))
+        if (timerRoutine != null)
         {
-            gestorTexto.ShowDialogue(dialogoFase2);
-            yield return new WaitForSeconds(3f);
-            gestorTexto.CloseDialogue();
+            StopCoroutine(timerRoutine);
+            timerRoutine = null;
+        }
+        running = false;
+        if (gestorTeleport != null && areaInicialPlayerSpawn != null)
+        {
+            gestorTeleport.TeleportInstant(areaInicialPlayerSpawn, areaInicialCameraTarget, 1.2f);
+            yield return new WaitForSeconds(1.2f);
+        }
+
+        if (AudioManager.Instance != null && musicaFase2 != null)
+        {
+            AudioManager.Instance.PlayMusic(musicaFase2, musicaFase2Volume, true, true);
+        }
+
+        if (gestorTexto != null)
+        {
+            if (dialogosFase2 != null && dialogosFase2.Length > 0)
+            {
+                for (int i = 0; i < dialogosFase2.Length; i++)
+                {
+                    gestorTexto.ShowDialogue(dialogosFase2[i]);
+                    yield return new WaitForSeconds(2f);
+                }
+                gestorTexto.CloseDialogue();
+            }
+            else if (!string.IsNullOrEmpty(dialogoFase2))
+            {
+                gestorTexto.ShowDialogue(dialogoFase2);
+                yield return new WaitForSeconds(3f);
+                gestorTexto.CloseDialogue();
+            }
         }
         StartTrial(index);
+    }
+
+    public void TeleportToInitialArea()
+    {
+        if (gestorTeleport != null && areaInicialPlayerSpawn != null)
+        {
+            gestorTeleport.TeleportInstant(areaInicialPlayerSpawn, areaInicialCameraTarget, 1.2f);
+        }
+    }
+
+    public void SetSuperAccelerated(bool value)
+    {
+        superAccelerated = value;
     }
 
     public float RemainingTime => timer;

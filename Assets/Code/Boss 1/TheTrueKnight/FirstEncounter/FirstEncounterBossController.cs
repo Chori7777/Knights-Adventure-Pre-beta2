@@ -11,6 +11,7 @@ public class FirstEncounterBossController : MonoBehaviour
     [Header("Música")]
     [SerializeField] private AudioClip musicaFase1;
     [SerializeField] private AudioClip musicaFase2;
+    [SerializeField] private AudioClip musicaAcelerada;
     [Header("Modelo")]
     [SerializeField] private GameObject modeloJefe;
     [SerializeField] private BossLife vidaJefe;
@@ -18,6 +19,7 @@ public class FirstEncounterBossController : MonoBehaviour
     private int currentHealth;
     private bool accelerated;
     private bool active;
+    private bool superAcceleratedMusic;
 
     private void Awake()
     {
@@ -51,6 +53,13 @@ public class FirstEncounterBossController : MonoBehaviour
     {
         if (!active) return;
         currentHealth = Mathf.Max(0, currentHealth - 1);
+
+        // ✅ NUEVO: Sincronizar con BossLife
+        if (vidaJefe != null)
+        {
+            vidaJefe.health = currentHealth;
+        }
+
         if (animadorJefe != null) animadorJefe.SetTrigger("Hit");
         if (currentHealth <= 0)
         {
@@ -64,8 +73,13 @@ public class FirstEncounterBossController : MonoBehaviour
             PlayMusicPhase2();
             gestorTrials.PauseForDialoguePhase2();
         }
+        if (!superAcceleratedMusic && currentHealth <= vidaMaxima / 4)
+        {
+            superAcceleratedMusic = true;
+            PlayMusicPhase3();
+        }
         if (modeloJefe != null) modeloJefe.SetActive(false);
-        gestorTrials.NextTrial();
+        // El avance al siguiente trial lo maneja BossLife en modo trial
     }
 
     private void Defeat()
@@ -89,6 +103,14 @@ public class FirstEncounterBossController : MonoBehaviour
         if (AudioManager.Instance != null && musicaFase2 != null)
         {
             AudioManager.Instance.PlayMusic(musicaFase2, 1f);
+        }
+    }
+
+    private void PlayMusicPhase3()
+    {
+        if (AudioManager.Instance != null && musicaAcelerada != null)
+        {
+            AudioManager.Instance.PlayMusic(musicaAcelerada, 1f);
         }
     }
 

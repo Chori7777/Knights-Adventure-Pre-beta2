@@ -65,7 +65,7 @@ public class SimpleNPC : MonoBehaviour
     {
         isInteracting = true;
 
-        // Mostrar di�logo
+        // Mostrar diálogo
         if (TextManager.Instance != null)
             TextManager.Instance.ShowDialogue(dialogueText);
 

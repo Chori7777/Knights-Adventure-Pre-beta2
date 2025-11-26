@@ -263,8 +263,7 @@ public class playerLife : MonoBehaviour
         if (ControladorDatosJuego.Instance != null)
         {
             ControladorDatosJuego.Instance.datosjuego.escenaActual = SceneManager.GetActiveScene().name;
-            // No sobreescribir la posición del último checkpoint al morir
-            ControladorDatosJuego.Instance.GuardarDatos(false);
+            ControladorDatosJuego.Instance.GuardarDatos();
             SceneManager.LoadScene("GameOver");
         }
         else

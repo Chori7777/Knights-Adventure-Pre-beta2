@@ -31,6 +31,7 @@ public class BossLife : MonoBehaviour
     public FirstEncounterTrialManager trialManager;
     public bool trialMode = false;
     private bool acceleratedApplied = false;
+    private bool superAcceleratedApplied = false;
 
     [Header("SCORE - NUEVO")]
     [SerializeField] private int scoreReward = 50; 
@@ -73,6 +74,11 @@ public class BossLife : MonoBehaviour
                     trialManager.SetAccelerated(true);
                     trialManager.PauseForDialoguePhase2();
                 }
+                if (!superAcceleratedApplied && health <= maxHealth / 4)
+                {
+                    superAcceleratedApplied = true;
+                    trialManager.SetSuperAccelerated(true);
+                }
                 gameObject.SetActive(false);
                 trialManager.NextTrial();
             }
@@ -113,6 +119,11 @@ public class BossLife : MonoBehaviour
                 acceleratedApplied = true;
                 trialManager.SetAccelerated(true);
                 trialManager.PauseForDialoguePhase2();
+            }
+            if (!superAcceleratedApplied && health <= maxHealth / 4)
+            {
+                superAcceleratedApplied = true;
+                trialManager.SetSuperAccelerated(true);
             }
             gameObject.SetActive(false);
             trialManager.NextTrial();
