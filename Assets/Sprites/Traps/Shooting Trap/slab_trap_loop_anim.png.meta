@@ -105,7 +105,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
+        width: 48
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -125,9 +125,9 @@ TextureImporter:
       name: slab_trap_loop_anim_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 48
         y: 0
-        width: 64
+        width: 48
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -147,9 +147,9 @@ TextureImporter:
       name: slab_trap_loop_anim_2
       rect:
         serializedVersion: 2
-        x: 128
+        x: 96
         y: 0
-        width: 64
+        width: 48
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -169,9 +169,9 @@ TextureImporter:
       name: slab_trap_loop_anim_3
       rect:
         serializedVersion: 2
-        x: 192
+        x: 144
         y: 0
-        width: 64
+        width: 48
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -191,9 +191,9 @@ TextureImporter:
       name: slab_trap_loop_anim_4
       rect:
         serializedVersion: 2
-        x: 256
+        x: 192
         y: 0
-        width: 64
+        width: 48
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -213,9 +213,9 @@ TextureImporter:
       name: slab_trap_loop_anim_5
       rect:
         serializedVersion: 2
-        x: 320
+        x: 240
         y: 0
-        width: 64
+        width: 48
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -235,9 +235,9 @@ TextureImporter:
       name: slab_trap_loop_anim_6
       rect:
         serializedVersion: 2
-        x: 384
+        x: 288
         y: 0
-        width: 64
+        width: 48
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -257,9 +257,9 @@ TextureImporter:
       name: slab_trap_loop_anim_7
       rect:
         serializedVersion: 2
-        x: 448
+        x: 336
         y: 0
-        width: 64
+        width: 48
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -279,9 +279,9 @@ TextureImporter:
       name: slab_trap_loop_anim_8
       rect:
         serializedVersion: 2
-        x: 512
+        x: 384
         y: 0
-        width: 64
+        width: 48
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -301,9 +301,9 @@ TextureImporter:
       name: slab_trap_loop_anim_9
       rect:
         serializedVersion: 2
-        x: 576
+        x: 432
         y: 0
-        width: 64
+        width: 48
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -323,9 +323,9 @@ TextureImporter:
       name: slab_trap_loop_anim_10
       rect:
         serializedVersion: 2
-        x: 640
+        x: 480
         y: 0
-        width: 64
+        width: 48
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -345,9 +345,9 @@ TextureImporter:
       name: slab_trap_loop_anim_11
       rect:
         serializedVersion: 2
-        x: 704
+        x: 528
         y: 0
-        width: 64
+        width: 48
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -367,9 +367,9 @@ TextureImporter:
       name: slab_trap_loop_anim_12
       rect:
         serializedVersion: 2
-        x: 768
+        x: 576
         y: 0
-        width: 64
+        width: 48
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -389,9 +389,9 @@ TextureImporter:
       name: slab_trap_loop_anim_13
       rect:
         serializedVersion: 2
-        x: 832
+        x: 624
         y: 0
-        width: 64
+        width: 48
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -411,9 +411,9 @@ TextureImporter:
       name: slab_trap_loop_anim_14
       rect:
         serializedVersion: 2
-        x: 896
+        x: 672
         y: 0
-        width: 64
+        width: 48
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -425,6 +425,116 @@ TextureImporter:
       bones: []
       spriteID: 009d8a513e22db24fa15930df9992184
       internalID: 653139735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slab_trap_loop_anim_15
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 0
+        width: 48
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d15400cf9ab461b41b1da9c3d10383b5
+      internalID: -965703504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slab_trap_loop_anim_16
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 48
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85da62a4e2cafc543a979eb97d9458a3
+      internalID: 521489038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slab_trap_loop_anim_17
+      rect:
+        serializedVersion: 2
+        x: 816
+        y: 0
+        width: 48
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f49cdbc5fab6d644e80761c9dde96bea
+      internalID: -83320105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slab_trap_loop_anim_18
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 0
+        width: 48
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da6249c87c841104892ccfa8244f43fd
+      internalID: 1617040788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slab_trap_loop_anim_19
+      rect:
+        serializedVersion: 2
+        x: 912
+        y: 0
+        width: 48
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a46bde9ba5875e4b943b8bc81096b00
+      internalID: 1019582337
       vertices: []
       indices: 
       edges: []
@@ -450,6 +560,11 @@ TextureImporter:
       slab_trap_loop_anim_12: 355219538
       slab_trap_loop_anim_13: 469776378
       slab_trap_loop_anim_14: 653139735
+      slab_trap_loop_anim_15: -965703504
+      slab_trap_loop_anim_16: 521489038
+      slab_trap_loop_anim_17: -83320105
+      slab_trap_loop_anim_18: 1617040788
+      slab_trap_loop_anim_19: 1019582337
       slab_trap_loop_anim_2: -660846111
       slab_trap_loop_anim_3: -1718993455
       slab_trap_loop_anim_4: -349167947

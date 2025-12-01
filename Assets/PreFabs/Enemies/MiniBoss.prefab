@@ -199,8 +199,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1262583705
-  m_SortingLayer: 9
+  m_SortingLayerID: 535337391
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: -7933326380236590641, guid: 4333d222d158f5b46b4921ad8778a519, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -357,6 +357,9 @@ MonoBehaviour:
   knockbackForce: 2
   knockbackRecoveryTime: 0.4
   scriptAtaque: {fileID: 3345787503557792628}
+  trialManager: {fileID: 0}
+  trialMode: 0
+  scoreReward: 50
 --- !u!114 &4282913100898536863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,10 +376,15 @@ MonoBehaviour:
   anim: {fileID: 0}
   spriteRenderer: {fileID: 0}
   player: {fileID: 0}
+  animController: {fileID: 0}
+  life: {fileID: 0}
+  movement: {fileID: 0}
   IsDead: 0
   IsAttacking: 0
+  IsTakingDamage: 0
   IsVulnerable: 1
   CanMove: 1
+  CurrentPhase: 1
 --- !u!114 &6899133255381184899
 MonoBehaviour:
   m_ObjectHideFlags: 0

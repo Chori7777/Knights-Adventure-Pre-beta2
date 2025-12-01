@@ -5,6 +5,8 @@ public class FirstEncounterTeleportManager : MonoBehaviour
 {
     [Header("Sonido de Teleport")]
     [SerializeField] private AudioClip sonidoTeleport;
+    [Header("Fade")]
+    [SerializeField] private bool useInstantFade = false;
 
     public void TeleportTo(Transform playerSpawn, Transform cameraTarget)
     {
@@ -26,7 +28,7 @@ public class FirstEncounterTeleportManager : MonoBehaviour
             pm.canBlock = false;
         }
 
-        if (FadeController.Instance != null)
+        if (!useInstantFade && FadeController.Instance != null)
         {
             FadeController.Instance.ActivarFadeOut();
         }
@@ -36,7 +38,8 @@ public class FirstEncounterTeleportManager : MonoBehaviour
             AudioManager.Instance.PlaySFX(sonidoTeleport, 0.8f);
         }
 
-        yield return new WaitForSeconds(0.2f);
+        float outWait = useInstantFade ? 0f : 0.2f;
+        yield return new WaitForSeconds(outWait);
 
         if (playerSpawn != null)
         {
@@ -49,9 +52,10 @@ public class FirstEncounterTeleportManager : MonoBehaviour
             cam.transform.position = cameraTarget.position;
         }
 
-        yield return new WaitForSeconds(0.1f);
+        float inWait = useInstantFade ? 0f : 0.1f;
+        yield return new WaitForSeconds(inWait);
 
-        if (FadeController.Instance != null)
+        if (!useInstantFade && FadeController.Instance != null)
         {
             FadeController.Instance.ActivarFadeIn();
         }
@@ -72,6 +76,40 @@ public class FirstEncounterTeleportManager : MonoBehaviour
         StartCoroutine(TeleportInstantRoutine(playerSpawn, cameraTarget, holdSeconds));
     }
 
+    public void TeleportRaw(Transform playerSpawn, Transform cameraTarget)
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null) return;
+        PlayerMovement pm = player.GetComponent<PlayerMovement>();
+        if (pm != null)
+        {
+            pm.canMove = false;
+            pm.canJump = false;
+            pm.canAttack = false;
+            pm.canDash = false;
+            pm.canWallCling = false;
+            pm.canBlock = false;
+        }
+        if (playerSpawn != null)
+        {
+            player.transform.position = playerSpawn.position;
+        }
+        Camera cam = Camera.main;
+        if (cam != null && cameraTarget != null)
+        {
+            cam.transform.position = cameraTarget.position;
+        }
+        if (pm != null)
+        {
+            pm.canMove = true;
+            pm.canJump = true;
+            pm.canAttack = true;
+            pm.canDash = true;
+            pm.canWallCling = true;
+            pm.canBlock = true;
+        }
+    }
+
     private IEnumerator TeleportInstantRoutine(Transform playerSpawn, Transform cameraTarget, float holdSeconds)
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -88,7 +126,7 @@ public class FirstEncounterTeleportManager : MonoBehaviour
             pm.canBlock = false;
         }
 
-        if (FadeController.Instance != null)
+        if (!useInstantFade && FadeController.Instance != null)
         {
             FadeController.Instance.ActivarFadeOut();
         }
@@ -104,9 +142,10 @@ public class FirstEncounterTeleportManager : MonoBehaviour
             cam.transform.position = cameraTarget.position;
         }
 
-        yield return new WaitForSeconds(holdSeconds);
+        float hold = useInstantFade ? 0f : holdSeconds;
+        yield return new WaitForSeconds(hold);
 
-        if (FadeController.Instance != null)
+        if (!useInstantFade && FadeController.Instance != null)
         {
             FadeController.Instance.ActivarFadeIn();
         }

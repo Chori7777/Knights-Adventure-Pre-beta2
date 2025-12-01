@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 5581318513901630645}
   - component: {fileID: 2499935810080274530}
   - component: {fileID: 7754343852622340422}
+  - component: {fileID: 2864388731827106927}
   m_Layer: 0
   m_Name: TheTownBoss
   m_TagString: Boss
@@ -37,8 +38,7 @@ Transform:
   m_LocalPosition: {x: 29.39, y: -4.06, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1986650323925365480}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6039950616443329120
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 535337391
-  m_SortingLayer: 5
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -7705628603804108666, guid: fcfd97adbc123ec42aba0af2b6b8ac38, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -130,12 +130,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15ed628fe5db5ae4d82443ea6adf7c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vidaMaxima: 30
+  vidaMaxima: 10
   gestorTrials: {fileID: 0}
   gestorTeleport: {fileID: 0}
   animadorJefe: {fileID: 3233077249390512466}
   musicaFase1: {fileID: 8300000, guid: 76bb2ea45f28e1343a7de3ed06f9b73d, type: 3}
   musicaFase2: {fileID: 8300000, guid: 558e42c52cd710347ac27848a5516f89, type: 3}
+  musicaAcelerada: {fileID: 0}
   modeloJefe: {fileID: 3514403228727287170}
   vidaJefe: {fileID: 7316361765053764207}
 --- !u!114 &4148564128654209167
@@ -286,95 +287,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b883a58e30144904f8488a932571e288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &4406865299592626899
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1986650323925365480}
-  - component: {fileID: 6705472232286318175}
-  - component: {fileID: 235088850616673956}
-  m_Layer: 0
-  m_Name: hitbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1986650323925365480
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4406865299592626899}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5799163405282762881}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6705472232286318175
+--- !u!114 &2864388731827106927
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4406865299592626899}
+  m_GameObject: {fileID: 3514403228727287170}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cd63962946f89241bf12dc55b146613, type: 3}
+  m_Script: {fileID: 11500000, guid: 65083cfa0d0e6184faec42b6d17415ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossController: {fileID: 7204285430496838318}
---- !u!61 &235088850616673956
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4406865299592626899}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  projectilePrefab: {fileID: 8552078095061905579, guid: cb1e92e3ba263294e9e5bc8ad34db0f9, type: 3}
+  spikePrefab: {fileID: 1313571315815608116, guid: ccbce06c6115d274485e4293a943a769, type: 3}
+  wandPrefab: {fileID: 8881892248107932051, guid: 768c34e50902085458c4c28329b38437, type: 3}
+  wandPoints: []
+  indicatorTime: 1
+  indicatorColor: {r: 1, g: 0, b: 0, a: 1}
+  attackIntervalPhase1: 1.5
+  attackIntervalPhase2: 0.5

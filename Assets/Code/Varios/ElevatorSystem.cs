@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using System.Collections;
 
 public class ElevatorSystem : MonoBehaviour
 {
@@ -8,15 +9,16 @@ public class ElevatorSystem : MonoBehaviour
     [SerializeField] private Transform pointB; // Punto B
     [SerializeField] private bool startAtPointA = true;
 
-    [Header("Configuraci�n")]
-    [SerializeField] private float moveSpeed = 2f; // Velocidad en unidades/segundo
-    [SerializeField] private Ease easeType = Ease.InOutSine; // Tipo de interpolaci�n
-    [SerializeField] private float waitTimeAtFloor = 1f; // Tiempo de espera en cada piso
+    [Header("Configuración")]
+    [SerializeField] private float moveSpeed = 2f;
+    [SerializeField] private Ease easeType = Ease.InOutSine;
+    [SerializeField] private float waitTimeAtFloor = 1f;
 
-    [Header("Activaci�n")]
+    [Header("Activación")]
     [SerializeField] private bool moveOnPlayerEnter = true; // Activar movimiento al subir el jugador
     [SerializeField] private bool canCallWithButton = true; // Puede llamarse con bot�n
     [SerializeField] private LayerMask playerLayer; // Layer del jugador
+    [SerializeField] private bool autoLoop = false;
 
     [Header("Audio (Opcional)")]
     [SerializeField] private AudioClip moveSound;
@@ -30,18 +32,53 @@ public class ElevatorSystem : MonoBehaviour
     private Tween currentTween;
 
     private Transform playerTransform;
+    private Rigidbody2D rb;
+    [Header("Objeto a mover")]
+    [SerializeField] private Transform platformRoot;
+    [Header("Espacio de referencia")]
+    [SerializeField] private bool lockToParentSpace = true;
+    private Vector3 localPointA;
+    private Vector3 localPointB;
 
     private void Start()
     {
-        // Posicionar ascensor en punto inicial
-        if (startAtPointA && pointA != null)
+        if (platformRoot == null) platformRoot = transform;
+        rb = platformRoot.GetComponent<Rigidbody2D>();
+        if (rb != null)
         {
-            transform.position = pointA.position;
+            rb.bodyType = RigidbodyType2D.Kinematic;
+            rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+        }
+        if (lockToParentSpace)
+        {
+            if (pointA != null)
+            {
+                localPointA = (platformRoot.parent != null)
+                    ? platformRoot.parent.InverseTransformPoint(pointA.position)
+                    : pointA.position;
+            }
+            if (pointB != null)
+            {
+                localPointB = (platformRoot.parent != null)
+                    ? platformRoot.parent.InverseTransformPoint(pointB.position)
+                    : pointB.position;
+            }
+        }
+        // Posicionar ascensor en punto inicial
+        if (startAtPointA && (pointA != null || lockToParentSpace))
+        {
+            Vector3 worldA = lockToParentSpace
+                ? (platformRoot.parent != null ? platformRoot.parent.TransformPoint(localPointA) : localPointA)
+                : pointA.position;
+            platformRoot.position = worldA;
             isAtPointA = true;
         }
-        else if (!startAtPointA && pointB != null)
+        else if (!startAtPointA && (pointB != null || lockToParentSpace))
         {
-            transform.position = pointB.position;
+            Vector3 worldB = lockToParentSpace
+                ? (platformRoot.parent != null ? platformRoot.parent.TransformPoint(localPointB) : localPointB)
+                : pointB.position;
+            platformRoot.position = worldB;
             isAtPointA = false;
         }
 
@@ -50,6 +87,31 @@ public class ElevatorSystem : MonoBehaviour
         if (audioSource == null && (moveSound != null || arriveSound != null))
         {
             audioSource = gameObject.AddComponent<AudioSource>();
+        }
+        if (autoLoop && ((pointA != null && pointB != null) || lockToParentSpace))
+        {
+            Vector3 worldA = lockToParentSpace
+                ? (platformRoot.parent != null ? platformRoot.parent.TransformPoint(localPointA) : localPointA)
+                : pointA.position;
+            Vector3 worldB = lockToParentSpace
+                ? (platformRoot.parent != null ? platformRoot.parent.TransformPoint(localPointB) : localPointB)
+                : pointB.position;
+
+            float durationAB = Vector3.Distance(platformRoot.position, worldB) / moveSpeed;
+            float durationBA = Vector3.Distance(worldB, worldA) / moveSpeed;
+
+            Sequence seq = DOTween.Sequence();
+            if (rb != null)
+                seq.Append(rb.DOMove((Vector2)worldB, durationAB).SetEase(easeType));
+            else
+                seq.Append(platformRoot.DOMove(worldB, durationAB).SetEase(easeType));
+            seq.AppendInterval(waitTimeAtFloor);
+            if (rb != null)
+                seq.Append(rb.DOMove((Vector2)worldA, durationBA).SetEase(easeType));
+            else
+                seq.Append(platformRoot.DOMove(worldA, durationBA).SetEase(easeType));
+            seq.AppendInterval(waitTimeAtFloor);
+            seq.SetLoops(-1);
         }
     }
 
@@ -66,7 +128,7 @@ public class ElevatorSystem : MonoBehaviour
 
                     // Poner al jugador como hijo del ascensor
                     if (playerTransform != null)
-                        playerTransform.SetParent(transform);
+                        playerTransform.SetParent(platformRoot);
 
                     Debug.Log("Jugador subi� al ascensor");
 
@@ -120,15 +182,36 @@ public class ElevatorSystem : MonoBehaviour
     {
         isMoving = true;
 
-        float distance = Vector3.Distance(transform.position, targetPosition);
+        Vector3 worldTarget = targetPosition;
+        if (lockToParentSpace)
+        {
+            worldTarget = movingToA
+                ? (platformRoot.parent != null ? platformRoot.parent.TransformPoint(localPointA) : localPointA)
+                : (platformRoot.parent != null ? platformRoot.parent.TransformPoint(localPointB) : localPointB);
+        }
+
+        float distance = Vector3.Distance(platformRoot.position, worldTarget);
         float duration = distance / moveSpeed;
 
         if (audioSource != null && moveSound != null)
             audioSource.PlayOneShot(moveSound);
-
-        currentTween = transform.DOMove(targetPosition, duration)
-            .SetEase(easeType)
-            .OnComplete(() => OnArriveAtFloor(movingToA));
+        if (currentTween != null)
+        {
+            currentTween.Kill();
+            currentTween = null;
+        }
+        if (rb != null)
+        {
+            currentTween = rb.DOMove((Vector2)worldTarget, duration)
+                .SetEase(easeType)
+                .OnComplete(() => OnArriveAtFloor(movingToA));
+        }
+        else
+        {
+            currentTween = platformRoot.DOMove(worldTarget, duration)
+                .SetEase(easeType)
+                .OnComplete(() => OnArriveAtFloor(movingToA));
+        }
     }
 
     private void OnArriveAtFloor(bool arrivedAtA)
@@ -139,7 +222,6 @@ public class ElevatorSystem : MonoBehaviour
         if (audioSource != null && arriveSound != null)
             audioSource.PlayOneShot(arriveSound);
 
-        // Espera opcional
         DOVirtual.DelayedCall(waitTimeAtFloor, () => { });
     }
 
@@ -155,6 +237,8 @@ public class ElevatorSystem : MonoBehaviour
         else
             MoveToPointB();
     }
+
+    
 
     private void OnDrawGizmos()
     {

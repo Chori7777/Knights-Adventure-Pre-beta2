@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 1428201519339842549}
   - component: {fileID: 1682110899891861815}
   - component: {fileID: 4789335185046553145}
+  - component: {fileID: 1572511647451081669}
   m_Layer: 0
   m_Name: worm.
   m_TagString: enemy
@@ -132,7 +133,7 @@ MonoBehaviour:
   Dust: {fileID: 8300000, guid: 42ae3beb092d45c4d9349c81570926a3, type: 3}
   knockbackForce: 6
   knockbackRecoveryTime: 0.4
-  deathDelay: 0.9
+  deathFallbackDelay: 1.5
   scoreReward: 10
 --- !u!61 &6522067530093130819
 BoxCollider2D:
@@ -264,6 +265,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+--- !u!114 &1572511647451081669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2645185197242809453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978f6051760fae34f96c68a65168ac8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5291124279953671108
 GameObject:
   m_ObjectHideFlags: 0

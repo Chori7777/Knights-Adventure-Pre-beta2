@@ -79,8 +79,7 @@ public class BossLife : MonoBehaviour
                     superAcceleratedApplied = true;
                     trialManager.SetSuperAccelerated(true);
                 }
-                gameObject.SetActive(false);
-                trialManager.NextTrial();
+                trialManager.OnBossHit();
             }
         }
     }
@@ -125,8 +124,7 @@ public class BossLife : MonoBehaviour
                 superAcceleratedApplied = true;
                 trialManager.SetSuperAccelerated(true);
             }
-            gameObject.SetActive(false);
-            trialManager.NextTrial();
+            trialManager.OnBossHit();
         }
     }
 
@@ -170,6 +168,11 @@ public class BossLife : MonoBehaviour
 
  
         GiveScore();
+
+        if (trialManager != null)
+        {
+            trialManager.EndSequenceVictory();
+        }
 
         StartCoroutine(DeathSequence());
     }

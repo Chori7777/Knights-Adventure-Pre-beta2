@@ -10,12 +10,17 @@ public class shootingTrap : MonoBehaviour
     public Transform firePoint;
     public float cooldown = 1.5f;
     public float projectileSpeed = 10f;
+    [Header("Animación")]
+    public Animator animator;
+    public string shotTriggerName = "Shot";
 
     private float lastShotTime = -999f;
     private Vector2 shootVector;
 
     void Start()
     {
+        if (animator == null)
+            animator = GetComponent<Animator>();
         SetDirection();
     }
 
@@ -54,6 +59,9 @@ public class shootingTrap : MonoBehaviour
     void Shoot()
     {
         if (projectilePrefab == null || firePoint == null) return;
+
+        if (animator != null && !string.IsNullOrEmpty(shotTriggerName))
+            animator.SetTrigger(shotTriggerName);
 
         GameObject p = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
         Rigidbody2D rb = p.GetComponent<Rigidbody2D>();

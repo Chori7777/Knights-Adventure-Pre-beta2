@@ -69,9 +69,10 @@ public class FirstEncounterBossController : MonoBehaviour
         if (!accelerated && currentHealth <= vidaMaxima / 2)
         {
             accelerated = true;
-            gestorTrials.SetAccelerated(true);
-            PlayMusicPhase2();
-            gestorTrials.PauseForDialoguePhase2();
+            if (gestorTrials != null)
+            {
+                gestorTrials.PauseForDialoguePhase2();
+            }
         }
         if (!superAcceleratedMusic && currentHealth <= vidaMaxima / 4)
         {

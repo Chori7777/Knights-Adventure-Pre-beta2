@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -12,9 +12,15 @@ public class PlayerShield : MonoBehaviour
     [SerializeField] private AudioClip shieldBreakSound;  // Sonido si se rompe
 
     [Header("Configuración")]
-    [SerializeField] private float blockAngle = 120f;     // Ángulo de bloqueo frontal
-    [SerializeField] private float staminaCost = 0f;      // Costo de stamina 
-    [SerializeField] private float perfectBlockWindow = 0.2f; // Ventana de bloqueo perfecto
+    [SerializeField] private float blockAngle = 120f;
+    [SerializeField] private float staminaCost = 0.2f;
+    [SerializeField] private float perfectBlockWindow = 0.2f;
+
+    [Header("Stamina del Escudo")]
+    [SerializeField] private float maxStamina = 1f;
+    [SerializeField] private float staminaDrainPerSecond = 0.2f;
+    [SerializeField] private float staminaRegenPerSecond = 0.3f;
+    [SerializeField] private float minStaminaToBlock = 0.1f;
 
     [Header("Efectos Visuales")]
     [SerializeField] private GameObject blockEffectPrefab; // Efecto al bloquear
@@ -28,8 +34,10 @@ public class PlayerShield : MonoBehaviour
     private Rigidbody2D rb;
     private bool isBlocking = false;
     private float lastBlockTime = -10f;
+    private float currentStamina = 1f;
 
     public bool IsBlocking => isBlocking;
+    public float Stamina01 => Mathf.Clamp01(currentStamina / maxStamina);
 
     private void Awake()
     {
@@ -42,13 +50,19 @@ public class PlayerShield : MonoBehaviour
 
     private void Update()
     {
-        // Solo funciona si tiene la habilidad
         if (!playerMovement.canBlock) return;
-
-        // Detectar input de bloqueo
-        isBlocking = Input.GetKey(KeyCode.X);
-
-        // Actualizar visual
+        if (Input.GetKeyDown(KeyCode.X)) OnBlockStart();
+        bool inputBlocking = Input.GetKey(KeyCode.X);
+        bool canUseShield = currentStamina >= minStaminaToBlock;
+        isBlocking = inputBlocking && canUseShield;
+        if (isBlocking)
+        {
+            currentStamina = Mathf.Max(0f, currentStamina - staminaDrainPerSecond * Time.deltaTime);
+        }
+        else
+        {
+            currentStamina = Mathf.Min(maxStamina, currentStamina + staminaRegenPerSecond * Time.deltaTime);
+        }
         if (shieldVisual != null)
             shieldVisual.SetActive(isBlocking);
     }
@@ -65,24 +79,21 @@ public class PlayerShield : MonoBehaviour
 
         // Calcular ángulo del ataque
         Vector2 facingDirection = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
-        float angle = Vector2.Angle(facingDirection, -attackDirection);
+        float angle = Vector2.Angle(facingDirection, attackDirection);
 
         // Verificar si el ataque viene de frente
         if (angle <= blockAngle / 2f)
         {
-            // Verificar si es bloqueo perfecto (justo después de activar)
             isPerfectBlock = canParry && (Time.time - lastBlockTime < perfectBlockWindow);
 
-            // Efectos visuales y sonoros
             OnSuccessfulBlock(attackDirection, isPerfectBlock);
 
-            // Aplicar knockback al jugador
             if (!isPerfectBlock && rb != null)
             {
                 Vector2 knockbackDir = attackDirection.normalized;
                 rb.linearVelocity = knockbackDir * blockKnockback;
             }
-
+            currentStamina = Mathf.Max(0f, currentStamina - staminaCost);
             return true;
         }
 

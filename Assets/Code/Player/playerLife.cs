@@ -167,6 +167,19 @@ public class playerLife : MonoBehaviour
     {
         if (!CanTakeDamage()) return;
 
+        var shield = GetComponent<PlayerShield>();
+        bool blocked = false;
+        bool perfect = false;
+        if (shield != null)
+        {
+            Vector2 attackDir = attackerPosition - (Vector2)transform.position;
+            blocked = shield.TryBlockAttack(attackDir, damage, out perfect);
+        }
+        if (blocked)
+        {
+            return;
+        }
+
         lastDamageTime = Time.time;
         currentHealth -= damage;
         currentHealth = Mathf.Max(currentHealth, 0);

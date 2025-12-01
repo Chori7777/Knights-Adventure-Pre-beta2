@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -56,6 +56,12 @@ public class PlayerHealthUI : MonoBehaviour
     [Header("Partículas")]
     public GameObject damageParticles;
     public Transform particleSpawnPoint;
+
+    [Header("Escudo")]
+    public float shieldBarWidth = 60f;
+    public float shieldBarHeight = 6f;
+    private Image shieldBarImage;
+    private RectTransform shieldBarRect;
 
     private List<Image> allSwordMiddleParts = new List<Image>();
     private Vector2 targetHeadPosition;
@@ -181,6 +187,7 @@ public class PlayerHealthUI : MonoBehaviour
         }
 
         IsInitialized = true;
+        EnsureShieldBarExists();
         Debug.Log("✅ [PlayerHealthUI] Inicialización completa");
     }
 
@@ -193,6 +200,7 @@ public class PlayerHealthUI : MonoBehaviour
         }
 
         AdjustSwordSegments(player.MaxHealth);
+        EnsureShieldBarExists();
         UpdateDisplay();
 
         Debug.Log("🔄 [PlayerHealthUI] Refresh forzado completado");
@@ -301,6 +309,43 @@ public class PlayerHealthUI : MonoBehaviour
         UpdateSword();
         UpdateHeadPosition();
         UpdateKnightPosition();
+        UpdateShieldBar();
+    }
+
+    private void EnsureShieldBarExists()
+    {
+        if (shieldBarImage == null)
+        {
+            GameObject go = new GameObject("ShieldBar");
+            go.transform.SetParent(transform, false);
+            shieldBarImage = go.AddComponent<Image>();
+            shieldBarImage.color = Color.cyan;
+            shieldBarRect = shieldBarImage.rectTransform;
+            shieldBarRect.anchorMin = new Vector2(0f, 1f);
+            shieldBarRect.anchorMax = new Vector2(0f, 1f);
+            shieldBarRect.pivot = new Vector2(0f, 1f);
+            shieldBarRect.anchoredPosition = new Vector2(10f, -10f);
+            shieldBarRect.sizeDelta = new Vector2(shieldBarWidth, shieldBarHeight);
+        }
+    }
+
+    private void UpdateShieldBar()
+    {
+        EnsureShieldBarExists();
+        if (player == null)
+        {
+            shieldBarImage.enabled = false;
+            return;
+        }
+        PlayerShield ps = player.GetComponent<PlayerShield>();
+        if (ps == null)
+        {
+            shieldBarImage.enabled = false;
+            return;
+        }
+        float ratio = ps.Stamina01;
+        shieldBarImage.enabled = true;
+        shieldBarRect.sizeDelta = new Vector2(Mathf.Max(0.0001f, shieldBarWidth * ratio), shieldBarHeight);
     }
 
     void UpdatePotionText()

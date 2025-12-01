@@ -3,9 +3,8 @@ using UnityEngine.Tilemaps;
 
 public class PotionSpawner : MonoBehaviour
 {
-    [Header("Configuración")]
+    [Header("ConfiguraciÃ³n")]
     [SerializeField] private Tilemap potionMap;  // El Tilemap donde se "pintan" las pocione
-
     [SerializeField] private GameObject potionPrefab; // El prefab de la pocion
 
     private void Start()
@@ -15,7 +14,6 @@ public class PotionSpawner : MonoBehaviour
             Debug.LogError("Faltan referencias");
             return;
         }
-
 
         foreach (Vector3Int pos in potionMap.cellBounds.allPositionsWithin)
         {
@@ -27,7 +25,6 @@ public class PotionSpawner : MonoBehaviour
             }
         }
 
-        // Desactiva el Tilemap para que no se vea
         potionMap.gameObject.SetActive(false);
 
         Debug.Log("Monedas generadas");

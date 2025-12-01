@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class CoinSpawner : MonoBehaviour
@@ -15,7 +15,6 @@ public class CoinSpawner : MonoBehaviour
             return;
         }
 
-
         foreach (Vector3Int pos in coinMap.cellBounds.allPositionsWithin)
         {
             TileBase tile = coinMap.GetTile(pos);
@@ -26,7 +25,6 @@ public class CoinSpawner : MonoBehaviour
             }
         }
 
-        // Desactiva el Tilemap para que no se vea
         coinMap.gameObject.SetActive(false);
 
         Debug.Log("Monedas generadas");

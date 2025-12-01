@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -22,6 +22,12 @@ public class BossScriptAttacks : MonoBehaviour
     [SerializeField] private float rainHeight = 10f;
     [SerializeField] private float timeBetweenStones = 0.2f;
     [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float stoneRainInterval = 6f;
+    [SerializeField] private float stoneLifetime = 3f;
+    [SerializeField] private float stoneFallSpeed = 12f;
+    [Header("Pantalla")]
+    [SerializeField] private float shakeDuration = 0.2f;
+    [SerializeField] private float shakeIntensity = 0.08f;
 
     [Header("Ataque: Embestida")]
     [SerializeField] private float chargeSpeedMultiplier = 2f;
@@ -72,6 +78,8 @@ public class BossScriptAttacks : MonoBehaviour
     }
 
 
+    private float lastStoneRainTime = -999f;
+
     private IEnumerator AttackLoop()
     {
         Debug.Log("Loop de ataques iniciado");
@@ -86,29 +94,17 @@ public class BossScriptAttacks : MonoBehaviour
 
             if (!core.IsAttacking && core.player != null)
             {
-                // Decidir qué ataque hacer
                 float distance = core.DistanceToPlayer();
-
                 if (distance <= minDistanceForMelee)
                 {
-                    Debug.Log("Golpe Melee");
                     yield return StartCoroutine(MeleeAttack());
                 }
-                else
-                {
-                    int attackChoice = Random.Range(0, 2);
+            }
 
-                    if (attackChoice == 0)
-                    {
-                        Debug.Log("Lluvia de Piedras");
-                        yield return StartCoroutine(StoneRainAttack());
-                    }
-                    else
-                    {
-                        Debug.Log("Embestida");
-                        yield return StartCoroutine(ChargeAttack());
-                    }
-                }
+            if (Time.time >= lastStoneRainTime + stoneRainInterval)
+            {
+                yield return StartCoroutine(StoneRainAttack());
+                lastStoneRainTime = Time.time;
             }
 
             Debug.Log("pensando siguiente ataque... mm...");
@@ -161,14 +157,11 @@ public class BossScriptAttacks : MonoBehaviour
         core.IsAttacking = true;
         core.rb.linearVelocity = Vector2.zero;
 
-        // Alerta
         yield return StartCoroutine(ShowAlert());
 
-        // Salto
         core.rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         yield return new WaitForSeconds(0.5f);
 
-        // Generar piedras
         for (int i = 0; i < stonesPerRain; i++)
         {
             SpawnStone();
@@ -186,48 +179,48 @@ public class BossScriptAttacks : MonoBehaviour
         spawnPosition.x += randomX;
         spawnPosition.y += rainHeight;
 
-        Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
+        GameObject p = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
+        if (p != null)
+        {
+            var rb = p.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.gravityScale = 0f;
+                rb.linearVelocity = Vector2.down * stoneFallSpeed;
+            }
+
+            var col = p.GetComponent<Collider2D>();
+            if (col != null)
+            {
+                col.enabled = false;
+            }
+
+            Destroy(p, stoneLifetime);
+            StartCoroutine(ShakeCamera(shakeDuration, shakeIntensity));
+        }
+    }
+
+    private IEnumerator ShakeCamera(float duration, float intensity)
+    {
+        var cam = Camera.main;
+        if (cam == null) yield break;
+
+        Transform t = cam.transform;
+        Vector3 original = t.position;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float x = Random.Range(-1f, 1f) * intensity;
+            float y = Random.Range(-1f, 1f) * intensity;
+            t.position = new Vector3(original.x + x, original.y + y, original.z);
+            yield return null;
+        }
+        t.position = original;
     }
 
  // segundo ataque
-    private IEnumerator ChargeAttack()
-    {
-        core.IsAttacking = true;
-        core.rb.linearVelocity = Vector2.zero;
-
-        // Alerta
-        yield return StartCoroutine(ShowAlert());
-
-        // Animación
-        if (core.anim != null)
-        {
-            core.anim.SetTrigger("Run");
-        }
-
-        // Cargar
-        Vector2 chargeDirection = core.DirectionToPlayer();
-        float chargeSpeed = moveSpeed * chargeSpeedMultiplier;
-
-        float elapsedTime = 0f;
-        while (elapsedTime < chargeDuration)
-        {
-            core.rb.linearVelocity = new Vector2(chargeDirection.x * chargeSpeed, core.rb.linearVelocity.y);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        core.rb.linearVelocity = Vector2.zero;
-
-        // Piedras al final
-        for (int i = 0; i < stonesPerRain; i++)
-        {
-            SpawnStone();
-            yield return new WaitForSeconds(timeBetweenStones);
-        }
-
-        yield return new WaitForSeconds(0.5f);
-        core.IsAttacking = false;
-    }
+    
 
   //Su ataque mas basico, el tercero
     private IEnumerator MeleeAttack()

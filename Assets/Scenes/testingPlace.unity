@@ -1577,7 +1577,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8, y: 0.8}
+    oldSize: {x: 0.5, y: 0.5}
     newSize: {x: 2.5, y: 0.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -2042,7 +2042,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8, y: 0.8}
+    oldSize: {x: 0.5, y: 0.5}
     newSize: {x: 2.5, y: 0.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -2622,7 +2622,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8, y: 0.8}
+    oldSize: {x: 0.5, y: 0.5}
     newSize: {x: 2.5, y: 0.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -6598,6 +6598,7 @@ MonoBehaviour:
   checkpoints: []
   startingCheckpoint: 1
   cameraSize: 5
+  zoomSpeed: 2
 --- !u!1001 &519697144
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38897,7 +38898,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8, y: 0.8}
+    oldSize: {x: 0.5, y: 0.5}
     newSize: {x: 2.5, y: 0.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -41767,7 +41768,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8, y: 0.8}
+    oldSize: {x: 0.5, y: 0.5}
     newSize: {x: 2.5, y: 0.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

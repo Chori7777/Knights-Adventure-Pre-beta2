@@ -115,9 +115,9 @@ TextureImporter:
       name: spear_trap_shooting_left_anim_0
       rect:
         serializedVersion: 2
-        x: 11
+        x: 0
         y: 0
-        width: 6
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -137,9 +137,9 @@ TextureImporter:
       name: spear_trap_shooting_left_anim_1
       rect:
         serializedVersion: 2
-        x: 25
+        x: 16
         y: 0
-        width: 8
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -159,9 +159,9 @@ TextureImporter:
       name: spear_trap_shooting_left_anim_2
       rect:
         serializedVersion: 2
-        x: 40
+        x: 32
         y: 0
-        width: 9
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -181,9 +181,9 @@ TextureImporter:
       name: spear_trap_shooting_left_anim_3
       rect:
         serializedVersion: 2
-        x: 56
+        x: 48
         y: 0
-        width: 9
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -203,9 +203,9 @@ TextureImporter:
       name: spear_trap_shooting_left_anim_4
       rect:
         serializedVersion: 2
-        x: 68
+        x: 64
         y: 0
-        width: 44
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -221,11 +221,55 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: spear_trap_shooting_left_anim_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cf01ff26dfab744cafa18055d11e502
+      internalID: -1722064434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spear_trap_shooting_left_anim_6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 573cd1094a566664182e20e2fd0cb684
+      internalID: 1282321231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 67ec0f00ecc592f4fb182f4bbcf97a95
     internalID: 0
     vertices: []
     indices: 
@@ -240,6 +284,8 @@ TextureImporter:
       spear_trap_shooting_left_anim_2: 7248972633637612285
       spear_trap_shooting_left_anim_3: -8694339265280680073
       spear_trap_shooting_left_anim_4: 8495949437301011677
+      spear_trap_shooting_left_anim_5: -1722064434
+      spear_trap_shooting_left_anim_6: 1282321231
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

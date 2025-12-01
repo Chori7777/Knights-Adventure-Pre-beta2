@@ -24,6 +24,7 @@ public class BossTrigger : MonoBehaviour
     [SerializeField] private Animator cameraAnimator;
     [SerializeField] private string nombreJefe;
     [SerializeField] private string[] introLines;
+    [SerializeField] private TheTrueKnightMusicTimeline musicTimeline;
 
     [Header("Modo Trial")]
     [SerializeField] private bool useTrialMode = true;
@@ -151,6 +152,12 @@ public class BossTrigger : MonoBehaviour
 
         if (AudioManager.Instance != null && musicaJefe != null)
             StartCoroutine(FadeInMusic(musicaJefe, 0.4f));
+
+        if (musicTimeline != null)
+        {
+            musicTimeline.ResetTimeline();
+            musicTimeline.StartTimeline();
+        }
 
         // ✅ Iniciar Trial Mode
         if (useTrialMode && trialManager != null)

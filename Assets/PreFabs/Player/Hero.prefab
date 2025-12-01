@@ -117,7 +117,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1262583705
-  m_SortingLayer: 9
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 2743055858919256353, guid: 4691816a068c7e44c9317d20077349a2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -152,7 +152,7 @@ MonoBehaviour:
   invincibilityDuration: 1
   usePotionKey: 114
   deathAnimationName: Death
-  deathFallbackDuration: 1
+  deathFallbackDuration: 0.7
 --- !u!114 &7134106177684360171
 MonoBehaviour:
   m_ObjectHideFlags: 0
