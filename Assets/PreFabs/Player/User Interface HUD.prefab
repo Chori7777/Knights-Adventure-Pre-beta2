@@ -3761,6 +3761,8 @@ GameObject:
   - component: {fileID: 6365660697040464030}
   - component: {fileID: 2897776962196628769}
   - component: {fileID: 178567990053109131}
+  - component: {fileID: 7829023670186500860}
+  - component: {fileID: 6229586796568341798}
   m_Layer: 5
   m_Name: User Interface HUD
   m_TagString: Untagged
@@ -3934,6 +3936,35 @@ MonoBehaviour:
   headMoveSpeed: 5
   damageParticles: {fileID: 0}
   particleSpawnPoint: {fileID: 0}
+  shieldBarWidth: 60
+  shieldBarHeight: 6
+--- !u!114 &7829023670186500860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4606079206516174595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f976495bc3ed0b34a826a30bbaba145f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 6229586796568341798}
+  disableGameObjectIfNoCanvasGroup: 0
+  checkInterval: 0.25
+--- !u!225 &6229586796568341798
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4606079206516174595}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4965688901607284964
 GameObject:
   m_ObjectHideFlags: 0
@@ -4725,7 +4756,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1163054303
-  m_SortingLayer: 10
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

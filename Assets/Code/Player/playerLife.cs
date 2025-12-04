@@ -129,7 +129,7 @@ public class playerLife : MonoBehaviour
 
     private void HandlePotionInput()
     {
-        if (Input.GetKeyDown(usePotionKey))
+        if (InputBindings.GetDown(InputBindings.GameAction.UseItem))
             TryUsePotion();
     }
 

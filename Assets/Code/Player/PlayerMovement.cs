@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -200,7 +200,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void CaptureInput()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
+        float h = 0f;
+        if (InputBindings.Get(InputBindings.GameAction.MoveLeft)) h -= 1f;
+        if (InputBindings.Get(InputBindings.GameAction.MoveRight)) h += 1f;
+        horizontalInput = Mathf.Clamp(h, -1f, 1f);
     }
 
     private void UpdateDetectionStates()
@@ -279,7 +282,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (InputBindings.GetDown(InputBindings.GameAction.Jump))
         {
             if (isWallSliding && Time.time > lastWallJumpTime + wallJumpCooldown)
             {
@@ -335,7 +338,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.gravityScale = fallMultiplier;
         }
-        else if (rb.linearVelocity.y > 0 && !Input.GetKey(KeyCode.Space))
+        else if (rb.linearVelocity.y > 0 && !InputBindings.Get(InputBindings.GameAction.Jump))
         {
             rb.gravityScale = lowJumpMultiplier;
         }
@@ -426,7 +429,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isAttacking || Time.time < lastAttackTime + attackCooldown) return;
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (InputBindings.GetDown(InputBindings.GameAction.Action1Attack))
         {
             currentCombo = isGrounded ? ((currentCombo == 1) ? 2 : 1) : 1;
             StartAttack(currentCombo);
@@ -523,7 +526,7 @@ public class PlayerMovement : MonoBehaviour
     public bool IsTakingDamage => isTakingDamage;
     public float HorizontalInput => horizontalInput;
     public float VerticalVelocity => rb.linearVelocity.y;
-    public bool IsBlocking => Input.GetKey(KeyCode.X);
+    public bool IsBlocking => InputBindings.Get(InputBindings.GameAction.Action2Shield);
     public bool IsWallSliding => isWallSliding;
     public bool IsSprinting => Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
     public bool FacingRight => facingRight;

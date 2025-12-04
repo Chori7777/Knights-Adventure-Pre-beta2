@@ -55,4 +55,9 @@ public class TextManager : MonoBehaviour
     {
         dialoguePanel.SetActive(false);
     }
+
+    public void SetTypeSpeed(float speed)
+    {
+        typeSpeed = Mathf.Max(0.001f, speed);
+    }
 }
