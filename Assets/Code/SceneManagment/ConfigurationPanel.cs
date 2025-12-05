@@ -1,5 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 public class ConfigurationPanel : MonoBehaviour
 {
@@ -8,7 +11,6 @@ public class ConfigurationPanel : MonoBehaviour
     [SerializeField] private GameObject preferencesPanel;
     [SerializeField] private GameObject keybindsPanel;
     [SerializeField] private GameObject audioPanel;
-    [SerializeField] private MenuOverlayManager overlayManager;
 
     [Header("Tab Navigation Keys")]
     [SerializeField] private KeyCode prevTabKey = KeyCode.Q;
@@ -55,10 +57,11 @@ public class ConfigurationPanel : MonoBehaviour
             InitializeTabs();
         }
 
-        if (overlayManager != null) overlayManager.OpenOptions();
         if (configurationRoot != null) configurationRoot.SetActive(true);
         if (mainMenuRoot != null) mainMenuRoot.SetActive(false);
+        EnsureEventSystem();
         EnsureRaycaster();
+        EnsureButtonsInteractive();
 
         // ✅ ARREGLO: Resetear a la primera pestaña SIEMPRE
         currentTabIndex = 0;
@@ -80,7 +83,6 @@ public class ConfigurationPanel : MonoBehaviour
     {
         Debug.Log("🔒 [ConfigPanel] Cerrando...");
 
-        if (overlayManager != null) overlayManager.CloseOptions();
         if (configurationRoot != null) configurationRoot.SetActive(false);
         if (mainMenuRoot != null) mainMenuRoot.SetActive(true);
 
@@ -101,8 +103,36 @@ public class ConfigurationPanel : MonoBehaviour
         if (canvas != null)
         {
             var rc = canvas.GetComponent<UnityEngine.UI.GraphicRaycaster>();
-            if (rc == null) rc = canvas.gameObject.AddComponent<UnityEngine.UI.GraphicRaycaster>();
+            if (rc == null)
+            {
+                rc = canvas.gameObject.AddComponent<UnityEngine.UI.GraphicRaycaster>();
+                Debug.Log($"[OptionsUI] GraphicRaycaster agregado a canvas {canvas.gameObject.name}");
+            }
             rc.enabled = true;
+            Debug.Log($"[OptionsUI] GraphicRaycaster habilitado en canvas {canvas.gameObject.name}");
+        }
+    }
+
+    private void EnsureEventSystem()
+    {
+        var es = UnityEngine.EventSystems.EventSystem.current;
+        if (es == null)
+        {
+            var go = new GameObject("EventSystem");
+            go.AddComponent<UnityEngine.EventSystems.EventSystem>();
+            go.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
+            Debug.Log("[OptionsUI] EventSystem creado con StandaloneInputModule");
+        }
+        else
+        {
+            var module = es.GetComponent<UnityEngine.EventSystems.StandaloneInputModule>();
+            if (module == null)
+            {
+                es.gameObject.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
+                Debug.Log("[OptionsUI] StandaloneInputModule agregado al EventSystem existente");
+            }
+            es.sendNavigationEvents = false;
+            Debug.Log("[OptionsUI] Navegación por teclado desactivada (solo mouse)");
         }
     }
 
@@ -132,6 +162,7 @@ public class ConfigurationPanel : MonoBehaviour
             tabs[currentTabIndex].SetActive(true);
             Debug.Log($"  ✅ Tab {currentTabIndex} ({tabs[currentTabIndex].name}) ACTIVADO");
             if (currentTabLabel != null) currentTabLabel.text = tabs[currentTabIndex].name;
+            if (audioPanel != null && tabs[currentTabIndex] == audioPanel) EnsureAudioInteractive();
         }
         else
         {
@@ -279,16 +310,121 @@ public class ConfigurationPanel : MonoBehaviour
             currentTabLabel.text = go != null ? go.name : string.Empty;
         }
 
-        // Fijar el MenuNavigator activo para el puntero compartido
-        if (overlayManager != null && tabs != null && currentTabIndex >= 0 && currentTabIndex < tabs.Length)
+        
+    }
+
+    private void EnsureAudioInteractive()
+    {
+        var canvas = configurationRoot != null ? configurationRoot.GetComponentInParent<UnityEngine.UI.GraphicRaycaster>() : null;
+        if (canvas == null && configurationRoot != null)
         {
-            var root = tabs[currentTabIndex];
-            if (root != null)
+            var c = configurationRoot.GetComponentInParent<Canvas>();
+            if (c != null)
             {
-                var nav = root.GetComponent<MenuNavigator>();
-                if (nav == null) nav = root.GetComponentInChildren<MenuNavigator>(true);
-                if (nav != null) overlayManager.SetOptionsNavigator(nav);
+                var rc = c.GetComponent<UnityEngine.UI.GraphicRaycaster>();
+                if (rc == null) rc = c.gameObject.AddComponent<UnityEngine.UI.GraphicRaycaster>();
+                rc.enabled = true;
+                Debug.Log($"[OptionsUI] Audio: Raycaster habilitado en canvas {c.gameObject.name}");
             }
         }
+
+        var cg = audioPanel.GetComponent<CanvasGroup>();
+        if (cg == null) cg = audioPanel.AddComponent<CanvasGroup>();
+        cg.alpha = 1f;
+        cg.interactable = true;
+        cg.blocksRaycasts = true;
+        Debug.Log("[OptionsUI] Audio: CanvasGroup activo e interactivo");
+
+        var sliders = audioPanel.GetComponentsInChildren<UnityEngine.UI.Slider>(true);
+        Debug.Log($"[OptionsUI] Audio: {sliders.Length} sliders detectados");
+        for (int i = 0; i < sliders.Length; i++)
+        {
+            var s = sliders[i];
+            s.interactable = true;
+            var h = s.handleRect;
+            if (h != null)
+            {
+                var g = h.GetComponent<UnityEngine.UI.Graphic>();
+                if (g != null) g.raycastTarget = true;
+                Debug.Log($"[OptionsUI] Slider '{s.gameObject.name}': handle raycastTarget ON");
+            }
+            var bg = s.transform.Find("Background");
+            if (bg != null)
+            {
+                var gb = bg.GetComponent<UnityEngine.UI.Graphic>();
+                if (gb != null) gb.raycastTarget = true;
+                Debug.Log($"[OptionsUI] Slider '{s.gameObject.name}': background raycastTarget ON");
+            }
+            else
+            {
+                Debug.LogWarning($"[OptionsUI] Slider '{s.gameObject.name}': Background no encontrado");
+            }
+
+            LogRaycastAt(s.GetComponent<RectTransform>(), "Slider");
+        }
+
+        var buttons = audioPanel.GetComponentsInChildren<UnityEngine.UI.Button>(true);
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].interactable = true;
+            var img = buttons[i].GetComponent<UnityEngine.UI.Image>();
+            if (img != null) img.raycastTarget = true;
+            Debug.Log($"[OptionsUI] Audio: botón '{buttons[i].gameObject.name}' interactivo (listeners={buttons[i].onClick.GetPersistentEventCount()})");
+        }
+
+        var bgRoot = configurationRoot != null ? configurationRoot.transform.Find("Background") : null;
+        if (bgRoot != null)
+        {
+            var bgImg = bgRoot.GetComponent<UnityEngine.UI.Image>();
+            if (bgImg != null)
+            {
+                bgImg.raycastTarget = false;
+                Debug.Log("[OptionsUI] Fondo de Options Interfaz deja de bloquear raycasts");
+            }
+        }
+
+        LogRaycastAt(audioPanel.GetComponent<RectTransform>(), "Audio_Panel");
+    }
+
+    private void EnsureButtonsInteractive()
+    {
+        if (configurationRoot == null) return;
+        var buttons = configurationRoot.GetComponentsInChildren<UnityEngine.UI.Button>(true);
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            var b = buttons[i];
+            b.interactable = true;
+            var img = b.GetComponent<UnityEngine.UI.Image>();
+            if (img != null) img.raycastTarget = true;
+            Debug.Log($"[OptionsUI] Botón '{b.gameObject.name}' habilitado (listeners={b.onClick.GetPersistentEventCount()})");
+        }
+
+        var toggles = configurationRoot.GetComponentsInChildren<UnityEngine.UI.Toggle>(true);
+        for (int i = 0; i < toggles.Length; i++)
+        {
+            var t = toggles[i];
+            t.interactable = true;
+            var img = t.GetComponent<UnityEngine.UI.Image>();
+            if (img != null) img.raycastTarget = true;
+            Debug.Log($"[OptionsUI] Toggle '{t.gameObject.name}' habilitado");
+        }
+    }
+
+    private void LogRaycastAt(RectTransform rt, string context)
+    {
+        if (rt == null) return;
+        var es = EventSystem.current;
+        if (es == null) return;
+        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(null, rt.position);
+        var ped = new PointerEventData(es);
+        ped.position = screenPos;
+        var results = new List<RaycastResult>();
+        es.RaycastAll(ped, results);
+        string log = "[OptionsUI] Raycast " + context + " -> ";
+        for (int i = 0; i < results.Count && i < 5; i++)
+        {
+            log += results[i].gameObject.name + (i < results.Count - 1 ? ", " : "");
+        }
+        Debug.Log(log);
     }
 }

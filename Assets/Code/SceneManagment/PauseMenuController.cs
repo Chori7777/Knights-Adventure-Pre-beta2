@@ -4,8 +4,7 @@ using UnityEngine.EventSystems;
 public class PauseMenuController : MonoBehaviour
 {
     [SerializeField] private CanvasGroup pauseGroup;
-    [SerializeField] private MenuOverlayManager overlay;
-    [SerializeField] private OptionsMenuController optionsController;
+    [SerializeField] private ConfigurationPanel optionsConfig;
     [SerializeField] private KeyCode toggleKey = KeyCode.Escape;
 
     private bool paused;
@@ -44,7 +43,7 @@ public class PauseMenuController : MonoBehaviour
 
     public void ClosePause()
     {
-        if (optionsController != null) optionsController.Hide();
+        if (optionsConfig != null) optionsConfig.Close();
         if (pauseGroup != null)
         {
             pauseGroup.alpha = 0f;
@@ -63,8 +62,7 @@ public class PauseMenuController : MonoBehaviour
     public void OnOptions()
     {
         if (!paused) OpenPause();
-        if (overlay != null) overlay.SetKeepMainVisible(true);
-        if (optionsController != null) optionsController.Show();
+        if (optionsConfig != null) optionsConfig.Open();
     }
 
     private void HidePauseInstant()

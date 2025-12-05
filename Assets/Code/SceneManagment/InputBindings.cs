@@ -10,9 +10,9 @@ public class InputBindings : MonoBehaviour
     private static KeyCode[] secundarios = new KeyCode[6];
     private static bool inicializado;
 
-    [SerializeField] private KeyCode submitKey = KeyCode.Return;
-    [SerializeField] private KeyCode submitAltKey = KeyCode.Z;
-    [SerializeField] private KeyCode cancelKey = KeyCode.Escape;
+    [SerializeField] private KeyCode submitKey = KeyCode.None;
+    [SerializeField] private KeyCode submitAltKey = KeyCode.None;
+    [SerializeField] private KeyCode cancelKey = KeyCode.None;
 
     private bool escuchando;
     private GameAction accionEscuchar;
@@ -22,7 +22,7 @@ public class InputBindings : MonoBehaviour
     {
         if (EventSystem.current != null)
         {
-            EventSystem.current.sendNavigationEvents = true;
+            EventSystem.current.sendNavigationEvents = false;
         }
         InicializarSiEsNecesario();
     }
@@ -36,51 +36,9 @@ public class InputBindings : MonoBehaviour
             return; // ✅ CRÍTICO: No procesar resto del input
         }
 
-        // ✅ Solo procesar UI si NO está escuchando
+        // Interacción UI: solo mouse. Sin atajos de teclado.
         var es = EventSystem.current;
         if (es == null) return;
-
-        var seleccionado = es.currentSelectedGameObject;
-
-        if (Input.GetKeyDown(submitKey) || Input.GetKeyDown(submitAltKey))
-        {
-            if (seleccionado != null)
-            {
-                var selectable = seleccionado.GetComponent<Selectable>();
-                if (selectable != null)
-                {
-                    var btn = selectable as Button;
-                    if (btn != null)
-                    {
-                        btn.onClick.Invoke();
-                        return;
-                    }
-
-                    var tog = selectable as Toggle;
-                    if (tog != null)
-                    {
-                        tog.isOn = !tog.isOn;
-                        return;
-                    }
-
-                    var inp = selectable as InputField;
-                    if (inp != null)
-                    {
-                        inp.OnPointerClick(new PointerEventData(es));
-                        return;
-                    }
-                }
-            }
-        }
-
-        if (Input.GetKeyDown(cancelKey))
-        {
-            var overlay = Object.FindFirstObjectByType<MenuOverlayManager>();
-            if (overlay != null)
-            {
-                overlay.CloseOptions();
-            }
-        }
     }
 
     public void StartRebind(string accion, int slot)

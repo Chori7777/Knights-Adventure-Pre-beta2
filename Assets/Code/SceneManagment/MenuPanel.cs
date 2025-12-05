@@ -11,7 +11,7 @@ public class MenuPanel : MonoBehaviour
     [SerializeField] private float duracionTween = 0.15f;
 
     [Header("Navegación")]
-    [SerializeField] private MenuNavigator navigator;
+
     [SerializeField] private RectTransform puntero;
 
     private void Awake()
@@ -37,12 +37,5 @@ public class MenuPanel : MonoBehaviour
             );
         }
 
-        if (navigator == null)
-            navigator = GetComponent<MenuNavigator>();
-
-        if (navigator != null && puntero != null)
-        {
-            navigator.SetPointer(puntero);
-        }
     }
 }

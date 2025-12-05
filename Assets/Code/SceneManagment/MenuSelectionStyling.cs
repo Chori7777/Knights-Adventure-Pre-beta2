@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 
-public class MenuSelectionStyling : MonoBehaviour, ISelectHandler, IDeselectHandler
+public class MenuSelectionStyling : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Graphic target;
     [SerializeField] private Color normalColor = Color.white;
@@ -34,6 +34,9 @@ public class MenuSelectionStyling : MonoBehaviour, ISelectHandler, IDeselectHand
     private Vector3 baseScale;
     private Vector3 baseEuler;
     private Vector2 baseAnchored;
+    
+    private bool isSelected = false;
+    private bool isHovered = false;
 
     public void Configure(Graphic g, Color cNormal, Color cSelected, float sNormal, float sSelected, float duration)
     {
@@ -59,19 +62,50 @@ public class MenuSelectionStyling : MonoBehaviour, ISelectHandler, IDeselectHand
     {
         StopAll();
         ResetTransforms();
+        isSelected = false;
+        isHovered = false;
     }
 
     public void OnSelect(BaseEventData eventData)
     {
-        StartTween(true);
-        StartEffects();
+        isSelected = true;
+        UpdateState();
     }
 
     public void OnDeselect(BaseEventData eventData)
     {
-        StartTween(false);
-        StopAll();
-        ResetTransforms();
+        isSelected = false;
+        UpdateState();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        isHovered = true;
+        UpdateState();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        isHovered = false;
+        UpdateState();
+    }
+
+    private void UpdateState()
+    {
+        // Active if either selected OR hovered
+        bool active = isSelected || isHovered;
+        
+        if (active)
+        {
+            StartTween(true);
+            StartEffects();
+        }
+        else
+        {
+            StartTween(false);
+            StopAll();
+            ResetTransforms();
+        }
     }
 
     private void StartTween(bool selected)
