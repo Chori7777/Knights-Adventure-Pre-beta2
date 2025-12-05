@@ -8,7 +8,6 @@ public class BlackScreenManager : MonoBehaviour
 
     [Header("Configuración Pantalla Negra")]
     [SerializeField] private Image blackScreenImage;
-    [SerializeField] private float blackScreenDuration = 1.5f;
 
     private void Awake()
     {

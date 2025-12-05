@@ -8,12 +8,6 @@ using System.Collections;
 /// </summary>
 public class UniversalProjectileMover : MonoBehaviour
 {
-    [Header("═══════════════════════════════")]
-    [Header("DIRECCIÓN PRINCIPAL")]
-    [Header("═══════════════════════════════")]
-
-    [SerializeField] private MovementDirection mainDirection = MovementDirection.Right;
-
     public enum MovementDirection
     {
         Right,          // →
@@ -24,11 +18,8 @@ public class UniversalProjectileMover : MonoBehaviour
         Custom          // Vector2 personalizado
     }
 
-    [SerializeField] private Vector2 customDirection = Vector2.right;
-    [SerializeField] private bool randomizeDirection = false; // Dirección aleatoria al spawn
-
     [Header("═══════════════════════════════")]
-    [Header("OSCILACIÓN SECUNDARIA")]
+    [Header("Oscilación")]
     [Header("═══════════════════════════════")]
 
     [SerializeField] private bool enableOscillation = false;
@@ -46,12 +37,23 @@ public class UniversalProjectileMover : MonoBehaviour
     [SerializeField] private bool randomizeOscillation = false;
 
     [Header("═══════════════════════════════")]
-    [Header("VELOCIDAD")]
+    [Header("Velocidad")]
     [Header("═══════════════════════════════")]
 
     [SerializeField] private float baseSpeed = 5f;
+    [SerializeField] private MovementDirection mainDirection = MovementDirection.Right;
+    [SerializeField] private Vector2 customDirection = Vector2.right;
+    [SerializeField] private bool randomizeDirection = false;
+    [SerializeField] private bool useBPM = false;
+    [SerializeField] private float bpm = 120f;
+    [SerializeField] private float unitsPerBeat = 4f;
     [SerializeField] private bool randomizeSpeed = false;
     [SerializeField] private Vector2 speedRange = new Vector2(3f, 8f);
+    [SerializeField] private bool useTimeSteps = false;
+    [SerializeField] private float stepIntervalSeconds = 0.2f;
+    [SerializeField] private float stepDistanceUnits = 1f;
+    [SerializeField] private bool useStepTween = false;
+    [SerializeField] private Ease stepTweenEase = Ease.Linear;
 
     [Header("Aceleración")]
     [SerializeField] private bool enableAcceleration = false;
@@ -68,14 +70,39 @@ public class UniversalProjectileMover : MonoBehaviour
     [SerializeField] private bool destroyOnReturn = true;
 
     [Header("═══════════════════════════════")]
-    [Header("DOTWEEN (Ease Type)")]
+    [Header("DOTWEEN (Movimiento y Oscilación)")]
     [Header("═══════════════════════════════")]
 
     [SerializeField] private bool useDOTweenMovement = false;
     [SerializeField] private Ease easeType = Ease.Linear;
     [SerializeField] private float tweenDuration = 2f;
+    [SerializeField] private bool useBPMForTween = false;
+    [SerializeField] private float tweenBeats = 4f;
     [SerializeField] private Vector2 tweenTargetOffset = new Vector2(10f, 0f);
     [SerializeField] private bool destroyOnTweenComplete = true;
+    [SerializeField] private bool useTweenForMovement = false;
+    [SerializeField] private float movementTweenDistance = 2f;
+    [SerializeField] private float movementTweenDuration = 0.4f;
+    [SerializeField] private Ease movementTweenEase = Ease.InOutSine;
+    [SerializeField] private bool useTweenForOscillation = false;
+    [SerializeField] private float oscillationTweenDuration = 0.5f;
+    [SerializeField] private Ease oscillationTweenEase = Ease.InOutSine;
+    [Header("MOVIMIENTO - ACTIVACIÓN")]
+    [SerializeField] private bool useMoveActivationTimer = false;
+    [SerializeField] private float moveInterval = 0.5f;
+    [SerializeField] private float moveActiveDuration = 0.2f;
+    [SerializeField] private bool fadeBeforeMoveActivation = false;
+    [SerializeField] private float movePreFadeLead = 0.1f;
+    [Header("OSCILACIÓN - ACTIVACIÓN")]
+    [SerializeField] private bool useOscActivationTimer = false;
+    [SerializeField] private float oscInterval = 5f;
+    [SerializeField] private float oscActiveDuration = 0.6f;
+    [SerializeField] private bool fadeBeforeOscActivation = false;
+    [SerializeField] private float oscPreFadeLead = 0.2f;
+    [SerializeField] private bool oscUseVerticalAxis = true;
+    [SerializeField] private bool fadeAfterActivation = false;
+    [SerializeField] private float postFadeAlpha = 0.6f;
+    [SerializeField] private float postFadeDuration = 0.3f;
 
     [Header("═══════════════════════════════")]
     [Header("ROTACIÓN")]
@@ -142,6 +169,8 @@ public class UniversalProjectileMover : MonoBehaviour
 
     [SerializeField] private float splitDistance = 5f;
     [SerializeField] private float splitTime = 2f;
+    [SerializeField] private bool useBPMForSplit = false;
+    [SerializeField] private float splitBeats = 2f;
     [SerializeField] private int splitCount = 3; // Cuántos proyectiles genera
     [SerializeField] private float splitAngleSpread = 60f; // Ángulo de dispersión
     [SerializeField] private bool destroyOnSplit = true;
@@ -154,14 +183,25 @@ public class UniversalProjectileMover : MonoBehaviour
     [SerializeField] private float homingStrength = 2f; // Qué tan fuerte gira hacia el jugador
     [SerializeField] private float homingDelay = 0.5f; // Delay antes de empezar a perseguir
     [SerializeField] private float homingDuration = 5f; // Cuánto tiempo persigue
+    [SerializeField] private bool useBPMForHoming = false;
+    [SerializeField] private float homingDelayBeats = 1f;
+    [SerializeField] private float homingDurationBeats = 4f;
 
     [Header("═══════════════════════════════")]
-    [Header("LIFETIME")]
+    [Header("VIDA ÚTIL")]
     [Header("═══════════════════════════════")]
 
     [SerializeField] private float lifetime = 10f;
     [SerializeField] private bool destroyOffScreen = true;
     [SerializeField] private bool autoDestroyByLifetime = true;
+    [SerializeField] private bool wrapScreenEdges = false;
+    [SerializeField] private float wrapMargin = 0.1f;
+    [SerializeField] private bool spawnOffscreen = false;
+    [SerializeField] private float entranceDuration = 0.6f;
+    [SerializeField] private Ease entranceEase = Ease.OutQuad;
+    [SerializeField] private bool fadeInOnSpawn = false;
+    [SerializeField] private float fadeInDuration = 0.4f;
+    [SerializeField] private float entranceMargin = 0.5f;
 
     // ═══════════════════════════════════════════════════
     // VARIABLES INTERNAS
@@ -174,6 +214,22 @@ public class UniversalProjectileMover : MonoBehaviour
     private Transform playerTransform;
     private Tween activeTween;
     private float oscillationPhase;
+    private float stepTimer;
+    private Tween movementTween;
+    private Tween oscillationTween;
+    private Tween stepTween;
+    private bool entranceActive;
+    private SpriteRenderer sr;
+    private float moveActivationTimer;
+    private bool moveActive;
+    private float moveActiveEndTime;
+    private bool movePreFaded;
+    private float oscActivationTimer;
+    private bool oscActive;
+    private float oscActiveEndTime;
+    private bool oscPreFaded;
+    [SerializeField] private bool firstMoveActivationImmediate = false;
+    [SerializeField] private bool firstOscActivationImmediate = false;
 
     // Spiral
     private float spiralAngle = 0f;
@@ -205,6 +261,7 @@ public class UniversalProjectileMover : MonoBehaviour
     {
         startPosition = transform.position;
         mainCamera = Camera.main;
+        sr = GetComponent<SpriteRenderer>();
 
         // Buscar jugador si es necesario
         if (mainDirection == MovementDirection.TowardsPlayer || enableHoming)
@@ -233,6 +290,18 @@ public class UniversalProjectileMover : MonoBehaviour
         if (useDOTweenMovement)
         {
             SetupDOTweenMovement();
+        }
+
+        if (spawnOffscreen || fadeInOnSpawn)
+        {
+            SetupEntrance();
+        }
+        else
+        {
+            if (!useMoveActivationTimer) StartTweenMovementIfEnabled();
+            if (!useOscActivationTimer) StartTweenOscillationIfEnabled();
+            if (useMoveActivationTimer && firstMoveActivationImmediate) StartMovementPulse();
+            if (useOscActivationTimer && firstOscActivationImmediate) StartOscillationPulse();
         }
 
         if (autoDestroyByLifetime && lifetime > 0f)
@@ -281,7 +350,11 @@ public class UniversalProjectileMover : MonoBehaviour
 
     private void SetupSpeed()
     {
-        if (randomizeSpeed)
+        if (useBPM)
+        {
+            currentSpeed = unitsPerBeat * (bpm / 60f);
+        }
+        else if (randomizeSpeed)
         {
             currentSpeed = Random.Range(speedRange.x, speedRange.y);
         }
@@ -322,8 +395,9 @@ public class UniversalProjectileMover : MonoBehaviour
     private void SetupDOTweenMovement()
     {
         Vector3 targetPos = transform.position + (Vector3)tweenTargetOffset;
+        float duration = useBPMForTween ? (tweenBeats * (60f / bpm)) : tweenDuration;
 
-        activeTween = transform.DOMove(targetPos, tweenDuration)
+        activeTween = transform.DOMove(targetPos, duration)
             .SetEase(easeType)
             .OnComplete(() => {
                 if (enableBoomerang && !isReturning)
@@ -337,14 +411,189 @@ public class UniversalProjectileMover : MonoBehaviour
             });
     }
 
+    private void StartTweenMovementIfEnabled()
+    {
+        if (!useTweenForMovement) return;
+        movementTween?.Kill();
+        movementTween = transform.DOMove(transform.position + (Vector3)moveDirection * movementTweenDistance, movementTweenDuration)
+            .SetEase(movementTweenEase)
+            .SetLoops(-1, LoopType.Incremental);
+    }
+
+    private void StartTweenOscillationIfEnabled()
+    {
+        if (!useTweenForOscillation) return;
+        oscillationTween?.Kill();
+        Vector3 axis = Vector3.up;
+        if (oscillationAxis == OscillationAxis.Horizontal) axis = Vector3.right;
+        else if (oscillationAxis == OscillationAxis.Both) axis = Vector3.up;
+        var t1 = transform.DOBlendableMoveBy(axis * oscillationAmplitude, oscillationTweenDuration).SetEase(oscillationTweenEase).SetLoops(-1, LoopType.Yoyo);
+        if (oscillationAxis == OscillationAxis.Both)
+        {
+            var t2 = transform.DOBlendableMoveBy(Vector3.right * oscillationAmplitude, oscillationTweenDuration).SetEase(oscillationTweenEase).SetLoops(-1, LoopType.Yoyo);
+            oscillationTween = t2;
+        }
+        else
+        {
+            oscillationTween = t1;
+        }
+    }
+
+    private void StartMovementPulse()
+    {
+        moveActive = true;
+        moveActiveEndTime = Time.time + moveActiveDuration;
+        moveActivationTimer = 0f;
+        movePreFaded = false;
+        if (useTweenForMovement)
+        {
+            movementTween?.Kill();
+            float dist = movementTweenDistance > 0f ? movementTweenDistance : (currentSpeed * moveActiveDuration);
+            movementTween = transform.DOBlendableMoveBy((Vector3)moveDirection * dist, moveActiveDuration).SetEase(movementTweenEase);
+        }
+        else if (useTimeSteps)
+        {
+            // Fuerza un primer paso inmediato para evitar sensación de espera
+            if (useStepTween)
+            {
+                stepTween?.Kill();
+                stepTween = transform.DOBlendableMoveBy((Vector3)moveDirection * stepDistanceUnits, stepIntervalSeconds).SetEase(stepTweenEase);
+            }
+            else
+            {
+                transform.position += (Vector3)moveDirection * stepDistanceUnits;
+            }
+            stepTimer = 0f;
+        }
+    }
+
+    private void StopMovementPulse()
+    {
+        moveActive = false;
+        movementTween?.Kill();
+        if (fadeAfterActivation && sr != null)
+        {
+            sr.DOFade(postFadeAlpha, postFadeDuration);
+        }
+    }
+
+    private void StartOscillationPulse()
+    {
+        oscActive = true;
+        oscActiveEndTime = Time.time + oscActiveDuration;
+        oscActivationTimer = 0f;
+        oscPreFaded = false;
+        if (useTweenForOscillation)
+        {
+            oscillationTween?.Kill();
+            Vector3 axis = oscUseVerticalAxis ? Vector3.up : Vector3.right;
+            Sequence s = DOTween.Sequence();
+            s.Append(transform.DOBlendableMoveBy(axis * oscillationAmplitude, oscActiveDuration * 0.5f).SetEase(oscillationTweenEase));
+            s.Append(transform.DOBlendableMoveBy(-axis * oscillationAmplitude, oscActiveDuration * 0.5f).SetEase(oscillationTweenEase));
+            oscillationTween = s;
+        }
+    }
+
+    private void StopOscillationPulse()
+    {
+        oscActive = false;
+        oscillationTween?.Kill();
+        if (fadeAfterActivation && sr != null)
+        {
+            sr.DOFade(postFadeAlpha, postFadeDuration);
+        }
+    }
+
+    private void SetupEntrance()
+    {
+        entranceActive = true;
+        Vector3 finalPos = transform.position;
+        if (spawnOffscreen && mainCamera != null)
+        {
+            float halfH = mainCamera.orthographicSize;
+            float halfW = halfH * mainCamera.aspect;
+            Vector3 camPos = mainCamera.transform.position;
+            Vector3 off = finalPos;
+            Vector2 dir = moveDirection == Vector2.zero ? Vector2.right : moveDirection;
+            if (Mathf.Abs(dir.x) >= Mathf.Abs(dir.y))
+            {
+                float x = dir.x > 0 ? camPos.x - halfW - entranceMargin : camPos.x + halfW + entranceMargin;
+                off = new Vector3(x, finalPos.y, finalPos.z);
+            }
+            else
+            {
+                float y = dir.y > 0 ? camPos.y - halfH - entranceMargin : camPos.y + halfH + entranceMargin;
+                off = new Vector3(finalPos.x, y, finalPos.z);
+            }
+            transform.position = off;
+        }
+        if (fadeInOnSpawn && sr != null)
+        {
+            Color c = sr.color; c.a = 0f; sr.color = c;
+            sr.DOFade(1f, fadeInDuration);
+        }
+        transform.DOMove(finalPos, entranceDuration)
+            .SetEase(entranceEase)
+            .OnComplete(() => {
+                entranceActive = false;
+                if (!useMoveActivationTimer) StartTweenMovementIfEnabled();
+                if (!useOscActivationTimer) StartTweenOscillationIfEnabled();
+            });
+    }
+
     // ═══════════════════════════════════════════════════
     // UPDATE
     // ═══════════════════════════════════════════════════
 
     private void Update()
     {
+        if (entranceActive) return;
         // Si usa DOTween, no mover manualmente
         if (useDOTweenMovement) return;
+
+        // Timers de activación de movimiento
+        if (useMoveActivationTimer)
+        {
+            moveActivationTimer += Time.deltaTime;
+            if (!moveActive)
+            {
+                if (fadeBeforeMoveActivation && !movePreFaded && sr != null && moveActivationTimer >= Mathf.Max(0f, moveInterval - movePreFadeLead))
+                {
+                    sr.DOFade(1f, movePreFadeLead);
+                    movePreFaded = true;
+                }
+                if (moveActivationTimer >= moveInterval)
+                {
+                    StartMovementPulse();
+                }
+            }
+            else if (Time.time >= moveActiveEndTime)
+            {
+                StopMovementPulse();
+            }
+        }
+
+        // Timers de activación de oscilación
+        if (useOscActivationTimer)
+        {
+            oscActivationTimer += Time.deltaTime;
+            if (!oscActive)
+            {
+                if (fadeBeforeOscActivation && !oscPreFaded && sr != null && oscActivationTimer >= Mathf.Max(0f, oscInterval - oscPreFadeLead))
+                {
+                    sr.DOFade(1f, oscPreFadeLead);
+                    oscPreFaded = true;
+                }
+                if (oscActivationTimer >= oscInterval)
+                {
+                    StartOscillationPulse();
+                }
+            }
+            else if (Time.time >= oscActiveEndTime)
+            {
+                StopOscillationPulse();
+            }
+        }
 
         // Movimiento espiral (prioridad sobre movimiento normal)
         if (enableSpiral)
@@ -354,10 +603,34 @@ public class UniversalProjectileMover : MonoBehaviour
         else
         {
             // Movimiento principal
-            MoveProjectile();
+            if (useTimeSteps)
+            {
+                stepTimer += Time.deltaTime;
+                if (stepTimer >= stepIntervalSeconds)
+                {
+                    stepTimer = 0f;
+                    if (!useMoveActivationTimer || moveActive)
+                    {
+                        if (useStepTween)
+                        {
+                            stepTween?.Kill();
+                            stepTween = transform.DOBlendableMoveBy((Vector3)moveDirection * stepDistanceUnits, stepIntervalSeconds).SetEase(stepTweenEase);
+                        }
+                        else
+                        {
+                            transform.position += (Vector3)moveDirection * stepDistanceUnits;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (!useTweenForMovement && (!useMoveActivationTimer || moveActive))
+                    MoveProjectile();
+            }
 
             // Aplicar oscilación
-            if (enableOscillation)
+            if (enableOscillation && !useTweenForOscillation && (!useOscActivationTimer || oscActive))
             {
                 ApplyOscillation();
             }
@@ -414,7 +687,8 @@ public class UniversalProjectileMover : MonoBehaviour
 
     private void ApplyOscillation()
     {
-        float oscillation = Mathf.Sin(Time.time * oscillationFrequency + oscillationPhase) * oscillationAmplitude;
+        float freq = useBPM ? ((bpm / 60f) * Mathf.Max(0.0001f, oscillationFrequency)) : oscillationFrequency;
+        float oscillation = Mathf.Sin(Time.time * freq + oscillationPhase) * oscillationAmplitude;
 
         Vector3 offset = Vector3.zero;
 
@@ -428,7 +702,7 @@ public class UniversalProjectileMover : MonoBehaviour
                 break;
             case OscillationAxis.Both:
                 offset = new Vector3(
-                    Mathf.Cos(Time.time * oscillationFrequency) * oscillationAmplitude * Time.deltaTime,
+                    Mathf.Cos(Time.time * freq) * oscillationAmplitude * Time.deltaTime,
                     oscillation * Time.deltaTime,
                     0
                 );
@@ -594,7 +868,8 @@ public class UniversalProjectileMover : MonoBehaviour
 
             case SplitTrigger.Time:
                 splitTimer += Time.deltaTime;
-                if (splitTimer >= splitTime)
+                float splitThreshold = useBPMForSplit ? (splitBeats * (60f / bpm)) : splitTime;
+                if (splitTimer >= splitThreshold)
                 {
                     shouldSplit = true;
                 }
@@ -664,6 +939,13 @@ public class UniversalProjectileMover : MonoBehaviour
         }
     }
 
+    public void SetCustomDirection(Vector2 dir)
+    {
+        mainDirection = MovementDirection.Custom;
+        customDirection = dir;
+        moveDirection = dir.normalized;
+    }
+
     // ═══════════════════════════════════════════════════
     // HOMING (PERSECUCIÓN)
     // ═══════════════════════════════════════════════════
@@ -674,12 +956,13 @@ public class UniversalProjectileMover : MonoBehaviour
 
         // Esperar delay antes de empezar
         homingTimer += Time.deltaTime;
-
-        if (homingTimer < homingDelay)
+        float delay = useBPMForHoming ? (homingDelayBeats * (60f / bpm)) : homingDelay;
+        if (homingTimer < delay)
             return;
 
         // Verificar si terminó la duración
-        if (homingTimer > homingDelay + homingDuration)
+        float duration = useBPMForHoming ? (homingDurationBeats * (60f / bpm)) : homingDuration;
+        if (homingTimer > delay + duration)
         {
             enableHoming = false;
             return;
@@ -721,7 +1004,8 @@ public class UniversalProjectileMover : MonoBehaviour
                 activeTween.Kill();
             }
 
-            activeTween = transform.DOMove(startPosition, tweenDuration * 0.8f)
+            float duration = useBPMForTween ? (tweenBeats * (60f / bpm) * 0.8f) : (tweenDuration * 0.8f);
+            activeTween = transform.DOMove(startPosition, duration)
                 .SetEase(Ease.InOutQuad)
                 .OnComplete(() => {
                     if (destroyOnReturn)
@@ -773,16 +1057,39 @@ public class UniversalProjectileMover : MonoBehaviour
 
     private void CheckOffScreen()
     {
-        // No destruir si está en modo spiral
         if (enableSpiral && spiralType == SpiralType.Orbit)
             return;
 
-        Vector3 screenPos = Camera.main.WorldToViewportPoint(transform.position);
+        var cam = Camera.main;
+        if (cam == null) return;
 
-        if (screenPos.x < -0.1f || screenPos.x > 1.1f ||
-            screenPos.y < -0.1f || screenPos.y > 1.1f)
+        float halfHeight = cam.orthographicSize;
+        float halfWidth = halfHeight * cam.aspect;
+        float leftX = cam.transform.position.x - halfWidth;
+        float rightX = cam.transform.position.x + halfWidth;
+        float bottomY = cam.transform.position.y - halfHeight;
+        float topY = cam.transform.position.y + halfHeight;
+
+        Vector3 pos = transform.position;
+        bool offX = pos.x < leftX - wrapMargin || pos.x > rightX + wrapMargin;
+        bool offY = pos.y < bottomY - wrapMargin || pos.y > topY + wrapMargin;
+
+        if (!wrapScreenEdges)
         {
-            Destroy(gameObject);
+            if (offX || offY)
+            {
+                Destroy(gameObject);
+            }
+        }
+        else
+        {
+            if (pos.x < leftX - wrapMargin) pos.x = rightX + wrapMargin;
+            else if (pos.x > rightX + wrapMargin) pos.x = leftX - wrapMargin;
+
+            if (pos.y < bottomY - wrapMargin) pos.y = topY + wrapMargin;
+            else if (pos.y > topY + wrapMargin) pos.y = bottomY - wrapMargin;
+
+            transform.position = pos;
         }
     }
 
@@ -824,10 +1131,6 @@ public class UniversalProjectileMover : MonoBehaviour
         mainDirection = direction;
     }
 
-    public void SetCustomDirection(Vector2 direction)
-    {
-        customDirection = direction;
-    }
 
     public void SetBaseSpeed(float speed)
     {

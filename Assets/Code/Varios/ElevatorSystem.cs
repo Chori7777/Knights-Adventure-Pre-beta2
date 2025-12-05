@@ -19,6 +19,15 @@ public class ElevatorSystem : MonoBehaviour
     [SerializeField] private bool canCallWithButton = true; // Puede llamarse con bot�n
     [SerializeField] private LayerMask playerLayer; // Layer del jugador
     [SerializeField] private bool autoLoop = false;
+    [SerializeField] private bool useBPM = false;
+    [SerializeField] private float bpm = 120f;
+    [SerializeField] private float unitsPerBeat = 4f;
+    [SerializeField] private float beatsWaitAtFloor = 2f;
+    [SerializeField] private bool useTimeSteps = false;
+    [SerializeField] private float stepIntervalSeconds = 0.2f;
+    [SerializeField] private float stepDistanceUnits = 0.5f;
+    [SerializeField] private bool stickPlayerToPlatform = true;
+    [SerializeField] private bool teleportToAOnArriveB = false;
 
     [Header("Audio (Opcional)")]
     [SerializeField] private AudioClip moveSound;
@@ -39,6 +48,7 @@ public class ElevatorSystem : MonoBehaviour
     [SerializeField] private bool lockToParentSpace = true;
     private Vector3 localPointA;
     private Vector3 localPointB;
+    private Vector3 lastPlatformPosition;
 
     private void Start()
     {
@@ -96,23 +106,44 @@ public class ElevatorSystem : MonoBehaviour
             Vector3 worldB = lockToParentSpace
                 ? (platformRoot.parent != null ? platformRoot.parent.TransformPoint(localPointB) : localPointB)
                 : pointB.position;
+            if (!useTimeSteps)
+            {
+                float speed = useBPM ? (unitsPerBeat * (bpm / 60f)) : moveSpeed;
+                float durationAB = Vector3.Distance(platformRoot.position, worldB) / speed;
+                float durationBA = Vector3.Distance(worldB, worldA) / speed;
+                float waitInterval = useBPM ? (beatsWaitAtFloor * (60f / bpm)) : waitTimeAtFloor;
 
-            float durationAB = Vector3.Distance(platformRoot.position, worldB) / moveSpeed;
-            float durationBA = Vector3.Distance(worldB, worldA) / moveSpeed;
-
-            Sequence seq = DOTween.Sequence();
-            if (rb != null)
-                seq.Append(rb.DOMove((Vector2)worldB, durationAB).SetEase(easeType));
+                Sequence seq = DOTween.Sequence();
+                if (rb != null)
+                    seq.Append(rb.DOMove((Vector2)worldB, durationAB).SetEase(easeType));
+                else
+                    seq.Append(platformRoot.DOMove(worldB, durationAB).SetEase(easeType));
+                seq.AppendInterval(waitInterval);
+                if (rb != null)
+                    seq.Append(rb.DOMove((Vector2)worldA, durationBA).SetEase(easeType));
+                else
+                    seq.Append(platformRoot.DOMove(worldA, durationBA).SetEase(easeType));
+                seq.AppendInterval(waitInterval);
+                seq.SetLoops(-1);
+            }
             else
-                seq.Append(platformRoot.DOMove(worldB, durationAB).SetEase(easeType));
-            seq.AppendInterval(waitTimeAtFloor);
-            if (rb != null)
-                seq.Append(rb.DOMove((Vector2)worldA, durationBA).SetEase(easeType));
-            else
-                seq.Append(platformRoot.DOMove(worldA, durationBA).SetEase(easeType));
-            seq.AppendInterval(waitTimeAtFloor);
-            seq.SetLoops(-1);
+            {
+                StartCoroutine(AutoLoopStepCoroutine(worldA, worldB));
+            }
         }
+
+        lastPlatformPosition = platformRoot.position;
+    }
+
+    private void Update()
+    {
+        Vector3 current = platformRoot.position;
+        Vector3 delta = current - lastPlatformPosition;
+        if (isMoving && playerOnElevator && playerTransform != null && !stickPlayerToPlatform)
+        {
+            playerTransform.position += new Vector3(-delta.x, 0f, 0f);
+        }
+        lastPlatformPosition = current;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -126,8 +157,7 @@ public class ElevatorSystem : MonoBehaviour
                     playerOnElevator = true;
                     playerTransform = collision.transform;
 
-                    // Poner al jugador como hijo del ascensor
-                    if (playerTransform != null)
+                    if (stickPlayerToPlatform && playerTransform != null)
                         playerTransform.SetParent(platformRoot);
 
                     Debug.Log("Jugador subi� al ascensor");
@@ -148,7 +178,6 @@ public class ElevatorSystem : MonoBehaviour
         {
             playerOnElevator = false;
 
-            // Desparentar al jugador
             if (playerTransform != null)
                 playerTransform.SetParent(null);
 
@@ -190,27 +219,42 @@ public class ElevatorSystem : MonoBehaviour
                 : (platformRoot.parent != null ? platformRoot.parent.TransformPoint(localPointB) : localPointB);
         }
 
-        float distance = Vector3.Distance(platformRoot.position, worldTarget);
-        float duration = distance / moveSpeed;
+        if (!useTimeSteps)
+        {
+            float distance = Vector3.Distance(platformRoot.position, worldTarget);
+            float speed = useBPM ? (unitsPerBeat * (bpm / 60f)) : moveSpeed;
+            float duration = distance / speed;
 
-        if (audioSource != null && moveSound != null)
-            audioSource.PlayOneShot(moveSound);
-        if (currentTween != null)
-        {
-            currentTween.Kill();
-            currentTween = null;
-        }
-        if (rb != null)
-        {
-            currentTween = rb.DOMove((Vector2)worldTarget, duration)
-                .SetEase(easeType)
-                .OnComplete(() => OnArriveAtFloor(movingToA));
+            if (audioSource != null && moveSound != null)
+                audioSource.PlayOneShot(moveSound);
+            if (currentTween != null)
+            {
+                currentTween.Kill();
+                currentTween = null;
+            }
+            if (rb != null)
+            {
+                currentTween = rb.DOMove((Vector2)worldTarget, duration)
+                    .SetEase(easeType)
+                    .OnComplete(() => OnArriveAtFloor(movingToA));
+            }
+            else
+            {
+                currentTween = platformRoot.DOMove(worldTarget, duration)
+                    .SetEase(easeType)
+                    .OnComplete(() => OnArriveAtFloor(movingToA));
+            }
         }
         else
         {
-            currentTween = platformRoot.DOMove(worldTarget, duration)
-                .SetEase(easeType)
-                .OnComplete(() => OnArriveAtFloor(movingToA));
+            if (audioSource != null && moveSound != null)
+                audioSource.PlayOneShot(moveSound);
+            if (currentTween != null)
+            {
+                currentTween.Kill();
+                currentTween = null;
+            }
+            StartCoroutine(StepMoveCoroutine(worldTarget, movingToA));
         }
     }
 
@@ -222,7 +266,63 @@ public class ElevatorSystem : MonoBehaviour
         if (audioSource != null && arriveSound != null)
             audioSource.PlayOneShot(arriveSound);
 
-        DOVirtual.DelayedCall(waitTimeAtFloor, () => { });
+        float waitInterval = useBPM ? (beatsWaitAtFloor * (60f / bpm)) : waitTimeAtFloor;
+        DOVirtual.DelayedCall(waitInterval, () => { });
+
+        if (!arrivedAtA && teleportToAOnArriveB)
+        {
+            Vector3 worldA = lockToParentSpace
+                ? (platformRoot.parent != null ? platformRoot.parent.TransformPoint(localPointA) : localPointA)
+                : (pointA != null ? pointA.position : platformRoot.position);
+
+            if (currentTween != null)
+            {
+                currentTween.Kill();
+                currentTween = null;
+            }
+
+            if (rb != null)
+                rb.position = (Vector2)worldA;
+            else
+                platformRoot.position = worldA;
+
+            lastPlatformPosition = platformRoot.position;
+            isAtPointA = true;
+        }
+    }
+
+    private IEnumerator StepMoveCoroutine(Vector3 target, bool movingToA)
+    {
+        isMoving = true;
+        Vector3 dir = (target - platformRoot.position).normalized;
+        while (Vector3.Distance(platformRoot.position, target) > 0.001f)
+        {
+            Vector3 next = platformRoot.position + dir * stepDistanceUnits;
+            if (Vector3.Distance(next, target) < stepDistanceUnits)
+                next = target;
+
+            if (rb != null)
+                rb.position = next;
+            else
+                platformRoot.position = next;
+
+            yield return new WaitForSeconds(stepIntervalSeconds);
+        }
+        OnArriveAtFloor(movingToA);
+    }
+
+    private IEnumerator AutoLoopStepCoroutine(Vector3 worldA, Vector3 worldB)
+    {
+        while (true)
+        {
+            yield return StepMoveCoroutine(worldB, false);
+            float waitInterval = useBPM ? (beatsWaitAtFloor * (60f / bpm)) : waitTimeAtFloor;
+            yield return new WaitForSeconds(waitInterval);
+
+            yield return StepMoveCoroutine(worldA, true);
+            waitInterval = useBPM ? (beatsWaitAtFloor * (60f / bpm)) : waitTimeAtFloor;
+            yield return new WaitForSeconds(waitInterval);
+        }
     }
 
     public void CallElevator(bool callToPointA)

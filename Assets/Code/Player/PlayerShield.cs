@@ -8,6 +8,8 @@ public class PlayerShield : MonoBehaviour
 {
     [Header("Referencias")]
     [SerializeField] private GameObject shieldVisual;     // Sprite del escudo
+    [SerializeField] private bool useAlternateShield = false;
+    [SerializeField] private GameObject alternateShieldVisual;
     [SerializeField] private AudioClip blockSound;        // Sonido al bloquear
     [SerializeField] private AudioClip shieldBreakSound;  // Sonido si se rompe
 
@@ -46,6 +48,8 @@ public class PlayerShield : MonoBehaviour
 
         if (shieldVisual != null)
             shieldVisual.SetActive(false);
+        if (alternateShieldVisual != null)
+            alternateShieldVisual.SetActive(false);
     }
 
     private void Update()
@@ -63,8 +67,10 @@ public class PlayerShield : MonoBehaviour
         {
             currentStamina = Mathf.Min(maxStamina, currentStamina + staminaRegenPerSecond * Time.deltaTime);
         }
-        if (shieldVisual != null)
-            shieldVisual.SetActive(isBlocking);
+        GameObject activeVisual = useAlternateShield && alternateShieldVisual != null ? alternateShieldVisual : shieldVisual;
+        GameObject inactiveVisual = useAlternateShield && alternateShieldVisual != null ? shieldVisual : alternateShieldVisual;
+        if (activeVisual != null) activeVisual.SetActive(isBlocking);
+        if (inactiveVisual != null) inactiveVisual.SetActive(false);
     }
 
     /// <summary>

@@ -1,0 +1,611 @@
+fileFormatVersion: 2
+guid: bfaabab313704214c898b590e774c6d9
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8028505023689061286
+    second: AttackTilemap_0
+  - first:
+      213: 2405054645664487577
+    second: AttackTilemap_1
+  - first:
+      213: -5954006863767114528
+    second: AttackTilemap_2
+  - first:
+      213: 2932406044961761165
+    second: AttackTilemap_3
+  - first:
+      213: -3336443275647594696
+    second: AttackTilemap_4
+  - first:
+      213: -2568933664023253836
+    second: AttackTilemap_5
+  - first:
+      213: -5604807861517461737
+    second: AttackTilemap_6
+  - first:
+      213: -2808122754959390688
+    second: AttackTilemap_7
+  - first:
+      213: -3919906026661860921
+    second: AttackTilemap_8
+  - first:
+      213: 4098496341712038586
+    second: AttackTilemap_9
+  - first:
+      213: 1559466571370571869
+    second: AttackTilemap_10
+  - first:
+      213: -1111106407549003361
+    second: AttackTilemap_11
+  - first:
+      213: -6356914049882340272
+    second: AttackTilemap_12
+  - first:
+      213: -2154356006767781558
+    second: AttackTilemap_13
+  - first:
+      213: -8713164051464055628
+    second: AttackTilemap_14
+  - first:
+      213: 9133031287068921145
+    second: AttackTilemap_15
+  - first:
+      213: -4795303989631457480
+    second: AttackTilemap_16
+  - first:
+      213: 3955189775835840018
+    second: AttackTilemap_17
+  - first:
+      213: -6950795047714549286
+    second: AttackTilemap_18
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: AttackTilemap_0
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 180
+        width: 8
+        height: 12
+      alignment: 9
+      pivot: {x: 0.48797894, y: 0.951238}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5c0391c735059090800000000000000
+      internalID: -8028505023689061286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackTilemap_1
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 177
+        width: 8
+        height: 15
+      alignment: 9
+      pivot: {x: 0.4922161, y: 0.96498007}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9981c3c2578706120800000000000000
+      internalID: 2405054645664487577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackTilemap_2
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 170
+        width: 10
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ec6ce69d4e1f5da0800000000000000
+      internalID: -5954006863767114528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackTilemap_3
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 166
+        width: 8
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d876727e2cff1b820800000000000000
+      internalID: 2932406044961761165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackTilemap_4
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 160
+        width: 8
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83fc8cd948292b1d0800000000000000
+      internalID: -3336443275647594696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackTilemap_5
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 154
+        width: 8
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bce9508170595cd0800000000000000
+      internalID: -2568933664023253836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackTilemap_6
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 148
+        width: 8
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7175feb02f8b732b0800000000000000
+      internalID: -5604807861517461737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackTilemap_7
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 141
+        width: 8
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02844f08b3b8709d0800000000000000
+      internalID: -2808122754959390688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackTilemap_8
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 133
+        width: 8
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c928efbc32b999c0800000000000000
+      internalID: -3919906026661860921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackTilemap_9
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 124
+        width: 8
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abaebf045b8c0e830800000000000000
+      internalID: 4098496341712038586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackTilemap_10
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 112
+        width: 8
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d58a3a1959654a510800000000000000
+      internalID: 1559466571370571869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackTilemap_11
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 98
+        width: 8
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f999166fb9e8490f0800000000000000
+      internalID: -1111106407549003361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackTilemap_12
+      rect:
+        serializedVersion: 2
+        x: 567
+        y: 98
+        width: 43
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 054c21d1a54b7c7a0800000000000000
+      internalID: -6356914049882340272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackTilemap_13
+      rect:
+        serializedVersion: 2
+        x: 567
+        y: 53
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4990e840a03a12e0800000000000000
+      internalID: -2154356006767781558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackTilemap_14
+      rect:
+        serializedVersion: 2
+        x: 612
+        y: 106
+        width: 8
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b418c2a57f941780800000000000000
+      internalID: -8713164051464055628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackTilemap_15
+      rect:
+        serializedVersion: 2
+        x: 623
+        y: 98
+        width: 43
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93d8544119b0fbe70800000000000000
+      internalID: 9133031287068921145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackTilemap_16
+      rect:
+        serializedVersion: 2
+        x: 611
+        y: 32
+        width: 62
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 837e0049d68a37db0800000000000000
+      internalID: -4795303989631457480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackTilemap_17
+      rect:
+        serializedVersion: 2
+        x: 612
+        y: 53
+        width: 8
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21eb3f74528a3e630800000000000000
+      internalID: 3955189775835840018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackTilemap_18
+      rect:
+        serializedVersion: 2
+        x: 612
+        y: 0
+        width: 63
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad11e622bb0d98f90800000000000000
+      internalID: -6950795047714549286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 3d525c4447bf71647aa4bcec499d7eb3
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      AttackTilemap_0: -8028505023689061286
+      AttackTilemap_1: 2405054645664487577
+      AttackTilemap_10: 1559466571370571869
+      AttackTilemap_11: -1111106407549003361
+      AttackTilemap_12: -6356914049882340272
+      AttackTilemap_13: -2154356006767781558
+      AttackTilemap_14: -8713164051464055628
+      AttackTilemap_15: 9133031287068921145
+      AttackTilemap_16: -4795303989631457480
+      AttackTilemap_17: 3955189775835840018
+      AttackTilemap_18: -6950795047714549286
+      AttackTilemap_2: -5954006863767114528
+      AttackTilemap_3: 2932406044961761165
+      AttackTilemap_4: -3336443275647594696
+      AttackTilemap_5: -2568933664023253836
+      AttackTilemap_6: -5604807861517461737
+      AttackTilemap_7: -2808122754959390688
+      AttackTilemap_8: -3919906026661860921
+      AttackTilemap_9: 4098496341712038586
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

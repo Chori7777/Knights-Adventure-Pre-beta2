@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -29,12 +29,14 @@ public class InputBindings : MonoBehaviour
 
     private void Update()
     {
+        // ✅ ARREGLO: Si está escuchando, capturar tecla PRIMERO
         if (escuchando)
         {
             CapturarNuevaTecla();
-            return;
+            return; // ✅ CRÍTICO: No procesar resto del input
         }
 
+        // ✅ Solo procesar UI si NO está escuchando
         var es = EventSystem.current;
         if (es == null) return;
 
@@ -87,19 +89,36 @@ public class InputBindings : MonoBehaviour
         accionEscuchar = ParseAction(accion);
         slotEscuchar = Mathf.Clamp(slot, 0, 1);
         escuchando = true;
+
+        Debug.Log($"🎧 [InputBindings] Escuchando para {accion} slot {slot}");
     }
 
     public void CancelRebind()
     {
         escuchando = false;
+        Debug.Log("❌ [InputBindings] Rebind cancelado");
     }
 
     private void CapturarNuevaTecla()
     {
+        // ✅ Ignorar teclas de sistema
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            CancelRebind();
+            return;
+        }
+
+        // ✅ Capturar cualquier tecla presionada
         foreach (KeyCode k in System.Enum.GetValues(typeof(KeyCode)))
         {
+            // ✅ Ignorar Mouse y teclas problemáticas
+            if (k >= KeyCode.Mouse0 && k <= KeyCode.Mouse6) continue;
+            if (k == KeyCode.None) continue;
+
             if (Input.GetKeyDown(k))
             {
+                Debug.Log($"✅ [InputBindings] Tecla capturada: {k}");
+
                 AsignarTecla(accionEscuchar, slotEscuchar, k);
                 GuardarBindingsPersistentes();
                 escuchando = false;
@@ -130,8 +149,30 @@ public class InputBindings : MonoBehaviour
         {
             string p = PlayerPrefs.GetString("bind_p_" + i, "");
             string s = PlayerPrefs.GetString("bind_s_" + i, "");
-            if (!string.IsNullOrEmpty(p)) primarios[i] = (KeyCode)System.Enum.Parse(typeof(KeyCode), p);
-            if (!string.IsNullOrEmpty(s)) secundarios[i] = (KeyCode)System.Enum.Parse(typeof(KeyCode), s);
+
+            if (!string.IsNullOrEmpty(p))
+            {
+                try
+                {
+                    primarios[i] = (KeyCode)System.Enum.Parse(typeof(KeyCode), p);
+                }
+                catch
+                {
+                    Debug.LogWarning($"⚠️ Error parseando binding primario {i}: {p}");
+                }
+            }
+
+            if (!string.IsNullOrEmpty(s))
+            {
+                try
+                {
+                    secundarios[i] = (KeyCode)System.Enum.Parse(typeof(KeyCode), s);
+                }
+                catch
+                {
+                    Debug.LogWarning($"⚠️ Error parseando binding secundario {i}: {s}");
+                }
+            }
         }
     }
 
@@ -143,12 +184,18 @@ public class InputBindings : MonoBehaviour
             PlayerPrefs.SetString("bind_s_" + i, secundarios[i].ToString());
         }
         PlayerPrefs.Save();
+        Debug.Log("💾 Bindings guardados");
     }
 
     private void AsignarTecla(GameAction accion, int slot, KeyCode tecla)
     {
         int idx = (int)accion;
-        if (slot == 0) primarios[idx] = tecla; else secundarios[idx] = tecla;
+        if (slot == 0)
+            primarios[idx] = tecla;
+        else
+            secundarios[idx] = tecla;
+
+        Debug.Log($"✅ Asignado {tecla} a {accion} slot {slot}");
     }
 
     public static KeyCode GetPrimary(GameAction accion)
@@ -183,6 +230,7 @@ public class InputBindings : MonoBehaviour
         CargarBindingsPorDefecto();
         CargarBindingsPersistentes();
         inicializado = true;
+        Debug.Log("✅ InputBindings inicializado");
     }
 
     public static bool Get(GameAction accion)
@@ -217,5 +265,9 @@ public class InputBindings : MonoBehaviour
     {
         CargarBindingsPorDefecto();
         GuardarBindingsPersistentes();
+        Debug.Log("🔄 Bindings reseteados");
     }
+
+    // ✅ Getter público para debugging
+    public bool IsListening => escuchando;
 }

@@ -31,8 +31,6 @@ public class playerLife : MonoBehaviour
     private bool isTakingDamage = false;
     public bool IsTakingDamage => isTakingDamage;
 
-    [Header("Controles")]
-    [SerializeField] private KeyCode usePotionKey = KeyCode.R;
 
     private bool isDead = false;
 

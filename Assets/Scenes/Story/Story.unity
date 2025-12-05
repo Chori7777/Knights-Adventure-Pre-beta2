@@ -996,7 +996,7 @@ MonoBehaviour:
   - {fileID: 6615105291565881644, guid: 15d3b6bb690d644a5bc7b540ff55d0bb, type: 3}
   - {fileID: 3879690903547675473, guid: 18d21297a73df473dae04363f1749376, type: 3}
   tiempoPorImagen: 8
-  escenaDestino: StartMenu
+  escenaDestino: MainMenu
   imagenDisplay: {fileID: 28226962}
   botonSkip: {fileID: 1982325586}
   tiempoFade: 1.5
@@ -1014,12 +1014,6 @@ MonoBehaviour:
   - That day has arrived. Now you must defeat the hordes of enemies and reclaim the
     city, eliminating evil from the kingdom and ushering in a new era of prosperity.
   textoHistoria: {fileID: 2117075771}
-  musicaIntro: {fileID: 0}
-  loopMusica: 1
-  fadeMusica: 1
-  velocidadTipeoTexto: 0.05
-  pausaComa: 0.2
-  pausaPunto: 0.4
 --- !u!224 &2147043160
 RectTransform:
   m_ObjectHideFlags: 0

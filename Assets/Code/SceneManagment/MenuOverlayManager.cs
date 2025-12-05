@@ -24,8 +24,18 @@ public class MenuOverlayManager : MonoBehaviour
 
     public void OpenOptions()
     {
-        if (optionsPanel != null) optionsPanel.gameObject.SetActive(true);
-        if (mainMenuPanel != null) mainMenuPanel.gameObject.SetActive(keepMainVisible);
+        if (optionsCanvasGroup != null)
+        {
+            optionsCanvasGroup.alpha = 1f;
+            optionsCanvasGroup.interactable = true;
+            optionsCanvasGroup.blocksRaycasts = true;
+        }
+        if (mainCanvasGroup != null)
+        {
+            mainCanvasGroup.alpha = keepMainVisible ? 1f : 0f;
+            mainCanvasGroup.interactable = keepMainVisible;
+            mainCanvasGroup.blocksRaycasts = keepMainVisible && !blockMainRaycastsWhenOptions;
+        }
 
         if (optionsNavigator != null)
         {
@@ -34,28 +44,27 @@ public class MenuOverlayManager : MonoBehaviour
             optionsNavigator.FocusFirst();
         }
 
-        if (blockMainRaycastsWhenOptions)
+        if (mainRaycaster != null)
         {
-            if (mainRaycaster != null) mainRaycaster.enabled = false;
-            if (mainCanvasGroup != null)
-            {
-                mainCanvasGroup.interactable = false;
-                mainCanvasGroup.blocksRaycasts = false;
-            }
+            mainRaycaster.enabled = !blockMainRaycastsWhenOptions && keepMainVisible;
         }
-
         if (optionsRaycaster != null) optionsRaycaster.enabled = true;
-        if (optionsCanvasGroup != null)
-        {
-            optionsCanvasGroup.interactable = true;
-            optionsCanvasGroup.blocksRaycasts = true;
-        }
     }
 
     public void CloseOptions()
     {
-        if (optionsPanel != null) optionsPanel.gameObject.SetActive(false);
-        if (mainMenuPanel != null) mainMenuPanel.gameObject.SetActive(true);
+        if (optionsCanvasGroup != null)
+        {
+            optionsCanvasGroup.alpha = 0f;
+            optionsCanvasGroup.interactable = false;
+            optionsCanvasGroup.blocksRaycasts = false;
+        }
+        if (mainCanvasGroup != null)
+        {
+            mainCanvasGroup.alpha = 1f;
+            mainCanvasGroup.interactable = true;
+            mainCanvasGroup.blocksRaycasts = true;
+        }
 
         if (mainNavigator != null)
         {
@@ -64,22 +73,23 @@ public class MenuOverlayManager : MonoBehaviour
             mainNavigator.FocusFirst();
         }
 
-        if (blockMainRaycastsWhenOptions)
-        {
-            if (mainRaycaster != null) mainRaycaster.enabled = true;
-            if (mainCanvasGroup != null)
-            {
-                mainCanvasGroup.interactable = true;
-                mainCanvasGroup.blocksRaycasts = true;
-            }
-        }
-
+        if (mainRaycaster != null) mainRaycaster.enabled = true;
         if (optionsRaycaster != null) optionsRaycaster.enabled = false;
-        if (optionsCanvasGroup != null)
+    }
+
+    public void SetKeepMainVisible(bool value)
+    {
+        keepMainVisible = value;
+    }
+
+    public void SetOptionsNavigator(MenuNavigator nav)
+    {
+        optionsNavigator = nav;
+        if (sharedPointer != null && optionsNavigator != null)
         {
-            optionsCanvasGroup.interactable = false;
-            optionsCanvasGroup.blocksRaycasts = false;
+            optionsNavigator.SetPointer(sharedPointer);
+            optionsNavigator.RefreshItems();
+            optionsNavigator.FocusFirst();
         }
     }
 }
-

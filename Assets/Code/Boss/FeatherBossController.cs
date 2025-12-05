@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 public class FeatherBossController : MonoBehaviour
@@ -26,8 +26,6 @@ public class FeatherBossController : MonoBehaviour
     [SerializeField] private AudioClip sonidoPlumaCayendo;
 
     [Header(" Ataque 2: Patrón Cruz y X")]
-    [SerializeField] private float distanciaCruz = 3f;
-    [SerializeField] private float duracionSeguimiento = 2f;
     [SerializeField] private AudioClip sonidoPatronCruz;
 
     [Header(" Ataque 3: Plumas Teledirigidas Triple")]

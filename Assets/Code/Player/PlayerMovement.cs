@@ -36,11 +36,19 @@ public class PlayerMovement : MonoBehaviour
 
     private float coyoteTimeCounter;
     private bool hasDoubleJumped;
+    private bool hasAirDashed;
 
     [Header("Dash")]
     [SerializeField] private float dashSpeed = 20f;
     [SerializeField] private float dashDuration = 0.15f;
     [SerializeField] private float dashCooldown = 0.5f;
+    [SerializeField] private KeyCode dashKey = KeyCode.LeftShift;
+    [SerializeField] private bool enable4WayDash = false;
+    [SerializeField] private GameObject dashAuraPrefab;
+    [SerializeField] private float dashAuraLifetime = 0.25f;
+    [SerializeField] private float dashAuraOffset = 0.5f;
+    [SerializeField] private string dashDestroyTag = "Breakable";
+    [SerializeField] private int dashDamage = 1;
 
     private bool isDashing;
     private float dashTimer;
@@ -231,6 +239,7 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && !wasGrounded)
         {
             hasDoubleJumped = false;
+            hasAirDashed = false;
             currentWallSlideSpeed = 0f;
         }
     }
@@ -350,17 +359,54 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleDash()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && Time.time > lastDashTime + dashCooldown)
+        if (Input.GetKeyDown(dashKey) && Time.time > lastDashTime + dashCooldown)
         {
+            bool canDashNow = isGrounded || (!isGrounded && !hasAirDashed);
+            if (!canDashNow) return;
+
+            if (isGrounded)
+            {
+                PerformJump(jumpForce);
+                hasAirDashed = false;
+            }
+            else
+            {
+                hasAirDashed = true;
+            }
+
             isDashing = true;
             dashTimer = dashDuration;
             lastDashTime = Time.time;
+
+            Vector2 dir = facingRight ? Vector2.right : Vector2.left;
+            if (enable4WayDash)
+            {
+                bool up = Input.GetKey(KeyCode.UpArrow);
+                bool down = Input.GetKey(KeyCode.DownArrow);
+                bool left = Input.GetKey(KeyCode.LeftArrow);
+                bool right = Input.GetKey(KeyCode.RightArrow);
+
+                Vector2 v = Vector2.zero;
+                if (up) v += Vector2.up;
+                if (down) v += Vector2.down;
+                if (left) v += Vector2.left;
+                if (right) v += Vector2.right;
+                if (v != Vector2.zero) dir = v.normalized;
+            }
+            currentDashDir = dir;
+
+            if (dashAuraPrefab != null)
+            {
+                Vector3 auraPos = transform.position - new Vector3(dir.x, dir.y, 0f) * dashAuraOffset;
+                GameObject aura = Instantiate(dashAuraPrefab, auraPos, Quaternion.identity);
+                aura.transform.right = new Vector3(dir.x, dir.y, 0f);
+                Destroy(aura, dashAuraLifetime);
+            }
         }
 
         if (isDashing)
         {
-            float dashDirection = facingRight ? 1f : -1f;
-            rb.linearVelocity = new Vector2(dashDirection * dashSpeed, rb.linearVelocity.y);
+            rb.linearVelocity = currentDashDir * dashSpeed;
         }
     }
 
@@ -530,4 +576,54 @@ public class PlayerMovement : MonoBehaviour
     public bool IsWallSliding => isWallSliding;
     public bool IsSprinting => Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
     public bool FacingRight => facingRight;
+
+    private Vector2 currentDashDir = Vector2.right;
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!isDashing) return;
+
+        if (!string.IsNullOrEmpty(dashDestroyTag) && collision.CompareTag(dashDestroyTag))
+        {
+            Destroy(collision.gameObject);
+            return;
+        }
+
+        var eLife = collision.GetComponent<EnemyLife>();
+        if (eLife != null)
+        {
+            eLife.TakeDamageWithKnockback(transform.position, dashDamage);
+            return;
+        }
+
+        var bLife = collision.GetComponent<BossLife>();
+        if (bLife != null)
+        {
+            bLife.RecibeDanio(transform.position, dashDamage);
+            return;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!isDashing) return;
+        var go = collision.gameObject;
+        if (!string.IsNullOrEmpty(dashDestroyTag) && go.CompareTag(dashDestroyTag))
+        {
+            Destroy(go);
+            return;
+        }
+        var eLife = go.GetComponent<EnemyLife>();
+        if (eLife != null)
+        {
+            eLife.TakeDamageWithKnockback(transform.position, dashDamage);
+            return;
+        }
+        var bLife = go.GetComponent<BossLife>();
+        if (bLife != null)
+        {
+            bLife.RecibeDanio(transform.position, dashDamage);
+            return;
+        }
+    }
 }

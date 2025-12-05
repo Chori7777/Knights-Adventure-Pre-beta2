@@ -15,6 +15,7 @@ public class PreferenceSettings : MonoBehaviour
     private void Awake()
     {
         PopulateResolutions();
+        PopulateFpsOptions();
         LoadPrefs();
         ApplyAll();
         HookEvents();
@@ -30,13 +31,39 @@ public class PreferenceSettings : MonoBehaviour
         for (int i = 0; i < availableResolutions.Length; i++)
         {
             var r = availableResolutions[i];
-            string option = r.width + "x" + r.height + " @" + r.refreshRateRatio.value + "Hz";
+            int hz = Mathf.RoundToInt((float)r.refreshRateRatio.value);
+            if (hz <= 0) hz = Mathf.RoundToInt((float)Screen.currentResolution.refreshRateRatio.value);
+            string option = r.width + "x" + r.height + " @" + hz + "Hz";
             options.Add(option);
             if (r.width == Screen.currentResolution.width && r.height == Screen.currentResolution.height) currentIndex = i;
+        }
+        if (options.Count == 0)
+        {
+            var r = Screen.currentResolution;
+            int hz = Mathf.RoundToInt((float)r.refreshRateRatio.value);
+            if (hz <= 0) hz = 60;
+            options.Add(r.width + "x" + r.height + " @" + hz + "Hz");
+            currentIndex = 0;
         }
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentIndex;
         resolutionDropdown.RefreshShownValue();
+    }
+
+    private void PopulateFpsOptions()
+    {
+        if (fpsDropdown == null) return;
+        var fpsOptions = new System.Collections.Generic.List<string>
+        {
+            "30 FPS",
+            "60 FPS",
+            "120 FPS",
+            "144 FPS",
+            "240 FPS"
+        };
+        fpsDropdown.ClearOptions();
+        fpsDropdown.AddOptions(fpsOptions);
+        fpsDropdown.RefreshShownValue();
     }
 
     private void HookEvents()

@@ -107,6 +107,16 @@ public class BossScriptAttacks : MonoBehaviour
                 lastStoneRainTime = Time.time;
             }
 
+            // Posible embestida si el jugador está a rango medio
+            if (!core.IsAttacking && core.player != null)
+            {
+                float dist = core.DistanceToPlayer();
+                if (dist > minDistanceForMelee && dist < 8f)
+                {
+                    yield return StartCoroutine(ChargeAttack());
+                }
+            }
+
             Debug.Log("pensando siguiente ataque... mm...");
             yield return new WaitForSeconds(timeBetweenAttacks);
         }
@@ -263,5 +273,20 @@ public class BossScriptAttacks : MonoBehaviour
         {
             currentAlert.SetActive(false);
         }
+    }
+    private IEnumerator ChargeAttack()
+    {
+        core.IsAttacking = true;
+        float elapsed = 0f;
+        Vector2 dir = core.DirectionToPlayer().normalized;
+        float baseX = moveSpeed;
+        while (elapsed < chargeDuration)
+        {
+            core.rb.linearVelocity = new Vector2(dir.x * baseX * chargeSpeedMultiplier, core.rb.linearVelocity.y);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        core.rb.linearVelocity = new Vector2(0f, core.rb.linearVelocity.y);
+        core.IsAttacking = false;
     }
 }
