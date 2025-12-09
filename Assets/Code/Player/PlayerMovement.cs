@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -44,6 +45,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashCooldown = 0.5f;
     [SerializeField] private KeyCode dashKey = KeyCode.LeftShift;
     [SerializeField] private bool enable4WayDash = false;
+    [SerializeField] private bool dashUpAsExtraJump = true;
+    [SerializeField] private float dashUpJumpForce = 12f;
+    [SerializeField] private bool dashUpConsumesAirDash = true;
+    [SerializeField] private bool dashUpConsumesDoubleJump = false;
     [SerializeField] private GameObject dashAuraPrefab;
     [SerializeField] private float dashAuraLifetime = 0.25f;
     [SerializeField] private float dashAuraOffset = 0.5f;
@@ -110,10 +115,22 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float cameraShakeDuration = 0.2f;
 
     private bool isTakingDamage;
+    [SerializeField] private bool allowControlsWhileDamaged = false;
 
     [Header("Camera Holder")]
     [SerializeField] private Transform cameraHolder;
     private Vector3 originalCameraPosition;
+
+    [Header("Resistance Shield")]
+    [SerializeField] public bool enableResistanceShield = false;
+    [SerializeField] private float shieldMax = 100f;
+    [SerializeField] private float shieldDurability = 100f;
+    [SerializeField] private float shieldTickCost = 2f;
+    [SerializeField] private float shieldRechargeDelay = 1.5f;
+    [SerializeField] private float shieldRechargeRate = 25f;
+    [SerializeField] private Image shieldBarFill;
+    private float shieldIdleTimer = 0f;
+    private bool shieldRecharging = false;
 
     private void Start()
     {
@@ -127,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (isTakingDamage) return;
+        if (isTakingDamage && !allowControlsWhileDamaged) return;
 
         CaptureInput();
         UpdateDetectionStates();
@@ -144,11 +161,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         ApplyBetterFalling();
+
+        UpdateShieldRecharge(Time.deltaTime);
+        UpdateShieldUI();
     }
 
     private void FixedUpdate()
     {
-        if (isTakingDamage) return;
+        if (isTakingDamage && !allowControlsWhileDamaged) return;
 
         bool isBlocking = Input.GetKey(KeyCode.X);
         bool isHoldingCtrl = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
@@ -324,6 +344,18 @@ public class PlayerMovement : MonoBehaviour
         animController?.TriggerDoubleJump();
     }
 
+    private void PerformDashUpJump()
+    {
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
+        float force = dashUpJumpForce > 0f ? dashUpJumpForce : doubleJumpForce;
+        rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
+        if (dashUpConsumesDoubleJump)
+        {
+            hasDoubleJumped = true;
+        }
+        animController?.TriggerDoubleJump();
+    }
+
     private void WallJump()
     {
         lastWallJumpTime = Time.time;
@@ -392,6 +424,27 @@ public class PlayerMovement : MonoBehaviour
                 if (left) v += Vector2.left;
                 if (right) v += Vector2.right;
                 if (v != Vector2.zero) dir = v.normalized;
+
+                // Dash hacia arriba como salto adicional
+                if (dashUpAsExtraJump && up && !down && dir.y > 0.5f)
+                {
+                    PerformDashUpJump();
+                    if (dashUpConsumesAirDash) hasAirDashed = true;
+                    if (dashUpConsumesDoubleJump) hasDoubleJumped = true;
+                    // Consumir cooldown del dash, pero no entrar en estado de dash
+                    isDashing = false;
+                    dashTimer = 0f;
+                    lastDashTime = Time.time;
+                    // Aura opcional
+                    if (dashAuraPrefab != null)
+                    {
+                        Vector3 auraPos = transform.position - new Vector3(0f, 1f, 0f) * dashAuraOffset;
+                        GameObject aura = Instantiate(dashAuraPrefab, auraPos, Quaternion.identity);
+                        aura.transform.right = Vector3.up;
+                        Destroy(aura, dashAuraLifetime);
+                    }
+                    return;
+                }
             }
             currentDashDir = dir;
 
@@ -574,6 +627,18 @@ public class PlayerMovement : MonoBehaviour
     public float VerticalVelocity => rb.linearVelocity.y;
     public bool IsBlocking => InputBindings.Get(InputBindings.GameAction.Action2Shield);
     public bool IsWallSliding => isWallSliding;
+
+    public void SetControlsEnabled(bool enabled)
+    {
+        canMove = enabled;
+        canJump = enabled;
+        canDoubleJump = enabled;
+        canAttack = enabled;
+        canDash = enabled;
+        canWallCling = enabled;
+        canBlock = enabled;
+        canThrowProjectile = enabled;
+    }
     public bool IsSprinting => Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
     public bool FacingRight => facingRight;
 
@@ -601,6 +666,56 @@ public class PlayerMovement : MonoBehaviour
         {
             bLife.RecibeDanio(transform.position, dashDamage);
             return;
+        }
+    }
+
+    private void UpdateShieldRecharge(float dt)
+    {
+        if (!enableResistanceShield) return;
+        bool quiet = Mathf.Abs(rb.linearVelocity.x) < 0.01f && !IsAttacking && !IsDashing && !IsBlocking;
+        if (!quiet)
+        {
+            shieldIdleTimer = 0f;
+            shieldRecharging = false;
+            return;
+        }
+        shieldIdleTimer += dt;
+        if (shieldIdleTimer >= shieldRechargeDelay) shieldRecharging = true;
+        if (shieldRecharging && shieldDurability < shieldMax)
+        {
+            shieldDurability = Mathf.Min(shieldMax, shieldDurability + shieldRechargeRate * dt);
+        }
+    }
+
+    private void UpdateShieldUI()
+    {
+        if (shieldBarFill == null) return;
+        if (!enableResistanceShield)
+        {
+            if (shieldBarFill.gameObject.activeSelf) shieldBarFill.gameObject.SetActive(false);
+            return;
+        }
+        bool show = Input.GetKey(KeyCode.X);
+        if (shieldBarFill.gameObject.activeSelf != show) shieldBarFill.gameObject.SetActive(show);
+        shieldBarFill.fillAmount = shieldDurability / shieldMax;
+    }
+
+    public void BossContactTick()
+    {
+        if (!enableResistanceShield) return;
+        if (shieldDurability <= 0f) return;
+        shieldDurability = Mathf.Max(0f, shieldDurability - shieldTickCost);
+        shieldIdleTimer = 0f;
+        shieldRecharging = false;
+    }
+
+    public void OnBossAttackEnd()
+    {
+        if (!enableResistanceShield) return;
+        if (shieldDurability < shieldMax * 0.5f)
+        {
+            var life = GetComponent<playerLife>();
+            if (life != null) life.TakeDamage(transform.position, 1);
         }
     }
 

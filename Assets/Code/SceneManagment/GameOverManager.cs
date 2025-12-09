@@ -9,6 +9,12 @@ public class GameOverManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textoMuerte; // Asignalo desde el Inspector
     [SerializeField] private float velocidadTipeo = 0.05f; // Velocidad entre letras
 
+    [SerializeField] private float pausaComaMultiplier = 3f;
+    [SerializeField] private float pausaPuntoMultiplier = 6f;
+    [SerializeField] private bool usarMensajesAlternativos = false;
+
+    public static bool UseVariant2 = false;
+
     private string[] frasesMuerte = new string[]
     {
         "Knight! Don't give up now! You were close!",
@@ -20,6 +26,13 @@ public class GameOverManager : MonoBehaviour
         "Ouroboros",
         "No matter what happens, you must reach the top of the tower",
     };
+    [SerializeField] private string[] frasesMuerteAlt = new string[]
+    {
+        "You fought bravely.",
+        "Rest, then rise again.",
+        "Silence...",
+        "A different path awaits.",
+    };
 
     private void Start()
     {
@@ -30,8 +43,9 @@ public class GameOverManager : MonoBehaviour
     private void MostrarTextoMuerte()
     {
         if (textoMuerte == null) return;
-        int randomIndex = Random.Range(0, frasesMuerte.Length);
-        StartCoroutine(TipearTexto(frasesMuerte[randomIndex]));
+        var lista = SeleccionarLista();
+        int randomIndex = Random.Range(0, lista.Length);
+        StartCoroutine(TipearTexto(lista[randomIndex]));
     }
 
     private IEnumerator TipearTexto(string frase)
@@ -40,7 +54,12 @@ public class GameOverManager : MonoBehaviour
         foreach (char letra in frase)
         {
             textoMuerte.text += letra;
-            yield return new WaitForSecondsRealtime(velocidadTipeo);
+            float wait = velocidadTipeo;
+            if (letra == '.' || letra == '!' || letra == '?' || letra == '…')
+                wait = velocidadTipeo * pausaPuntoMultiplier;
+            else if (letra == ',' || letra == ';' || letra == ':')
+                wait = velocidadTipeo * pausaComaMultiplier;
+            yield return new WaitForSecondsRealtime(wait);
             // WaitForSecondsRealtime se usa porque el juego está en pausa (Time.timeScale = 0)
         }
     }
@@ -87,5 +106,18 @@ public class GameOverManager : MonoBehaviour
         Time.timeScale = 1f;
         Debug.Log(" Volviendo al menú principal...");
         SceneManager.LoadScene("MainMenu");
+    }
+
+    private string[] SeleccionarLista()
+    {
+        bool variante = usarMensajesAlternativos || UseVariant2;
+        if (variante && frasesMuerteAlt != null && frasesMuerteAlt.Length > 0)
+            return frasesMuerteAlt;
+        return frasesMuerte;
+    }
+
+    public static void SetVariant2(bool use)
+    {
+        UseVariant2 = use;
     }
 }

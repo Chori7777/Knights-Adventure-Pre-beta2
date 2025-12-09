@@ -81,7 +81,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1262583705
-  m_SortingLayer: 9
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: -1906453376738543106, guid: 89cddebf50d334540a7ac4abbfbed478, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -130,7 +130,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   posicionIzquierda: {fileID: 0}
   posicionDerecha: {fileID: 0}
-  velocidadMovimiento: 3
   cooldownMovimiento: 6
   duracionTeletransporte: 0.5
   voltearHaciaJugador: 1
@@ -143,12 +142,7 @@ MonoBehaviour:
   rangoSpawnX: 15
   alturaSpawn: 6
   sonidoPlumaCayendo: {fileID: 0}
-  distanciaCruz: 4
-  duracionSeguimiento: 2
-  tiempoAdvertencia: 1
-  prefabIndicadorAdvertencia: {fileID: 0}
   sonidoPatronCruz: {fileID: 0}
-  sonidoBeepAdvertencia: {fileID: 0}
   cantidadPlumasTeledirigidas: 3
   intervaloPlumasTeledirigidas: 0.25
   anguloDispersion: 1
@@ -184,7 +178,6 @@ MonoBehaviour:
   vidaJefe: {fileID: 3354991593770247439}
   sonidoMovimiento: {fileID: 0}
   sonidoTeletransporte: {fileID: 0}
-  sonidoMuerte: {fileID: 0}
   tiempoEntreAtaques: 2.5
   mostrarIntroduccion: 1
 --- !u!50 &934493352331397093
@@ -276,10 +269,15 @@ MonoBehaviour:
   anim: {fileID: 0}
   spriteRenderer: {fileID: 0}
   player: {fileID: 0}
+  animController: {fileID: 0}
+  life: {fileID: 0}
+  movement: {fileID: 0}
   IsDead: 0
   IsAttacking: 0
+  IsTakingDamage: 0
   IsVulnerable: 1
   CanMove: 1
+  CurrentPhase: 1
 --- !u!114 &3354991593770247439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,6 +298,10 @@ MonoBehaviour:
   spawnSavePointOnDeath: 1
   knockbackForce: 6
   knockbackRecoveryTime: 0.4
+  scriptAtaque: {fileID: 0}
+  trialManager: {fileID: 0}
+  trialMode: 0
+  scoreReward: 50
 --- !u!114 &5799007874817773941
 MonoBehaviour:
   m_ObjectHideFlags: 0

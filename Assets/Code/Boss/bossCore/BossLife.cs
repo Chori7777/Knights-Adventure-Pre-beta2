@@ -32,18 +32,50 @@ public class BossLife : MonoBehaviour
     public bool trialMode = false;
     private bool acceleratedApplied = false;
     private bool superAcceleratedApplied = false;
+    private bool phase2PulseActivated = false;
+    [SerializeField] private bool enablePhase2VignettePulse = false;
+    [SerializeField] private Color phase2PulseColor = Color.red;
+    [SerializeField] private float phase2PulseMin = 0.2f;
+    [SerializeField] private float phase2PulseMax = 0.5f;
+    [SerializeField] private float phase2PulsePeriod = 1.5f;
+    [Header("Trials - Teleport inicial a mitad de vida")]
+    [SerializeField] private bool triggerInitialAreaAtHalfHealth = true;
+    private bool initialAreaTeleportDone = false;
 
     [Header("SCORE - NUEVO")]
     [SerializeField] private int scoreReward = 50; 
+
+    [Header("Drop al morir")]
+    [SerializeField] private GameObject dropPrefab;
+    [SerializeField] private Vector3 dropSpawnOffset;
+    [SerializeField] private bool dropOnDeath = true;
+
 
     private void Awake()
     {
         health = maxHealth;
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        // Permitir empuje por contacto: no congelar ejes
 
         if (savePointSpawnPosition == Vector3.zero)
             savePointSpawnPosition = transform.position;
+
+        if (BossHealthUI.Instance != null)
+            BossHealthUI.Instance.UpdateHealth(health, maxHealth);
+    }
+
+    public void AssignAttackScript(MonoBehaviour attackScript)
+    {
+        scriptAtaque = attackScript;
+    }
+
+    public void SetAttackEnabled(bool enabled)
+    {
+        if (scriptAtaque != null)
+        {
+            scriptAtaque.enabled = enabled;
+        }
     }
 
     public void SetBossTrigger(BossTrigger trigger)
@@ -58,6 +90,15 @@ public class BossLife : MonoBehaviour
         health -= damage;
         if (health < 0) health = 0;
 
+        if (BossHealthUI.Instance != null)
+            BossHealthUI.Instance.UpdateHealth(health, maxHealth);
+
+        var feather = GetComponent<FeatherBossController>();
+        if (feather != null)
+        {
+            feather.OnBossHit();
+        }
+
         if (anim != null)
             anim.SetBool("damage", true);
 
@@ -68,18 +109,24 @@ public class BossLife : MonoBehaviour
             StartCoroutine(RecuperarDeKnockback());
             if (trialMode && trialManager != null)
             {
-                if (!acceleratedApplied && health <= maxHealth / 2)
-                {
-                    acceleratedApplied = true;
-                    trialManager.SetAccelerated(true);
-                    trialManager.PauseForDialoguePhase2();
-                }
-                if (!superAcceleratedApplied && health <= maxHealth / 4)
-                {
-                    superAcceleratedApplied = true;
-                    trialManager.SetSuperAccelerated(true);
-                }
                 trialManager.OnBossHit();
+                if (triggerInitialAreaAtHalfHealth && !initialAreaTeleportDone && health <= maxHealth / 2)
+                {
+                    initialAreaTeleportDone = true;
+                    trialManager.TeleportToInitialArea();
+                }
+            }
+            else
+            {
+                if (enablePhase2VignettePulse && !phase2PulseActivated && health <= maxHealth / 2)
+                {
+                    phase2PulseActivated = true;
+                    var fx = FindFirstObjectByType<CameraEffectsController>(FindObjectsInactive.Include);
+                    if (fx != null)
+                    {
+                        fx.StartVignettePulse(phase2PulseColor, phase2PulseMin, phase2PulseMax, phase2PulsePeriod);
+                    }
+                }
             }
         }
     }
@@ -90,6 +137,15 @@ public class BossLife : MonoBehaviour
 
         health -= cantDanio;
         if (health < 0) health = 0;
+
+        if (BossHealthUI.Instance != null)
+            BossHealthUI.Instance.UpdateHealth(health, maxHealth);
+
+        var feather2 = GetComponent<FeatherBossController>();
+        if (feather2 != null)
+        {
+            feather2.OnBossHit();
+        }
 
         recibiendoDanio = true;
 
@@ -104,6 +160,7 @@ public class BossLife : MonoBehaviour
 
         if (rb != null)
         {
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation; // liberar X temporalmente
             Vector2 knockDir = ((Vector2)transform.position - direccionAtaque).normalized;
             knockDir.y = Mathf.Clamp(knockDir.y + 0.5f, 0.5f, 1f);
             rb.linearVelocity = Vector2.zero;
@@ -113,18 +170,24 @@ public class BossLife : MonoBehaviour
         StartCoroutine(RecuperarDeKnockback());
         if (trialMode && trialManager != null)
         {
-            if (!acceleratedApplied && health <= maxHealth / 2)
-            {
-                acceleratedApplied = true;
-                trialManager.SetAccelerated(true);
-                trialManager.PauseForDialoguePhase2();
-            }
-            if (!superAcceleratedApplied && health <= maxHealth / 4)
-            {
-                superAcceleratedApplied = true;
-                trialManager.SetSuperAccelerated(true);
-            }
             trialManager.OnBossHit();
+            if (triggerInitialAreaAtHalfHealth && !initialAreaTeleportDone && health <= maxHealth / 2)
+            {
+                initialAreaTeleportDone = true;
+                trialManager.TeleportToInitialArea();
+            }
+        }
+        else
+        {
+            if (enablePhase2VignettePulse && !phase2PulseActivated && health <= maxHealth / 2)
+            {
+                phase2PulseActivated = true;
+                var fx = FindFirstObjectByType<CameraEffectsController>(FindObjectsInactive.Include);
+                if (fx != null)
+                {
+                    fx.StartVignettePulse(phase2PulseColor, phase2PulseMin, phase2PulseMax, phase2PulsePeriod);
+                }
+            }
         }
     }
 
@@ -137,7 +200,9 @@ public class BossLife : MonoBehaviour
             anim.SetBool("damage", false);
 
         if (rb != null)
+        {
             rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+        }
     }
 
     private void Die()
@@ -174,6 +239,13 @@ public class BossLife : MonoBehaviour
             trialManager.EndSequenceVictory();
         }
 
+        if (BossHealthUI.Instance != null)
+            BossHealthUI.Instance.Hide();
+
+        var fxStop = FindFirstObjectByType<CameraEffectsController>(FindObjectsInactive.Include);
+        if (fxStop != null)
+            fxStop.StopVignettePulse();
+
         StartCoroutine(DeathSequence());
     }
 
@@ -204,6 +276,13 @@ public class BossLife : MonoBehaviour
                                : savePointSpawnPosition;
             Instantiate(savePointPrefab, spawnPos, Quaternion.identity);
         }
+
+        if (dropOnDeath && dropPrefab != null)
+        {
+            Vector3 dropPos = transform.position + dropSpawnOffset;
+            Instantiate(dropPrefab, dropPos, Quaternion.identity);
+        }
+
         AudioManager.Instance.StopMusicImmediately();
         yield return new WaitForSeconds(1.5f);
         Destroy(gameObject);

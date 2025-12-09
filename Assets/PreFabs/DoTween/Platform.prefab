@@ -77,7 +77,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -548834727
-  m_SortingLayer: 4
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -5113850848988359095, guid: 10d2067b79dc58c4c88214ee3c2eae11, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -105,16 +105,26 @@ MonoBehaviour:
   pointA: {fileID: 0}
   pointB: {fileID: 0}
   startAtPointA: 1
-  moveSpeed: 2
-  easeType: 4
+  moveSpeed: 4
+  easeType: 27
   waitTimeAtFloor: 1
-  moveOnPlayerEnter: 0
-  canCallWithButton: 0
+  moveOnPlayerEnter: 1
+  canCallWithButton: 1
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  autoLoop: 1
-  moveSound: {fileID: 0}
+  autoLoop: 0
+  useBPM: 0
+  bpm: 120
+  unitsPerBeat: 4
+  beatsWaitAtFloor: 2
+  useTimeSteps: 0
+  stepIntervalSeconds: 0.2
+  stepDistanceUnits: 0.5
+  stickPlayerToPlatform: 1
+  teleportToAOnArriveB: 0
+  teleportLoopSMB: 0
+  moveSound: {fileID: 8300000, guid: dcc383f17dc24eb4d9e2fec3a67f96be, type: 3}
   arriveSound: {fileID: 0}
   platformRoot: {fileID: 481654831800271065}
   lockToParentSpace: 0

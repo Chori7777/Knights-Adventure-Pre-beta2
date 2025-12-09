@@ -1,5 +1,80 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &653598847917336518
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1868094998954684210}
+  - component: {fileID: 1913559672985049442}
+  - component: {fileID: 3111439494422802132}
+  m_Layer: 5
+  m_Name: ShieldBar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1868094998954684210
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653598847917336518}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 3122601687045036572}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -262.94, y: -132.88}
+  m_SizeDelta: {x: 20.8125, y: 3.4871}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1913559672985049442
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653598847917336518}
+  m_CullTransparentMesh: 1
+--- !u!114 &3111439494422802132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653598847917336518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -8882491957927913235, guid: 1295b61123c562045a62f1f5f0a0d8f7, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &5407286007423337658
 GameObject:
   m_ObjectHideFlags: 0
@@ -18,6 +93,7 @@ GameObject:
   - component: {fileID: 5724456180602391206}
   - component: {fileID: 656354545055968790}
   - component: {fileID: 8441539338800490037}
+  - component: {fileID: 7153805960494185477}
   m_Layer: 7
   m_Name: second character_0
   m_TagString: Player
@@ -34,11 +110,12 @@ Transform:
   m_GameObject: {fileID: 5407286007423337658}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -57.38, y: 19.11, z: 0}
+  m_LocalPosition: {x: -54.354897, y: 19.002989, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4604669837468981973}
+  - {fileID: 3122601687045036572}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &556246369610114617
@@ -85,7 +162,7 @@ SpriteRenderer:
   m_SortingLayerID: 1262583705
   m_SortingLayer: 8
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2860740465585663781, guid: 03f0e38c95312e7489eac1bb6f32aeb4, type: 3}
+  m_Sprite: {fileID: 247034515338632906, guid: 983fd55db39d557409610560c17c86d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -127,9 +204,17 @@ MonoBehaviour:
   potionHealAmount: 1
   potionCooldown: 0.5
   potionCooldownIndicator: {fileID: 0}
+  enableAutoRechargePotions: 1
+  autoRechargePotions: 1
+  autoRechargeDuration: 30
+  autoRechargeInterval: 5
   invincibilityDuration: 1
   deathAnimationName: Death
   deathFallbackDuration: 1
+  useAlternateDeathDestination: 1
+  gameOverSceneDefault: GameOver
+  gameOverSceneAlternate: GameOverALT
+  useAlternateGameOverMessagesForThisCharacter: 1
 --- !u!114 &6474835378896499795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,7 +242,7 @@ MonoBehaviour:
   sprintMultiplier: 1.5
   isSprintMode: 0
   jumpForce: 8
-  doubleJumpForce: 0
+  doubleJumpForce: 8
   fallMultiplier: 2.5
   lowJumpMultiplier: 3
   coyoteTime: 0.15
@@ -166,6 +251,10 @@ MonoBehaviour:
   dashCooldown: 0.5
   dashKey: 304
   enable4WayDash: 1
+  dashUpAsExtraJump: 1
+  dashUpJumpForce: 8
+  dashUpConsumesAirDash: 1
+  dashUpConsumesDoubleJump: 1
   dashAuraPrefab: {fileID: 0}
   dashAuraLifetime: 0.25
   dashAuraOffset: 0.5
@@ -191,7 +280,7 @@ MonoBehaviour:
   canAttack: 0
   canDash: 1
   canWallCling: 0
-  canBlock: 0
+  canBlock: 1
   canThrowProjectile: 0
   groundCheckRay: 0.2
   groundCheckSpacing: 0.3
@@ -200,7 +289,15 @@ MonoBehaviour:
   inputDeadzone: 0.1
   cameraShakeIntensity: 0.3
   cameraShakeDuration: 0.2
+  allowControlsWhileDamaged: 1
   cameraHolder: {fileID: 0}
+  enableResistanceShield: 1
+  shieldMax: 100
+  shieldDurability: 100
+  shieldTickCost: 2
+  shieldRechargeDelay: 1.5
+  shieldRechargeRate: 25
+  shieldBarFill: {fileID: 3111439494422802132}
 --- !u!50 &2323940080219901551
 Rigidbody2D:
   serializedVersion: 5
@@ -262,17 +359,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0025839806, y: -0.02325511}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.0625, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.85013247, y: 0.9534898}
   m_EdgeRadius: 0
 --- !u!114 &5724456180602391206
 MonoBehaviour:
@@ -299,7 +396,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shieldVisual: {fileID: 0}
-  useAlternateShield: 0
+  useAlternateShield: 1
   alternateShieldVisual: {fileID: 0}
   blockSound: {fileID: 0}
   shieldBreakSound: {fileID: 0}
@@ -333,9 +430,141 @@ MonoBehaviour:
   potionHealAmount: 1
   potionCooldown: 0.5
   potionCooldownIndicator: {fileID: 0}
-  invincibilityDuration: 1
+  enableAutoRechargePotions: 1
+  autoRechargePotions: 1
+  autoRechargeDuration: 30
+  autoRechargeInterval: 5
+  invincibilityDuration: 0.5
   deathAnimationName: Death
   deathFallbackDuration: 1
+  useAlternateDeathDestination: 0
+  gameOverSceneDefault: GameOver
+  gameOverSceneAlternate: GameOver
+  useAlternateGameOverMessagesForThisCharacter: 0
+--- !u!95 &7153805960494185477
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5407286007423337658}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9e8456106c0524a45934eebf26820f2e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &8061201806002372717
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3122601687045036572}
+  - component: {fileID: 4409515165557395533}
+  - component: {fileID: 3801561039799483681}
+  - component: {fileID: 8737667618727863418}
+  m_Layer: 5
+  m_Name: Canvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3122601687045036572
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8061201806002372717}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1868094998954684210}
+  m_Father: {fileID: 1232063694853253268}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 263.02, y: 133.65}
+  m_SizeDelta: {x: 519, y: 253}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!223 &4409515165557395533
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8061201806002372717}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &3801561039799483681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8061201806002372717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 1
+--- !u!114 &8737667618727863418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8061201806002372717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &8776338193302484647
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,7 +590,7 @@ Transform:
   m_GameObject: {fileID: 8776338193302484647}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.321, y: -0.484, z: 0}
+  m_LocalPosition: {x: 0.42, y: -0.497, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

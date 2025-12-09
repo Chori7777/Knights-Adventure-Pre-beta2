@@ -6053,6 +6053,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   autoLoop: 0
+  useBPM: 0
+  bpm: 120
+  unitsPerBeat: 4
+  beatsWaitAtFloor: 2
+  useTimeSteps: 0
+  stepIntervalSeconds: 0.2
+  stepDistanceUnits: 0.5
+  stickPlayerToPlatform: 1
+  stickYOffsetThreshold: 0.15
+  teleportToAOnArriveB: 0
+  teleportLoopSMB: 0
+  autoReturnToAWhenEmpty: 1
+  autoReturnDelay: 1
   moveSound: {fileID: 0}
   arriveSound: {fileID: 0}
   platformRoot: {fileID: 0}
@@ -7457,56 +7470,6 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741827
-  - first: {x: 109, y: 65, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741827
-  - first: {x: 110, y: 65, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741827
-  - first: {x: 111, y: 65, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741827
-  - first: {x: 109, y: 66, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741827
-  - first: {x: 111, y: 66, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741827
   - first: {x: 152, y: 67, z: 0}
     second:
       serializedVersion: 2
@@ -7719,13 +7682,13 @@ Tilemap:
       m_AllTileFlags: 1073741827
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 145
+  - m_RefCount: 140
     m_Data: {fileID: 1816987767}
   m_TileSpriteArray:
-  - m_RefCount: 145
+  - m_RefCount: 140
     m_Data: {fileID: 246513770}
   m_TileMatrixArray:
-  - m_RefCount: 145
+  - m_RefCount: 140
     m_Data:
       e00: 1
       e01: 0
@@ -7744,7 +7707,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 145
+  - m_RefCount: 140
     m_Data: {r: 0.9386005, g: 0.6211604, b: 0.6590676, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -8871,16 +8834,6 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: 61, y: 49, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
   - first: {x: 108, y: 54, z: 0}
     second:
       serializedVersion: 2
@@ -8903,13 +8856,13 @@ Tilemap:
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 7
+  - m_RefCount: 6
     m_Data: {fileID: 11400000, guid: 8fa0ed3580dc47944a0ad0e278a90d7b, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 7
+  - m_RefCount: 6
     m_Data: {fileID: 1059412885, guid: 928892c16efd6044294d1988c256e74f, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 7
+  - m_RefCount: 6
     m_Data:
       e00: 1
       e01: 0
@@ -8928,7 +8881,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 7
+  - m_RefCount: 6
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -9999,6 +9952,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   autoLoop: 0
+  useBPM: 0
+  bpm: 120
+  unitsPerBeat: 4
+  beatsWaitAtFloor: 2
+  useTimeSteps: 0
+  stepIntervalSeconds: 0.2
+  stepDistanceUnits: 0.5
+  stickPlayerToPlatform: 1
+  stickYOffsetThreshold: 0.15
+  teleportToAOnArriveB: 0
+  teleportLoopSMB: 0
+  autoReturnToAWhenEmpty: 1
+  autoReturnDelay: 1
   moveSound: {fileID: 0}
   arriveSound: {fileID: 0}
   platformRoot: {fileID: 0}
@@ -12879,6 +12845,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30ef241437f58624eb14f699427be5e4, type: 3}
+--- !u!1001 &861339933
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4941232459256486631, guid: 2b5a7a1ce8d4da845badebca933ae97a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -57.163513
+      objectReference: {fileID: 0}
+    - target: {fileID: 4941232459256486631, guid: 2b5a7a1ce8d4da845badebca933ae97a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 20.759476
+      objectReference: {fileID: 0}
+    - target: {fileID: 4941232459256486631, guid: 2b5a7a1ce8d4da845badebca933ae97a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.04756689
+      objectReference: {fileID: 0}
+    - target: {fileID: 4941232459256486631, guid: 2b5a7a1ce8d4da845badebca933ae97a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4941232459256486631, guid: 2b5a7a1ce8d4da845badebca933ae97a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4941232459256486631, guid: 2b5a7a1ce8d4da845badebca933ae97a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4941232459256486631, guid: 2b5a7a1ce8d4da845badebca933ae97a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4941232459256486631, guid: 2b5a7a1ce8d4da845badebca933ae97a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4941232459256486631, guid: 2b5a7a1ce8d4da845badebca933ae97a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4941232459256486631, guid: 2b5a7a1ce8d4da845badebca933ae97a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6781899409882942398, guid: 2b5a7a1ce8d4da845badebca933ae97a, type: 3}
+      propertyPath: m_Name
+      value: Volume
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2b5a7a1ce8d4da845badebca933ae97a, type: 3}
 --- !u!1001 &873681579
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -185946,6 +185969,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   autoLoop: 0
+  useBPM: 0
+  bpm: 120
+  unitsPerBeat: 4
+  beatsWaitAtFloor: 2
+  useTimeSteps: 0
+  stepIntervalSeconds: 0.2
+  stepDistanceUnits: 0.5
+  stickPlayerToPlatform: 1
+  stickYOffsetThreshold: 0.15
+  teleportToAOnArriveB: 0
+  teleportLoopSMB: 0
+  autoReturnToAWhenEmpty: 1
+  autoReturnDelay: 1
   moveSound: {fileID: 0}
   arriveSound: {fileID: 0}
   platformRoot: {fileID: 0}
@@ -190303,6 +190339,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   autoLoop: 0
+  useBPM: 0
+  bpm: 120
+  unitsPerBeat: 4
+  beatsWaitAtFloor: 2
+  useTimeSteps: 0
+  stepIntervalSeconds: 0.2
+  stepDistanceUnits: 0.5
+  stickPlayerToPlatform: 1
+  stickYOffsetThreshold: 0.15
+  teleportToAOnArriveB: 0
+  teleportLoopSMB: 0
+  autoReturnToAWhenEmpty: 1
+  autoReturnDelay: 1
   moveSound: {fileID: 0}
   arriveSound: {fileID: 0}
   platformRoot: {fileID: 0}
@@ -193201,6 +193250,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   autoLoop: 0
+  useBPM: 0
+  bpm: 120
+  unitsPerBeat: 4
+  beatsWaitAtFloor: 2
+  useTimeSteps: 0
+  stepIntervalSeconds: 0.2
+  stepDistanceUnits: 0.5
+  stickPlayerToPlatform: 1
+  stickYOffsetThreshold: 0.15
+  teleportToAOnArriveB: 0
+  teleportLoopSMB: 0
+  autoReturnToAWhenEmpty: 1
+  autoReturnDelay: 1
   moveSound: {fileID: 0}
   arriveSound: {fileID: 0}
   platformRoot: {fileID: 0}
@@ -193585,3 +193647,4 @@ SceneRoots:
   - {fileID: 291162378}
   - {fileID: 102351074}
   - {fileID: 598403123}
+  - {fileID: 861339933}

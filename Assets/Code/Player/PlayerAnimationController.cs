@@ -8,6 +8,7 @@ public class PlayerAnimationController : MonoBehaviour
 
     private bool isDoubleJumping;
     private float doubleJumpAnimTime = 0.6f;
+    private bool frozen;
 
 
     public void Initialize(PlayerMovement playerMovement)
@@ -125,5 +126,10 @@ public class PlayerAnimationController : MonoBehaviour
         {
             life.OnDeathAnimationEnd();
         }
+    }
+
+    public void SetFrozen(bool value)
+    {
+        frozen = value;
     }
 }

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -10,9 +10,6 @@ public class InputBindings : MonoBehaviour
     private static KeyCode[] secundarios = new KeyCode[6];
     private static bool inicializado;
 
-    [SerializeField] private KeyCode submitKey = KeyCode.None;
-    [SerializeField] private KeyCode submitAltKey = KeyCode.None;
-    [SerializeField] private KeyCode cancelKey = KeyCode.None;
 
     private bool escuchando;
     private GameAction accionEscuchar;

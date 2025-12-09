@@ -1,10 +1,12 @@
 using UnityEngine;
+using System.Collections;
 
 public class NPC : MonoBehaviour
 {
     [Header("Diálogo")]
     [SerializeField] private float interactionDistance = 2f;
     [SerializeField] private string[] dialogueLines;
+    
 
     [Header("Recompensas")]
     [SerializeField] private bool giveRewards = false;
@@ -19,12 +21,20 @@ public class NPC : MonoBehaviour
     private bool dialogueActive = false;
     private bool isInRange = false;
 
+    [Header("Corpse")]
+    [SerializeField] public bool isCorpse = false;
+    [SerializeField] private string npcID = "npc_001";
+    [SerializeField] private AudioClip levelUpSound;
+
     private void Start()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
 
         if (playerObj != null)
             player = playerObj.transform;
+
+        if (isCorpse && PlayerPrefs.GetInt("Corpse_" + npcID, 0) == 1)
+            gameObject.SetActive(false);
     }
 
     private void Update()
@@ -102,6 +112,11 @@ public class NPC : MonoBehaviour
             Destroy(tilemapToDestroy);
             Debug.Log("Tilemap destruido por NPC.");
         }
+
+        if (isCorpse)
+        {
+            StartCoroutine(CorpseSequence());
+        }
     }
 
     private void OnDrawGizmosSelected()
@@ -109,4 +124,27 @@ public class NPC : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, interactionDistance);
     }
+
+    private IEnumerator CorpseSequence()
+    {
+        if (BlackScreenManager.Instance != null)
+            BlackScreenManager.Instance.ShowBlackScreen();
+
+        if (levelUpSound != null && AudioManager.Instance != null)
+            AudioManager.Instance.PlaySFX(levelUpSound, 1f);
+
+        yield return new WaitForSeconds(1f);
+
+        PlayerPrefs.SetInt("Corpse_" + npcID, 1);
+        PlayerPrefs.Save();
+
+        gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(0.5f);
+
+        if (BlackScreenManager.Instance != null)
+            BlackScreenManager.Instance.HideBlackScreen();
+    }
+
+    
 }

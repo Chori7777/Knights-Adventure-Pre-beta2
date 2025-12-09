@@ -31,6 +31,93 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1776710345640356568}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3230430081567901213
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8086891477599413897}
+  - component: {fileID: 7598810071581221346}
+  m_Layer: 0
+  m_Name: Circle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8086891477599413897
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3230430081567901213}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.0028274304, z: -0, w: 0.999996}
+  m_LocalPosition: {x: 0.02050812, y: 0, z: 0}
+  m_LocalScale: {x: 1.1753266, y: 1.3178062, z: 31272.285}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1776710345640356568}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &7598810071581221346
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3230430081567901213}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 1262583705
+  m_SortingLayer: 8
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Color: {r: 0, g: 0.7942071, b: 1, a: 0.09411765}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &5671156133088508336
 GameObject:
   m_ObjectHideFlags: 0
@@ -73,6 +160,7 @@ Transform:
   - {fileID: 8912768487357915013}
   - {fileID: 3176949573638936446}
   - {fileID: 5589603784711402807}
+  - {fileID: 8086891477599413897}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0.324, z: 0}
 --- !u!212 &988187615517789785
@@ -144,15 +232,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   currentHealth: 5
+  defaultStartingHealth: 3
   maxPotions: 5
   currentPotions: 3
   potionHealAmount: 1
   potionCooldown: 0.5
   potionCooldownIndicator: {fileID: 0}
+  enableAutoRechargePotions: 0
+  autoRechargeInterval: 5
   invincibilityDuration: 1
-  usePotionKey: 114
   deathAnimationName: Death
   deathFallbackDuration: 0.7
+  useAlternateDeathDestination: 0
+  gameOverSceneDefault: GameOver
+  gameOverSceneAlternate: GameOver
+  useAlternateGameOverMessagesForThisCharacter: 0
 --- !u!114 &7134106177684360171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,6 +281,17 @@ MonoBehaviour:
   dashSpeed: 11
   dashDuration: 0.15
   dashCooldown: 0.5
+  dashKey: 304
+  enable4WayDash: 0
+  dashUpAsExtraJump: 1
+  dashUpJumpForce: 12
+  dashUpConsumesAirDash: 1
+  dashUpConsumesDoubleJump: 0
+  dashAuraPrefab: {fileID: 0}
+  dashAuraLifetime: 0.25
+  dashAuraOffset: 0.5
+  dashDestroyTag: Breakable
+  dashDamage: 1
   wallSlideSpeed: 0.1
   wallSlideAcceleration: 2
   wallJumpForceX: 8
@@ -216,7 +321,15 @@ MonoBehaviour:
   inputDeadzone: 0.1
   cameraShakeIntensity: 0.3
   cameraShakeDuration: 0.2
+  allowControlsWhileDamaged: 0
   cameraHolder: {fileID: 0}
+  enableResistanceShield: 0
+  shieldMax: 100
+  shieldDurability: 100
+  shieldTickCost: 2
+  shieldRechargeDelay: 1.5
+  shieldRechargeRate: 25
+  shieldBarFill: {fileID: 0}
 --- !u!50 &5419059314384228200
 Rigidbody2D:
   serializedVersion: 5
@@ -356,16 +469,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 752b91d04b9a81b4497ef09e3c664b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shieldVisual: {fileID: 0}
-  blockSound: {fileID: 0}
-  shieldBreakSound: {fileID: 0}
-  blockAngle: 120
+  shieldVisual: {fileID: 3230430081567901213}
+  useAlternateShield: 0
+  alternateShieldVisual: {fileID: 0}
+  blockSound: {fileID: 8300000, guid: cedee2f7e1b82dd41b2c365df5f6d33d, type: 3}
+  shieldBreakSound: {fileID: 8300000, guid: c20d6096bd770a5409ab0f6eb44976d5, type: 3}
+  blockAngle: 180
   staminaCost: 0
   perfectBlockWindow: 0.2
+  maxStamina: 1
+  staminaDrainPerSecond: 0.2
+  staminaRegenPerSecond: 0.3
+  minStaminaToBlock: 0.1
   blockEffectPrefab: {fileID: 0}
   blockEffectDuration: 0.3
   blockKnockback: 2
-  canParry: 0
+  canParry: 1
 --- !u!1 &6035785815265924650
 GameObject:
   m_ObjectHideFlags: 0

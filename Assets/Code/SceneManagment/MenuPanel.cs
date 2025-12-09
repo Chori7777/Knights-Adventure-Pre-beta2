@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class MenuPanel : MonoBehaviour
 {
@@ -23,9 +24,10 @@ public class MenuPanel : MonoBehaviour
             if (style == null)
                 style = s.gameObject.AddComponent<MenuSelectionStyling>();
 
-            var graphic = s.GetComponent<Graphic>();
-            if (graphic == null)
-                graphic = s.GetComponentInChildren<Graphic>();
+            Graphic graphic = null;
+            var tmp = s.GetComponentInChildren<TextMeshProUGUI>(true);
+            if (tmp != null) graphic = tmp;
+            if (graphic == null) graphic = s.GetComponentInChildren<Graphic>(true);
 
             style.Configure(
                 graphic,

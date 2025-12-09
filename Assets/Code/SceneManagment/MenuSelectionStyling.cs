@@ -7,6 +7,7 @@ public class MenuSelectionStyling : MonoBehaviour, ISelectHandler, IDeselectHand
 {
     [SerializeField] private Graphic target;
     [SerializeField] private Color normalColor = Color.white;
+    [SerializeField] private Color hoverColor = Color.yellow;
     [SerializeField] private Color selectedColor = Color.white;
     [SerializeField] private float normalScale = 1f;
     [SerializeField] private float selectedScale = 1f;
@@ -92,35 +93,38 @@ public class MenuSelectionStyling : MonoBehaviour, ISelectHandler, IDeselectHand
 
     private void UpdateState()
     {
-        // Active if either selected OR hovered
         bool active = isSelected || isHovered;
-        
+
+        byte mode = 0;
+        if (isSelected) mode = 2;
+        else if (isHovered) mode = 1;
+
+        StartTween(mode);
+
         if (active)
-        {
-            StartTween(true);
             StartEffects();
-        }
         else
         {
-            StartTween(false);
             StopAll();
             ResetTransforms();
         }
     }
 
-    private void StartTween(bool selected)
+    private void StartTween(byte mode)
     {
         if (tweenRoutine != null) StopCoroutine(tweenRoutine);
-        tweenRoutine = StartCoroutine(Tween(selected));
+        tweenRoutine = StartCoroutine(Tween(mode));
     }
 
-    private IEnumerator Tween(bool selected)
+    private IEnumerator Tween(byte mode)
     {
         float t = 0f;
         Color c0 = target != null ? target.color : Color.white;
-        Color c1 = selected ? selectedColor : normalColor;
+        Color c1 = normalColor;
+        if (mode == 1) c1 = hoverColor;
+        else if (mode == 2) c1 = selectedColor;
         Vector3 s0 = transform.localScale;
-        Vector3 s1 = baseScale * (selected ? selectedScale : normalScale);
+        Vector3 s1 = baseScale * ((mode == 0) ? normalScale : selectedScale);
         while (t < tweenDuration)
         {
             t += Time.unscaledDeltaTime;
@@ -254,4 +258,3 @@ public class MenuSelectionStyling : MonoBehaviour, ISelectHandler, IDeselectHand
         if (rt != null) rt.anchoredPosition = baseAnchored;
     }
 }
-

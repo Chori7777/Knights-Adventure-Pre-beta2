@@ -16,6 +16,8 @@ public class AudioManager : MonoBehaviour
 
     [Header("Fade Settings")]
     [SerializeField] private float fadeDuration = 1f;
+    [Header("Pitch Settings")]
+    [SerializeField] private float musicPitch = 1f;
 
     private Coroutine musicFadeCoroutine;
 
@@ -35,14 +37,17 @@ public class AudioManager : MonoBehaviour
             musicSource = gameObject.AddComponent<AudioSource>();
             musicSource.loop = true;
             musicSource.playOnAwake = false;
+            musicSource.spatialBlend = 0f;
         }
 
         if (sfxSource == null)
         {
             sfxSource = gameObject.AddComponent<AudioSource>();
             sfxSource.playOnAwake = false;
+            sfxSource.spatialBlend = 0f;
         }
 
+        LoadVolumes();
         UpdateVolumes();
     }
 
@@ -58,8 +63,7 @@ public class AudioManager : MonoBehaviour
     public void PlaySFX3D(AudioClip clip, Vector3 position, float volume = 1f)
     {
         if (clip == null) return;
-
-        AudioSource.PlayClipAtPoint(clip, position, volume * sfxVolume * masterVolume);
+        PlaySFX(clip, volume);
     }
 
     public void PlayMusic(AudioClip clip, float volume = 1f, bool loop = true, bool fade = true)
@@ -71,9 +75,16 @@ public class AudioManager : MonoBehaviour
             StopCoroutine(musicFadeCoroutine);
         }
 
-        if (fade && musicSource.isPlaying)
+        if (fade)
         {
-            musicFadeCoroutine = StartCoroutine(FadeMusicCoroutine(clip, volume, loop));
+            if (musicSource.isPlaying)
+            {
+                musicFadeCoroutine = StartCoroutine(FadeMusicCoroutine(clip, volume, loop));
+            }
+            else
+            {
+                musicFadeCoroutine = StartCoroutine(FadeInNewClipCoroutine(clip, volume, loop));
+            }
         }
         else
         {
@@ -86,6 +97,7 @@ public class AudioManager : MonoBehaviour
         musicSource.clip = clip;
         musicSource.volume = volume * musicVolume * masterVolume;
         musicSource.loop = loop;
+        musicSource.pitch = Mathf.Clamp(musicPitch, 0.5f, 2f);
         musicSource.Play();
     }
 
@@ -104,6 +116,7 @@ public class AudioManager : MonoBehaviour
         musicSource.Stop();
         musicSource.clip = newClip;
         musicSource.loop = loop;
+        musicSource.pitch = Mathf.Clamp(musicPitch, 0.5f, 2f);
         musicSource.Play();
 
         elapsed = 0f;
@@ -116,6 +129,26 @@ public class AudioManager : MonoBehaviour
             yield return null;
         }
 
+        musicSource.volume = finalVolume;
+        musicFadeCoroutine = null;
+    }
+
+    private IEnumerator FadeInNewClipCoroutine(AudioClip newClip, float targetVolume, bool loop)
+    {
+        musicSource.clip = newClip;
+        musicSource.loop = loop;
+        musicSource.pitch = Mathf.Clamp(musicPitch, 0.5f, 2f);
+        musicSource.volume = 0f;
+        musicSource.Play();
+
+        float elapsed = 0f;
+        float finalVolume = targetVolume * musicVolume * masterVolume;
+        while (elapsed < fadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            musicSource.volume = Mathf.Lerp(0f, finalVolume, elapsed / fadeDuration);
+            yield return null;
+        }
         musicSource.volume = finalVolume;
         musicFadeCoroutine = null;
     }
@@ -179,21 +212,54 @@ public class AudioManager : MonoBehaviour
         musicSource.UnPause();
     }
 
+    public void SetMusicPitch(float pitch)
+    {
+        musicPitch = Mathf.Clamp(pitch, 0.5f, 2f);
+        if (musicSource != null && musicSource.isPlaying)
+        {
+            musicSource.pitch = musicPitch;
+        }
+    }
+
+    public IEnumerator RampMusicPitch(float targetPitch, float duration)
+    {
+        float start = musicSource != null ? musicSource.pitch : 1f;
+        float t = 0f;
+        float target = Mathf.Clamp(targetPitch, 0.5f, 2f);
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float p = Mathf.Lerp(start, target, duration > 0f ? t / duration : 1f);
+            SetMusicPitch(p);
+            yield return null;
+        }
+        SetMusicPitch(target);
+    }
+
+    public void ResetMusicPitch()
+    {
+        SetMusicPitch(1f);
+    }
+
     public void SetMasterVolume(float volume)
     {
         masterVolume = Mathf.Clamp01(volume);
         UpdateVolumes();
+        SaveVolumes();
     }
 
     public void SetMusicVolume(float volume)
     {
         musicVolume = Mathf.Clamp01(volume);
         UpdateVolumes();
+        SaveVolumes();
     }
 
     public void SetSFXVolume(float volume)
     {
         sfxVolume = Mathf.Clamp01(volume);
+        UpdateVolumes();
+        SaveVolumes();
     }
 
     private void UpdateVolumes()
@@ -202,6 +268,25 @@ public class AudioManager : MonoBehaviour
         {
             musicSource.volume = musicVolume * masterVolume;
         }
+        if (sfxSource != null)
+        {
+            sfxSource.volume = sfxVolume * masterVolume;
+        }
+    }
+
+    public void SaveVolumes()
+    {
+        PlayerPrefs.SetFloat("audio_master", masterVolume);
+        PlayerPrefs.SetFloat("audio_music", musicVolume);
+        PlayerPrefs.SetFloat("audio_sfx", sfxVolume);
+        PlayerPrefs.Save();
+    }
+
+    public void LoadVolumes()
+    {
+        masterVolume = PlayerPrefs.GetFloat("audio_master", masterVolume);
+        musicVolume = PlayerPrefs.GetFloat("audio_music", musicVolume);
+        sfxVolume = PlayerPrefs.GetFloat("audio_sfx", sfxVolume);
     }
 
     public bool IsMusicPlaying()

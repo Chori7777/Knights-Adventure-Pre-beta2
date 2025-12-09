@@ -18,6 +18,7 @@ TagManager:
   - HUD
   - CameraCheckpoint
   - PlayerSpawn
+  - Breakable
   layers:
   - Default
   - TransparentFX

@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 using System.Collections;
 
 public class KeybindsSettings : MonoBehaviour
@@ -45,8 +46,9 @@ public class KeybindsSettings : MonoBehaviour
     private void OnEnable()
     {
         Debug.Log("🎮 [Keybinds] Panel activado - Refrescando UI");
+        EnsureInteractive();
+        AutoWireButtons();
         RefreshUI();
-        StartCoroutine(RefreshUILoop());
     }
 
     private void OnDisable()
@@ -58,20 +60,46 @@ public class KeybindsSettings : MonoBehaviour
             waitingMessagePanel.SetActive(false);
     }
 
-    // ✅ Loop para actualizar UI constantemente (por si cambia mientras espera)
-    private IEnumerator RefreshUILoop()
+    private void EnsureInteractive()
     {
-        while (true)
-        {
-            yield return new WaitForSecondsRealtime(0.2f);
+        var cg = GetComponent<CanvasGroup>();
+        if (cg == null) cg = gameObject.AddComponent<CanvasGroup>();
+        cg.alpha = 1f;
+        cg.interactable = true;
+        cg.blocksRaycasts = true;
+        Debug.Log("🎮 [Keybinds] CanvasGroup interactivo");
+    }
 
-            // Solo refrescar si NO está esperando una tecla
-            if (!isWaitingForKey)
-            {
-                RefreshUI();
-            }
+    private void AutoWireButtons()
+    {
+        var buttons = GetComponentsInChildren<Button>(true);
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            var b = buttons[i];
+            var n = b.gameObject.name.ToLowerInvariant();
+
+            // Limpiar listeners previos sólo de rebind
+            b.onClick.RemoveAllListeners();
+
+            if (n.Contains("left1") || n == "left1") b.onClick.AddListener(() => StartRebind("MoveLeft", 0, "MOVER IZQUIERDA (Primario)"));
+            else if (n.Contains("left2") || n == "left2") b.onClick.AddListener(() => StartRebind("MoveLeft", 1, "MOVER IZQUIERDA (Secundario)"));
+            else if (n.Contains("right1") || n == "right1") b.onClick.AddListener(() => StartRebind("MoveRight", 0, "MOVER DERECHA (Primario)"));
+            else if (n.Contains("right2") || n == "right2") b.onClick.AddListener(() => StartRebind("MoveRight", 1, "MOVER DERECHA (Secundario)"));
+            else if (n.Contains("jump1") || n == "jump1") b.onClick.AddListener(() => StartRebind("Jump", 0, "SALTAR (Primario)"));
+            else if (n.Contains("jump2") || n == "jump2") b.onClick.AddListener(() => StartRebind("Jump", 1, "SALTAR (Secundario)"));
+            else if (n.Contains("attack1") || n == "attack1") b.onClick.AddListener(() => StartRebind("Action1Attack", 0, "ATACAR (Primario)"));
+            else if (n.Contains("attack2") || n == "attack2") b.onClick.AddListener(() => StartRebind("Action1Attack", 1, "ATACAR (Secundario)"));
+            else if (n.Contains("shield1") || n == "shield1" || n == "shiel1") b.onClick.AddListener(() => StartRebind("Action2Shield", 0, "ESCUDO (Primario)"));
+            else if (n.Contains("shield2") || n == "shield2" || n == "shiel2") b.onClick.AddListener(() => StartRebind("Action2Shield", 1, "ESCUDO (Secundario)"));
+            else if (n.Contains("potion1") || n == "potion1" || n.Contains("item1")) b.onClick.AddListener(() => StartRebind("UseItem", 0, "USAR ÍTEM (Primario)"));
+            else if (n.Contains("potion2") || n == "potion2" || n.Contains("item2")) b.onClick.AddListener(() => StartRebind("UseItem", 1, "USAR ÍTEM (Secundario)"));
+            else if (n.Contains("confirm")) b.onClick.AddListener(ConfirmChanges);
+            else if (n.Contains("reset") || n.Contains("restart")) b.onClick.AddListener(ResetToDefaults);
+
+            Debug.Log($"🎮 [Keybinds] Auto-wire botón: {b.gameObject.name}");
         }
     }
+
 
     private void RefreshUI()
     {
@@ -148,6 +176,13 @@ public class KeybindsSettings : MonoBehaviour
                 if (inputBindingsComponent != null)
                     inputBindingsComponent.CancelRebind();
 
+                isWaitingForKey = false;
+                break;
+            }
+
+            // Si InputBindings ya dejó de escuchar, terminar
+            if (inputBindingsComponent != null && !inputBindingsComponent.IsListening)
+            {
                 isWaitingForKey = false;
                 break;
             }

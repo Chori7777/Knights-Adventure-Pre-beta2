@@ -22,15 +22,19 @@ public class FirstEncounterBossAttackManager : MonoBehaviour
     [SerializeField] private int overheadCount = 5;
     [SerializeField] private float overheadSpread = 6f;
     [SerializeField] private float overheadTopMargin = 0f;
+    [SerializeField] private float overheadPlayerYOffset = 3f;
 
     [Header("Parámetros de Orbes Laterales")]
     [SerializeField] private float sideOrbDuration = 2.2f;
     [SerializeField] private float sideOrbEdgeOffset = 0.5f;
     [SerializeField] private bool sideOrbsTrackPlayerY = true;
     [SerializeField] private float sideOrbsY = 0f;
+    [SerializeField] private bool sideOrbsFollowDuringMove = false;
 
     private bool running;
     private Coroutine loopRoutine;
+    private System.Collections.Generic.List<GameObject> spawnedObjects = new System.Collections.Generic.List<GameObject>();
+    [SerializeField] private float fallbackLifetime = 4f;
 
     public void StartTrialAttacks(bool phase2)
     {
@@ -47,6 +51,7 @@ public class FirstEncounterBossAttackManager : MonoBehaviour
             StopCoroutine(loopRoutine);
             loopRoutine = null;
         }
+        ClearSpawnedObjects();
     }
 
     private IEnumerator AttackLoop(bool phase2)
@@ -95,7 +100,9 @@ public class FirstEncounterBossAttackManager : MonoBehaviour
         {
             float offX = (i - count / 2f) * (spread / count);
             float x = Mathf.Clamp(targetIndicator.x + offX, leftX, rightX);
-            Vector3 spawnPos = new Vector3(x, topY - overheadTopMargin, 0f);
+            float ySpawn = player.transform.position.y + overheadPlayerYOffset;
+            ySpawn = Mathf.Min(ySpawn, topY - overheadTopMargin);
+            Vector3 spawnPos = new Vector3(x, ySpawn, 0f);
             DrawIndicator(spawnPos, targetIndicator);
         }
         yield return new WaitForSeconds(indicatorTime);
@@ -105,8 +112,11 @@ public class FirstEncounterBossAttackManager : MonoBehaviour
             Vector3 targetFire = player != null ? player.transform.position : targetIndicator;
             float offX = (i - count / 2f) * (spread / count);
             float x = Mathf.Clamp(targetFire.x + offX, leftX, rightX);
-            Vector3 spawnPos = new Vector3(x, topY - overheadTopMargin, 0f);
+            float ySpawn = player.transform.position.y + overheadPlayerYOffset;
+            ySpawn = Mathf.Min(ySpawn, topY - overheadTopMargin);
+            Vector3 spawnPos = new Vector3(x, ySpawn, 0f);
             GameObject proj = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
+            RegisterSpawn(proj);
             Sequence seq = DOTween.Sequence();
             seq.Append(proj.transform.DOMove(spawnPos + Vector3.up * 1.5f, 0.25f).SetEase(Ease.OutQuad));
             seq.Append(proj.transform.DOMove(targetFire, 0.8f).SetEase(Ease.InQuad));
@@ -122,7 +132,9 @@ public class FirstEncounterBossAttackManager : MonoBehaviour
         Vector3 p = player.transform.position;
         DrawIndicator(p + Vector3.down * 0.5f, p + Vector3.up * 2f);
         yield return new WaitForSeconds(indicatorTime);
-        Instantiate(spikePrefab, new Vector3(p.x, p.y - 0.1f, 0f), Quaternion.identity);
+        var spike = Instantiate(spikePrefab, new Vector3(p.x, p.y - 0.1f, 0f), Quaternion.identity);
+        RegisterSpawn(spike);
+        Destroy(spike, fallbackLifetime);
     }
 
     private IEnumerator LaunchWandBurst()
@@ -130,6 +142,7 @@ public class FirstEncounterBossAttackManager : MonoBehaviour
         if (wandPrefab == null || projectilePrefab == null) yield break;
         Vector3 pos = GetRandomWandPoint();
         GameObject wand = Instantiate(wandPrefab, pos, Quaternion.identity);
+        RegisterSpawn(wand);
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
@@ -154,6 +167,7 @@ public class FirstEncounterBossAttackManager : MonoBehaviour
     private void FireProjectile(Vector3 from, Vector3 to)
     {
         GameObject proj = Instantiate(projectilePrefab, from, Quaternion.identity);
+        RegisterSpawn(proj);
         float dist = Vector3.Distance(from, to);
         float dur = Mathf.Clamp(dist / 12f, 0.4f, 1.2f);
         proj.transform.DOMove(to, dur).SetEase(Ease.InQuad).OnComplete(() => Destroy(proj));
@@ -178,12 +192,14 @@ public class FirstEncounterBossAttackManager : MonoBehaviour
 
         GameObject orbLeft = Instantiate(projectilePrefab, new Vector3(leftX, y, 0f), Quaternion.identity);
         GameObject orbRight = Instantiate(projectilePrefab, new Vector3(rightX, y, 0f), Quaternion.identity);
+        RegisterSpawn(orbLeft);
+        RegisterSpawn(orbRight);
 
         float dur = sideOrbDuration;
         var twLeft = orbLeft.transform.DOMoveX(rightX, dur).SetEase(Ease.Linear);
         twLeft.OnUpdate(() =>
         {
-            if (sideOrbsTrackPlayerY && player != null)
+            if (sideOrbsFollowDuringMove && sideOrbsTrackPlayerY && player != null)
             {
                 var pos = orbLeft.transform.position;
                 pos.y = player.transform.position.y;
@@ -194,7 +210,7 @@ public class FirstEncounterBossAttackManager : MonoBehaviour
         var twRight = orbRight.transform.DOMoveX(leftX, dur).SetEase(Ease.Linear);
         twRight.OnUpdate(() =>
         {
-            if (sideOrbsTrackPlayerY && player != null)
+            if (sideOrbsFollowDuringMove && sideOrbsTrackPlayerY && player != null)
             {
                 var pos = orbRight.transform.position;
                 pos.y = player.transform.position.y;
@@ -244,5 +260,24 @@ public class FirstEncounterBossAttackManager : MonoBehaviour
         float rx = Random.Range(leftX, rightX);
         float ry = Random.Range(bottomY, topY);
         return new Vector3(rx, ry, 0f);
+    }
+
+    private void RegisterSpawn(GameObject go)
+    {
+        if (go == null) return;
+        spawnedObjects.Add(go);
+    }
+
+    public void ClearSpawnedObjects()
+    {
+        for (int i = 0; i < spawnedObjects.Count; i++)
+        {
+            var go = spawnedObjects[i];
+            if (go != null)
+            {
+                Destroy(go);
+            }
+        }
+        spawnedObjects.Clear();
     }
 }

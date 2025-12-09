@@ -130,7 +130,6 @@ GameObject:
   - component: {fileID: 28226964}
   - component: {fileID: 28226963}
   - component: {fileID: 28226962}
-  - component: {fileID: 28226965}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -195,32 +194,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 119}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &28226965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 28226961}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32c1b49aae24f874bb284f1c9f86e1df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  floatY: 1
-  floatAmplitude: 10
-  floatDuration: 2
-  pulseScale: 0
-  pulseAmount: 0.05
-  pulseDuration: 1.5
-  rotate: 0
-  rotateAmount: 2
-  rotateDuration: 3
-  shake: 0
-  shakeDuration: 0.6
-  shakeStrength: 8
-  shakeVibrato: 20
-  shakeRandomness: 90
 --- !u!1 &1129753162
 GameObject:
   m_ObjectHideFlags: 0

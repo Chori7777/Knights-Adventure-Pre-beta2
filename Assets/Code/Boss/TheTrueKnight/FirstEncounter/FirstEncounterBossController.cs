@@ -80,6 +80,11 @@ public class FirstEncounterBossController : MonoBehaviour
             PlayMusicPhase3();
         }
         if (modeloJefe != null) modeloJefe.SetActive(false);
+
+        if (gestorTrials != null)
+        {
+            gestorTrials.OnBossHit();
+        }
         // El avance al siguiente trial lo maneja BossLife en modo trial
     }
 

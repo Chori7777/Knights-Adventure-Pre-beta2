@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class EnemyLife : MonoBehaviour
@@ -25,6 +25,7 @@ public class EnemyLife : MonoBehaviour
     {
         core = enemyCore;
         currentHealth = maxHealth;
+        // Permitir empuje por contacto: no congelar ejes
     }
 
     public void TakeDamage(int damage)
@@ -80,6 +81,7 @@ public class EnemyLife : MonoBehaviour
     private void ApplyKnockback(Vector2 attackPosition)
     {
         if (core.rb == null) return;
+        // No tocar constraints para permitir empuje natural
 
         Vector2 knockbackDir = ((Vector2)transform.position - attackPosition).normalized;
         knockbackDir.y = Mathf.Clamp(knockbackDir.y + 0.5f, 0.5f, 1f);

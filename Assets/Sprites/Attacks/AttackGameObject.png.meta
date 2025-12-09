@@ -1,0 +1,4000 @@
+fileFormatVersion: 2
+guid: 18fb100802f99c745b47c14894fbe770
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -892028995156583291
+    second: AttackGameObject_0
+  - first:
+      213: 6211715478490731418
+    second: AttackGameObject_1
+  - first:
+      213: 2936561409703585596
+    second: AttackGameObject_2
+  - first:
+      213: -1997132810562823630
+    second: AttackGameObject_3
+  - first:
+      213: -1568476728437019331
+    second: AttackGameObject_4
+  - first:
+      213: 5465949801378175967
+    second: AttackGameObject_5
+  - first:
+      213: -8683464988321756227
+    second: AttackGameObject_6
+  - first:
+      213: 8466967001405188457
+    second: AttackGameObject_7
+  - first:
+      213: -353050710413779715
+    second: AttackGameObject_8
+  - first:
+      213: -8950406253817892258
+    second: AttackGameObject_9
+  - first:
+      213: -1428716033417779277
+    second: AttackGameObject_10
+  - first:
+      213: 7990989181692735930
+    second: AttackGameObject_11
+  - first:
+      213: 3902996594101243904
+    second: AttackGameObject_12
+  - first:
+      213: 8067112307573561862
+    second: AttackGameObject_13
+  - first:
+      213: 8570730683470144406
+    second: AttackGameObject_14
+  - first:
+      213: 6800509141359078565
+    second: AttackGameObject_15
+  - first:
+      213: 1780537397564004610
+    second: AttackGameObject_16
+  - first:
+      213: -3995540702979062815
+    second: AttackGameObject_17
+  - first:
+      213: -5281015629100627429
+    second: AttackGameObject_18
+  - first:
+      213: 7863179543239947603
+    second: AttackGameObject_19
+  - first:
+      213: -7850149629011241423
+    second: AttackGameObject_20
+  - first:
+      213: -3054293352661985956
+    second: AttackGameObject_21
+  - first:
+      213: 7728732860701629112
+    second: AttackGameObject_22
+  - first:
+      213: 3242442633830291609
+    second: AttackGameObject_23
+  - first:
+      213: 3593471985316004701
+    second: AttackGameObject_24
+  - first:
+      213: -5138102277583914698
+    second: AttackGameObject_25
+  - first:
+      213: 6057239157063211939
+    second: AttackGameObject_26
+  - first:
+      213: -1439330247793929230
+    second: AttackGameObject_27
+  - first:
+      213: 8646383403518797621
+    second: AttackGameObject_28
+  - first:
+      213: 109851608161811915
+    second: AttackGameObject_29
+  - first:
+      213: -7648904617255616998
+    second: AttackGameObject_30
+  - first:
+      213: 4710190445942259046
+    second: AttackGameObject_31
+  - first:
+      213: 5754170761214437047
+    second: AttackGameObject_32
+  - first:
+      213: -5311285805561804036
+    second: AttackGameObject_33
+  - first:
+      213: -458183726922855523
+    second: AttackGameObject_34
+  - first:
+      213: -7341761903650539783
+    second: AttackGameObject_35
+  - first:
+      213: 2133096627501188967
+    second: AttackGameObject_36
+  - first:
+      213: 8646685367236756369
+    second: AttackGameObject_37
+  - first:
+      213: 5021296045669357901
+    second: AttackGameObject_38
+  - first:
+      213: 4518759617136029710
+    second: AttackGameObject_39
+  - first:
+      213: -8097782030336859026
+    second: AttackGameObject_40
+  - first:
+      213: 5446335858013589129
+    second: AttackGameObject_41
+  - first:
+      213: 8249770515581605198
+    second: AttackGameObject_42
+  - first:
+      213: -6896582502334191994
+    second: AttackGameObject_43
+  - first:
+      213: 2794940769181350430
+    second: AttackGameObject_44
+  - first:
+      213: -5915218130905807351
+    second: AttackGameObject_45
+  - first:
+      213: 3749258883816077043
+    second: AttackGameObject_46
+  - first:
+      213: 1697956399805276317
+    second: AttackGameObject_47
+  - first:
+      213: -7864851592443052610
+    second: AttackGameObject_48
+  - first:
+      213: 2228151533393137159
+    second: AttackGameObject_49
+  - first:
+      213: 3533879458301041090
+    second: AttackGameObject_50
+  - first:
+      213: 7456731362101057037
+    second: AttackGameObject_51
+  - first:
+      213: 3911700982524554689
+    second: AttackGameObject_52
+  - first:
+      213: 4127837316259803968
+    second: AttackGameObject_53
+  - first:
+      213: -8675071737601055767
+    second: AttackGameObject_54
+  - first:
+      213: 8173448351577031581
+    second: AttackGameObject_55
+  - first:
+      213: -3295168061401683430
+    second: AttackGameObject_56
+  - first:
+      213: 7031702503026033754
+    second: AttackGameObject_57
+  - first:
+      213: 6303733847576003666
+    second: AttackGameObject_58
+  - first:
+      213: -8293573503738627418
+    second: AttackGameObject_59
+  - first:
+      213: -8651478018485791785
+    second: AttackGameObject_60
+  - first:
+      213: -5858163471425274023
+    second: AttackGameObject_61
+  - first:
+      213: -542047024809688410
+    second: AttackGameObject_62
+  - first:
+      213: -4187835816203577364
+    second: AttackGameObject_63
+  - first:
+      213: 3524250304058932062
+    second: AttackGameObject_64
+  - first:
+      213: -7583016723379030214
+    second: AttackGameObject_65
+  - first:
+      213: 4800274198919632576
+    second: AttackGameObject_66
+  - first:
+      213: 1677233100701322654
+    second: AttackGameObject_67
+  - first:
+      213: -157819663723640443
+    second: AttackGameObject_68
+  - first:
+      213: -4918523639257228894
+    second: AttackGameObject_69
+  - first:
+      213: -7837951784054904158
+    second: AttackGameObject_70
+  - first:
+      213: -5142153688581972193
+    second: AttackGameObject_71
+  - first:
+      213: 8695284188463107673
+    second: AttackGameObject_72
+  - first:
+      213: 8354037033027084747
+    second: AttackGameObject_73
+  - first:
+      213: 8956404829410413648
+    second: AttackGameObject_74
+  - first:
+      213: 4002833769122532930
+    second: AttackGameObject_75
+  - first:
+      213: -920877860915552164
+    second: AttackGameObject_76
+  - first:
+      213: -7740509726853517033
+    second: AttackGameObject_77
+  - first:
+      213: -5444661009988802975
+    second: AttackGameObject_78
+  - first:
+      213: 4338390255816590631
+    second: AttackGameObject_79
+  - first:
+      213: -1084064141884683153
+    second: AttackGameObject_80
+  - first:
+      213: 6315581070230470659
+    second: AttackGameObject_81
+  - first:
+      213: 9096911142676222551
+    second: AttackGameObject_82
+  - first:
+      213: 6766834013029995224
+    second: AttackGameObject_83
+  - first:
+      213: 4378701475825564530
+    second: AttackGameObject_84
+  - first:
+      213: 29123148903293993
+    second: AttackGameObject_85
+  - first:
+      213: -2098818841240086404
+    second: AttackGameObject_86
+  - first:
+      213: 7110014621971865568
+    second: AttackGameObject_87
+  - first:
+      213: 2392498265729993174
+    second: AttackGameObject_88
+  - first:
+      213: -8025334565220060946
+    second: AttackGameObject_89
+  - first:
+      213: -5675987287695531111
+    second: AttackGameObject_90
+  - first:
+      213: -2607967937258766031
+    second: AttackGameObject_91
+  - first:
+      213: 2489973162792745081
+    second: AttackGameObject_92
+  - first:
+      213: 545062053764578950
+    second: AttackGameObject_93
+  - first:
+      213: 2202619616245374706
+    second: AttackGameObject_94
+  - first:
+      213: -7218936173546852042
+    second: AttackGameObject_95
+  - first:
+      213: 4294538877785770480
+    second: AttackGameObject_96
+  - first:
+      213: 8870112256744882203
+    second: AttackGameObject_97
+  - first:
+      213: -179762773688241469
+    second: AttackGameObject_98
+  - first:
+      213: 5423552756713197808
+    second: AttackGameObject_99
+  - first:
+      213: 673205048334894763
+    second: AttackGameObject_100
+  - first:
+      213: 8605174568638599585
+    second: AttackGameObject_101
+  - first:
+      213: 71585384569773022
+    second: AttackGameObject_102
+  - first:
+      213: 899722381926975710
+    second: AttackGameObject_103
+  - first:
+      213: -7549589703295579772
+    second: AttackGameObject_104
+  - first:
+      213: 3085133246431693208
+    second: AttackGameObject_105
+  - first:
+      213: -4977961669520039917
+    second: AttackGameObject_106
+  - first:
+      213: -6616438099632327964
+    second: AttackGameObject_107
+  - first:
+      213: -6830278595504240988
+    second: AttackGameObject_108
+  - first:
+      213: 3463401018386378509
+    second: AttackGameObject_109
+  - first:
+      213: -5096430897452361213
+    second: AttackGameObject_110
+  - first:
+      213: -6101145541215598321
+    second: AttackGameObject_111
+  - first:
+      213: -6995207816122012503
+    second: AttackGameObject_112
+  - first:
+      213: 8927203387261770796
+    second: AttackGameObject_113
+  - first:
+      213: -5737286969492957367
+    second: AttackGameObject_114
+  - first:
+      213: 7139647638901258148
+    second: AttackGameObject_115
+  - first:
+      213: 4318276416418885699
+    second: AttackGameObject_116
+  - first:
+      213: -3686022033056587405
+    second: AttackGameObject_117
+  - first:
+      213: -8481310369307231899
+    second: AttackGameObject_118
+  - first:
+      213: 3010956755330988042
+    second: AttackGameObject_119
+  - first:
+      213: -2213641362023250930
+    second: AttackGameObject_120
+  - first:
+      213: -1943084000604496037
+    second: AttackGameObject_121
+  - first:
+      213: -4209805427271798821
+    second: AttackGameObject_122
+  - first:
+      213: 1736222229430054109
+    second: AttackGameObject_123
+  - first:
+      213: 7292700174696533991
+    second: AttackGameObject_124
+  - first:
+      213: -2797728759251126970
+    second: AttackGameObject_125
+  - first:
+      213: 5609582051754620609
+    second: AttackGameObject_126
+  - first:
+      213: 2106284127952296553
+    second: AttackGameObject_127
+  - first:
+      213: -6172237712345065013
+    second: AttackGameObject_128
+  - first:
+      213: -3904825400623111777
+    second: AttackGameObject_129
+  - first:
+      213: 7218477091727581087
+    second: AttackGameObject_130
+  - first:
+      213: -2338214819199285363
+    second: AttackGameObject_131
+  - first:
+      213: 5778514925237493946
+    second: AttackGameObject_132
+  - first:
+      213: -1555252236459604420
+    second: AttackGameObject_133
+  - first:
+      213: 6273949234791136339
+    second: AttackGameObject_134
+  - first:
+      213: 4705252005967604250
+    second: AttackGameObject_135
+  - first:
+      213: 3342924196464231024
+    second: AttackGameObject_136
+  - first:
+      213: -3693420565325250245
+    second: AttackGameObject_137
+  - first:
+      213: -8193514414188035399
+    second: AttackGameObject_138
+  - first:
+      213: -7079284650059188291
+    second: AttackGameObject_139
+  - first:
+      213: 6898000823046588018
+    second: AttackGameObject_140
+  - first:
+      213: 2187003446406574208
+    second: AttackGameObject_141
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: AttackGameObject_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 116
+        width: 10
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      physicsShape:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58cd756ea50ee93f0800000000000000
+      internalID: -892028995156583291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_1
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 159
+        width: 8
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a935c3d0152743650800000000000000
+      internalID: 6211715478490731418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_2
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 177
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c37a0862b03c0c820800000000000000
+      internalID: 2936561409703585596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_3
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 177
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23a10214a42c844e0800000000000000
+      internalID: -1997132810562823630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_4
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 177
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3d6b03c9b6ab3ae0800000000000000
+      internalID: -1568476728437019331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_5
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 99
+        width: 371
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdb534f6264fadb40800000000000000
+      internalID: 5465949801378175967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_6
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 178
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbb4a8f99922e7780800000000000000
+      internalID: -8683464988321756227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_7
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 171
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 969e5bbb0a5b08570800000000000000
+      internalID: 8466967001405188457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_8
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 167
+        width: 6
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfc561adf36b91bf0800000000000000
+      internalID: -353050710413779715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_9
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 161
+        width: 6
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e52ffb5fee4c9c380800000000000000
+      internalID: -8950406253817892258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_10
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 155
+        width: 6
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b76a37565e2c2ce0800000000000000
+      internalID: -1428716033417779277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_11
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 149
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab1f8ca9252b5ee60800000000000000
+      internalID: 7990989181692735930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_12
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 142
+        width: 6
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 000d6fe29ba3a2630800000000000000
+      internalID: 3902996594101243904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_13
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 134
+        width: 6
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60a9a1007e324ff60800000000000000
+      internalID: 8067112307573561862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_14
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 125
+        width: 6
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      physicsShape:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69367cd952a51f670800000000000000
+      internalID: 8570730683470144406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_15
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 113
+        width: 6
+        height: 79
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ac218e8803406e50800000000000000
+      internalID: 6800509141359078565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_16
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 99
+        width: 6
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 209d913545db5b810800000000000000
+      internalID: 1780537397564004610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_17
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 99
+        width: 6
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      physicsShape:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e3815166ecfc88c0800000000000000
+      internalID: -3995540702979062815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_18
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 113
+        width: 6
+        height: 79
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      physicsShape:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1acb2ee34016b6b0800000000000000
+      internalID: -5281015629100627429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_19
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 125
+        width: 6
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3557fe73220af1d60800000000000000
+      internalID: 7863179543239947603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_20
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 134
+        width: 6
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 136de19118aae0390800000000000000
+      internalID: -7850149629011241423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_21
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 142
+        width: 6
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c55debac068fc95d0800000000000000
+      internalID: -3054293352661985956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_22
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 149
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ba52069699f14b60800000000000000
+      internalID: 7728732860701629112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_23
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 155
+        width: 6
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 998590275687ffc20800000000000000
+      internalID: 3242442633830291609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_24
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 161
+        width: 6
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d53041b4bb39ed130800000000000000
+      internalID: 3593471985316004701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_25
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 167
+        width: 6
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6393cfc833bc1b8b0800000000000000
+      internalID: -5138102277583914698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_26
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 171
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      physicsShape:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3abd654bbe2af0450800000000000000
+      internalID: 6057239157063211939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_27
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 178
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f394c9f3c8760ce0800000000000000
+      internalID: -1439330247793929230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_28
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 181
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 537229e15ef1ef770800000000000000
+      internalID: 8646383403518797621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_29
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 181
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcd7d72a475468100800000000000000
+      internalID: 109851608161811915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_30
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 178
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1e32a7b6c1a9d590800000000000000
+      internalID: -7648904617255616998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_31
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 171
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66db3d24145fd5140800000000000000
+      internalID: 4710190445942259046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_32
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 167
+        width: 6
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b6202702dbeadf40800000000000000
+      internalID: 5754170761214437047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_33
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 161
+        width: 6
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfa0ae243b58a46b0800000000000000
+      internalID: -5311285805561804036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_34
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 155
+        width: 6
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9b06e2f35434a9f0800000000000000
+      internalID: -458183726922855523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_35
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 149
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f6f96b6272dc1a90800000000000000
+      internalID: -7341761903650539783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_36
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 142
+        width: 6
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 767cac1c4184a9d10800000000000000
+      internalID: 2133096627501188967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_37
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 134
+        width: 6
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19307b687823ff770800000000000000
+      internalID: 8646685367236756369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_38
+      rect:
+        serializedVersion: 2
+        x: 355
+        y: 125
+        width: 6
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      physicsShape:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      tessellationDetail: -1
+      bones: []
+      spriteID: d49123a462a3fa540800000000000000
+      internalID: 5021296045669357901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_39
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 113
+        width: 6
+        height: 79
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e00f5cc2eebd5be30800000000000000
+      internalID: 4518759617136029710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_40
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 99
+        width: 6
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e64ea35b526ee9f80800000000000000
+      internalID: -8097782030336859026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_41
+      rect:
+        serializedVersion: 2
+        x: 381
+        y: 99
+        width: 6
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98e4f506b95459b40800000000000000
+      internalID: 5446335858013589129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_42
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 113
+        width: 6
+        height: 79
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      physicsShape:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      tessellationDetail: -1
+      bones: []
+      spriteID: e459bb323921d7270800000000000000
+      internalID: 8249770515581605198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_43
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 125
+        width: 6
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6862238f0ca6a40a0800000000000000
+      internalID: -6896582502334191994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_44
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 134
+        width: 6
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1abf4342df99c620800000000000000
+      internalID: 2794940769181350430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_45
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 142
+        width: 6
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 906c86a337ce8eda0800000000000000
+      internalID: -5915218130905807351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_46
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 149
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f6b5d4271b080430800000000000000
+      internalID: 3749258883816077043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_47
+      rect:
+        serializedVersion: 2
+        x: 425
+        y: 155
+        width: 6
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d90ae76795a509710800000000000000
+      internalID: 1697956399805276317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_48
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 161
+        width: 6
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebd344d752f6ad290800000000000000
+      internalID: -7864851592443052610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_49
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 167
+        width: 6
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70ec3ada30cfbee10800000000000000
+      internalID: 2228151533393137159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_50
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 171
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c9551fd4acda0130800000000000000
+      internalID: 3533879458301041090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_51
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 178
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d065c879aa1ab7760800000000000000
+      internalID: 7456731362101057037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_52
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 181
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1cd2cea8157294630800000000000000
+      internalID: 3911700982524554689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_53
+      rect:
+        serializedVersion: 2
+        x: 523
+        y: 121
+        width: 6
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      physicsShape:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      tessellationDetail: -1
+      bones: []
+      spriteID: 043744e3b26094930800000000000000
+      internalID: 4127837316259803968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_54
+      rect:
+        serializedVersion: 2
+        x: 552
+        y: 99
+        width: 6
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      physicsShape:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e322479734fb9780800000000000000
+      internalID: -8675071737601055767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_55
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 62
+        width: 46
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      physicsShape:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9340c198fbed6170800000000000000
+      internalID: 8173448351577031581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_56
+      rect:
+        serializedVersion: 2
+        x: 613
+        y: 107
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      physicsShape:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1aa0f05b163542d0800000000000000
+      internalID: -3295168061401683430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_57
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 32
+        width: 6
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      physicsShape:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      tessellationDetail: -1
+      bones: []
+      spriteID: a548713cb20a59160800000000000000
+      internalID: 7031702503026033754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_58
+      rect:
+        serializedVersion: 2
+        x: 568
+        y: 99
+        width: 41
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      physicsShape:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      tessellationDetail: -1
+      bones: []
+      spriteID: 254cf57298c5b7750800000000000000
+      internalID: 6303733847576003666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_59
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 99
+        width: 41
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      physicsShape:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6aa311fe6de47ec80800000000000000
+      internalID: -8293573503738627418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_60
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 32
+        width: 61
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      physicsShape:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d3dd066496cfe780800000000000000
+      internalID: -8651478018485791785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_61
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 32
+        width: 7
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95ff6815c5f93bea0800000000000000
+      internalID: -5858163471425274023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_62
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 32
+        width: 7
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a249a25a134a78f0800000000000000
+      internalID: -542047024809688410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_63
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 32
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      physicsShape:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce717856381d1e5c0800000000000000
+      internalID: -4187835816203577364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_64
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 32
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5bbef0baf6a8e030800000000000000
+      internalID: 3524250304058932062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_65
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 32
+        width: 6
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3775257776b3c690800000000000000
+      internalID: -7583016723379030214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_66
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 32
+        width: 6
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c6d31373fffd9240800000000000000
+      internalID: 4800274198919632576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_67
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 32
+        width: 6
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9d44d46e9ab64710800000000000000
+      internalID: 1677233100701322654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_68
+      rect:
+        serializedVersion: 2
+        x: 523
+        y: 0
+        width: 6
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5894e2d1adf4fcdf0800000000000000
+      internalID: -157819663723640443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_69
+      rect:
+        serializedVersion: 2
+        x: 613
+        y: 54
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a916be3fc4edbbb0800000000000000
+      internalID: -4918523639257228894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_70
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 32
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2aaa4c031600a3390800000000000000
+      internalID: -7837951784054904158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_71
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 32
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1f5b9be67663a8b0800000000000000
+      internalID: -5142153688581972193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_72
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 32
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95e0a6a56eadba870800000000000000
+      internalID: 8695284188463107673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_73
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 32
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc1a9028b608fe370800000000000000
+      internalID: 8354037033027084747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_74
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 32
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05cc9914dba8b4c70800000000000000
+      internalID: 8956404829410413648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_75
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 32
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24e8c77ea1cec8730800000000000000
+      internalID: 4002833769122532930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_76
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 32
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c506b9ae6726833f0800000000000000
+      internalID: -920877860915552164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_77
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 32
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 711b0761a6f249490800000000000000
+      internalID: -7740509726853517033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_78
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 32
+        width: 61
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 166a23198ada074b0800000000000000
+      internalID: -5444661009988802975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_79
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 32
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 725c6fea3fe053c30800000000000000
+      internalID: 4338390255816590631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_80
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 0
+        width: 174
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6c89351861a4f0f0800000000000000
+      internalID: -1084064141884683153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_81
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 0
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 300c441a58375a750800000000000000
+      internalID: 6315581070230470659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_82
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 0
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 752528c9c78be3e70800000000000000
+      internalID: 9096911142676222551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_83
+      rect:
+        serializedVersion: 2
+        x: 345
+        y: 0
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d21fa0ceaf98ed50800000000000000
+      internalID: 6766834013029995224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_84
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 0
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      physicsShape:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27bbf0cfac544cc30800000000000000
+      internalID: 4378701475825564530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_85
+      rect:
+        serializedVersion: 2
+        x: 361
+        y: 0
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9242f118957776000800000000000000
+      internalID: 29123148903293993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_86
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 0
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c78dcf7426f7fd2e0800000000000000
+      internalID: -2098818841240086404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_87
+      rect:
+        serializedVersion: 2
+        x: 377
+        y: 0
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ef5772d0a8dba260800000000000000
+      internalID: 7110014621971865568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_88
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 0
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d903962f7cd33120800000000000000
+      internalID: 2392498265729993174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_89
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 0
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee0f464abb840a090800000000000000
+      internalID: -8025334565220060946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_90
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 0
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 993664f62a7da31b0800000000000000
+      internalID: -5675987287695531111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_91
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 0
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 131451a8af2aecbd0800000000000000
+      internalID: -2607967937258766031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_92
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 0
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      physicsShape:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      tessellationDetail: -1
+      bones: []
+      spriteID: 978748c26692e8220800000000000000
+      internalID: 2489973162792745081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_93
+      rect:
+        serializedVersion: 2
+        x: 425
+        y: 0
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68ebe2fcc03709700800000000000000
+      internalID: 545062053764578950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_94
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 0
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fedc99fed6419e10800000000000000
+      internalID: 2202619616245374706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_95
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 0
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 631b5873ccf21db90800000000000000
+      internalID: -7218936173546852042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_96
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 0
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f9868c1b54499b30800000000000000
+      internalID: 4294538877785770480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_97
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 0
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b100e150a18f81b70800000000000000
+      internalID: 8870112256744882203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_98
+      rect:
+        serializedVersion: 2
+        x: 465
+        y: 0
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c23972b5ba518df0800000000000000
+      internalID: -179762773688241469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_99
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 0
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f01b7c3f74544b40800000000000000
+      internalID: 5423552756713197808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_100
+      rect:
+        serializedVersion: 2
+        x: 481
+        y: 0
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba64007bc64b75900800000000000000
+      internalID: 673205048334894763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_101
+      rect:
+        serializedVersion: 2
+        x: 489
+        y: 0
+        width: 6
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a1dde19da8bb6770800000000000000
+      internalID: 8605174568638599585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_102
+      rect:
+        serializedVersion: 2
+        x: 612
+        y: 33
+        width: 60
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      physicsShape:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      tessellationDetail: -1
+      bones: []
+      spriteID: edb146a27825ef000800000000000000
+      internalID: 71585384569773022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_103
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 0
+        width: 294
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed8c93b4db47c7c00800000000000000
+      internalID: 899722381926975710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_104
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 0
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 489ce1f0a287a3790800000000000000
+      internalID: -7549589703295579772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_105
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 0
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8990f46875890da20800000000000000
+      internalID: 3085133246431693208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_106
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 0
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3106fb66c3abaeab0800000000000000
+      internalID: -4977961669520039917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_107
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 0
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e2fd019a90bd24a0800000000000000
+      internalID: -6616438099632327964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_108
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 0
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a604064ec9f531a0800000000000000
+      internalID: -6830278595504240988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_109
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 0
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0f65a750e8701030800000000000000
+      internalID: 3463401018386378509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_110
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 0
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30ad60fc917d549b0800000000000000
+      internalID: -5096430897452361213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_111
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 0
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f09c2ec9470645ba0800000000000000
+      internalID: -6101145541215598321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_112
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 0
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ace20ead870cee90800000000000000
+      internalID: -6995207816122012503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_113
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 0
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2cd66fae2cc3eb70800000000000000
+      internalID: 8927203387261770796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_114
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 0
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94715e016ef0160b0800000000000000
+      internalID: -5737286969492957367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_115
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 0
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a77a2a33bf151360800000000000000
+      internalID: 7139647638901258148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_116
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 0
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 340389285899deb30800000000000000
+      internalID: 4318276416418885699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_117
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 0
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37126658d7e98dcc0800000000000000
+      internalID: -3686022033056587405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_118
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 0
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 569fa9fa7255c4a80800000000000000
+      internalID: -8481310369307231899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_119
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 0
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a08f09b573119c920800000000000000
+      internalID: 3010956755330988042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_120
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 0
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e040e7cd8e09741e0800000000000000
+      internalID: -2213641362023250930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_121
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 0
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5f59377567c805e0800000000000000
+      internalID: -1943084000604496037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_122
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 0
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdfe3f5b444c395c0800000000000000
+      internalID: -4209805427271798821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_123
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 0
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddca0543bec481810800000000000000
+      internalID: 1736222229430054109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_124
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 0
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ef4736ab20e43560800000000000000
+      internalID: 7292700174696533991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_125
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 0
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64531f634887c29d0800000000000000
+      internalID: -2797728759251126970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_126
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 0
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c6bd3db72d39dd40800000000000000
+      internalID: 5609582051754620609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_127
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 0
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96ad3aa31460b3d10800000000000000
+      internalID: 2106284127952296553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_128
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 0
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc91766a08ec75aa0800000000000000
+      internalID: -6172237712345065013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_129
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 0
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f91efed9cf54fc9c0800000000000000
+      internalID: -3904825400623111777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_130
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 0
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9f97b77bae2d2460800000000000000
+      internalID: 7218477091727581087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_131
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 0
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d878215a20efc8fd0800000000000000
+      internalID: -2338214819199285363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_132
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 0
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab0e21865b8613050800000000000000
+      internalID: 5778514925237493946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_133
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 0
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3681bdb452aa6ae0800000000000000
+      internalID: -1555252236459604420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_134
+      rect:
+        serializedVersion: 2
+        x: 249
+        y: 0
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35c3f86969b811750800000000000000
+      internalID: 6273949234791136339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_135
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 0
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1aa46a15c96c4140800000000000000
+      internalID: 4705252005967604250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_136
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 0
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      physicsShape:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0720f4958d3746e20800000000000000
+      internalID: 3342924196464231024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_137
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 0
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b318aad70955ebcc0800000000000000
+      internalID: -3693420565325250245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_138
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 0
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b287482d0aca4e80800000000000000
+      internalID: -8193514414188035399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_139
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 0
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db7b8515e1451cd90800000000000000
+      internalID: -7079284650059188291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_140
+      rect:
+        serializedVersion: 2
+        x: 552
+        y: 0
+        width: 6
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2764b0e833f9abf50800000000000000
+      internalID: 6898000823046588018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_141
+      rect:
+        serializedVersion: 2
+        x: 613
+        y: 1
+        width: 61
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      physicsShape:
+      - - {x: 0, y: -32}
+        - {x: 32, y: 0}
+        - {x: 0, y: 32}
+        - {x: -32, y: 0}
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0807e991c0cc95e10800000000000000
+      internalID: 2187003446406574208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackGameObject_142
+      rect:
+        serializedVersion: 2
+        x: 757
+        y: 2
+        width: 6
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab43e0ee439443249a0f17793352e934
+      internalID: -720078776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 35fe6b7d5aba7c248812d39964cc3830
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      AttackGameObject_0: -892028995156583291
+      AttackGameObject_1: 6211715478490731418
+      AttackGameObject_10: -1428716033417779277
+      AttackGameObject_100: 673205048334894763
+      AttackGameObject_101: 8605174568638599585
+      AttackGameObject_102: 71585384569773022
+      AttackGameObject_103: 899722381926975710
+      AttackGameObject_104: -7549589703295579772
+      AttackGameObject_105: 3085133246431693208
+      AttackGameObject_106: -4977961669520039917
+      AttackGameObject_107: -6616438099632327964
+      AttackGameObject_108: -6830278595504240988
+      AttackGameObject_109: 3463401018386378509
+      AttackGameObject_11: 7990989181692735930
+      AttackGameObject_110: -5096430897452361213
+      AttackGameObject_111: -6101145541215598321
+      AttackGameObject_112: -6995207816122012503
+      AttackGameObject_113: 8927203387261770796
+      AttackGameObject_114: -5737286969492957367
+      AttackGameObject_115: 7139647638901258148
+      AttackGameObject_116: 4318276416418885699
+      AttackGameObject_117: -3686022033056587405
+      AttackGameObject_118: -8481310369307231899
+      AttackGameObject_119: 3010956755330988042
+      AttackGameObject_12: 3902996594101243904
+      AttackGameObject_120: -2213641362023250930
+      AttackGameObject_121: -1943084000604496037
+      AttackGameObject_122: -4209805427271798821
+      AttackGameObject_123: 1736222229430054109
+      AttackGameObject_124: 7292700174696533991
+      AttackGameObject_125: -2797728759251126970
+      AttackGameObject_126: 5609582051754620609
+      AttackGameObject_127: 2106284127952296553
+      AttackGameObject_128: -6172237712345065013
+      AttackGameObject_129: -3904825400623111777
+      AttackGameObject_13: 8067112307573561862
+      AttackGameObject_130: 7218477091727581087
+      AttackGameObject_131: -2338214819199285363
+      AttackGameObject_132: 5778514925237493946
+      AttackGameObject_133: -1555252236459604420
+      AttackGameObject_134: 6273949234791136339
+      AttackGameObject_135: 4705252005967604250
+      AttackGameObject_136: 3342924196464231024
+      AttackGameObject_137: -3693420565325250245
+      AttackGameObject_138: -8193514414188035399
+      AttackGameObject_139: -7079284650059188291
+      AttackGameObject_14: 8570730683470144406
+      AttackGameObject_140: 6898000823046588018
+      AttackGameObject_141: 2187003446406574208
+      AttackGameObject_142: -720078776
+      AttackGameObject_15: 6800509141359078565
+      AttackGameObject_16: 1780537397564004610
+      AttackGameObject_17: -3995540702979062815
+      AttackGameObject_18: -5281015629100627429
+      AttackGameObject_19: 7863179543239947603
+      AttackGameObject_2: 2936561409703585596
+      AttackGameObject_20: -7850149629011241423
+      AttackGameObject_21: -3054293352661985956
+      AttackGameObject_22: 7728732860701629112
+      AttackGameObject_23: 3242442633830291609
+      AttackGameObject_24: 3593471985316004701
+      AttackGameObject_25: -5138102277583914698
+      AttackGameObject_26: 6057239157063211939
+      AttackGameObject_27: -1439330247793929230
+      AttackGameObject_28: 8646383403518797621
+      AttackGameObject_29: 109851608161811915
+      AttackGameObject_3: -1997132810562823630
+      AttackGameObject_30: -7648904617255616998
+      AttackGameObject_31: 4710190445942259046
+      AttackGameObject_32: 5754170761214437047
+      AttackGameObject_33: -5311285805561804036
+      AttackGameObject_34: -458183726922855523
+      AttackGameObject_35: -7341761903650539783
+      AttackGameObject_36: 2133096627501188967
+      AttackGameObject_37: 8646685367236756369
+      AttackGameObject_38: 5021296045669357901
+      AttackGameObject_39: 4518759617136029710
+      AttackGameObject_4: -1568476728437019331
+      AttackGameObject_40: -8097782030336859026
+      AttackGameObject_41: 5446335858013589129
+      AttackGameObject_42: 8249770515581605198
+      AttackGameObject_43: -6896582502334191994
+      AttackGameObject_44: 2794940769181350430
+      AttackGameObject_45: -5915218130905807351
+      AttackGameObject_46: 3749258883816077043
+      AttackGameObject_47: 1697956399805276317
+      AttackGameObject_48: -7864851592443052610
+      AttackGameObject_49: 2228151533393137159
+      AttackGameObject_5: 5465949801378175967
+      AttackGameObject_50: 3533879458301041090
+      AttackGameObject_51: 7456731362101057037
+      AttackGameObject_52: 3911700982524554689
+      AttackGameObject_53: 4127837316259803968
+      AttackGameObject_54: -8675071737601055767
+      AttackGameObject_55: 8173448351577031581
+      AttackGameObject_56: -3295168061401683430
+      AttackGameObject_57: 7031702503026033754
+      AttackGameObject_58: 6303733847576003666
+      AttackGameObject_59: -8293573503738627418
+      AttackGameObject_6: -8683464988321756227
+      AttackGameObject_60: -8651478018485791785
+      AttackGameObject_61: -5858163471425274023
+      AttackGameObject_62: -542047024809688410
+      AttackGameObject_63: -4187835816203577364
+      AttackGameObject_64: 3524250304058932062
+      AttackGameObject_65: -7583016723379030214
+      AttackGameObject_66: 4800274198919632576
+      AttackGameObject_67: 1677233100701322654
+      AttackGameObject_68: -157819663723640443
+      AttackGameObject_69: -4918523639257228894
+      AttackGameObject_7: 8466967001405188457
+      AttackGameObject_70: -7837951784054904158
+      AttackGameObject_71: -5142153688581972193
+      AttackGameObject_72: 8695284188463107673
+      AttackGameObject_73: 8354037033027084747
+      AttackGameObject_74: 8956404829410413648
+      AttackGameObject_75: 4002833769122532930
+      AttackGameObject_76: -920877860915552164
+      AttackGameObject_77: -7740509726853517033
+      AttackGameObject_78: -5444661009988802975
+      AttackGameObject_79: 4338390255816590631
+      AttackGameObject_8: -353050710413779715
+      AttackGameObject_80: -1084064141884683153
+      AttackGameObject_81: 6315581070230470659
+      AttackGameObject_82: 9096911142676222551
+      AttackGameObject_83: 6766834013029995224
+      AttackGameObject_84: 4378701475825564530
+      AttackGameObject_85: 29123148903293993
+      AttackGameObject_86: -2098818841240086404
+      AttackGameObject_87: 7110014621971865568
+      AttackGameObject_88: 2392498265729993174
+      AttackGameObject_89: -8025334565220060946
+      AttackGameObject_9: -8950406253817892258
+      AttackGameObject_90: -5675987287695531111
+      AttackGameObject_91: -2607967937258766031
+      AttackGameObject_92: 2489973162792745081
+      AttackGameObject_93: 545062053764578950
+      AttackGameObject_94: 2202619616245374706
+      AttackGameObject_95: -7218936173546852042
+      AttackGameObject_96: 4294538877785770480
+      AttackGameObject_97: 8870112256744882203
+      AttackGameObject_98: -179762773688241469
+      AttackGameObject_99: 5423552756713197808
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

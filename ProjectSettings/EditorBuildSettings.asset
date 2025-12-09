@@ -36,17 +36,29 @@ EditorBuildSettings:
     path: Assets/Scenes/NormalMaps/Bosses/FinalBoss.unity
     guid: 6823ee85cef7123408524566a3cd8f0c
   - enabled: 1
+    path: Assets/Scenes/Story/CorruptedGameScene.unity
+    guid: 9af06ebfe5429f0448385273d1bbe178
+  - enabled: 1
+    path: Assets/Scenes/ALTMenus/MainMenuALT.unity
+    guid: 3a6aa9ab24953a0448f80df0656ce4bd
+  - enabled: 1
     path: Assets/Scenes/ALTMaps/AlternativeForest.unity
     guid: cceb932bd0aa4bc45ae95a631ace4e52
+  - enabled: 1
+    path: Assets/Scenes/ALTMaps/ALTBosses/SnowBoss.unity
+    guid: 4d0a16dbe3e27a14789e8ed0cd944462
+  - enabled: 1
+    path: Assets/Scenes/ALTMaps/AlternativeTown.unity
+    guid: 18c47db67cb8258468df008485171931
+  - enabled: 1
+    path: Assets/Scenes/ALTMaps/ALTBosses/AlchemyBoss.unity
+    guid: 71f8189ad6df23841ae68b71fc86e979
   - enabled: 1
     path: Assets/Scenes/AllMenus/GameOver.unity
     guid: b7682bcb2222bfa4aa5dfe4eaf5558f3
   - enabled: 1
     path: Assets/Scenes/AllMenus/Victory.unity
     guid: b2900a45325a0824ba2d0fd6ef319cbf
-  - enabled: 1
-    path: Assets/Scenes/ALTMaps/ALTBosses/AlquimyBoss.unity
-    guid: 71f8189ad6df23841ae68b71fc86e979
   - enabled: 1
     path: Assets/Scenes/AllMenus/Debug.unity
     guid: bb12b0033d40a485e84cae23a426ee90

@@ -16,7 +16,7 @@ public class ElevatorSystem : MonoBehaviour
 
     [Header("Activación")]
     [SerializeField] private bool moveOnPlayerEnter = true; // Activar movimiento al subir el jugador
-    [SerializeField] private bool canCallWithButton = true; // Puede llamarse con bot�n
+    [SerializeField] private bool canCallWithButton = true; // Puede llamarse con boton
     [SerializeField] private LayerMask playerLayer; // Layer del jugador
     [SerializeField] private bool autoLoop = false;
     [SerializeField] private bool useBPM = false;
@@ -27,7 +27,13 @@ public class ElevatorSystem : MonoBehaviour
     [SerializeField] private float stepIntervalSeconds = 0.2f;
     [SerializeField] private float stepDistanceUnits = 0.5f;
     [SerializeField] private bool stickPlayerToPlatform = true;
+    [SerializeField] private float stickYOffsetThreshold = 0.15f;
     [SerializeField] private bool teleportToAOnArriveB = false;
+    [SerializeField] private bool teleportLoopSMB = false;
+
+    [Header("Auto retorno")]
+    [SerializeField] private bool autoReturnToAWhenEmpty = true;
+    [SerializeField] private float autoReturnDelay = 1f;
 
     [Header("Audio (Opcional)")]
     [SerializeField] private AudioClip moveSound;
@@ -49,6 +55,7 @@ public class ElevatorSystem : MonoBehaviour
     private Vector3 localPointA;
     private Vector3 localPointB;
     private Vector3 lastPlatformPosition;
+    private bool autoReturnScheduled = false;
 
     private void Start()
     {
@@ -106,33 +113,43 @@ public class ElevatorSystem : MonoBehaviour
             Vector3 worldB = lockToParentSpace
                 ? (platformRoot.parent != null ? platformRoot.parent.TransformPoint(localPointB) : localPointB)
                 : pointB.position;
-            if (!useTimeSteps)
+            if (teleportLoopSMB)
             {
-                float speed = useBPM ? (unitsPerBeat * (bpm / 60f)) : moveSpeed;
-                float durationAB = Vector3.Distance(platformRoot.position, worldB) / speed;
-                float durationBA = Vector3.Distance(worldB, worldA) / speed;
-                float waitInterval = useBPM ? (beatsWaitAtFloor * (60f / bpm)) : waitTimeAtFloor;
-
-                Sequence seq = DOTween.Sequence();
-                if (rb != null)
-                    seq.Append(rb.DOMove((Vector2)worldB, durationAB).SetEase(easeType));
-                else
-                    seq.Append(platformRoot.DOMove(worldB, durationAB).SetEase(easeType));
-                seq.AppendInterval(waitInterval);
-                if (rb != null)
-                    seq.Append(rb.DOMove((Vector2)worldA, durationBA).SetEase(easeType));
-                else
-                    seq.Append(platformRoot.DOMove(worldA, durationBA).SetEase(easeType));
-                seq.AppendInterval(waitInterval);
-                seq.SetLoops(-1);
+                StartCoroutine(AutoTeleportLoopCoroutine(worldA, worldB));
             }
             else
             {
-                StartCoroutine(AutoLoopStepCoroutine(worldA, worldB));
+                if (!useTimeSteps)
+                {
+                    float speed = useBPM ? (unitsPerBeat * (bpm / 60f)) : moveSpeed;
+                    float durationAB = Vector3.Distance(platformRoot.position, worldB) / speed;
+                    float durationBA = Vector3.Distance(worldB, worldA) / speed;
+                    float waitInterval = useBPM ? (beatsWaitAtFloor * (60f / bpm)) : waitTimeAtFloor;
+
+                    Sequence seq = DOTween.Sequence();
+                    if (rb != null)
+                        seq.Append(rb.DOMove((Vector2)worldB, durationAB).SetEase(easeType));
+                    else
+                        seq.Append(platformRoot.DOMove(worldB, durationAB).SetEase(easeType));
+                    seq.AppendInterval(waitInterval);
+                    if (rb != null)
+                        seq.Append(rb.DOMove((Vector2)worldA, durationBA).SetEase(easeType));
+                    else
+                        seq.Append(platformRoot.DOMove(worldA, durationBA).SetEase(easeType));
+                    seq.AppendInterval(waitInterval);
+                    seq.SetLoops(-1);
+                }
+                else
+                {
+                    StartCoroutine(AutoLoopStepCoroutine(worldA, worldB));
+                }
             }
         }
 
         lastPlatformPosition = platformRoot.position;
+
+        // Si arrancamos en B y esta vacio, programar retorno automatico
+        TryScheduleAutoReturn();
     }
 
     private void Update()
@@ -150,24 +167,34 @@ public class ElevatorSystem : MonoBehaviour
     {
         if (((1 << collision.gameObject.layer) & playerLayer) != 0)
         {
-            foreach (ContactPoint2D contact in collision.contacts)
+            playerOnElevator = true;
+            playerTransform = collision.transform;
+            if (stickPlayerToPlatform && playerTransform != null)
             {
-                if (contact.normal.y < -0.5f) // El jugador est� encima
+                // Solo parentear si el jugador esta sobre la plataforma (Y mayor o igual)
+                if (playerTransform.position.y >= platformRoot.position.y - stickYOffsetThreshold)
                 {
-                    playerOnElevator = true;
-                    playerTransform = collision.transform;
-
-                    if (stickPlayerToPlatform && playerTransform != null)
-                        playerTransform.SetParent(platformRoot);
-
-                    Debug.Log("Jugador subi� al ascensor");
-
-                    // Mover autom�ticamente si est� configurado
-                    if (moveOnPlayerEnter && !isMoving)
-                        MoveToOppositeFloor();
-
-                    break;
+                    playerTransform.SetParent(platformRoot);
                 }
+            }
+
+            if (moveOnPlayerEnter && !isMoving)
+                MoveToOppositeFloor();
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (((1 << collision.gameObject.layer) & playerLayer) == 0) return;
+        if (!stickPlayerToPlatform) return;
+        if (collision.transform == null) return;
+        if (playerTransform == null) playerTransform = collision.transform;
+        // Asegurar pegado mientras este sobre la plataforma
+        if (playerTransform.position.y >= platformRoot.position.y - stickYOffsetThreshold)
+        {
+            if (playerTransform.parent != platformRoot)
+            {
+                playerTransform.SetParent(platformRoot);
             }
         }
     }
@@ -177,11 +204,15 @@ public class ElevatorSystem : MonoBehaviour
         if (collision.transform == playerTransform)
         {
             playerOnElevator = false;
-
             if (playerTransform != null)
-                playerTransform.SetParent(null);
-
+            {
+                var t = playerTransform;
+                StartCoroutine(UnparentDeferred(t));
+            }
             playerTransform = null;
+
+            // Si se baja el jugador y estamos en B, programar retorno
+            TryScheduleAutoReturn();
         }
     }
 
@@ -267,7 +298,6 @@ public class ElevatorSystem : MonoBehaviour
             audioSource.PlayOneShot(arriveSound);
 
         float waitInterval = useBPM ? (beatsWaitAtFloor * (60f / bpm)) : waitTimeAtFloor;
-        DOVirtual.DelayedCall(waitInterval, () => { });
 
         if (!arrivedAtA && teleportToAOnArriveB)
         {
@@ -288,6 +318,35 @@ public class ElevatorSystem : MonoBehaviour
 
             lastPlatformPosition = platformRoot.position;
             isAtPointA = true;
+
+            if (teleportLoopSMB && !autoLoop)
+            {
+                DOVirtual.DelayedCall(waitInterval, () =>
+                {
+                    if (!isMoving) MoveToPointB();
+                });
+            }
+        }
+        else
+        {
+            if (teleportLoopSMB && arrivedAtA && !autoLoop)
+            {
+                // Si es un loop tipo SMB pero no hay teleport en B, aseguramos movimiento A->B continuo
+                DOVirtual.DelayedCall(waitInterval, () =>
+                {
+                    if (!isMoving) MoveToPointB();
+                });
+            }
+            else
+            {
+                DOVirtual.DelayedCall(waitInterval, () => { });
+            }
+        }
+
+        // Si llegamos a B y no hay jugador, programar retorno automatico
+        if (!arrivedAtA)
+        {
+            TryScheduleAutoReturn();
         }
     }
 
@@ -325,6 +384,17 @@ public class ElevatorSystem : MonoBehaviour
         }
     }
 
+    private IEnumerator AutoTeleportLoopCoroutine(Vector3 worldA, Vector3 worldB)
+    {
+        while (true)
+        {
+            MoveToPointB();
+            while (isMoving) yield return null;
+            float waitInterval = useBPM ? (beatsWaitAtFloor * (60f / bpm)) : waitTimeAtFloor;
+            yield return new WaitForSeconds(waitInterval);
+        }
+    }
+
     public void CallElevator(bool callToPointA)
     {
         if (!canCallWithButton || isMoving) return;
@@ -338,7 +408,32 @@ public class ElevatorSystem : MonoBehaviour
             MoveToPointB();
     }
 
-    
+    private void TryScheduleAutoReturn()
+    {
+        if (!autoReturnToAWhenEmpty) return;
+        if (isMoving) return;
+        if (isAtPointA) return;
+        if (playerOnElevator) return;
+        if (autoReturnScheduled) return;
+        autoReturnScheduled = true;
+        DOVirtual.DelayedCall(autoReturnDelay, () =>
+        {
+            autoReturnScheduled = false;
+            if (!playerOnElevator && !isMoving && !isAtPointA)
+            {
+                MoveToPointA();
+            }
+        });
+    }
+
+    private IEnumerator UnparentDeferred(Transform t)
+    {
+        yield return null;
+        if (t != null && t.parent == platformRoot)
+        {
+            t.SetParent(null);
+        }
+    }
 
     private void OnDrawGizmos()
     {
@@ -359,7 +454,7 @@ public class ElevatorSystem : MonoBehaviour
         Gizmos.DrawWireCube(transform.position, transform.localScale);
     }
 
-    // Getters p�blicos
+    // Getters publicos
     public bool IsMoving => isMoving;
     public bool IsAtPointA => isAtPointA;
     public bool PlayerOnElevator => playerOnElevator;

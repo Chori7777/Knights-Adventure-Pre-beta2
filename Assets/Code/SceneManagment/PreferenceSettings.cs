@@ -102,8 +102,31 @@ public class PreferenceSettings : MonoBehaviour
     {
         if (fullscreenToggle != null) fullscreenToggle.isOn = true;
         if (vsyncToggle != null) vsyncToggle.isOn = true;
-        if (resolutionDropdown != null) resolutionDropdown.value = Mathf.Clamp(resolutionDropdown.value, 0, (availableResolutions?.Length ?? 1) - 1);
-        if (fpsDropdown != null) fpsDropdown.value = FpsIndexFromValue(60);
+
+        int resIndex = 0;
+        if (availableResolutions != null && availableResolutions.Length > 0)
+        {
+            for (int i = 0; i < availableResolutions.Length; i++)
+            {
+                var r = availableResolutions[i];
+                if (r.width == Screen.currentResolution.width && r.height == Screen.currentResolution.height)
+                {
+                    resIndex = i;
+                    break;
+                }
+            }
+        }
+        if (resolutionDropdown != null)
+        {
+            resolutionDropdown.value = Mathf.Clamp(resIndex, 0, (availableResolutions?.Length ?? 1) - 1);
+            resolutionDropdown.RefreshShownValue();
+        }
+
+        if (fpsDropdown != null)
+        {
+            fpsDropdown.value = FpsIndexFromValue(60);
+            fpsDropdown.RefreshShownValue();
+        }
         if (textSpeedSlider != null) textSpeedSlider.value = 0.05f;
         ApplyAll();
     }

@@ -12,6 +12,7 @@ public class playerLife : MonoBehaviour
     [Header("Vida")]
     [SerializeField] private int maxHealth = 5;
     [SerializeField] private int currentHealth = 5;
+    [SerializeField] private int defaultStartingHealth = 3;
     public int Health => currentHealth;
     public int MaxHealth => maxHealth;
 
@@ -25,6 +26,11 @@ public class playerLife : MonoBehaviour
     public int Potions => currentPotions;
     public int MaxPotions => maxPotions;
 
+    [Header("Auto Recarga de Pociones")]
+    [SerializeField] public bool enableAutoRechargePotions = false;
+    [SerializeField] private float autoRechargeInterval = 5f;
+    private Coroutine autoRechargeRoutine;
+
     [Header("Sistema de Daño")]
     [SerializeField] private float invincibilityDuration = 1f;
     private float lastDamageTime = -10f;
@@ -37,6 +43,10 @@ public class playerLife : MonoBehaviour
     [Header("Muerte")]
     [SerializeField] private string deathAnimationName = "Death";
     [SerializeField] private float deathFallbackDuration = 1f;
+    [SerializeField] private bool useAlternateDeathDestination = false;
+    [SerializeField] private string gameOverSceneDefault = "GameOver";
+    [SerializeField] private string gameOverSceneAlternate = "GameOver";
+    [SerializeField] private bool useAlternateGameOverMessagesForThisCharacter = false;
 
     public bool IsInitialized { get; private set; }
 
@@ -54,7 +64,7 @@ public class playerLife : MonoBehaviour
 
     private IEnumerator Start()
     {
-        // ✅ Esperar a que el HUD esté disponible
+        // Esperar HUD disponible
         float timeout = 2.0f;
         float elapsed = 0f;
 
@@ -68,17 +78,17 @@ public class playerLife : MonoBehaviour
         {
             healthUI = PlayerHealthUI.Instance;
 
-            // ✅ El HUD se encarga de reconectar, solo inicializamos
+            // El HUD reconecta, inicializar
             healthUI.Initialize(this);
 
-            Debug.Log("✅ [playerLife] Conectado al HUD");
+            Debug.Log("[playerLife] Conectado al HUD");
         }
         else
         {
-            Debug.LogWarning("⚠️ [playerLife] No se encontró PlayerHealthUI después de timeout");
+            Debug.LogWarning("[playerLife] No se encontro PlayerHealthUI despues de timeout");
         }
 
-        // ✅ Cargar datos guardados
+        // Cargar datos guardados
         LoadGameData();
 
         IsInitialized = true;
@@ -94,18 +104,18 @@ public class playerLife : MonoBehaviour
         if (datos.vidaMaxima > 0)
         {
             SetMaxHealth(datos.vidaMaxima);
-            Debug.Log($"💾 Vida máxima cargada: {datos.vidaMaxima}");
+            Debug.Log($"Vida maxima cargada: {datos.vidaMaxima}");
         }
 
         // Cargar vida actual
         if (datos.vidaActual > 0)
         {
             SetHealth(datos.vidaActual);
-            Debug.Log($"💾 Vida actual cargada: {datos.vidaActual}");
+            Debug.Log($"Vida actual cargada: {datos.vidaActual}");
         }
         else
         {
-            SetHealth(maxHealth);
+            SetHealth(Mathf.Min(defaultStartingHealth, maxHealth));
         }
 
         // Cargar pociones
@@ -113,10 +123,10 @@ public class playerLife : MonoBehaviour
         {
             SetMaxPotions(datos.maxPotions);
             SetPotions(datos.cantidadpociones);
-            Debug.Log($"💾 Pociones cargadas: {datos.cantidadpociones}/{datos.maxPotions}");
+            Debug.Log($"Pociones cargadas: {datos.cantidadpociones}/{datos.maxPotions}");
         }
 
-        // ✅ Actualizar HUD final
+        // Actualizar HUD
         UpdateUI();
     }
 
@@ -145,6 +155,39 @@ public class playerLife : MonoBehaviour
         }
 
         UpdateUI();
+    }
+
+    public void EnableAutoRechargePotions(float duration)
+    {
+        if (!enableAutoRechargePotions) return;
+        if (autoRechargeRoutine != null)
+        {
+            StopCoroutine(autoRechargeRoutine);
+            autoRechargeRoutine = null;
+        }
+        autoRechargeRoutine = StartCoroutine(AutoRechargePotions(duration));
+    }
+
+    private IEnumerator AutoRechargePotions(float duration)
+    {
+        float elapsed = 0f;
+        float tick = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            tick += Time.deltaTime;
+            if (tick >= autoRechargeInterval)
+            {
+                tick = 0f;
+                if (currentPotions < maxPotions)
+                {
+                    currentPotions = Mathf.Min(currentPotions + 1, maxPotions);
+                    UpdateUI();
+                }
+            }
+            yield return null;
+        }
+        autoRechargeRoutine = null;
     }
 
     private bool CanUsePotion()
@@ -271,15 +314,23 @@ public class playerLife : MonoBehaviour
         if (AudioManager.Instance != null)
             AudioManager.Instance.StopMusicImmediately();
 
+        GameOverManager.SetVariant2(useAlternateGameOverMessagesForThisCharacter);
+
         if (ControladorDatosJuego.Instance != null)
         {
             ControladorDatosJuego.Instance.datosjuego.escenaActual = SceneManager.GetActiveScene().name;
             ControladorDatosJuego.Instance.GuardarDatos();
-            SceneManager.LoadScene("GameOver");
+            string target = gameOverSceneDefault;
+            if (useAlternateDeathDestination && GameOverManager.UseVariant2)
+                target = string.IsNullOrEmpty(gameOverSceneAlternate) ? gameOverSceneDefault : gameOverSceneAlternate;
+            SceneManager.LoadScene(target);
         }
         else
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            string target = gameOverSceneDefault;
+            if (useAlternateDeathDestination && GameOverManager.UseVariant2)
+                target = string.IsNullOrEmpty(gameOverSceneAlternate) ? gameOverSceneDefault : gameOverSceneAlternate;
+            SceneManager.LoadScene(target);
         }
     }
 
@@ -341,7 +392,7 @@ public class playerLife : MonoBehaviour
         maxHealth = max;
         currentHealth = Mathf.Min(currentHealth, maxHealth);
 
-        // ✅ Forzar actualización de segmentos
+        // Forzar actualizacion de segmentos
         if (healthUI != null)
         {
             healthUI.ForceRefresh();

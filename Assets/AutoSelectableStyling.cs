@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -48,6 +48,7 @@ public class AutoSelectableStyling : MonoBehaviour
     [Header("═══════════════════════════════")]
 
     [SerializeField] private bool mostrarLogs = true;
+    [SerializeField] private Transform targetRoot;
 
     private void Awake()
     {
@@ -71,21 +72,22 @@ public class AutoSelectableStyling : MonoBehaviour
     [ContextMenu("Aplicar Estilos a Todos")]
     public void AplicarEstilosATodos()
     {
+        Transform root = targetRoot != null ? targetRoot : transform;
         Selectable[] selectables;
 
         if (aplicarRecursivamente)
         {
-            selectables = GetComponentsInChildren<Selectable>(true); // Incluir inactivos
+            selectables = root.GetComponentsInChildren<Selectable>(true);
         }
         else
         {
-            selectables = GetComponentsInDirectChildren<Selectable>();
+            selectables = GetComponentsInDirectChildren(root);
         }
 
         if (selectables == null || selectables.Length == 0)
         {
             if (mostrarLogs)
-                Debug.LogWarning($"⚠️ [AutoStyling] No se encontraron selectables en {gameObject.name}");
+                Debug.LogWarning($"⚠️ [AutoStyling] No se encontraron selectables en {(root != null ? root.gameObject.name : gameObject.name)}");
             return;
         }
 
@@ -228,11 +230,11 @@ public class AutoSelectableStyling : MonoBehaviour
     /// <summary>
     /// Obtiene selectables solo de hijos directos (no recursivo)
     /// </summary>
-    private Selectable[] GetComponentsInDirectChildren<T>() where T : Component
+    private Selectable[] GetComponentsInDirectChildren(Transform root)
     {
         System.Collections.Generic.List<Selectable> result = new System.Collections.Generic.List<Selectable>();
-
-        foreach (Transform child in transform)
+        if (root == null) root = transform;
+        foreach (Transform child in root)
         {
             Selectable selectable = child.GetComponent<Selectable>();
             if (selectable != null)
@@ -242,6 +244,11 @@ public class AutoSelectableStyling : MonoBehaviour
         }
 
         return result.ToArray();
+    }
+
+    public void SetTargetRoot(Transform root)
+    {
+        targetRoot = root;
     }
 
     /// <summary>

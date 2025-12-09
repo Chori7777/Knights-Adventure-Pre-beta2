@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class BossTrigger : MonoBehaviour
@@ -11,7 +12,7 @@ public class BossTrigger : MonoBehaviour
     [SerializeField] private BossDoor[] puertasArena;
 
     [Header("Trial Mode - Jefe en Escena")]
-    [SerializeField] private BossLife bossInScene; // ✅ NUEVO: Referencia directa
+    [SerializeField] private BossLife bossInScene; // Nuevo: Referencia directa
 
     [Header("Opciones")]
     [SerializeField] private float cooldownTiempo = 1f;
@@ -21,19 +22,23 @@ public class BossTrigger : MonoBehaviour
     [SerializeField] private float introDuracion = 3f;
     [SerializeField] private AudioClip musicaJefe;
     [SerializeField] private AudioClip sfxInicioBatalla;
-    [SerializeField] private Animator cameraAnimator;
-    [SerializeField] private string nombreJefe;
     [SerializeField] private string[] introLines;
     [SerializeField] private TheTrueKnightMusicTimeline musicTimeline;
+    [SerializeField] private KeyCode skipKey = KeyCode.Space;
+    [SerializeField] private Button skipButton;
 
     [Header("Modo Trial")]
     [SerializeField] private bool useTrialMode = true;
     [SerializeField] private FirstEncounterTrialManager trialManager;
     [SerializeField] private FirstEncounterTeleportManager teleportManager;
 
+    [Header("Control de Ataques")]
+    [SerializeField] private MonoBehaviour attackScriptToControl;
+
     private bool enCooldown = false;
     private bool enPelea = false;
     private BossLife spawnedBoss;
+    private bool skipRequested = false;
 
     void Start()
     {
@@ -42,6 +47,10 @@ public class BossTrigger : MonoBehaviour
         {
             gameObject.SetActive(false);
             return;
+        }
+        if (skipButton != null)
+        {
+            skipButton.onClick.AddListener(RequestSkip);
         }
     }
 
@@ -59,6 +68,9 @@ public class BossTrigger : MonoBehaviour
 
     private IEnumerator IniciarSecuenciaJefe()
     {
+        var player = GameObject.FindGameObjectWithTag("Player");
+        var pm = player != null ? player.GetComponent<PlayerMovement>() : null;
+        if (pm != null) pm.SetControlsEnabled(false);
         enPelea = true;
 
         var playerController = player.GetComponent<PlayerMovement>();
@@ -87,18 +99,18 @@ public class BossTrigger : MonoBehaviour
                 puerta.CerrarPuerta();
         }
 
-        // ✅ NUEVO: Decidir entre usar jefe en escena o instanciar uno nuevo
+        // Nuevo: decidir entre jefe en escena o instanciar uno nuevo
         if (useTrialMode)
         {
             // Modo Trial: Usar el jefe que ya está en la escena
             if (bossInScene != null)
             {
                 spawnedBoss = bossInScene;
-                Debug.Log("✅ Usando jefe de la escena para Trial Mode");
+                Debug.Log("Usando jefe de la escena para Trial Mode");
             }
             else
             {
-                Debug.LogError("❌ Trial Mode activado pero no hay jefe asignado en 'Boss In Scene'");
+                Debug.LogError("Trial Mode activado pero no hay jefe asignado en 'Boss In Scene'");
                 yield break;
             }
         }
@@ -114,34 +126,81 @@ public class BossTrigger : MonoBehaviour
 
             if (spawnedBoss == null)
             {
-                Debug.LogError("❌ BossLife no encontrado en el prefab del jefe!");
+                Debug.LogError("BossLife no encontrado en el prefab del jefe!");
                 yield break;
             }
         }
 
         spawnedBoss.SetBossTrigger(this);
+        if (attackScriptToControl != null)
+            spawnedBoss.AssignAttackScript(attackScriptToControl);
+
+        // Activar jefe y HUD inmediatamente y pausar ataques durante los diálogos
+        spawnedBoss.gameObject.SetActive(true);
+        spawnedBoss.SetAttackEnabled(false);
 
         if (AudioManager.Instance != null)
             AudioManager.Instance.StopMusic();
 
-        if (cameraAnimator != null)
-            cameraAnimator.SetTrigger("BossIntro");
-
-        if (BossNameUI.Instance != null)
-            BossNameUI.Instance.MostrarNombre(nombreJefe);
 
         if (introLines != null && introLines.Length > 0 && TextManager.Instance != null)
         {
+            float totalIntroTime = 0f;
+            float typeSpeed = 0.05f;
+            if (TextManager.Instance != null)
+            {
+                typeSpeed = TextManager.Instance.GetTypeSpeed();
+            }
+
             for (int i = 0; i < introLines.Length; i++)
             {
-                TextManager.Instance.ShowDialogue(introLines[i]);
-                yield return new WaitForSeconds(2f);
+                string line = introLines[i];
+                TextManager.Instance.ShowDialogue(line);
+
+                int dotCount = 0;
+                int commaCount = 0;
+                for (int c = 0; c < line.Length; c++)
+                {
+                    char ch = line[c];
+                    if (ch == '.') dotCount++;
+                    else if (ch == ',') commaCount++;
+                }
+
+                float baseTime = line.Length * typeSpeed;
+                float punctuationTime = dotCount * 0.5f + commaCount * 0.25f;
+                float displayTime = baseTime + punctuationTime;
+                if (displayTime < 1.0f) displayTime = 1.0f;
+                float elapsed = 0f;
+                while (elapsed < displayTime)
+                {
+                    if (skipRequested || Input.GetKeyDown(skipKey)) break;
+                    elapsed += Time.deltaTime;
+                    yield return null;
+                }
+                totalIntroTime += displayTime;
+                if (skipRequested) break;
             }
             TextManager.Instance.CloseDialogue();
+            if (!skipRequested)
+            {
+                yield return new WaitForSeconds(1f);
+                totalIntroTime += 1f;
+            }
+
+            if (!skipRequested && totalIntroTime < introDuracion)
+            {
+                yield return new WaitForSeconds(introDuracion - totalIntroTime);
+            }
         }
         else
         {
-            yield return new WaitForSeconds(introDuracion);
+            float elapsed = 0f;
+            while (elapsed < introDuracion)
+            {
+                if (skipRequested || Input.GetKeyDown(skipKey)) break;
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
         }
 
         if (AudioManager.Instance != null && sfxInicioBatalla != null)
@@ -159,24 +218,29 @@ public class BossTrigger : MonoBehaviour
             musicTimeline.StartTimeline();
         }
 
-        // ✅ Iniciar Trial Mode
+        spawnedBoss.SetAttackEnabled(true);
+        if (BossHealthUI.Instance != null)
+            BossHealthUI.Instance.ShowForBoss(spawnedBoss);
+
+        // Iniciar Trial Mode
         if (useTrialMode && trialManager != null)
         {
-            spawnedBoss.gameObject.SetActive(true); // Asegurar que esté activo
             spawnedBoss.trialManager = trialManager;
             spawnedBoss.trialMode = true;
             trialManager.BeginSequence(spawnedBoss);
         }
-        else
-        {
-            spawnedBoss.gameObject.SetActive(true);
-        }
+        if (pm != null) pm.SetControlsEnabled(true);
 
         if (playerController != null)
             playerController.canMove = true;
 
         if (playerRb != null)
             playerRb.gravityScale = 1;
+    }
+
+    public void RequestSkip()
+    {
+        skipRequested = true;
     }
 
     private IEnumerator FadeInMusic(AudioClip music, float duration)

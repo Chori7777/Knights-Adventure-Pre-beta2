@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -9,6 +9,7 @@ public class Portal : MonoBehaviour
     [Header("Configuración de Portal")]
     [SerializeField] private Transform destination; // Punto de destino
     [SerializeField] private Portal pairedPortal;   // Portal conectado (opcional)
+    [SerializeField] private bool autoUnlockPairedOnEnter = true;
 
     [Header("Cooldown")]
     [SerializeField] private float teleportCooldown = 1f;
@@ -97,6 +98,11 @@ public class Portal : MonoBehaviour
             Debug.LogWarning("⚠️ No hay destino asignado al portal!");
         }
 
+        if (pairedPortal != null && autoUnlockPairedOnEnter)
+        {
+            pairedPortal.Unlock();
+        }
+
         // Sonido de salida
         if (teleportSound != null && AudioManager.Instance != null)
             AudioManager.Instance.PlaySFX(teleportSound, 0.7f);
@@ -138,6 +144,15 @@ public class Portal : MonoBehaviour
     public void SetImmunity(float duration)
     {
         StartCoroutine(ImmunityCoroutine(duration));
+    }
+
+    public void Unlock()
+    {
+        var go = gameObject;
+        if (!go.activeSelf) go.SetActive(true);
+        var col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = true;
+        canTeleport = true;
     }
 
     private IEnumerator ImmunityCoroutine(float duration)

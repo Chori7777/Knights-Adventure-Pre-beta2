@@ -33,6 +33,7 @@ public class TrueKnightWand : MonoBehaviour
     [SerializeField] private float beamMoveDistance = 20f;
     [SerializeField] private float beamMoveDuration = 0.8f;
     [SerializeField] private Ease beamMoveEase = Ease.Linear;
+    [SerializeField] private float beamMaxLength = 20f;
 
     [Header("Ataque Simple")]
     [SerializeField] private GameObject projectilePrefab;
@@ -114,6 +115,12 @@ public class TrueKnightWand : MonoBehaviour
         if (beamPrefab != null)
         {
             GameObject beam = Instantiate(beamPrefab, transform.position, transform.rotation);
+            var bc = beam.GetComponent<BeamController>();
+            if (bc != null)
+            {
+                bc.SetMaxLength(beamMaxLength);
+                bc.Activate(beamLifetime);
+            }
             if (mover && beamMoves)
             {
                 Vector3 dir = transform.right;

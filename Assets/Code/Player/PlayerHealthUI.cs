@@ -68,6 +68,9 @@ public class PlayerHealthUI : MonoBehaviour
     private Tweener headTween;
 
     public bool IsInitialized { get; private set; }
+    [Header("Visibilidad")]
+    [SerializeField] private bool hideWhenNoPlayer = true;
+    [SerializeField] private CanvasGroup hudGroup;
 
     void Awake()
     {
@@ -90,6 +93,7 @@ public class PlayerHealthUI : MonoBehaviour
 
         // Cachear referencias FIJAS (las que están en el prefab)
         CacheFixedReferences();
+        SetHUDVisible(false);
     }
 
     private void OnDestroy()
@@ -104,6 +108,7 @@ public class PlayerHealthUI : MonoBehaviour
         Debug.Log($"🔄 [PlayerHealthUI] Escena cargada: {scene.name}");
 
         // Reconectar al jugador de la nueva escena
+        SetHUDVisible(false);
         StartCoroutine(ReconnectToPlayer());
     }
 
@@ -119,6 +124,7 @@ public class PlayerHealthUI : MonoBehaviour
         if (playerObj == null)
         {
             Debug.LogWarning("⚠️ [PlayerHealthUI] No se encontró jugador en la escena");
+            SetHUDVisible(false);
             yield break;
         }
 
@@ -146,6 +152,7 @@ public class PlayerHealthUI : MonoBehaviour
 
         // ✅ Actualizar display completo
         ForceRefresh();
+        SetHUDVisible(true);
     }
 
     private void CacheFixedReferences()
@@ -204,6 +211,22 @@ public class PlayerHealthUI : MonoBehaviour
         UpdateDisplay();
 
         Debug.Log("🔄 [PlayerHealthUI] Refresh forzado completado");
+    }
+
+    private void SetHUDVisible(bool visible)
+    {
+        if (!hideWhenNoPlayer) return;
+        var cg = hudGroup != null ? hudGroup : GetComponentInParent<CanvasGroup>();
+        if (cg != null)
+        {
+            cg.alpha = visible ? 1f : 0f;
+            cg.interactable = visible;
+            cg.blocksRaycasts = visible;
+        }
+        else
+        {
+            gameObject.SetActive(visible);
+        }
     }
 
     private void AdjustSwordSegments(int maxHealth)
