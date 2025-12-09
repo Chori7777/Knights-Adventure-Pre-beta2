@@ -230,8 +230,15 @@ public class EnemyLife : MonoBehaviour
     {
         if (collision.CompareTag("Espada") && !core.IsDead)
         {
+            if (collision.GetComponent<swordDamageScript>() != null) return;
             Vector2 attackPosition = new Vector2(collision.transform.position.x, transform.position.y);
-            TakeDamageWithKnockback(attackPosition, 1);
+            int damage = 1;
+            if (ControladorDatosJuego.Instance != null)
+            {
+                var datos = ControladorDatosJuego.Instance.datosjuego;
+                damage = Mathf.Max(1, 1 + datos.attackDamageUpgrades + (datos.nivelActualEspada - 1));
+            }
+            TakeDamageWithKnockback(attackPosition, damage);
         }
     }
 

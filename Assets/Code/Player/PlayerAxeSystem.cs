@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 /// <summary>
 /// Sistema de cargas de hachas para ataque a distancia
@@ -14,6 +15,11 @@ public class PlayerAxeSystem : MonoBehaviour
     [Header("Munición")]
     [SerializeField] private int currentAxes = 3;
     [SerializeField] private int maxAxes = 3;
+
+    [Header("Auto Recarga")]
+    [SerializeField] private bool enableAutoRecharge = true;
+    [SerializeField] private float autoRechargeInterval = 5f;
+    [SerializeField] private int autoRechargeAmount = 1;
 
     [Header("Audio")]
     [SerializeField] private AudioClip throwSound;
@@ -41,6 +47,8 @@ public class PlayerAxeSystem : MonoBehaviour
     private void Start()
     {
         UpdateUI();
+        if (enableAutoRecharge && autoRechargeRoutine == null)
+            autoRechargeRoutine = StartCoroutine(AutoRechargeRoutine());
     }
 
     private void CreateThrowPointIfNeeded()
@@ -55,6 +63,7 @@ public class PlayerAxeSystem : MonoBehaviour
     }
 
     private PlayerMovement pm;
+    private Coroutine autoRechargeRoutine;
 
     private void Update()
     {
@@ -66,6 +75,33 @@ public class PlayerAxeSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             TryThrowAxe();
+        }
+    }
+
+    private IEnumerator AutoRechargeRoutine()
+    {
+        while (enableAutoRecharge)
+        {
+            if (currentAxes < maxAxes)
+            {
+                currentAxes = Mathf.Min(currentAxes + autoRechargeAmount, maxAxes);
+                UpdateUI();
+                SaveAxeCount();
+            }
+            yield return new WaitForSeconds(autoRechargeInterval);
+        }
+        autoRechargeRoutine = null;
+    }
+
+    public void SetAutoRechargeEnabled(bool value)
+    {
+        enableAutoRecharge = value;
+        if (enableAutoRecharge && autoRechargeRoutine == null)
+            autoRechargeRoutine = StartCoroutine(AutoRechargeRoutine());
+        if (!enableAutoRecharge && autoRechargeRoutine != null)
+        {
+            StopCoroutine(autoRechargeRoutine);
+            autoRechargeRoutine = null;
         }
     }
 

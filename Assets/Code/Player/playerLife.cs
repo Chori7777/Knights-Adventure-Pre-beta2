@@ -48,6 +48,10 @@ public class playerLife : MonoBehaviour
     [SerializeField] private string gameOverSceneAlternate = "GameOver";
     [SerializeField] private bool useAlternateGameOverMessagesForThisCharacter = false;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip healSound;
+    [SerializeField] private AudioClip potionPickupSound;
+
     public bool IsInitialized { get; private set; }
 
     private void Awake()
@@ -155,6 +159,10 @@ public class playerLife : MonoBehaviour
         }
 
         UpdateUI();
+        if (healSound != null && AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(healSound, 1f);
+        }
     }
 
     public void EnableAutoRechargePotions(float duration)
@@ -351,6 +359,10 @@ public class playerLife : MonoBehaviour
         if (isDead) return;
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
         UpdateUI();
+        if (healSound != null && AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(healSound, 1f);
+        }
     }
 
     public void HealFull()
@@ -358,6 +370,10 @@ public class playerLife : MonoBehaviour
         if (isDead) return;
         currentHealth = maxHealth;
         UpdateUI();
+        if (healSound != null && AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(healSound, 1f);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -366,6 +382,10 @@ public class playerLife : MonoBehaviour
         {
             AddPotion();
             Destroy(collision.gameObject);
+            if (potionPickupSound != null && AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlaySFX(potionPickupSound, 1f);
+            }
         }
 
         if (collision.CompareTag("Consumable"))

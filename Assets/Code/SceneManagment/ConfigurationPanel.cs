@@ -354,6 +354,29 @@ public class ConfigurationPanel : MonoBehaviour
 
         var keyb = keybindsPanel?.GetComponent<KeybindsSettings>();
         if (keyb != null) keyb.ResetToDefaults();
+
+        var am = AudioManager.Instance;
+        if (am != null)
+        {
+            am.SetMasterVolume(1f);
+            am.SetMusicVolume(1f);
+            am.SetSFXVolume(0.7f);
+        }
+
+        if (audioPanel != null)
+        {
+            var sliders = audioPanel.GetComponentsInChildren<UnityEngine.UI.Slider>(true);
+            for (int i = 0; i < sliders.Length; i++)
+            {
+                var s = sliders[i];
+                var n = s.gameObject.name.ToLowerInvariant();
+                if (am == null) continue;
+                if (n.Contains("master")) s.value = am.masterVolume;
+                else if (n.Contains("music")) s.value = am.musicVolume;
+                else if (n.Contains("sfx") || n.Contains("effects")) s.value = am.sfxVolume;
+            }
+            UpdateAudioLabels();
+        }
     }
 
     private void FixVisibility()
@@ -485,6 +508,7 @@ public class ConfigurationPanel : MonoBehaviour
     private void EnsureButtonsInteractive()
     {
         if (configurationRoot == null) return;
+        if (buttonClickSound == null) { /* no-op, optional sound */ }
         var buttons = configurationRoot.GetComponentsInChildren<UnityEngine.UI.Button>(true);
         for (int i = 0; i < buttons.Length; i++)
         {
@@ -493,6 +517,7 @@ public class ConfigurationPanel : MonoBehaviour
             var img = b.GetComponent<UnityEngine.UI.Image>();
             if (img != null) img.raycastTarget = true;
             Debug.Log($"[ConfigPanel] Botón '{b.gameObject.name}' habilitado (listeners={b.onClick.GetPersistentEventCount()})");
+            WireButtonClickSound(b);
         }
 
         var toggles = configurationRoot.GetComponentsInChildren<UnityEngine.UI.Toggle>(true);
@@ -503,6 +528,26 @@ public class ConfigurationPanel : MonoBehaviour
             var img = t.GetComponent<UnityEngine.UI.Image>();
             if (img != null) img.raycastTarget = true;
             Debug.Log($"[ConfigPanel] Toggle '{t.gameObject.name}' habilitado");
+        }
+    }
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip buttonClickSound;
+    private System.Collections.Generic.HashSet<int> wiredButtonsSound = new System.Collections.Generic.HashSet<int>();
+
+    private void WireButtonClickSound(UnityEngine.UI.Button b)
+    {
+        int id = b.GetInstanceID();
+        if (wiredButtonsSound.Contains(id)) return;
+        b.onClick.AddListener(PlayClickSound);
+        wiredButtonsSound.Add(id);
+    }
+
+    private void PlayClickSound()
+    {
+        if (buttonClickSound != null && AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(buttonClickSound, 0.7f);
         }
     }
 

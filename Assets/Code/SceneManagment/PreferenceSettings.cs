@@ -128,6 +128,7 @@ public class PreferenceSettings : MonoBehaviour
             fpsDropdown.RefreshShownValue();
         }
         if (textSpeedSlider != null) textSpeedSlider.value = 0.05f;
+        InputBindings.ResetToDefaults();
         ApplyAll();
     }
 

@@ -247,6 +247,8 @@ MonoBehaviour:
   gameOverSceneDefault: GameOver
   gameOverSceneAlternate: GameOver
   useAlternateGameOverMessagesForThisCharacter: 0
+  healSound: {fileID: 0}
+  potionPickupSound: {fileID: 0}
 --- !u!114 &7134106177684360171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,9 +312,9 @@ MonoBehaviour:
   canJump: 1
   canDoubleJump: 1
   canAttack: 1
-  canDash: 1
-  canWallCling: 1
-  canBlock: 1
+  canDash: 0
+  canWallCling: 0
+  canBlock: 0
   canThrowProjectile: 1
   groundCheckRay: 0.57
   groundCheckSpacing: 0.3
@@ -455,6 +457,9 @@ MonoBehaviour:
   throwCooldown: 15
   currentAxes: 3
   maxAxes: 3
+  enableAutoRecharge: 1
+  autoRechargeInterval: 5
+  autoRechargeAmount: 1
   throwSound: {fileID: 0}
   emptySound: {fileID: 0}
 --- !u!114 &1657270733753478340
@@ -469,10 +474,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 752b91d04b9a81b4497ef09e3c664b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shieldVisual: {fileID: 3230430081567901213}
+  shieldVisual: {fileID: 0}
   useAlternateShield: 0
   alternateShieldVisual: {fileID: 0}
-  blockSound: {fileID: 8300000, guid: cedee2f7e1b82dd41b2c365df5f6d33d, type: 3}
+  blockSound: {fileID: 8300000, guid: 1bfa73a5741d7bb479036c658e12a0dd, type: 3}
   shieldBreakSound: {fileID: 8300000, guid: c20d6096bd770a5409ab0f6eb44976d5, type: 3}
   blockAngle: 180
   staminaCost: 0

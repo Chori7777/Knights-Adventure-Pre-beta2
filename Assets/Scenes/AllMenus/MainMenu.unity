@@ -599,9 +599,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625f33e9c32e6df4a8eca737bb87775e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  submitKey: 13
-  submitAltKey: 122
-  cancelKey: 27
 --- !u!4 &562195624
 Transform:
   m_ObjectHideFlags: 0
@@ -3021,6 +3018,10 @@ PrefabInstance:
       propertyPath: mainMenuRoot
       value: 
       objectReference: {fileID: 468208933}
+    - target: {fileID: 5777499618131055377, guid: 017a6e1e63b796c4094c9a9fd838286e, type: 3}
+      propertyPath: buttonClickSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 8892c0daee3381643a9ceaf7b530fb03, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

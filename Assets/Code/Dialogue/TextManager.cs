@@ -27,6 +27,7 @@ public class TextManager : MonoBehaviour
     {
         if (instance == null)
             instance = this;
+        typeSpeed = PlayerPrefs.GetFloat("pref_text_speed", typeSpeed);
     }
 
     public static TextManager Instance => instance;

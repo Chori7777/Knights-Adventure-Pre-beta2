@@ -23654,6 +23654,14 @@ PrefabInstance:
       propertyPath: cameraHolder
       value: 
       objectReference: {fileID: 905322687}
+    - target: {fileID: 8063530325838669568, guid: dc0dfb65d9dc32d4dbdcf70da0a95762, type: 3}
+      propertyPath: healSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 1d44b20800e8a944b9378b893c91dddd, type: 3}
+    - target: {fileID: 8063530325838669568, guid: dc0dfb65d9dc32d4dbdcf70da0a95762, type: 3}
+      propertyPath: potionPickupSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 668d4177c90eec1478e77e797fbb1ce9, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -24414,12 +24422,16 @@ PrefabInstance:
       objectReference: {fileID: 1809535957}
     - target: {fileID: 3354991593770247439, guid: bf5120562dfa0774aa7920329fe131b9, type: 3}
       propertyPath: health
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3354991593770247439, guid: bf5120562dfa0774aa7920329fe131b9, type: 3}
       propertyPath: maxHealth
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3354991593770247439, guid: bf5120562dfa0774aa7920329fe131b9, type: 3}
+      propertyPath: dropPrefab
+      value: 
+      objectReference: {fileID: 118723011694184022, guid: 1ef941b9dd5d47a409b207f5e55a0606, type: 3}
     - target: {fileID: 3354991593770247439, guid: bf5120562dfa0774aa7920329fe131b9, type: 3}
       propertyPath: scoreReward
       value: 1100
@@ -24428,6 +24440,14 @@ PrefabInstance:
       propertyPath: scriptAtaque
       value: 
       objectReference: {fileID: 1637732942}
+    - target: {fileID: 4590586387892462161, guid: bf5120562dfa0774aa7920329fe131b9, type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4590586387892462161, guid: bf5120562dfa0774aa7920329fe131b9, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 535337391
+      objectReference: {fileID: 0}
     - target: {fileID: 9210925217902634886, guid: bf5120562dfa0774aa7920329fe131b9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.7
