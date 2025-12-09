@@ -129,9 +129,9 @@ public class PlayerShield : MonoBehaviour
 
         // Log para debugging
         if (isPerfect)
-            Debug.Log("⚡ ¡BLOQUEO PERFECTO! (Parry)");
+            Debug.Log("[PlayerShield] Bloqueo perfecto (parry)");
         else
-            Debug.Log("🛡️ Ataque bloqueado");
+            Debug.Log("[PlayerShield] Ataque bloqueado");
     }
 
     /// <summary>

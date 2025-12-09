@@ -199,14 +199,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   currentHealth: 5
+  defaultStartingHealth: 5
   maxPotions: 3
   currentPotions: 3
   potionHealAmount: 1
   potionCooldown: 0.5
   potionCooldownIndicator: {fileID: 0}
   enableAutoRechargePotions: 1
-  autoRechargePotions: 1
-  autoRechargeDuration: 30
   autoRechargeInterval: 5
   invincibilityDuration: 1
   deathAnimationName: Death
@@ -425,14 +424,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   currentHealth: 5
+  defaultStartingHealth: 3
   maxPotions: 5
   currentPotions: 3
   potionHealAmount: 1
   potionCooldown: 0.5
   potionCooldownIndicator: {fileID: 0}
   enableAutoRechargePotions: 1
-  autoRechargePotions: 1
-  autoRechargeDuration: 30
   autoRechargeInterval: 5
   invincibilityDuration: 0.5
   deathAnimationName: Death

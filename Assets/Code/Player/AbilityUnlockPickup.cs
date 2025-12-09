@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 /// <summary>
 /// Pickup para desbloquear habilidades + animación flotante
@@ -72,7 +72,7 @@ public class AbilityUnlockPickup : MonoBehaviour
 
     private void UnlockAbility(GameObject player)
     {
-        Debug.Log($"🔓 Desbloqueando: {abilityName}");
+        Debug.Log($"[AbilityPickup] Desbloqueando: {abilityName}");
 
         // ========== PASO 1: DESBLOQUEAR EN PLAYER ==========
         PlayerMovement pm = player.GetComponent<PlayerMovement>();
@@ -103,7 +103,7 @@ public class AbilityUnlockPickup : MonoBehaviour
             }
 
             ControladorDatosJuego.Instance.GuardarDatos(false);
-            Debug.Log("💾 Habilidad guardada");
+            Debug.Log("[AbilityPickup] Habilidad guardada");
         }
 
         // ========== PASO 3: MOSTRAR TUTORIAL ==========
@@ -117,7 +117,7 @@ public class AbilityUnlockPickup : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("⚠ UnlockTutorialUI.Instance es NULL");
+            Debug.LogWarning("[AbilityPickup] UnlockTutorialUI.Instance es NULL");
         }
 
         // ========== PASO 4: SFX + EFECTO ==========

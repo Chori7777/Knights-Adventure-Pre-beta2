@@ -33,6 +33,18 @@ public class FadeController : MonoBehaviour
             Debug.Log(" Animator asignado en FadeController.");
         }
 
+        var canvas = GetComponentInChildren<Canvas>(true);
+        if (canvas == null)
+        {
+            var go = new GameObject("FadeCanvas");
+            go.transform.SetParent(transform, false);
+            canvas = go.AddComponent<Canvas>();
+            go.AddComponent<UnityEngine.UI.CanvasScaler>();
+            go.AddComponent<UnityEngine.UI.GraphicRaycaster>();
+        }
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.overrideSorting = true;
+        canvas.sortingOrder = 9998;
         // Subscribirse al evento de cambio de escena
         SceneManager.sceneLoaded += OnSceneLoaded;
     }

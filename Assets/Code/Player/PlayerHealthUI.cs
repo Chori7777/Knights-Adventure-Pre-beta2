@@ -66,6 +66,7 @@ public class PlayerHealthUI : MonoBehaviour
     private List<Image> allSwordMiddleParts = new List<Image>();
     private Vector2 targetHeadPosition;
     private Tweener headTween;
+    private float initialKnightX;
 
     public bool IsInitialized { get; private set; }
     [Header("Visibilidad")]
@@ -83,7 +84,7 @@ public class PlayerHealthUI : MonoBehaviour
             // ✅ Suscribirse a cambios de escena
             SceneManager.sceneLoaded += OnSceneLoaded;
 
-            Debug.Log("✅ [PlayerHealthUI] HUD creado y persistente");
+            Debug.Log("[PlayerHealthUI] HUD creado y persistente");
         }
         else
         {
@@ -94,6 +95,12 @@ public class PlayerHealthUI : MonoBehaviour
         // Cachear referencias FIJAS (las que están en el prefab)
         CacheFixedReferences();
         SetHUDVisible(false);
+
+        if (knightImage != null)
+        {
+            var rect = knightImage.GetComponent<RectTransform>();
+            initialKnightX = rect != null ? rect.anchoredPosition.x : 0f;
+        }
     }
 
     private void OnDestroy()
@@ -105,7 +112,7 @@ public class PlayerHealthUI : MonoBehaviour
     // ✅ NUEVO: Se llama cada vez que cambia la escena
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log($"🔄 [PlayerHealthUI] Escena cargada: {scene.name}");
+        Debug.Log($"[PlayerHealthUI] Escena cargada: {scene.name}");
 
         // Reconectar al jugador de la nueva escena
         SetHUDVisible(false);
@@ -123,7 +130,7 @@ public class PlayerHealthUI : MonoBehaviour
 
         if (playerObj == null)
         {
-            Debug.LogWarning("⚠️ [PlayerHealthUI] No se encontró jugador en la escena");
+            Debug.LogWarning("[PlayerHealthUI] No se encontró jugador en la escena");
             SetHUDVisible(false);
             yield break;
         }
@@ -132,7 +139,7 @@ public class PlayerHealthUI : MonoBehaviour
 
         if (newPlayer == null)
         {
-            Debug.LogError("❌ [PlayerHealthUI] El jugador no tiene componente playerLife");
+            Debug.LogError("[PlayerHealthUI] El jugador no tiene componente playerLife");
             yield break;
         }
 
@@ -148,7 +155,7 @@ public class PlayerHealthUI : MonoBehaviour
 
         // ✅ Reconectar
         player = newPlayer;
-        Debug.Log("🔗 [PlayerHealthUI] Reconectado al nuevo jugador");
+        Debug.Log("[PlayerHealthUI] Reconectado al nuevo jugador");
 
         // ✅ Actualizar display completo
         ForceRefresh();
@@ -159,7 +166,7 @@ public class PlayerHealthUI : MonoBehaviour
     {
         if (swordMiddle0 == null || swordMiddle1 == null || swordMiddle2 == null)
         {
-            Debug.LogError("❌ [PlayerHealthUI] FALTAN segmentos base en el Inspector");
+            Debug.LogError("[PlayerHealthUI] FALTAN segmentos base en el Inspector");
             return;
         }
 
@@ -168,7 +175,7 @@ public class PlayerHealthUI : MonoBehaviour
         allSwordMiddleParts.Add(swordMiddle1);
         allSwordMiddleParts.Add(swordMiddle2);
 
-        Debug.Log($"✅ [PlayerHealthUI] {allSwordMiddleParts.Count} segmentos base cacheados");
+        Debug.Log($"[PlayerHealthUI] {allSwordMiddleParts.Count} segmentos base cacheados");
     }
 
     public void Initialize(playerLife p)
@@ -195,14 +202,14 @@ public class PlayerHealthUI : MonoBehaviour
 
         IsInitialized = true;
         EnsureShieldBarExists();
-        Debug.Log("✅ [PlayerHealthUI] Inicialización completa");
+        Debug.Log("[PlayerHealthUI] Inicialización completa");
     }
 
     public void ForceRefresh()
     {
         if (player == null)
         {
-            Debug.LogWarning("⚠️ [PlayerHealthUI] No hay player para refrescar");
+            Debug.LogWarning("[PlayerHealthUI] No hay player para refrescar");
             return;
         }
 
@@ -210,7 +217,7 @@ public class PlayerHealthUI : MonoBehaviour
         EnsureShieldBarExists();
         UpdateDisplay();
 
-        Debug.Log("🔄 [PlayerHealthUI] Refresh forzado completado");
+        Debug.Log("[PlayerHealthUI] Refresh forzado completado");
     }
 
     private void SetHUDVisible(bool visible)
@@ -235,7 +242,7 @@ public class PlayerHealthUI : MonoBehaviour
 
         if (allSwordMiddleParts.Count == 0)
         {
-            Debug.LogError("❌ allSwordMiddleParts vacío");
+            Debug.LogError("[PlayerHealthUI] allSwordMiddleParts vacío");
             return;
         }
 
@@ -247,7 +254,7 @@ public class PlayerHealthUI : MonoBehaviour
             {
                 if (!AddSwordSegmentDynamic())
                 {
-                    Debug.LogError($"❌ Falló añadir segmento {i + 1}/{segmentsToAdd}");
+                    Debug.LogError($"[PlayerHealthUI] Falló añadir segmento {i + 1}/{segmentsToAdd}");
                     break;
                 }
             }
@@ -323,7 +330,7 @@ public class PlayerHealthUI : MonoBehaviour
     {
         if (player == null)
         {
-            Debug.LogWarning("⚠️ [PlayerHealthUI] No hay player para actualizar");
+            Debug.LogWarning("[PlayerHealthUI] No hay player para actualizar");
             return;
         }
 
@@ -487,11 +494,8 @@ public class PlayerHealthUI : MonoBehaviour
         if (player == null || knightImage == null) return;
 
         RectTransform knightRect = knightImage.GetComponent<RectTransform>();
-        float healthLost = player.MaxHealth - player.Health;
-        float moveAmount = healthLost * knightMoveDistancePerHealth;
-
         Vector2 newPos = knightRect.anchoredPosition;
-        newPos.x = -moveAmount;
+        newPos.x = initialKnightX;
         knightRect.anchoredPosition = newPos;
     }
 }

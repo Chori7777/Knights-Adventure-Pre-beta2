@@ -158,21 +158,21 @@ public class NPCRewardSystem : MonoBehaviour
         var datos = ControladorDatosJuego.Instance.datosjuego;
         playerLife playerLifeComponent = player.GetComponent<playerLife>();
 
-        // 💰 Recompensa: Monedas
+        // Recompensa: Monedas
         if (giveCoins)
         {
             ControladorDatosJuego.Instance.AgregarMonedas(coinAmount);
-            Debug.Log($"[NPC] Diste {coinAmount} monedas");
+            Debug.Log($"[NPC] Entregadas {coinAmount} monedas");
         }
 
-        // ❤️ Recompensa: Vida
+        // Recompensa: Vida
         if (giveHealth && playerLifeComponent != null)
         {
             playerLifeComponent.Heal(healthAmount);
-            Debug.Log($"[NPC] Curaste {healthAmount} puntos de vida");
+            Debug.Log($"[NPC] Curados {healthAmount} puntos de vida");
         }
 
-        // ❤️ Recompensa: Vida máxima
+        // Recompensa: Vida máxima
         if (giveMaxHealthUpgrade && playerLifeComponent != null)
         {
             int newMax = playerLifeComponent.MaxHealth + 1;
@@ -181,14 +181,14 @@ public class NPCRewardSystem : MonoBehaviour
             Debug.Log($"[NPC] Vida máxima aumentada a {newMax}");
         }
 
-        // 🧪 Recompensa: Pociones
+        // Recompensa: Pociones
         if (givePotions && playerLifeComponent != null)
         {
             playerLifeComponent.AddPotion(potionAmount);
-            Debug.Log($"[NPC] Diste {potionAmount} pociones");
+            Debug.Log($"[NPC] Entregadas {potionAmount} pociones");
         }
 
-        // 🧪 Recompensa: Capacidad de pociones
+        // Recompensa: Capacidad de pociones
         if (giveMaxPotionUpgrade && playerLifeComponent != null)
         {
             int newMax = playerLifeComponent.MaxPotions + 1;
@@ -197,7 +197,7 @@ public class NPCRewardSystem : MonoBehaviour
             Debug.Log($"[NPC] Capacidad de pociones aumentada a {newMax}");
         }
 
-        // 🪓 Recompensa: Hachas
+        // Recompensa: Hachas
         if (giveAxes)
         {
             datos.cantidadHachas = Mathf.Min(datos.cantidadHachas + axeAmount, datos.maxHachas);
@@ -205,10 +205,10 @@ public class NPCRewardSystem : MonoBehaviour
             {
                 PlayerHealthUI.Instance.ActualizarHachas(datos.cantidadHachas);
             }
-            Debug.Log($"[NPC] Diste {axeAmount} hachas");
+            Debug.Log($"[NPC] Entregadas {axeAmount} hachas");
         }
 
-        // 🎯 Recompensa: Habilidades
+        // Recompensa: Habilidades
         PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
         if (playerMovement != null)
         {
@@ -216,28 +216,28 @@ public class NPCRewardSystem : MonoBehaviour
             {
                 playerMovement.canDoubleJump = true;
                 datos.hasDoubleJump = true;
-                Debug.Log("[NPC] Desbloqueaste: Doble Salto");
+                Debug.Log("[NPC] Desbloqueada: Doble salto");
             }
 
             if (unlockDash)
             {
                 playerMovement.canDash = true;
                 datos.hasDash = true;
-                Debug.Log("[NPC] Desbloqueaste: Dash");
+                Debug.Log("[NPC] Desbloqueada: Dash");
             }
 
             if (unlockWallCling)
             {
                 playerMovement.canWallCling = true;
                 datos.hasWallCling = true;
-                Debug.Log("[NPC] Desbloqueaste: Escalada de Paredes");
+                Debug.Log("[NPC] Desbloqueada: Escalada de paredes");
             }
 
             if (unlockShield)
             {
                 playerMovement.canBlock = true;
                 datos.hasShield = true;
-                Debug.Log("[NPC] Desbloqueaste: Escudo");
+                Debug.Log("[NPC] Desbloqueada: Escudo");
             }
         }
 

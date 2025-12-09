@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class EnemyAnimationController : MonoBehaviour
 {
@@ -105,9 +105,9 @@ public class EnemyAnimationController : MonoBehaviour
 
         // ✅ DEBUG: Mostrar qué parámetros de Death se encontraron
         if (hasDeathBoolParam)
-            Debug.Log($"[{gameObject.name}] Death detectado como BOOL: {deathBoolParamName}");
+            Debug.Log($"[EnemyAnimationController] Death detectado como BOOL: {deathBoolParamName}");
         if (hasDeathTriggerParam)
-            Debug.Log($"[{gameObject.name}] Death detectado como TRIGGER: {deathTriggerParamName}");
+            Debug.Log($"[EnemyAnimationController] Death detectado como TRIGGER: {deathTriggerParamName}");
     }
 
     private void LateUpdate()
@@ -198,13 +198,13 @@ public class EnemyAnimationController : MonoBehaviour
     {
         if (!value) return; // Solo procesar cuando value = true
 
-        Debug.Log($"🎬 [{gameObject.name}] SetDeath llamado");
+        Debug.Log("[EnemyAnimationController] SetDeath llamado");
 
         // ✅ Prioridad 1: Usar Trigger si existe
         if (hasDeathTriggerParam)
         {
             anim.SetTrigger(deathTriggerParamName);
-            Debug.Log($"   ✅ SetTrigger('{deathTriggerParamName}')");
+            Debug.Log($"[EnemyAnimationController] SetTrigger('{deathTriggerParamName}')");
         }
         // ✅ Prioridad 2: Usar Bool si no hay Trigger
         else if (hasDeathBoolParam)
@@ -217,25 +217,25 @@ public class EnemyAnimationController : MonoBehaviour
 
             // Luego activar Death
             anim.SetBool(deathBoolParamName, true);
-            Debug.Log($"   ✅ SetBool('{deathBoolParamName}', true)");
+            Debug.Log($"[EnemyAnimationController] SetBool('{deathBoolParamName}', true)");
 
             // ✅ CRÍTICO: Forzar que el Animator actualice inmediatamente
             anim.Update(0f);
         }
         else
         {
-            Debug.LogWarning($"   ⚠️ No hay parámetro Death (ni Bool ni Trigger)");
+            Debug.LogWarning("[EnemyAnimationController] No hay parámetro Death (ni Bool ni Trigger)");
         }
 
         // ✅ DEBUG: Verificar estado del Animator
         if (anim != null)
         {
-            Debug.Log($"   🔍 Animator enabled: {anim.enabled}");
-            Debug.Log($"   🔍 Animator speed: {anim.speed}");
+            Debug.Log($"[EnemyAnimationController] Animator enabled: {anim.enabled}");
+            Debug.Log($"[EnemyAnimationController] Animator speed: {anim.speed}");
 
             // Ver estado actual
             AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-            Debug.Log($"   🔍 Estado actual: {stateInfo.shortNameHash}");
+            Debug.Log($"[EnemyAnimationController] Estado actual: {stateInfo.shortNameHash}");
         }
     }
 

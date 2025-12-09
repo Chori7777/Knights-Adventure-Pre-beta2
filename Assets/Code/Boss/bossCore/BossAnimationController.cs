@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class BossAnimationController : MonoBehaviour
 {
@@ -96,17 +96,17 @@ public class BossAnimationController : MonoBehaviour
         // Solo log informativo, no warnings molestos
         if (!hasDeathBoolParam && !hasDeathTriggerParam)
         {
-            Debug.Log($"ℹ️ [{gameObject.name}] Sin parámetro 'Death' (opcional)");
+            Debug.Log("[BossAnimationController] Sin parámetro 'Death' (opcional)");
         }
 
         if (!hasDamageBoolParam && !hasDamageTriggerParam)
         {
-            Debug.Log($"ℹ️ [{gameObject.name}] Sin parámetro 'Damage' (opcional)");
+            Debug.Log("[BossAnimationController] Sin parámetro 'Damage' (opcional)");
         }
 
         if (!hasPhaseParam)
         {
-            Debug.Log($"ℹ️ [{gameObject.name}] Sin parámetro 'Phase' (opcional)");
+            Debug.Log("[BossAnimationController] Sin parámetro 'Phase' (opcional)");
         }
     }
 
@@ -169,17 +169,17 @@ public class BossAnimationController : MonoBehaviour
         // ✅ Solo procesar si hay algún parámetro de death
         if (!hasDeathBoolParam && !hasDeathTriggerParam)
         {
-            Debug.Log($"ℹ️ [{gameObject.name}] Sin animación de muerte configurada");
+            Debug.Log("[BossAnimationController] Sin animación de muerte configurada");
             return;
         }
 
-        Debug.Log($"🎬 [{gameObject.name}] Activando animación de muerte");
+        Debug.Log("[BossAnimationController] Activando animación de muerte");
 
         // Prioridad 1: Usar Trigger si existe
         if (hasDeathTriggerParam)
         {
             anim.SetTrigger(deathTriggerParamName);
-            Debug.Log($"   ✅ SetTrigger('{deathTriggerParamName}')");
+            Debug.Log($"[BossAnimationController] SetTrigger('{deathTriggerParamName}')");
         }
         // Prioridad 2: Usar Bool si no hay Trigger
         else if (hasDeathBoolParam)
@@ -191,7 +191,7 @@ public class BossAnimationController : MonoBehaviour
             }
 
             anim.SetBool(deathBoolParamName, true);
-            Debug.Log($"   ✅ SetBool('{deathBoolParamName}', true)");
+            Debug.Log($"[BossAnimationController] SetBool('{deathBoolParamName}', true)");
 
             // Forzar actualización inmediata
             anim.Update(0f);
@@ -208,7 +208,7 @@ public class BossAnimationController : MonoBehaviour
         }
 
         anim.SetInteger("Phase", phase);
-        Debug.Log($"🔄 [{gameObject.name}] Fase cambiada a: {phase}");
+        Debug.Log($"[BossAnimationController] Fase cambiada a: {phase}");
     }
 
     // ========== ANIMATION EVENTS ==========
@@ -225,7 +225,7 @@ public class BossAnimationController : MonoBehaviour
 
     public void OnDeathAnimationEnd()
     {
-        Debug.Log($"✅ [{gameObject.name}] Animación de muerte completada");
+        Debug.Log("[BossAnimationController] Animación de muerte completada");
         // Aquí puedes llamar al método de muerte del jefe
         // O simplemente destruir el GameObject
     }

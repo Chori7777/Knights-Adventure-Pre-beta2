@@ -70,7 +70,7 @@ public class GameOverManager : MonoBehaviour
         Time.timeScale = 1f;
         string escenaActual = SceneManager.GetActiveScene().name;
 
-        Debug.Log($" Reiniciando nivel completo: {escenaActual}");
+        Debug.Log($"[GameOver] Reiniciando nivel completo: {escenaActual}");
         SceneManager.LoadScene(escenaActual);
     }
 
@@ -81,7 +81,7 @@ public class GameOverManager : MonoBehaviour
 
         if (ControladorDatosJuego.Instance == null)
         {
-            Debug.LogError("❌ No existe instancia de ControladorDatosJuego.");
+            Debug.LogError("[GameOver] No existe instancia de ControladorDatosJuego");
             return;
         }
 
@@ -90,12 +90,12 @@ public class GameOverManager : MonoBehaviour
         string escena = ControladorDatosJuego.Instance.datosjuego.escenaActual;
         if (!string.IsNullOrEmpty(escena))
         {
-            Debug.Log($" Cargando último checkpoint en escena: {escena}");
+            Debug.Log($"[GameOver] Cargando último checkpoint en escena: {escena}");
             SceneManager.LoadScene(escena);
         }
         else
         {
-            Debug.LogWarning(" No hay checkpoint guardado. Se reiniciará el nivel actual.");
+            Debug.LogWarning("[GameOver] No hay checkpoint guardado. Se reiniciará el nivel actual");
             ReiniciarNivel();
         }
     }
@@ -104,7 +104,7 @@ public class GameOverManager : MonoBehaviour
     public void VolverAlMenu()
     {
         Time.timeScale = 1f;
-        Debug.Log(" Volviendo al menú principal...");
+        Debug.Log("[GameOver] Volviendo al menú principal");
         SceneManager.LoadScene("MainMenu");
     }
 

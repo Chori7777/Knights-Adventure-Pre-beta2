@@ -119,7 +119,7 @@ public class EnemyLife : MonoBehaviour
     {
         if (core.IsDead) return;
 
-        Debug.Log($"💀 [{gameObject.name}] Iniciando secuencia de muerte");
+        Debug.Log($"[EnemyLife] Iniciando secuencia de muerte");
 
         core.SetDead(true);
         core.SetTakingDamage(false);
@@ -157,14 +157,14 @@ public class EnemyLife : MonoBehaviour
         {
             core.animController.SetDamage(false);
             core.animController.SetDeath(true);
-            Debug.Log($"🎬 [{gameObject.name}] Animación de muerte activada");
+            Debug.Log("[EnemyLife] Animación de muerte activada");
 
             // ✅ DEBUG: Verificar estado del Animator
             Animator anim = GetComponent<Animator>();
             if (anim != null)
             {
-                Debug.Log($"🎬 Animator enabled: {anim.enabled}");
-                Debug.Log($"🎬 Animator speed: {anim.speed}");
+                Debug.Log($"[EnemyLife] Animator enabled: {anim.enabled}");
+                Debug.Log($"[EnemyLife] Animator speed: {anim.speed}");
             }
         }
 
@@ -178,11 +178,11 @@ public class EnemyLife : MonoBehaviour
     {
         if (!isDeathSequenceStarted)
         {
-            Debug.LogWarning($"⚠️ [{gameObject.name}] OnDeathAnimationEnd llamado pero no hay secuencia activa");
+            Debug.LogWarning("[EnemyLife] OnDeathAnimationEnd llamado pero no hay secuencia activa");
             return;
         }
 
-        Debug.Log($"✅ [{gameObject.name}] Animation Event: OnDeathAnimationEnd llamado");
+        Debug.Log("[EnemyLife] Animation Event OnDeathAnimationEnd llamado");
         DestroyEnemy();
     }
 
@@ -194,7 +194,7 @@ public class EnemyLife : MonoBehaviour
         // Solo destruir si todavía existe (el Animation Event podría haberlo destruido ya)
         if (gameObject != null && isDeathSequenceStarted)
         {
-            Debug.LogWarning($"⚠️ [{gameObject.name}] Usando fallback - Animation Event no se llamó");
+            Debug.LogWarning("[EnemyLife] Usando fallback - Animation Event no se llamó");
             DestroyEnemy();
         }
     }
@@ -202,7 +202,7 @@ public class EnemyLife : MonoBehaviour
     // ✅ Método centralizado para destruir
     private void DestroyEnemy()
     {
-        Debug.Log($"💥 [{gameObject.name}] Destruyendo enemigo");
+        Debug.Log("[EnemyLife] Destruyendo enemigo");
         Destroy(gameObject);
     }
 
@@ -211,7 +211,7 @@ public class EnemyLife : MonoBehaviour
         if (ControladorDatosJuego.Instance != null)
         {
             ControladorDatosJuego.Instance.AgregarMonedas(scoreReward);
-            Debug.Log($"💰 [{gameObject.name}] +{scoreReward} monedas");
+            Debug.Log($"[EnemyLife] +{scoreReward} monedas");
         }
     }
 

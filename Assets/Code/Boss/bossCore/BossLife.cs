@@ -30,14 +30,7 @@ public class BossLife : MonoBehaviour
     private BossTrigger bossTrigger;
     public FirstEncounterTrialManager trialManager;
     public bool trialMode = false;
-    private bool acceleratedApplied = false;
-    private bool superAcceleratedApplied = false;
-    private bool phase2PulseActivated = false;
-    [SerializeField] private bool enablePhase2VignettePulse = false;
-    [SerializeField] private Color phase2PulseColor = Color.red;
-    [SerializeField] private float phase2PulseMin = 0.2f;
-    [SerializeField] private float phase2PulseMax = 0.5f;
-    [SerializeField] private float phase2PulsePeriod = 1.5f;
+    
     [Header("Trials - Teleport inicial a mitad de vida")]
     [SerializeField] private bool triggerInitialAreaAtHalfHealth = true;
     private bool initialAreaTeleportDone = false;
@@ -113,20 +106,11 @@ public class BossLife : MonoBehaviour
                 if (triggerInitialAreaAtHalfHealth && !initialAreaTeleportDone && health <= maxHealth / 2)
                 {
                     initialAreaTeleportDone = true;
-                    trialManager.TeleportToInitialArea();
+                    trialManager.PauseForDialoguePhase2();
                 }
             }
             else
             {
-                if (enablePhase2VignettePulse && !phase2PulseActivated && health <= maxHealth / 2)
-                {
-                    phase2PulseActivated = true;
-                    var fx = FindFirstObjectByType<CameraEffectsController>(FindObjectsInactive.Include);
-                    if (fx != null)
-                    {
-                        fx.StartVignettePulse(phase2PulseColor, phase2PulseMin, phase2PulseMax, phase2PulsePeriod);
-                    }
-                }
             }
         }
     }
@@ -174,20 +158,11 @@ public class BossLife : MonoBehaviour
             if (triggerInitialAreaAtHalfHealth && !initialAreaTeleportDone && health <= maxHealth / 2)
             {
                 initialAreaTeleportDone = true;
-                trialManager.TeleportToInitialArea();
+                trialManager.PauseForDialoguePhase2();
             }
         }
         else
         {
-            if (enablePhase2VignettePulse && !phase2PulseActivated && health <= maxHealth / 2)
-            {
-                phase2PulseActivated = true;
-                var fx = FindFirstObjectByType<CameraEffectsController>(FindObjectsInactive.Include);
-                if (fx != null)
-                {
-                    fx.StartVignettePulse(phase2PulseColor, phase2PulseMin, phase2PulseMax, phase2PulsePeriod);
-                }
-            }
         }
     }
 
@@ -255,7 +230,7 @@ public class BossLife : MonoBehaviour
         if (ControladorDatosJuego.Instance != null)
         {
             ControladorDatosJuego.Instance.AgregarMonedas(scoreReward);
-            Debug.Log($"👑 ¡JEFE ELIMINADO! Score +{scoreReward}");
+            Debug.Log($"[BossLife] Jefe eliminado. Score +{scoreReward}");
         }
     }
 

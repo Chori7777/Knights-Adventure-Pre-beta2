@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 /// <summary>
 /// Sistema de cargas de hachas para ataque a distancia
@@ -35,6 +35,7 @@ public class PlayerAxeSystem : MonoBehaviour
         }
 
         CreateThrowPointIfNeeded();
+        pm = GetComponent<PlayerMovement>();
     }
 
     private void Start()
@@ -53,13 +54,16 @@ public class PlayerAxeSystem : MonoBehaviour
         }
     }
 
+    private PlayerMovement pm;
+
     private void Update()
     {
         // Actualizar dirección
         facingRight = transform.localScale.x > 0;
 
         // Detectar input de lanzamiento
-        if (Input.GetKeyDown(KeyCode.C)) // Cambiar a InputManager más tarde
+        if (pm != null && !pm.canThrowProjectile) return;
+        if (Input.GetKeyDown(KeyCode.C))
         {
             TryThrowAxe();
         }

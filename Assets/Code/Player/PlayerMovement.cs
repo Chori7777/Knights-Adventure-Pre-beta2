@@ -690,12 +690,12 @@ public class PlayerMovement : MonoBehaviour
     private void UpdateShieldUI()
     {
         if (shieldBarFill == null) return;
-        if (!enableResistanceShield)
+        if (!enableResistanceShield || !canBlock)
         {
             if (shieldBarFill.gameObject.activeSelf) shieldBarFill.gameObject.SetActive(false);
             return;
         }
-        bool show = Input.GetKey(KeyCode.X);
+        bool show = canBlock && Input.GetKey(KeyCode.X);
         if (shieldBarFill.gameObject.activeSelf != show) shieldBarFill.gameObject.SetActive(show);
         shieldBarFill.fillAmount = shieldDurability / shieldMax;
     }

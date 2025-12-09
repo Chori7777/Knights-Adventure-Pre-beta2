@@ -91,11 +91,11 @@ public class Portal : MonoBehaviour
         if (destination != null)
         {
             player.transform.position = destination.position;
-            Debug.Log($"🌀 Jugador teletransportado a {destination.name}");
+            Debug.Log($"[Portal] Jugador teletransportado a {destination.name}");
         }
         else
         {
-            Debug.LogWarning("⚠️ No hay destino asignado al portal!");
+            Debug.LogWarning("[Portal] No hay destino asignado al portal");
         }
 
         if (pairedPortal != null && autoUnlockPairedOnEnter)

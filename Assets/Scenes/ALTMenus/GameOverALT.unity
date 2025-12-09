@@ -1126,6 +1126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
+  hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   selectedColor: {r: 1, g: 1, b: 1, a: 1}
   normalScale: 1
   selectedScale: 1
@@ -1195,12 +1196,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8213783554813428928, guid: 9ae3fe31d21cbd04cb57f81b29dc32e9, type: 3}
       propertyPath: volume
-      value: 0.704
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8213783554813428928, guid: 9ae3fe31d21cbd04cb57f81b29dc32e9, type: 3}
       propertyPath: sceneMusic
       value: 
-      objectReference: {fileID: 8300000, guid: 8f6750de13ceddc40ac2e07744e2bfb5, type: 3}
+      objectReference: {fileID: 8300000, guid: 18f5d2c6e5d944b42a528475e8f113c8, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1479,6 +1480,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
+  hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   selectedColor: {r: 1, g: 1, b: 1, a: 1}
   normalScale: 1
   selectedScale: 1

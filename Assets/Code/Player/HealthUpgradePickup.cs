@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 /// <summary>
 /// Objeto recolectable que aumenta la vida máxima del jugador
@@ -49,8 +49,7 @@ public class HealthUpgradePickup : MonoBehaviour
             playerLife vida = collision.GetComponent<playerLife>();
             if (vida != null)
             {
-                Debug.Log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-                Debug.Log("Objeto de mejora de vida recogido");
+                Debug.Log("[PICKUP] Objeto de mejora de vida recogido");
 
                 // Guardar vida actual
                 int oldHealth = vida.Health;
@@ -82,7 +81,7 @@ public class HealthUpgradePickup : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("❌ [PICKUP] PlayerHealthUI.Instance es NULL");
+                    Debug.LogError("[PICKUP] PlayerHealthUI.Instance es NULL");
                 }
 
                 if (pickupSound != null && AudioManager.Instance != null)
@@ -102,7 +101,7 @@ public class HealthUpgradePickup : MonoBehaviour
                     ControladorDatosJuego.Instance.datosjuego.vidaMaxima = newMax;
                     ControladorDatosJuego.Instance.datosjuego.vidaActual = vida.Health;
                     ControladorDatosJuego.Instance.GuardarDatos(false);
-                    Debug.Log("Datos guardados");
+                    Debug.Log("[PICKUP] Datos guardados");
                 }
 
 

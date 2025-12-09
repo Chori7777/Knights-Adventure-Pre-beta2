@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using DG.Tweening;
+using System.Collections.Generic;
 
 public class FirstEncounterBossAttackManager : MonoBehaviour
 {
@@ -96,6 +97,7 @@ public class FirstEncounterBossAttackManager : MonoBehaviour
 
         int count = Mathf.Max(1, overheadCount);
         float spread = overheadSpread;
+        var spawnPositions = new List<Vector3>(count);
         for (int i = 0; i < count; i++)
         {
             float offX = (i - count / 2f) * (spread / count);
@@ -104,17 +106,14 @@ public class FirstEncounterBossAttackManager : MonoBehaviour
             ySpawn = Mathf.Min(ySpawn, topY - overheadTopMargin);
             Vector3 spawnPos = new Vector3(x, ySpawn, 0f);
             DrawIndicator(spawnPos, targetIndicator);
+            spawnPositions.Add(spawnPos);
         }
         yield return new WaitForSeconds(indicatorTime);
 
         for (int i = 0; i < count; i++)
         {
-            Vector3 targetFire = player != null ? player.transform.position : targetIndicator;
-            float offX = (i - count / 2f) * (spread / count);
-            float x = Mathf.Clamp(targetFire.x + offX, leftX, rightX);
-            float ySpawn = player.transform.position.y + overheadPlayerYOffset;
-            ySpawn = Mathf.Min(ySpawn, topY - overheadTopMargin);
-            Vector3 spawnPos = new Vector3(x, ySpawn, 0f);
+            Vector3 spawnPos = spawnPositions[i];
+            Vector3 targetFire = targetIndicator;
             GameObject proj = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
             RegisterSpawn(proj);
             Sequence seq = DOTween.Sequence();

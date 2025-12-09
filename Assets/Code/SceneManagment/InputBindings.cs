@@ -45,13 +45,13 @@ public class InputBindings : MonoBehaviour
         slotEscuchar = Mathf.Clamp(slot, 0, 1);
         escuchando = true;
 
-        Debug.Log($"🎧 [InputBindings] Escuchando para {accion} slot {slot}");
+        Debug.Log($"[InputBindings] Escuchando para {accion} slot {slot}");
     }
 
     public void CancelRebind()
     {
         escuchando = false;
-        Debug.Log("❌ [InputBindings] Rebind cancelado");
+        Debug.Log("[InputBindings] Rebind cancelado");
     }
 
     private void CapturarNuevaTecla()
@@ -72,7 +72,7 @@ public class InputBindings : MonoBehaviour
 
             if (Input.GetKeyDown(k))
             {
-                Debug.Log($"✅ [InputBindings] Tecla capturada: {k}");
+                Debug.Log($"[InputBindings] Tecla capturada: {k}");
 
                 AsignarTecla(accionEscuchar, slotEscuchar, k);
                 GuardarBindingsPersistentes();
@@ -113,7 +113,7 @@ public class InputBindings : MonoBehaviour
                 }
                 catch
                 {
-                    Debug.LogWarning($"⚠️ Error parseando binding primario {i}: {p}");
+                    Debug.LogWarning($"[InputBindings] Error parseando binding primario {i}: {p}");
                 }
             }
 
@@ -125,7 +125,7 @@ public class InputBindings : MonoBehaviour
                 }
                 catch
                 {
-                    Debug.LogWarning($"⚠️ Error parseando binding secundario {i}: {s}");
+                    Debug.LogWarning($"[InputBindings] Error parseando binding secundario {i}: {s}");
                 }
             }
         }
@@ -139,7 +139,7 @@ public class InputBindings : MonoBehaviour
             PlayerPrefs.SetString("bind_s_" + i, secundarios[i].ToString());
         }
         PlayerPrefs.Save();
-        Debug.Log("💾 Bindings guardados");
+        Debug.Log("[InputBindings] Bindings guardados");
     }
 
     private void AsignarTecla(GameAction accion, int slot, KeyCode tecla)
@@ -150,7 +150,7 @@ public class InputBindings : MonoBehaviour
         else
             secundarios[idx] = tecla;
 
-        Debug.Log($"✅ Asignado {tecla} a {accion} slot {slot}");
+        Debug.Log($"[InputBindings] Asignado {tecla} a {accion} slot {slot}");
     }
 
     public static KeyCode GetPrimary(GameAction accion)
@@ -185,7 +185,7 @@ public class InputBindings : MonoBehaviour
         CargarBindingsPorDefecto();
         CargarBindingsPersistentes();
         inicializado = true;
-        Debug.Log("✅ InputBindings inicializado");
+        Debug.Log("[InputBindings] Inicializado");
     }
 
     public static bool Get(GameAction accion)
@@ -220,7 +220,7 @@ public class InputBindings : MonoBehaviour
     {
         CargarBindingsPorDefecto();
         GuardarBindingsPersistentes();
-        Debug.Log("🔄 Bindings reseteados");
+        Debug.Log("[InputBindings] Bindings reseteados");
     }
 
     // ✅ Getter público para debugging

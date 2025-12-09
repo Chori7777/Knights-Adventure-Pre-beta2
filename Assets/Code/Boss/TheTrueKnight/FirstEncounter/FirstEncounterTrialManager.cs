@@ -23,7 +23,7 @@ public class FirstEncounterTrialManager : MonoBehaviour
     [SerializeField] private Trial[] phase2Trials;
     [Header("Tiempo por Fase")]
     [SerializeField] private float tiempoFase1 = 15f;
-    [SerializeField] private float tiempoFase2 = 8f;
+    
     [Header("Teleport")]
     [SerializeField] private FirstEncounterTeleportManager gestorTeleport;
     [Header("Boss Controller")]
@@ -43,6 +43,7 @@ public class FirstEncounterTrialManager : MonoBehaviour
     [Header("Área Inicial del Combate")]
     [SerializeField] private Transform areaInicialPlayerSpawn;
     [SerializeField] private Transform areaInicialCameraTarget;
+    [SerializeField] private Transform areaInicialBossSpawn;
     [Header("Música Fase 2")]
     [SerializeField] private AudioClip musicaFase2;
     [SerializeField] private float musicaFase2Volume = 0.5f;
@@ -50,22 +51,26 @@ public class FirstEncounterTrialManager : MonoBehaviour
     [Header("Pantalla Negra")]
     [SerializeField] private float blackScreenDuration = 1.5f;
     [Header("Fase 2 - Reducción de tiempo por golpe")]
-    [SerializeField] private float hitTimeReduction = 5f;
-    [SerializeField] private float directFightThreshold = 3f;
-    [SerializeField] private bool forceTeleportOnFirstHitPhase2 = true;
+    
+    [Header("Transición Fase 2")]
+    [SerializeField] private float phase2DialogueExtraDelay = 8f;
+    [SerializeField] private bool enableDebugLogs = true;
+    
 
     private int index;
     private float timer;
     private bool running;
-    private bool accelerated;
+    
     private bool superAccelerated;
+    private bool phase2Active;
+    private bool ignoreHitAdvance;
     private BossLife boss;
     private Coroutine timerRoutine;
     private bool phaseTransitionActive;
     private Trial[] currentTrials;
     private bool sequenceActive;
     private bool directFightActive;
-    private bool phase2TeleportTriggered;
+    
 
     private void Awake()
     {
@@ -77,25 +82,24 @@ public class FirstEncounterTrialManager : MonoBehaviour
 
     public void BeginSequence(BossLife bossLife)
     {
+        if (enableDebugLogs) Debug.Log("[TrialManager] BeginSequence");
         boss = bossLife;
         if (boss != null)
         {
             boss.trialManager = this;
             boss.trialMode = true;
         }
-        accelerated = false;
-        phase2TeleportTriggered = false;
+        phase2Active = false;
         currentTrials = phase1Trials;
         index = 0;
         sequenceActive = true;
+        if (enableDebugLogs) Debug.Log("[TrialManager] Starting trial index=" + index);
         StartTrial(index);
     }
 
     public void SetAccelerated(bool value)
     {
-        accelerated = false;
-        // No cambiar lista de trials
-        phase2TeleportTriggered = false;
+        // Desactivado. No cambia lista de trials.
     }
 
     private float GetTime()
@@ -104,8 +108,9 @@ public class FirstEncounterTrialManager : MonoBehaviour
         return Mathf.Max(1f, t);
     }
 
-    private void StartTrial(int i)
+    private void StartTrial(int trialIndex)
     {
+        if (enableDebugLogs) Debug.Log("[TrialManager] StartTrial trialIndex=" + trialIndex);
         if (phaseTransitionActive) return;
         if (!sequenceActive) return;
         if (directFightActive) return;
@@ -114,13 +119,13 @@ public class FirstEncounterTrialManager : MonoBehaviour
             EndSequenceVictory();
             return;
         }
-        if (i < 0 || i >= currentTrials.Length)
+        if (trialIndex < 0 || trialIndex >= currentTrials.Length)
         {
             EndSequenceVictory();
             return;
         }
 
-        Trial t = currentTrials[i];
+        Trial trial = currentTrials[trialIndex];
         if (timerRoutine != null)
         {
             StopCoroutine(timerRoutine);
@@ -132,7 +137,7 @@ public class FirstEncounterTrialManager : MonoBehaviour
         // Verificar que gestorTeleport no sea null
         if (gestorTeleport == null)
         {
-            Debug.LogError("gestorTeleport es NULL en FirstEncounterTrialManager!");
+            Debug.LogError("[TrialManager] gestorTeleport es NULL");
             return;
         }
 
@@ -140,32 +145,37 @@ public class FirstEncounterTrialManager : MonoBehaviour
         if (boss != null && !boss.gameObject.activeSelf)
         {
             boss.gameObject.SetActive(true);
-            Debug.Log("Jefe activado para trial");
+            Debug.Log("[TrialManager] Jefe activado para trial");
         }
 
-        StartCoroutine(TeleportWithBlackScreen(t.playerSpawn, t.cameraTarget));
+        StartCoroutine(TeleportWithBlackScreen(trial.playerSpawn, trial.cameraTarget));
 
-        if (boss != null && t.bossSpawn != null)
+        if (boss != null && trial.bossSpawn != null)
         {
-            boss.transform.position = t.bossSpawn.position;
+            boss.transform.position = trial.bossSpawn.position;
             if (bossController != null)
             {
-                bossController.OnTrialSuccess(t.bossSpawn.position);
+                bossController.OnTrialSuccess(trial.bossSpawn.position);
             }
-            Debug.Log($"Jefe teletransportado a: {t.bossSpawn.position}");
+            Debug.Log($"[TrialManager] Jefe teletransportado a: {trial.bossSpawn.position}");
         }
 
-        EnableTrialBehaviours(t);
+        EnableTrialBehaviours(trial);
         timerRoutine = StartCoroutine(TimerRoutine());
 
+        if (attackManager == null)
+            attackManager = FindFirstObjectByType<FirstEncounterBossAttackManager>(FindObjectsInactive.Include);
         if (attackManager != null)
         {
-            attackManager.StartTrialAttacks(false);
+            if (!attackManager.enabled) attackManager.enabled = true;
+            attackManager.StartTrialAttacks(phase2Active);
+            if (enableDebugLogs) Debug.Log("[TrialManager] AttackManager StartTrialAttacks phase2=" + phase2Active);
         }
     }
 
     private IEnumerator TeleportWithBlackScreen(Transform playerSpawn, Transform cameraTarget)
     {
+        if (enableDebugLogs) Debug.Log("[TrialManager] TeleportWithBlackScreen enter");
         // Mostrar pantalla negra
         if (BlackScreenManager.Instance != null)
         {
@@ -186,6 +196,7 @@ public class FirstEncounterTrialManager : MonoBehaviour
         {
             BlackScreenManager.Instance.HideBlackScreen();
         }
+        if (enableDebugLogs) Debug.Log("[TrialManager] TeleportWithBlackScreen exit");
     }
 
     private IEnumerator TimerRoutine()
@@ -211,11 +222,11 @@ public class FirstEncounterTrialManager : MonoBehaviour
         if (!running || !sequenceActive) return;
         running = false;
         if (currentTrials == null || currentTrials.Length == 0) return;
-        Trial t = currentTrials[index];
+        Trial trial = currentTrials[index];
 
         if (boss != null)
         {
-            boss.transform.position = t.bossSpawn.position;
+            boss.transform.position = trial.bossSpawn.position;
 
             // Asegurar que este activo
             if (!boss.gameObject.activeSelf)
@@ -223,7 +234,7 @@ public class FirstEncounterTrialManager : MonoBehaviour
                 boss.gameObject.SetActive(true);
             }
 
-                Debug.Log($"Jefe aparece en: {t.bossSpawn.position}");
+                Debug.Log($"[TrialManager] Boss aparece en: {trial.bossSpawn.position}");
         }
     }
 
@@ -271,6 +282,8 @@ public class FirstEncounterTrialManager : MonoBehaviour
             attackManager.StopAttacks();
         }
 
+        
+
         StartCoroutine(ShowFinalDefeatDialogue());
     }
 
@@ -304,21 +317,36 @@ public class FirstEncounterTrialManager : MonoBehaviour
         }
 
         // Permitir que el jugador continúe después del diálogo
-        Debug.Log("Combate finalizado. El jugador puede continuar.");
+        Debug.Log("[TrialManager] Combate finalizado. El jugador puede continuar.");
     }
 
     public void PauseForDialoguePhase2()
     {
-        StartCoroutine(Phase2PauseRoutine());
+        StartCoroutine(TransitionToPhase2WithBlackScreen());
     }
 
-    private IEnumerator Phase2PauseRoutine()
+    private IEnumerator TransitionToPhase2WithBlackScreen()
     {
+        if (enableDebugLogs) Debug.Log("[TrialManager] TransitionToPhase2WithBlackScreen start");
         phaseTransitionActive = true;
+        ignoreHitAdvance = true;
+        if (attackManager == null)
+            attackManager = FindFirstObjectByType<FirstEncounterBossAttackManager>(FindObjectsInactive.Include);
         if (attackManager != null)
         {
             attackManager.StopAttacks();
             attackManager.ClearSpawnedObjects();
+            attackManager.enabled = false;
+            if (enableDebugLogs) Debug.Log("[TrialManager] AttackManager stopped and disabled");
+        }
+        var bossObjForAttacks = bossController != null ? bossController.gameObject : null;
+        if (bossObjForAttacks == null && boss != null) bossObjForAttacks = boss.gameObject;
+        if (bossObjForAttacks != null)
+        {
+            var generalAttackA = bossObjForAttacks.GetComponentInChildren<TheTrueKnightAttackManager>(true);
+            if (generalAttackA != null) generalAttackA.enabled = false;
+            var generalAttackB = bossObjForAttacks.GetComponentInChildren<TrueKnightBoss>(true);
+            if (generalAttackB != null) generalAttackB.enabled = false;
         }
         DisableAndResetTrialBehaviours(currentTrials[index]);
         if (timerRoutine != null)
@@ -333,6 +361,49 @@ public class FirstEncounterTrialManager : MonoBehaviour
             AudioManager.Instance.StopMusic(false);
             yield return new WaitForSeconds(0.2f);
         }
+        if (boss == null && bossController != null)
+            boss = bossController.GetComponent<BossLife>();
+        if (boss != null) boss.SetAttackEnabled(false);
+        // Teleport al área inicial antes de activar la fase 2
+        if (gestorTeleport != null && areaInicialPlayerSpawn != null)
+        {
+            yield return TeleportWithBlackScreen(areaInicialPlayerSpawn, areaInicialCameraTarget);
+            if (enableDebugLogs) Debug.Log("[TrialManager] Teleported to initial area for phase2 dialogue");
+        }
+
+        // Congelar jugador durante el diálogo de fase 2
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        PlayerMovement pm = playerObj != null ? playerObj.GetComponent<PlayerMovement>() : null;
+        Rigidbody2D prb = playerObj != null ? playerObj.GetComponent<Rigidbody2D>() : null;
+        if (pm != null) pm.SetControlsEnabled(false);
+        if (prb != null)
+        {
+            prb.linearVelocity = Vector2.zero;
+            prb.simulated = false;
+        }
+
+        // Asegurar referencia al jefe y posicionarlo en el spawn inicial del área
+        if (boss == null && bossController != null)
+            boss = bossController.GetComponent<BossLife>();
+        if (boss == null)
+        {
+            var bossObj = GameObject.FindGameObjectWithTag("Boss");
+            if (bossObj != null) boss = bossObj.GetComponent<BossLife>();
+        }
+        if (boss != null && areaInicialBossSpawn != null)
+        {
+            if (!boss.gameObject.activeSelf) boss.gameObject.SetActive(true);
+            boss.transform.position = areaInicialBossSpawn.position;
+            boss.SetAttackEnabled(false);
+            if (enableDebugLogs) Debug.Log("[TrialManager] Boss positioned at initial area and attacks disabled");
+        }
+
+        if (bossController != null && areaInicialBossSpawn != null)
+        {
+            bossController.OnTrialSuccess(areaInicialBossSpawn.position);
+            if (enableDebugLogs) Debug.Log("[TrialManager] BossController OnTrialSuccess at initial area");
+        }
+
         if (gestorTexto != null)
         {
             if (dialogosFase2 != null && dialogosFase2.Length > 0)
@@ -351,19 +422,38 @@ public class FirstEncounterTrialManager : MonoBehaviour
                 gestorTexto.CloseDialogue();
             }
         }
-        yield return new WaitForSeconds(1.5f);
-
+        while (TextManager.IsOpen)
+        {
+            yield return null;
+        }
+        // Espera extra antes de activar la fase 2
+        if (phase2DialogueExtraDelay > 0f)
+        {
+            yield return new WaitForSeconds(phase2DialogueExtraDelay);
+        }
+        else
+        {
+            yield return new WaitForSeconds(1.0f);
+        }
         if (AudioManager.Instance != null && musicaFase2 != null)
         {
             AudioManager.Instance.PlayMusic(musicaFase2, musicaFase2Volume, true, true);
         }
+        // Rehabilitar controles del jugador al terminar el diálogo
+        if (prb != null) prb.simulated = true;
+        if (pm != null) pm.SetControlsEnabled(true);
+        // Activar Fase 2 y empezar en el primer trial
+        phase2Active = true;
+        currentTrials = (phase2Trials != null && phase2Trials.Length > 0) ? phase2Trials : phase1Trials;
+        index = 0;
         phaseTransitionActive = false;
+        ignoreHitAdvance = false;
+        if (enableDebugLogs) Debug.Log("[TrialManager] TransitionToPhase2WithBlackScreen end, starting trial0");
         StartTrial(index);
     }
 
     public void TransitionToPhase2Immediate()
     {
-        accelerated = false;
         // No cambiar trials
         if (timerRoutine != null)
         {
@@ -379,7 +469,7 @@ public class FirstEncounterTrialManager : MonoBehaviour
     {
         if (gestorTeleport != null && areaInicialPlayerSpawn != null)
         {
-            gestorTeleport.TeleportInstant(areaInicialPlayerSpawn, areaInicialCameraTarget, 1.2f);
+            StartCoroutine(TeleportWithBlackScreen(areaInicialPlayerSpawn, areaInicialCameraTarget));
         }
     }
 
@@ -395,6 +485,7 @@ public class FirstEncounterTrialManager : MonoBehaviour
     {
         if (!sequenceActive) return;
         if (directFightActive) return;
+        if (phaseTransitionActive || ignoreHitAdvance) return;
         StartCoroutine(AdvanceToNextTrialWithBlackScreen());
     }
 
@@ -412,6 +503,7 @@ public class FirstEncounterTrialManager : MonoBehaviour
 
     private IEnumerator AdvanceToNextTrialWithBlackScreen()
     {
+        if (enableDebugLogs) Debug.Log("[TrialManager] AdvanceToNextTrialWithBlackScreen from index=" + index);
         if (currentTrials == null || currentTrials.Length == 0) yield break;
         DisableAndResetTrialBehaviours(currentTrials[index]);
         if (attackManager != null)
@@ -419,14 +511,14 @@ public class FirstEncounterTrialManager : MonoBehaviour
             attackManager.ClearSpawnedObjects();
         }
         index = (index + 1) % currentTrials.Length;
-        int i = index;
+        int trialIndex = index;
 
         if (!sequenceActive) yield break;
         if (directFightActive) yield break;
         if (currentTrials == null || currentTrials.Length == 0) { EndSequenceVictory(); yield break; }
-        if (i < 0 || i >= currentTrials.Length) { EndSequenceVictory(); yield break; }
+        if (trialIndex < 0 || trialIndex >= currentTrials.Length) { EndSequenceVictory(); yield break; }
 
-        Trial t = currentTrials[i];
+        Trial trial = currentTrials[trialIndex];
         if (timerRoutine != null)
         {
             StopCoroutine(timerRoutine);
@@ -437,7 +529,7 @@ public class FirstEncounterTrialManager : MonoBehaviour
 
         if (gestorTeleport == null)
         {
-            Debug.LogError("gestorTeleport es NULL en FirstEncounterTrialManager!");
+            Debug.LogError("[TrialManager] gestorTeleport es NULL");
             yield break;
         }
 
@@ -446,33 +538,39 @@ public class FirstEncounterTrialManager : MonoBehaviour
             boss.gameObject.SetActive(true);
         }
 
-        yield return TeleportWithBlackScreen(t.playerSpawn, t.cameraTarget);
+        yield return TeleportWithBlackScreen(trial.playerSpawn, trial.cameraTarget);
+        if (enableDebugLogs) Debug.Log("[TrialManager] Teleported to next trial trialIndex=" + trialIndex);
 
-        if (boss != null && t.bossSpawn != null)
+        if (boss != null && trial.bossSpawn != null)
         {
-            boss.transform.position = t.bossSpawn.position;
+            boss.transform.position = trial.bossSpawn.position;
             if (bossController != null)
             {
-                bossController.OnTrialSuccess(t.bossSpawn.position);
+                bossController.OnTrialSuccess(trial.bossSpawn.position);
             }
         }
 
-        EnableTrialBehaviours(t);
+        EnableTrialBehaviours(trial);
         timerRoutine = StartCoroutine(TimerRoutine());
+        if (attackManager == null)
+            attackManager = FindFirstObjectByType<FirstEncounterBossAttackManager>(FindObjectsInactive.Include);
         if (attackManager != null)
         {
-            attackManager.StartTrialAttacks(false);
+            if (!attackManager.enabled) attackManager.enabled = true;
+            attackManager.StartTrialAttacks(phase2Active);
+            if (enableDebugLogs) Debug.Log("[TrialManager] AttackManager StartTrialAttacks next trial");
         }
     }
 
-    private void StartTrialImmediate(int i)
+    private void StartTrialImmediate(int trialIndex)
     {
+        if (enableDebugLogs) Debug.Log("[TrialManager] StartTrialImmediate trialIndex=" + trialIndex);
         if (!sequenceActive) return;
         if (directFightActive) return;
         if (currentTrials == null || currentTrials.Length == 0) { EndSequenceVictory(); return; }
-        if (i < 0 || i >= currentTrials.Length) { EndSequenceVictory(); return; }
+        if (trialIndex < 0 || trialIndex >= currentTrials.Length) { EndSequenceVictory(); return; }
 
-        Trial t = currentTrials[i];
+        Trial trial = currentTrials[trialIndex];
         if (timerRoutine != null)
         {
             StopCoroutine(timerRoutine);
@@ -483,7 +581,7 @@ public class FirstEncounterTrialManager : MonoBehaviour
 
         if (gestorTeleport == null)
         {
-            Debug.LogError("gestorTeleport es NULL en FirstEncounterTrialManager!");
+            Debug.LogError("[TrialManager] gestorTeleport es NULL");
             return;
         }
 
@@ -492,89 +590,79 @@ public class FirstEncounterTrialManager : MonoBehaviour
             boss.gameObject.SetActive(true);
         }
 
-        gestorTeleport.TeleportRaw(t.playerSpawn, t.cameraTarget);
+        gestorTeleport.TeleportRaw(trial.playerSpawn, trial.cameraTarget);
 
-        if (boss != null && t.bossSpawn != null)
+        if (boss != null && trial.bossSpawn != null)
         {
-            boss.transform.position = t.bossSpawn.position;
+            boss.transform.position = trial.bossSpawn.position;
             if (bossController != null)
             {
-                bossController.OnTrialSuccess(t.bossSpawn.position);
+                bossController.OnTrialSuccess(trial.bossSpawn.position);
             }
         }
 
-        EnableTrialBehaviours(t);
+        EnableTrialBehaviours(trial);
         timerRoutine = StartCoroutine(TimerRoutine());
+        if (attackManager == null)
+            attackManager = FindFirstObjectByType<FirstEncounterBossAttackManager>(FindObjectsInactive.Include);
         if (attackManager != null)
         {
-            attackManager.StartTrialAttacks(false);
+            if (!attackManager.enabled) attackManager.enabled = true;
+            attackManager.StartTrialAttacks(phase2Active);
+            if (enableDebugLogs) Debug.Log("[TrialManager] AttackManager StartTrialAttacks immediate");
         }
     }
 
-    private IEnumerator TeleportToInitialAndResume()
-    {
-        yield return TeleportWithBlackScreen(areaInicialPlayerSpawn, areaInicialCameraTarget);
-        directFightActive = false;
-        sequenceActive = true;
-        accelerated = true;
-        currentTrials = (phase2Trials != null && phase2Trials.Length > 0) ? phase2Trials : phase1Trials;
-        index = (index + 1) % currentTrials.Length;
-        if (attackManager != null)
-        {
-            attackManager.ClearSpawnedObjects();
-        }
-        EnableTrialBehaviours(currentTrials[index]);
-        StartTrial(index);
-    }
+    
 
     public float RemainingTime => timer;
 
-    private void EnableTrialBehaviours(Trial t)
+    private void EnableTrialBehaviours(Trial trial)
     {
-        if (t == null) return;
-        if (t.enableOnEnterObjects != null)
+        if (trial == null) return;
+        if (trial.enableOnEnterObjects != null)
         {
-            for (int i = 0; i < t.enableOnEnterObjects.Length; i++)
+            for (int i = 0; i < trial.enableOnEnterObjects.Length; i++)
             {
-                var go = t.enableOnEnterObjects[i];
+                var go = trial.enableOnEnterObjects[i];
                 if (go != null) go.SetActive(true);
             }
         }
-        if (t.enableOnEnterComponents != null)
+        if (trial.enableOnEnterComponents != null)
         {
-            for (int i = 0; i < t.enableOnEnterComponents.Length; i++)
+            for (int i = 0; i < trial.enableOnEnterComponents.Length; i++)
             {
-                var comp = t.enableOnEnterComponents[i];
+                var comp = trial.enableOnEnterComponents[i];
                 if (comp != null) comp.enabled = true;
             }
         }
     }
 
-    private void DisableAndResetTrialBehaviours(Trial t)
+    private void DisableAndResetTrialBehaviours(Trial trial)
     {
-        if (t == null) return;
-        if (t.disableOnExitObjects != null)
+        if (trial == null) return;
+        if (trial.disableOnExitObjects != null)
         {
-            for (int i = 0; i < t.disableOnExitObjects.Length; i++)
+            for (int i = 0; i < trial.disableOnExitObjects.Length; i++)
             {
-                var go = t.disableOnExitObjects[i];
+                var go = trial.disableOnExitObjects[i];
                 if (go != null) go.SetActive(false);
             }
         }
-        if (t.disableOnExitComponents != null)
+        if (trial.disableOnExitComponents != null)
         {
-            for (int i = 0; i < t.disableOnExitComponents.Length; i++)
+            for (int i = 0; i < trial.disableOnExitComponents.Length; i++)
             {
-                var comp = t.disableOnExitComponents[i];
+                var comp = trial.disableOnExitComponents[i];
                 if (comp != null) comp.enabled = false;
             }
         }
 
-        if (t.enableOnEnterComponents != null)
+        if (trial.enableOnEnterComponents != null)
         {
-            for (int i = 0; i < t.enableOnEnterComponents.Length; i++)
+            for (int i = 0; i < trial.enableOnEnterComponents.Length; i++)
             {
-                var comp = t.enableOnEnterComponents[i];
+                var comp = trial.enableOnEnterComponents[i];
                 if (comp == null) continue;
                 comp.enabled = false;
                 comp.enabled = true;

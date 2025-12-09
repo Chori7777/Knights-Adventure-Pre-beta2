@@ -96238,8 +96238,11 @@ MonoBehaviour:
   stepIntervalSeconds: 0.2
   stepDistanceUnits: 0.5
   stickPlayerToPlatform: 1
+  stickYOffsetThreshold: 0.15
   teleportToAOnArriveB: 0
   teleportLoopSMB: 0
+  autoReturnToAWhenEmpty: 1
+  autoReturnDelay: 1
   moveSound: {fileID: 0}
   arriveSound: {fileID: 0}
   platformRoot: {fileID: 0}
@@ -97347,8 +97350,11 @@ MonoBehaviour:
   stepIntervalSeconds: 0.2
   stepDistanceUnits: 0.5
   stickPlayerToPlatform: 1
+  stickYOffsetThreshold: 0.15
   teleportToAOnArriveB: 0
   teleportLoopSMB: 0
+  autoReturnToAWhenEmpty: 1
+  autoReturnDelay: 1
   moveSound: {fileID: 0}
   arriveSound: {fileID: 0}
   platformRoot: {fileID: 0}
@@ -209165,7 +209171,7 @@ Sprite:
         format: 0
         dimension: 0
       m_DataSize: 80
-      _typelessdata: 000000bf0000003f000000000000003f0000003f00000000000000bf000000bf000000000000003f000000bf000000000000000000000000000000000000000000000000000000000000000000000000
+      _typelessdata: 000000bf0000003f000000000000003f0000003f00000000000000bf000000bf000000000000003f000000bf00000000000000000000803f0000803f0000803f00000000000000000000803f00000000
     m_Bindpose: []
     textureRect:
       serializedVersion: 2
@@ -209386,7 +209392,7 @@ Sprite:
         format: 0
         dimension: 0
       m_DataSize: 80
-      _typelessdata: 000000bf0000003f000000000000003f0000003f00000000000000bf000000bf000000000000003f000000bf000000000000000000000000000000000000000000000000000000000000000000000000
+      _typelessdata: 000000bf0000003f000000000000003f0000003f00000000000000bf000000bf000000000000003f000000bf00000000000000000000803f0000803f0000803f00000000000000000000803f00000000
     m_Bindpose: []
     textureRect:
       serializedVersion: 2
@@ -209596,8 +209602,11 @@ MonoBehaviour:
   stepIntervalSeconds: 0.2
   stepDistanceUnits: 0.5
   stickPlayerToPlatform: 1
+  stickYOffsetThreshold: 0.15
   teleportToAOnArriveB: 0
   teleportLoopSMB: 0
+  autoReturnToAWhenEmpty: 1
+  autoReturnDelay: 1
   moveSound: {fileID: 0}
   arriveSound: {fileID: 0}
   platformRoot: {fileID: 0}
@@ -256663,7 +256672,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 41
-      m_TileSpriteIndex: 42
+      m_TileSpriteIndex: 52
       m_TileMatrixIndex: 3
       m_TileColorIndex: 10
       m_TileObjectToInstantiateIndex: 65535
@@ -265900,8 +265909,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: -1383846123, guid: 3303afa471b12894888c72f7ac09d6e9, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 3
     m_Data: {fileID: 6663399962055943209, guid: 3303afa471b12894888c72f7ac09d6e9, type: 3}
   - m_RefCount: 24
@@ -265920,8 +265929,8 @@ Tilemap:
     m_Data: {fileID: -1043366601, guid: 3303afa471b12894888c72f7ac09d6e9, type: 3}
   - m_RefCount: 32
     m_Data: {fileID: 7093113562608773357, guid: 3303afa471b12894888c72f7ac09d6e9, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -1383846123, guid: 3303afa471b12894888c72f7ac09d6e9, type: 3}
   - m_RefCount: 29
     m_Data: {fileID: -7009300872201695759, guid: 3303afa471b12894888c72f7ac09d6e9, type: 3}
   - m_RefCount: 531
@@ -268044,8 +268053,11 @@ MonoBehaviour:
   stepIntervalSeconds: 0.2
   stepDistanceUnits: 0.5
   stickPlayerToPlatform: 1
+  stickYOffsetThreshold: 0.15
   teleportToAOnArriveB: 0
   teleportLoopSMB: 0
+  autoReturnToAWhenEmpty: 1
+  autoReturnDelay: 1
   moveSound: {fileID: 0}
   arriveSound: {fileID: 0}
   platformRoot: {fileID: 0}
@@ -268927,8 +268939,11 @@ MonoBehaviour:
   stepIntervalSeconds: 0.2
   stepDistanceUnits: 0.5
   stickPlayerToPlatform: 1
+  stickYOffsetThreshold: 0.15
   teleportToAOnArriveB: 0
   teleportLoopSMB: 0
+  autoReturnToAWhenEmpty: 1
+  autoReturnDelay: 1
   moveSound: {fileID: 0}
   arriveSound: {fileID: 0}
   platformRoot: {fileID: 0}

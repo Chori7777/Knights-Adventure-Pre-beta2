@@ -49,13 +49,13 @@ public class PlayerSpawnManager : MonoBehaviour
 
             if (isFromCheckpoint || isFromContinue)
             {
-                Debug.Log("🔹 [PlayerSpawnManager] Cargando desde checkpoint/continue - NO reposicionar");
+                Debug.Log("[PlayerSpawnManager] Cargando desde checkpoint/continue - no reposicionar");
                 return; // ✅ Dejar que ControladorDatosJuego maneje el spawn
             }
         }
 
         // Solo llegar aquí si es spawn NORMAL (nueva partida, transición de escena)
-        Debug.Log("🔹 [PlayerSpawnManager] Spawn normal - reposicionando");
+        Debug.Log("[PlayerSpawnManager] Spawn normal - reposicionando");
         RepositionPlayer(scene.name);
     }
 
@@ -64,13 +64,13 @@ public class PlayerSpawnManager : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
         {
-            Debug.LogWarning("⚠️ [PlayerSpawnManager] No se encontró jugador");
+            Debug.LogWarning("[PlayerSpawnManager] No se encontró jugador");
             return;
         }
 
         Vector3 spawnPos = GetSpawnPosition(sceneName);
         player.transform.position = spawnPos;
-        Debug.Log($"🎯 [PlayerSpawnManager] Jugador reposicionado en {sceneName}: {spawnPos}");
+        Debug.Log($"[PlayerSpawnManager] Jugador reposicionado en {sceneName}: {spawnPos}");
     }
 
     private Vector3 GetSpawnPosition(string sceneName)
@@ -88,7 +88,7 @@ public class PlayerSpawnManager : MonoBehaviour
             return spawnPoint.transform.position;
 
         // 3. Usar spawn por defecto
-        Debug.LogWarning($"⚠️ [PlayerSpawnManager] No hay spawn definido para {sceneName}, usando default");
+        Debug.LogWarning($"[PlayerSpawnManager] No hay spawn definido para {sceneName}, usando default");
         return defaultSpawn;
     }
 }

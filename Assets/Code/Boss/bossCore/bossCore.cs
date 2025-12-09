@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class bossCore : MonoBehaviour
 {
@@ -62,14 +62,14 @@ public class bossCore : MonoBehaviour
         if (animController != null)
         {
             animController.Initialize(this);
-            Debug.Log($"✅ [{gameObject.name}] BossAnimationController inicializado");
+            Debug.Log($"[bossCore] BossAnimationController inicializado");
         }
 
 
         if (movement != null)
         {
             movement.Initialize(this);
-            Debug.Log($"✅ [{gameObject.name}] BossMovement inicializado");
+            Debug.Log($"[bossCore] BossMovement inicializado");
         }
 
         // ✅ Nota: Los scripts de ataque específicos de cada jefe
@@ -121,7 +121,7 @@ public class bossCore : MonoBehaviour
             IsAttacking = false;
             IsTakingDamage = false;
             CanMove = false;
-            Debug.Log($"💀 [{gameObject.name}] Jefe marcado como muerto");
+            Debug.Log($"[bossCore] Jefe marcado como muerto");
         }
     }
 
@@ -148,7 +148,7 @@ public class bossCore : MonoBehaviour
     public void SetVulnerable(bool state)
     {
         IsVulnerable = state;
-        Debug.Log($"🛡️ [{gameObject.name}] Vulnerable: {state}");
+        Debug.Log($"[bossCore] Vulnerable: {state}");
     }
 
     // ========== SISTEMA DE FASES ==========
@@ -158,7 +158,7 @@ public class bossCore : MonoBehaviour
         if (IsDead) return;
 
         CurrentPhase = newPhase;
-        Debug.Log($"🔄 [{gameObject.name}] Cambiando a fase {newPhase}");
+        Debug.Log($"[bossCore] Cambiando a fase {newPhase}");
 
         // Actualizar animación de fase
         if (animController != null)
@@ -173,7 +173,7 @@ public class bossCore : MonoBehaviour
     protected virtual void OnPhaseChanged(int phase)
     {
         // Override este método en clases hijas para comportamiento específico por fase
-        Debug.Log($"📌 [{gameObject.name}] Fase {phase} activada");
+        Debug.Log($"[bossCore] Fase {phase} activada");
     }
 
     // ========== VERIFICACIONES DE ESTADO ==========

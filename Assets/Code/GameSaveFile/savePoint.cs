@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class savePoint : MonoBehaviour
@@ -39,19 +39,19 @@ public class savePoint : MonoBehaviour
         playerLife vida = player.GetComponent<playerLife>();
         if (vida == null)
         {
-            Debug.LogError("❌ [savePoint] No se encontró playerLife en el jugador");
+            Debug.LogError("[savePoint] No se encontró playerLife en el jugador");
             yield break;
         }
 
 
-        Debug.Log("Guardando progreso...");
+        Debug.Log("[savePoint] Guardando progreso");
 
         var datos = ControladorDatosJuego.Instance.datosjuego;
 
         // Guardar VIDA ACTUAL y MÁXIMA
         datos.vidaActual = vida.Health;
         datos.vidaMaxima = vida.MaxHealth;
-        Debug.Log($" Vida guardada: {datos.vidaActual}/{datos.vidaMaxima}");
+        Debug.Log($"[savePoint] Vida guardada: {datos.vidaActual}/{datos.vidaMaxima}");
 
         // Guardar POCIONES
         datos.cantidadpociones = vida.Potions;
@@ -72,18 +72,18 @@ public class savePoint : MonoBehaviour
 
         // Guardar ESCENA ACTUAL
         datos.escenaActual = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        Debug.Log($"Escena guardada: {datos.escenaActual}");
+        Debug.Log($"[savePoint] Escena guardada: {datos.escenaActual}");
 
         // GUARDAR TODO EN ARCHIVO
         ControladorDatosJuego.Instance.GuardarDatos(false);
-        Debug.Log(" Datos guardados exitosamente");
+        Debug.Log("[savePoint] Datos guardados");
 
 
         // ========== PASO 3: CURAR JUGADOR (OPCIONAL) ==========
         if (curarAlGuardar)
         {
             vida.HealFull();
-            Debug.Log(" Vida restaurada completamente");
+            Debug.Log("[savePoint] Vida restaurada completamente");
 
             // Actualizar UI
             if (PlayerHealthUI.Instance != null)
@@ -114,7 +114,7 @@ public class savePoint : MonoBehaviour
         if (mostrarMensaje)
         {
   
-            Debug.Log("💾 Progreso guardado");
+            Debug.Log("[savePoint] Progreso guardado");
         }
 
         yield return null;

@@ -599,9 +599,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625f33e9c32e6df4a8eca737bb87775e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  submitKey: 13
-  submitAltKey: 122
-  cancelKey: 27
 --- !u!4 &562195624
 Transform:
   m_ObjectHideFlags: 0
@@ -670,9 +667,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8213783554813428928, guid: 9ae3fe31d21cbd04cb57f81b29dc32e9, type: 3}
+      propertyPath: volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8213783554813428928, guid: 9ae3fe31d21cbd04cb57f81b29dc32e9, type: 3}
       propertyPath: sceneMusic
       value: 
-      objectReference: {fileID: 8300000, guid: 6770343078faecf4f996596606f3aa8b, type: 3}
+      objectReference: {fileID: 8300000, guid: 34fbdce959ae672448d8022d3eb90f59, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3104,12 +3105,12 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1902429661}
-  - {fileID: 296083683903922709}
   - {fileID: 608611527}
   - {fileID: 6437058664024247713}
-  - {fileID: 7660206087429342493}
   - {fileID: 1035656334}
   - {fileID: 1348130338}
   - {fileID: 1848099306}
   - {fileID: 562195624}
   - {fileID: 591423320}
+  - {fileID: 296083683903922709}
+  - {fileID: 7660206087429342493}

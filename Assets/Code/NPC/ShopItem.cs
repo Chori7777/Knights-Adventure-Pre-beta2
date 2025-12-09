@@ -1,4 +1,4 @@
-﻿// ============== ShopItem.cs ==============
+// ============== ShopItem.cs ==============
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -100,14 +100,14 @@ public class ShopItem : MonoBehaviour
             if (priceText != null)
                 priceText.text = "¡COMPRADO!";
 
-            Debug.Log($"✅ Compra exitosa: {itemName}");
+            Debug.Log($"[ShopItem] Compra exitosa: {itemName}");
 
             // Efecto visual (parpadeo)
             yield return StartCoroutine(PurchaseEffect());
         }
         else
         {
-            Debug.Log($"❌ No tienes suficientes monedas. Necesitas {cost}, tienes {currentCoins}");
+            Debug.Log($"[ShopItem] No tienes suficientes monedas. Necesitas {cost}, tienes {currentCoins}");
 
             // Efecto de fallo (sacudida)
             yield return StartCoroutine(FailEffect());

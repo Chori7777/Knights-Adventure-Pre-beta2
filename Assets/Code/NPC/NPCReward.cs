@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 [System.Serializable]
 public class NPCReward
@@ -23,7 +23,7 @@ public class NPCReward
         {
             case RewardType.Potion:
                 vida.AddPotion(amount);
-                Debug.Log($"✅ +{amount} Poción");
+                Debug.Log($"[NPCReward] +{amount} poción");
                 break;
 
             case RewardType.Axe:
@@ -31,7 +31,7 @@ public class NPCReward
                 ControladorDatosJuego.Instance.GuardarDatos(false);
                 if (PlayerHealthUI.Instance != null)
                     PlayerHealthUI.Instance.ActualizarHachas(datos.cantidadHachas);
-                Debug.Log($"✅ +{amount} Hacha");
+                Debug.Log($"[NPCReward] +{amount} hacha");
                 break;
 
             case RewardType.MaxHealth:
@@ -40,7 +40,7 @@ public class NPCReward
                 vida.SetHealth(newMax);
                 datos.vidaMaxima = newMax;
                 ControladorDatosJuego.Instance.GuardarDatos(false);
-                Debug.Log($"✅ +{amount} Vida máxima (ahora {newMax})");
+                Debug.Log($"[NPCReward] +{amount} vida máxima (ahora {newMax})");
                 break;
 
             case RewardType.MaxAxes:
@@ -48,20 +48,20 @@ public class NPCReward
                 ControladorDatosJuego.Instance.GuardarDatos(false);
                 if (PlayerHealthUI.Instance != null)
                     PlayerHealthUI.Instance.ActualizarHachas(datos.cantidadHachas);
-                Debug.Log($"✅ Máximo de hachas aumentado a {datos.maxHachas}");
+                Debug.Log($"[NPCReward] Máximo de hachas aumentado a {datos.maxHachas}");
                 break;
 
             case RewardType.MaxPotions:
                 vida.SetMaxPotions(vida.MaxPotions + amount);
                 datos.maxPotions = vida.MaxPotions;
                 ControladorDatosJuego.Instance.GuardarDatos(false);
-                Debug.Log($"✅ Máximo de pociones aumentado a {vida.MaxPotions}");
+                Debug.Log($"[NPCReward] Máximo de pociones aumentado a {vida.MaxPotions}");
                 break;
 
             case RewardType.AttackDamage:
                 datos.attackDamageUpgrades += amount;
                 ControladorDatosJuego.Instance.GuardarDatos(false);
-                Debug.Log($"✅ +{amount} Daño de ataque (Total upgrades: {datos.attackDamageUpgrades})");
+                Debug.Log($"[NPCReward] +{amount} daño de ataque (total upgrades: {datos.attackDamageUpgrades})");
                 break;
         }
     }

@@ -43,10 +43,9 @@ public class ControladorDatosJuego : MonoBehaviour
     // 🔹 EVENTO DE ESCENA CARGADA
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log($"━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-        Debug.Log($"📂 Escena cargada: {scene.name}");
-        Debug.Log($"🔹 IsLoadingFromCheckpoint: {IsLoadingFromCheckpoint}");
-        Debug.Log($"🔹 IsLoadingFromContinue: {IsLoadingFromContinue}");
+        Debug.Log($"[Save] Escena cargada: {scene.name}");
+        Debug.Log($"[Save] IsLoadingFromCheckpoint: {IsLoadingFromCheckpoint}");
+        Debug.Log($"[Save] IsLoadingFromContinue: {IsLoadingFromContinue}");
 
         // Reset flag
         hasRepositionedThisScene = false;
@@ -62,7 +61,7 @@ public class ControladorDatosJuego : MonoBehaviour
             StartCoroutine(SaveInitialCheckpointAfterLoad(scene.name));
         }
 
-        Debug.Log($"━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        
     }
 
     // 🔹 REPOSICIONAMIENTO UNIFICADO
@@ -70,7 +69,7 @@ public class ControladorDatosJuego : MonoBehaviour
     {
         if (hasRepositionedThisScene)
         {
-            Debug.LogWarning("⚠️ Ya se reposicionó en esta escena, ignorando");
+            Debug.LogWarning("[Save] Ya se reposicionó en esta escena, ignorando");
             yield break;
         }
 
@@ -82,21 +81,21 @@ public class ControladorDatosJuego : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
         {
-            Debug.LogError("❌ No se encontró jugador");
+            Debug.LogError("[Save] No se encontró jugador");
             ResetFlags();
             yield break;
         }
 
         // ✅ REPOSICIONAR JUGADOR
         player.transform.position = datosjuego.posicion;
-        Debug.Log($"✅ Jugador reposicionado en: {datosjuego.posicion}");
+        Debug.Log($"[Save] Jugador reposicionado en: {datosjuego.posicion}");
 
         // ✅ REPOSICIONAR CÁMARA
         Camera cam = Camera.main;
         if (cam != null)
         {
             cam.transform.position = datosjuego.posicionCamara;
-            Debug.Log($"✅ Cámara reposicionada en: {datosjuego.posicionCamara}");
+            Debug.Log($"[Save] Cámara reposicionada en: {datosjuego.posicionCamara}");
         }
 
         // ✅ RESTAURAR VIDA
@@ -107,7 +106,7 @@ public class ControladorDatosJuego : MonoBehaviour
             vida.SetHealth(datosjuego.vidaActual);
             vida.SetPotions(datosjuego.cantidadpociones);
             vida.SetMaxPotions(datosjuego.maxPotions);
-            Debug.Log($"✅ Vida restaurada: {datosjuego.vidaActual}/{datosjuego.vidaMaxima}");
+            Debug.Log($"[Save] Vida restaurada: {datosjuego.vidaActual}/{datosjuego.vidaMaxima}");
         }
 
         // ✅ ACTUALIZAR HUD
@@ -117,7 +116,7 @@ public class ControladorDatosJuego : MonoBehaviour
         {
             PlayerHealthUI.Instance.ActualizarMonedas(datosjuego.cantidadMonedas);
             PlayerHealthUI.Instance.ActualizarHachas(datosjuego.cantidadHachas);
-            Debug.Log("✅ HUD actualizado");
+            Debug.Log("[Save] HUD actualizado");
         }
 
         // ✅ RESETEAR FLAGS
@@ -143,7 +142,7 @@ public class ControladorDatosJuego : MonoBehaviour
     {
         IsLoadingFromCheckpoint = false;
         IsLoadingFromContinue = false;
-        Debug.Log("🔄 Flags reseteados");
+        Debug.Log("[Save] Flags reseteados");
     }
 
     // ═══════════════════════════════════════════════════
@@ -155,7 +154,7 @@ public class ControladorDatosJuego : MonoBehaviour
         GameObject player = FindPlayer();
         if (player == null)
         {
-            Debug.LogWarning("⚠️ No se encontró jugador para guardar");
+            Debug.LogWarning("[Save] No se encontró jugador para guardar");
             return;
         }
 
@@ -170,7 +169,7 @@ public class ControladorDatosJuego : MonoBehaviour
         datosjuego.escenaActual = SceneManager.GetActiveScene().name;
         EscribirArchivo();
 
-        Debug.Log($"💾 Datos guardados correctamente");
+        Debug.Log("[Save] Datos guardados");
 
         if (SaveNotification.Instance != null)
             SaveNotification.Instance.ShowSaveSuccess();
@@ -186,7 +185,7 @@ public class ControladorDatosJuego : MonoBehaviour
             datosjuego.posicionCamara = cam.transform.position;
 
         GuardarDatos(false); // Ya capturamos la posición manualmente
-        Debug.Log($"💾 Checkpoint guardado en: {playerPosition}");
+        Debug.Log($"[Save] Checkpoint guardado: {playerPosition}");
     }
 
     public void CargarDatos()
@@ -195,11 +194,11 @@ public class ControladorDatosJuego : MonoBehaviour
         {
             string json = File.ReadAllText(rutaArchivo);
             datosjuego = JsonUtility.FromJson<DatosJuego>(json);
-            Debug.Log("📂 Datos cargados correctamente");
+            Debug.Log("[Save] Datos cargados");
         }
         else
         {
-            Debug.LogWarning("⚠️ No hay archivo de guardado");
+            Debug.LogWarning("[Save] No hay archivo de guardado");
         }
 
         if (SaveNotification.Instance != null)
@@ -213,12 +212,12 @@ public class ControladorDatosJuego : MonoBehaviour
 
         if (string.IsNullOrEmpty(datosjuego.escenaActual))
         {
-            Debug.LogWarning("⚠️ No hay escena guardada");
+            Debug.LogWarning("[Save] No hay escena guardada");
             return;
         }
 
-        Debug.Log($"📂 Continuando partida en: {datosjuego.escenaActual}");
-        Debug.Log($"📍 Posición guardada: {datosjuego.posicion}");
+        Debug.Log($"[Save] Continuando partida en: {datosjuego.escenaActual}");
+        Debug.Log($"[Save] Posición guardada: {datosjuego.posicion}");
 
         // ✅ ACTIVAR FLAG
         IsLoadingFromContinue = true;
@@ -231,7 +230,7 @@ public class ControladorDatosJuego : MonoBehaviour
     {
         if (datosjuego == null || datosjuego.posicion == Vector3.zero)
         {
-            Debug.LogWarning("⚠️ No hay checkpoint, recargando escena");
+            Debug.LogWarning("[Save] No hay checkpoint, recargando escena");
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             return;
         }
@@ -242,7 +241,7 @@ public class ControladorDatosJuego : MonoBehaviour
             return;
         }
 
-        Debug.Log($"💀 Respawneando en checkpoint: {datosjuego.escenaActual}");
+        Debug.Log($"[Save] Respawneando en checkpoint: {datosjuego.escenaActual}");
 
         // ✅ ACTIVAR FLAG
         IsLoadingFromCheckpoint = true;
@@ -288,7 +287,7 @@ public class ControladorDatosJuego : MonoBehaviour
         if (File.Exists(rutaArchivo))
         {
             File.Delete(rutaArchivo);
-            Debug.Log("🗑️ Guardado eliminado");
+            Debug.Log("[Save] Guardado eliminado");
         }
     }
 
@@ -296,7 +295,7 @@ public class ControladorDatosJuego : MonoBehaviour
     {
         datosjuego = new DatosJuego();
         EliminarGuardado();
-        Debug.Log("🔄 Datos reseteados");
+        Debug.Log("[Save] Datos reseteados");
     }
 
     public bool EstaNPCRecompensaEntregada(string npcID)

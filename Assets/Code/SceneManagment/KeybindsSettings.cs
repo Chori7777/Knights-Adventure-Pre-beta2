@@ -33,7 +33,7 @@ public class KeybindsSettings : MonoBehaviour
 
         if (inputBindingsComponent == null)
         {
-            Debug.LogWarning("⚠️ No se encontró InputBindings, creando uno...");
+            Debug.LogWarning("[Keybinds] No se encontró InputBindings, creando uno");
             GameObject go = new GameObject("InputBindings");
             inputBindingsComponent = go.AddComponent<InputBindings>();
         }
@@ -45,7 +45,7 @@ public class KeybindsSettings : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("🎮 [Keybinds] Panel activado - Refrescando UI");
+        Debug.Log("[Keybinds] Panel activado - refrescando UI");
         EnsureInteractive();
         AutoWireButtons();
         RefreshUI();
@@ -67,7 +67,7 @@ public class KeybindsSettings : MonoBehaviour
         cg.alpha = 1f;
         cg.interactable = true;
         cg.blocksRaycasts = true;
-        Debug.Log("🎮 [Keybinds] CanvasGroup interactivo");
+        Debug.Log("[Keybinds] CanvasGroup interactivo");
     }
 
     private void AutoWireButtons()
@@ -96,7 +96,7 @@ public class KeybindsSettings : MonoBehaviour
             else if (n.Contains("confirm")) b.onClick.AddListener(ConfirmChanges);
             else if (n.Contains("reset") || n.Contains("restart")) b.onClick.AddListener(ResetToDefaults);
 
-            Debug.Log($"🎮 [Keybinds] Auto-wire botón: {b.gameObject.name}");
+            Debug.Log($"[Keybinds] Auto-wire botón: {b.gameObject.name}");
         }
     }
 
@@ -133,11 +133,11 @@ public class KeybindsSettings : MonoBehaviour
 
     private void StartRebind(string accion, int slot, string actionName)
     {
-        Debug.Log($"🎯 [Keybinds] Iniciando rebind: {actionName} (slot {slot})");
+        Debug.Log($"[Keybinds] Iniciando rebind: {actionName} (slot {slot})");
 
         if (inputBindingsComponent == null)
         {
-            Debug.LogError("❌ InputBindings es null");
+            Debug.LogError("[Keybinds] InputBindings es null");
             return;
         }
 
@@ -203,19 +203,19 @@ public class KeybindsSettings : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.1f);
         RefreshUI();
 
-        Debug.Log("✅ [Keybinds] Rebind completado");
+        Debug.Log("[Keybinds] Rebind completado");
     }
 
     public void ConfirmChanges()
     {
         InputBindings.SaveAll();
-        Debug.Log("💾 Keybinds guardados");
+        Debug.Log("[Keybinds] Keybinds guardados");
     }
 
     public void ResetToDefaults()
     {
         InputBindings.ResetToDefaults();
         RefreshUI();
-        Debug.Log("🔄 Keybinds reseteados a default");
+        Debug.Log("[Keybinds] Keybinds reseteados a default");
     }
 }

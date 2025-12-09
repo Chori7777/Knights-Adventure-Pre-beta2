@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class EnemyMeleeAttack : MonoBehaviour
@@ -94,7 +94,7 @@ public class EnemyMeleeAttack : MonoBehaviour
 
         if (Time.time < lastDamageDealtTime + damageImmunityDuration)
         {
-            Debug.Log($" Daño en cooldown. Espera {damageImmunityDuration}s");
+            Debug.Log($"[EnemyMeleeAttack] Daño en cooldown. Espera {damageImmunityDuration}s");
             return;
         }
 
@@ -112,7 +112,7 @@ public class EnemyMeleeAttack : MonoBehaviour
 
                     lastDamageDealtTime = Time.time;
 
-                    Debug.Log("⚔️ Golpeó al jugador");
+                    Debug.Log("[EnemyMeleeAttack] Golpeó al jugador");
                 }
             }
         }

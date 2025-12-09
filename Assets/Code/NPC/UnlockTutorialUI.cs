@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
@@ -134,7 +134,7 @@ public class UnlockTutorialUI : MonoBehaviour
             }
         }
 
-        Debug.Log($"🔓 Tutorial mostrado: {itemName}");
+        Debug.Log($"[UnlockTutorialUI] Tutorial mostrado: {itemName}");
     }
 
     /// <summary>
@@ -186,7 +186,7 @@ public class UnlockTutorialUI : MonoBehaviour
         Time.timeScale = originalTimeScale;
         isShowing = false;
 
-        Debug.Log(" Tutorial cerrado, juego reanudado");
+        Debug.Log("[UnlockTutorialUI] Tutorial cerrado, juego reanudado");
     }
 
     /// <summary>

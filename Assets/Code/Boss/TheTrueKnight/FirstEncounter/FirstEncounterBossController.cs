@@ -69,6 +69,12 @@ public class FirstEncounterBossController : MonoBehaviour
         if (!accelerated && currentHealth <= vidaMaxima / 2)
         {
             accelerated = true;
+            var attackManager = GetComponentInChildren<FirstEncounterBossAttackManager>();
+            if (attackManager != null)
+            {
+                attackManager.StopAttacks();
+                Debug.Log("Ataques detenidos para transición de fase");
+            }
             if (gestorTrials != null)
             {
                 gestorTrials.PauseForDialoguePhase2();

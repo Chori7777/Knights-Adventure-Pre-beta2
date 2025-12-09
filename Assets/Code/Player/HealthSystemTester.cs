@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using TMPro;
 
 /// <summary>
@@ -29,7 +29,7 @@ public class HealthSystemTester : MonoBehaviour
 
         if (playerLifeScript == null)
         {
-            Debug.LogError("❌ [HealthSystemTester] No se encontró playerLife");
+            Debug.LogError("[HealthSystemTester] No se encontró playerLife");
         }
 
         UpdateDebugInfo();
@@ -93,11 +93,11 @@ public class HealthSystemTester : MonoBehaviour
         if (playerLifeScript.Health > 0)
         {
             playerLifeScript.TakeDamage(transform.position, 1);
-            Debug.Log($"💔 Daño aplicado. Vida: {playerLifeScript.Health}/{playerLifeScript.MaxHealth}");
+            Debug.Log($"[HealthTester] Daño aplicado. Vida: {playerLifeScript.Health}/{playerLifeScript.MaxHealth}");
         }
         else
         {
-            Debug.Log("💀 Jugador ya está muerto");
+            Debug.Log("[HealthTester] Jugador ya está muerto");
         }
     }
 
@@ -106,24 +106,23 @@ public class HealthSystemTester : MonoBehaviour
         if (playerLifeScript.Health < playerLifeScript.MaxHealth)
         {
             playerLifeScript.Heal(1);
-            Debug.Log($"💚 +1 vida. Vida: {playerLifeScript.Health}/{playerLifeScript.MaxHealth}");
+            Debug.Log($"[HealthTester] +1 vida. Vida: {playerLifeScript.Health}/{playerLifeScript.MaxHealth}");
         }
         else
         {
-            Debug.Log("❤️ Vida ya está al máximo");
+            Debug.Log("[HealthTester] Vida ya está al máximo");
         }
     }
 
     private void TestFullHeal()
     {
         playerLifeScript.HealFull();
-        Debug.Log($"✨ Curación completa. Vida: {playerLifeScript.Health}/{playerLifeScript.MaxHealth}");
+        Debug.Log($"[HealthTester] Curación completa. Vida: {playerLifeScript.Health}/{playerLifeScript.MaxHealth}");
     }
 
     private void TestIncreaseMaxHealth()
     {
-        Debug.Log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-        Debug.Log("🔧 [TEST] Aumentando vida máxima...");
+        Debug.Log("[HealthTester] Aumentando vida máxima");
 
         int oldMax = playerLifeScript.MaxHealth;
         int oldHealth = playerLifeScript.Health;
@@ -131,25 +130,25 @@ public class HealthSystemTester : MonoBehaviour
         // PASO 1: Aumentar vida máxima
         int newMax = oldMax + 1;
         playerLifeScript.SetMaxHealth(newMax);
-        Debug.Log($"✅ [TEST] Vida máxima: {oldMax} → {newMax}");
+        Debug.Log($"[HealthTester] Vida máxima: {oldMax} -> {newMax}");
 
         // PASO 2: Curar hasta el nuevo máximo
         playerLifeScript.SetHealth(newMax);
-        Debug.Log($"✅ [TEST] Vida actual: {oldHealth} → {newMax}");
+        Debug.Log($"[HealthTester] Vida actual: {oldHealth} -> {newMax}");
 
         // PASO 3: FORZAR actualización de UI (CRÍTICO)
         if (PlayerHealthUI.Instance != null)
         {
-            Debug.Log("🔄 [TEST] Forzando actualización de UI...");
+            Debug.Log("[HealthTester] Forzando actualización de UI");
             PlayerHealthUI.Instance.ForceRefresh();
-            Debug.Log("✅ [TEST] UI actualizada");
+            Debug.Log("[HealthTester] UI actualizada");
         }
         else
         {
-            Debug.LogError("❌ [TEST] PlayerHealthUI.Instance es NULL");
+            Debug.LogError("[HealthTester] PlayerHealthUI.Instance es NULL");
         }
 
-        Debug.Log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        
     }
 
     private void TestDecreaseMaxHealth()
@@ -158,18 +157,18 @@ public class HealthSystemTester : MonoBehaviour
         {
             int newMax = playerLifeScript.MaxHealth - 1;
             playerLifeScript.SetMaxHealth(newMax);
-            Debug.Log($"⬇️ Vida máxima reducida. Ahora: {playerLifeScript.Health}/{playerLifeScript.MaxHealth}");
+            Debug.Log($"[HealthTester] Vida máxima reducida. Ahora: {playerLifeScript.Health}/{playerLifeScript.MaxHealth}");
         }
         else
         {
-            Debug.Log("⚠️ No se puede reducir más la vida máxima");
+            Debug.Log("[HealthTester] No se puede reducir más la vida máxima");
         }
     }
 
     private void TestKill()
     {
         playerLifeScript.TakeDamage(transform.position, playerLifeScript.MaxHealth);
-        Debug.Log("☠️ Jugador eliminado");
+        Debug.Log("[HealthTester] Jugador eliminado");
     }
 
     private void TestReset()
@@ -177,7 +176,7 @@ public class HealthSystemTester : MonoBehaviour
         playerLifeScript.SetMaxHealth(5);
         playerLifeScript.SetHealth(5);
         playerLifeScript.SetPotions(3);
-        Debug.Log("🔄 Sistema de vida reseteado a valores iniciales (5/5 vida, 3 pociones)");
+        Debug.Log("[HealthTester] Sistema de vida reseteado a valores iniciales (5/5 vida, 3 pociones)");
     }
 
     // ========== DEBUG UI ==========
@@ -187,8 +186,8 @@ public class HealthSystemTester : MonoBehaviour
         if (playerLifeScript == null) return;
 
         debugInfo = $"=== HEALTH SYSTEM TESTER ===\n\n";
-        debugInfo += $"❤️ Vida: {playerLifeScript.Health}/{playerLifeScript.MaxHealth}\n";
-        debugInfo += $"🧪 Pociones: {playerLifeScript.Potions}/{playerLifeScript.MaxPotions}\n\n";
+        debugInfo += $"Vida: {playerLifeScript.Health}/{playerLifeScript.MaxHealth}\n";
+        debugInfo += $"Pociones: {playerLifeScript.Potions}/{playerLifeScript.MaxPotions}\n\n";
         debugInfo += "--- CONTROLES ---\n";
         debugInfo += "F1 - Daño (-1 vida)\n";
         debugInfo += "F2 - Curar (+1 vida)\n";
@@ -235,7 +234,7 @@ public class HealthSystemTester : MonoBehaviour
         // Curar el nuevo punto de vida
         playerLifeScript.HealFull();
 
-        Debug.Log($"💰 ¡Mejora comprada! Nueva vida máxima: {playerLifeScript.MaxHealth}");
+        Debug.Log($"[HealthTester] Mejora comprada. Nueva vida máxima: {playerLifeScript.MaxHealth}");
     }
 
     // ========== VALIDACIÓN VISUAL ==========
@@ -251,14 +250,14 @@ public class HealthSystemTester : MonoBehaviour
 
     private System.Collections.IEnumerator AutomatedTestSequence()
     {
-        Debug.Log("🧪 === INICIANDO PRUEBA AUTOMÁTICA ===");
+        Debug.Log("[HealthTester] Iniciando prueba automática");
 
         // Reset inicial
         TestReset();
         yield return new WaitForSeconds(1f);
 
         // Probar daño progresivo
-        Debug.Log("📉 Probando daño progresivo...");
+        Debug.Log("[HealthTester] Probando daño progresivo");
         for (int i = 0; i < 5; i++)
         {
             TestDamage();
@@ -268,7 +267,7 @@ public class HealthSystemTester : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // Probar curación
-        Debug.Log("📈 Probando curación...");
+        Debug.Log("[HealthTester] Probando curación");
         for (int i = 0; i < 5; i++)
         {
             TestHeal();
@@ -278,7 +277,7 @@ public class HealthSystemTester : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // Probar aumento de vida máxima
-        Debug.Log("⬆️ Probando aumento de vida máxima...");
+        Debug.Log("[HealthTester] Probando aumento de vida máxima");
         for (int i = 0; i < 3; i++)
         {
             TestIncreaseMaxHealth();
@@ -288,14 +287,14 @@ public class HealthSystemTester : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // Probar daño con vida extendida
-        Debug.Log("📉 Probando daño con vida extendida...");
+        Debug.Log("[HealthTester] Probando daño con vida extendida");
         for (int i = 0; i < 8; i++)
         {
             TestDamage();
             yield return new WaitForSeconds(0.5f);
         }
 
-        Debug.Log("✅ === PRUEBA AUTOMÁTICA COMPLETADA ===");
+        Debug.Log("[HealthTester] Prueba automática completada");
     }
 }
 

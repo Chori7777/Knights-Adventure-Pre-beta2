@@ -20,7 +20,7 @@ public class Door : MonoBehaviour
         {
             player = other.gameObject;
             playerInRange = true;
-            Debug.Log($"✅ [Door:{name}] Jugador detectado: {player.name}");
+            Debug.Log($"[Door:{name}] Jugador detectado: {player.name}");
         }
     }
 
@@ -29,7 +29,7 @@ public class Door : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
-            Debug.Log($"⚪ [Door:{name}] Jugador salió del rango");
+            Debug.Log($"[Door:{name}] Jugador salió del rango");
         }
     }
 
@@ -37,7 +37,7 @@ public class Door : MonoBehaviour
     {
         if (playerInRange && !isUsingDoor && Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log($"🟠 [Door:{name}] Tecla E presionada, iniciando UseDoor()");
+            Debug.Log($"[Door:{name}] Tecla E presionada, iniciando UseDoor()");
             StartCoroutine(UseDoor());
         }
     }
@@ -45,18 +45,18 @@ public class Door : MonoBehaviour
     private IEnumerator UseDoor()
     {
         isUsingDoor = true; // 🔹 bloquea múltiples activaciones
-        Debug.Log($"🚪 [Door:{name}] UseDoor iniciado");
+        Debug.Log($"[Door:{name}] UseDoor iniciado");
 
         if (player == null)
         {
-            Debug.LogError($"❌ [Door:{name}] player es NULL — No se puede continuar.");
+            Debug.LogError($"[Door:{name}] player es NULL — No se puede continuar");
             isUsingDoor = false;
             yield break;
         }
 
         if (destination == null)
         {
-            Debug.LogError($"❌ [Door:{name}] destination es NULL — Asigná un destino en el Inspector.");
+            Debug.LogError($"[Door:{name}] destination es NULL — Asigná un destino en el Inspector");
             isUsingDoor = false;
             yield break;
         }
@@ -64,7 +64,7 @@ public class Door : MonoBehaviour
         // --- 1. Fade out ---
         if (FadeController.Instance != null)
         {
-            Debug.Log($"🌑 [Door:{name}] Activando FadeOut...");
+            Debug.Log($"[Door:{name}] Activando FadeOut");
             FadeController.Instance.ActivarFadeOut();
         }
 
@@ -73,14 +73,14 @@ public class Door : MonoBehaviour
         if (sr != null)
         {
             sr.enabled = false;
-            Debug.Log($"🙈 [Door:{name}] Jugador ocultado");
+            Debug.Log($"[Door:{name}] Jugador ocultado");
         }
 
         // --- 3. Animar puerta ---
         if (doorAnimator != null)
         {
             doorAnimator.SetTrigger("Open");
-            Debug.Log($"🎞️ [Door:{name}] Animación de puerta activada");
+            Debug.Log($"[Door:{name}] Animación de puerta activada");
         }
 
         // Esperar la duración del fade/animación
@@ -88,12 +88,12 @@ public class Door : MonoBehaviour
 
         // --- 4. Mover jugador ---
         player.transform.position = destination.position;
-        Debug.Log($"➡️ [Door:{name}] Jugador movido a {destination.name}");
+        Debug.Log($"[Door:{name}] Jugador movido a {destination.name}");
 
         // --- 5. Fade in ---
         if (FadeController.Instance != null)
         {
-            Debug.Log($"🌕 [Door:{name}] Activando FadeIn...");
+            Debug.Log($"[Door:{name}] Activando FadeIn");
             FadeController.Instance.ActivarFadeIn();
         }
 
@@ -104,10 +104,10 @@ public class Door : MonoBehaviour
         if (sr != null)
         {
             sr.enabled = true;
-            Debug.Log($"👀 [Door:{name}] Jugador visible nuevamente");
+            Debug.Log($"[Door:{name}] Jugador visible nuevamente");
         }
 
-        Debug.Log($"✅ [Door:{name}] UseDoor completado");
+        Debug.Log($"[Door:{name}] UseDoor completado");
         isUsingDoor = false;
     }
 }

@@ -50,22 +50,22 @@ public class ConfigurationPanel : MonoBehaviour
             if (tab != null)
             {
                 tab.SetActive(false);
-                Debug.Log($"🔧 [Init] Tab desactivado: {tab.name}");
+                Debug.Log($"[ConfigPanel] Tab desactivado: {tab.name}");
             }
         }
 
         isInitialized = true;
-        Debug.Log($"✅ [ConfigPanel] Tabs inicializados: {tabs.Length}");
+        Debug.Log($"[ConfigPanel] Tabs inicializados: {tabs.Length}");
     }
 
     public void Open()
     {
-        Debug.Log("🔓 [ConfigPanel] === ABRIENDO OPTIONS ===");
+        Debug.Log("[ConfigPanel] Abriendo opciones");
 
         // Verificar que tabs esté inicializado
         if (!isInitialized || tabs == null)
         {
-            Debug.LogWarning("⚠️ Tabs no estaban inicializados, inicializando ahora...");
+            Debug.LogWarning("[ConfigPanel] Tabs no estaban inicializados, inicializando ahora");
             InitializeTabs();
         }
 
@@ -113,12 +113,12 @@ public class ConfigurationPanel : MonoBehaviour
         ShowCurrentTab();
         FixVisibility();
 
-        Debug.Log($"✅ [ConfigPanel] Abierto correctamente en tab {currentTabIndex}");
+        Debug.Log($"[ConfigPanel] Abierto correctamente en tab {currentTabIndex}");
     }
 
     public void Close()
     {
-        Debug.Log("🔒 [ConfigPanel] Cerrando...");
+        Debug.Log("[ConfigPanel] Cerrando");
 
         if (configurationRoot != null) configurationRoot.SetActive(false);
         if (mainMenuRoot != null) mainMenuRoot.SetActive(true);
@@ -143,10 +143,10 @@ public class ConfigurationPanel : MonoBehaviour
             if (rc == null)
             {
                 rc = canvas.gameObject.AddComponent<UnityEngine.UI.GraphicRaycaster>();
-                Debug.Log($"[OptionsUI] GraphicRaycaster agregado a canvas {canvas.gameObject.name}");
+                Debug.Log($"[ConfigPanel] GraphicRaycaster agregado a canvas {canvas.gameObject.name}");
             }
             rc.enabled = true;
-            Debug.Log($"[OptionsUI] GraphicRaycaster habilitado en canvas {canvas.gameObject.name}");
+            Debug.Log($"[ConfigPanel] GraphicRaycaster habilitado en canvas {canvas.gameObject.name}");
         }
     }
 
@@ -183,7 +183,7 @@ public class ConfigurationPanel : MonoBehaviour
             var go = new GameObject("EventSystem");
             go.AddComponent<UnityEngine.EventSystems.EventSystem>();
             go.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
-            Debug.Log("[OptionsUI] EventSystem creado con StandaloneInputModule");
+            Debug.Log("[ConfigPanel] EventSystem creado con StandaloneInputModule");
         }
         else
         {
@@ -191,10 +191,10 @@ public class ConfigurationPanel : MonoBehaviour
             if (module == null)
             {
                 es.gameObject.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
-                Debug.Log("[OptionsUI] StandaloneInputModule agregado al EventSystem existente");
+                Debug.Log("[ConfigPanel] StandaloneInputModule agregado al EventSystem existente");
             }
             es.sendNavigationEvents = false;
-            Debug.Log("[OptionsUI] Navegación por teclado desactivada (solo mouse)");
+            Debug.Log("[ConfigPanel] Navegación por teclado desactivada (solo mouse)");
         }
     }
 
@@ -204,11 +204,11 @@ public class ConfigurationPanel : MonoBehaviour
     {
         if (tabs == null || tabs.Length == 0)
         {
-            Debug.LogError("❌ [ConfigPanel] No hay tabs para mostrar");
+            Debug.LogError("[ConfigPanel] No hay tabs para mostrar");
             return;
         }
 
-        Debug.Log($"📂 [ConfigPanel] === CAMBIANDO A TAB {currentTabIndex} ===");
+        Debug.Log($"[ConfigPanel] Cambiando a tab {currentTabIndex}");
 
         // ✅ PASO 1: Desactivar TODOS primero (evita superposición)
         for (int i = 0; i < tabs.Length; i++)
@@ -216,7 +216,7 @@ public class ConfigurationPanel : MonoBehaviour
             if (tabs[i] != null)
             {
                 tabs[i].SetActive(false);
-                Debug.Log($"  ❌ Tab {i} ({tabs[i].name}) desactivado");
+                Debug.Log($"[ConfigPanel] Tab {i} ({tabs[i].name}) desactivado");
             }
         }
 
@@ -224,13 +224,13 @@ public class ConfigurationPanel : MonoBehaviour
         if (currentTabIndex >= 0 && currentTabIndex < tabs.Length && tabs[currentTabIndex] != null)
         {
             tabs[currentTabIndex].SetActive(true);
-            Debug.Log($"  ✅ Tab {currentTabIndex} ({tabs[currentTabIndex].name}) ACTIVADO");
+            Debug.Log($"[ConfigPanel] Tab {currentTabIndex} ({tabs[currentTabIndex].name}) activado");
             if (currentTabLabel != null) currentTabLabel.text = tabs[currentTabIndex].name;
             if (audioPanel != null && tabs[currentTabIndex] == audioPanel) EnsureAudioInteractive();
         }
         else
         {
-            Debug.LogError($"❌ Índice inválido: {currentTabIndex}");
+            Debug.LogError($"[ConfigPanel] Índice inválido: {currentTabIndex}");
         }
     }
 
@@ -243,7 +243,7 @@ public class ConfigurationPanel : MonoBehaviour
         // Verificar inicialización
         if (tabs == null || tabs.Length == 0)
         {
-            Debug.LogWarning("⚠️ Tabs no inicializado en Update");
+            Debug.LogWarning("[ConfigPanel] Tabs no inicializados en Update");
             InitializeTabs();
             return;
         }
@@ -252,13 +252,13 @@ public class ConfigurationPanel : MonoBehaviour
         {
             if (Input.GetKeyDown(prevTabKey))
             {
-                Debug.Log($"⬅️ [Q] Presionado - Tab actual: {currentTabIndex}");
+                Debug.Log($"[ConfigPanel] Q presionado - tab actual: {currentTabIndex}");
                 PrevTab();
             }
 
             if (Input.GetKeyDown(nextTabKey))
             {
-                Debug.Log($"➡️ [E] Presionado - Tab actual: {currentTabIndex}");
+                Debug.Log($"[ConfigPanel] E presionado - tab actual: {currentTabIndex}");
                 NextTab();
             }
 
@@ -289,7 +289,7 @@ public class ConfigurationPanel : MonoBehaviour
         if (currentTabIndex < 0)
             currentTabIndex = tabs.Length - 1;
 
-        Debug.Log($"⬅️ Tab anterior: {oldIndex} → {currentTabIndex}");
+        Debug.Log($"[ConfigPanel] Tab anterior: {oldIndex} -> {currentTabIndex}");
         ShowCurrentTab();
         FixVisibility();
     }
@@ -304,7 +304,7 @@ public class ConfigurationPanel : MonoBehaviour
         if (currentTabIndex >= tabs.Length)
             currentTabIndex = 0;
 
-        Debug.Log($"➡️ Tab siguiente: {oldIndex} → {currentTabIndex}");
+        Debug.Log($"[ConfigPanel] Tab siguiente: {oldIndex} -> {currentTabIndex}");
         ShowCurrentTab();
         FixVisibility();
     }
@@ -334,7 +334,7 @@ public class ConfigurationPanel : MonoBehaviour
 
     public void ConfirmChanges()
     {
-        Debug.Log("💾 Confirmando cambios...");
+        Debug.Log("[ConfigPanel] Confirmando cambios");
 
         var pref = preferencesPanel?.GetComponent<PreferenceSettings>();
         if (pref != null) pref.ApplyAll();
@@ -347,7 +347,7 @@ public class ConfigurationPanel : MonoBehaviour
 
     public void RestartValues()
     {
-        Debug.Log("🔄 Reseteando valores...");
+        Debug.Log("[ConfigPanel] Reseteando valores");
 
         var pref = preferencesPanel?.GetComponent<PreferenceSettings>();
         if (pref != null) pref.ResetToDefaults();
@@ -415,7 +415,7 @@ public class ConfigurationPanel : MonoBehaviour
                 var rc = c.GetComponent<UnityEngine.UI.GraphicRaycaster>();
                 if (rc == null) rc = c.gameObject.AddComponent<UnityEngine.UI.GraphicRaycaster>();
                 rc.enabled = true;
-                Debug.Log($"[OptionsUI] Audio: Raycaster habilitado en canvas {c.gameObject.name}");
+                Debug.Log($"[ConfigPanel] Audio: Raycaster habilitado en canvas {c.gameObject.name}");
             }
         }
 
@@ -424,10 +424,10 @@ public class ConfigurationPanel : MonoBehaviour
         cg.alpha = 1f;
         cg.interactable = true;
         cg.blocksRaycasts = true;
-        Debug.Log("[OptionsUI] Audio: CanvasGroup activo e interactivo");
+        Debug.Log("[ConfigPanel] Audio: CanvasGroup activo e interactivo");
 
         var sliders = audioPanel.GetComponentsInChildren<UnityEngine.UI.Slider>(true);
-        Debug.Log($"[OptionsUI] Audio: {sliders.Length} sliders detectados");
+        Debug.Log($"[ConfigPanel] Audio: {sliders.Length} sliders detectados");
         for (int i = 0; i < sliders.Length; i++)
         {
             var s = sliders[i];
@@ -442,25 +442,25 @@ public class ConfigurationPanel : MonoBehaviour
                 himg.color = Color.white;
                 himg.raycastTarget = true;
                 s.handleRect = hrt;
-                Debug.Log($"[OptionsUI] Slider '{s.gameObject.name}': se creó Handle y se asignó");
+                Debug.Log($"[ConfigPanel] Slider '{s.gameObject.name}': se creó Handle y se asignó");
             }
             var h = s.handleRect;
             if (h != null)
             {
                 var g = h.GetComponent<UnityEngine.UI.Graphic>();
                 if (g != null) g.raycastTarget = true;
-                Debug.Log($"[OptionsUI] Slider '{s.gameObject.name}': handle raycastTarget ON");
+                Debug.Log($"[ConfigPanel] Slider '{s.gameObject.name}': handle raycastTarget ON");
             }
             var bg = s.transform.Find("Background");
             if (bg != null)
             {
                 var gb = bg.GetComponent<UnityEngine.UI.Graphic>();
                 if (gb != null) gb.raycastTarget = true;
-                Debug.Log($"[OptionsUI] Slider '{s.gameObject.name}': background raycastTarget ON");
+                Debug.Log($"[ConfigPanel] Slider '{s.gameObject.name}': background raycastTarget ON");
             }
             else
             {
-                Debug.LogWarning($"[OptionsUI] Slider '{s.gameObject.name}': Background no encontrado");
+                Debug.LogWarning($"[ConfigPanel] Slider '{s.gameObject.name}': Background no encontrado");
             }
 
             LogRaycastAt(s.GetComponent<RectTransform>(), "Slider");
@@ -472,7 +472,7 @@ public class ConfigurationPanel : MonoBehaviour
             buttons[i].interactable = true;
             var img = buttons[i].GetComponent<UnityEngine.UI.Image>();
             if (img != null) img.raycastTarget = true;
-            Debug.Log($"[OptionsUI] Audio: botón '{buttons[i].gameObject.name}' interactivo (listeners={buttons[i].onClick.GetPersistentEventCount()})");
+        Debug.Log($"[ConfigPanel] Audio: botón '{buttons[i].gameObject.name}' interactivo (listeners={buttons[i].onClick.GetPersistentEventCount()})");
         }
 
         EnsureBackgroundUnblocked();
@@ -492,7 +492,7 @@ public class ConfigurationPanel : MonoBehaviour
             b.interactable = true;
             var img = b.GetComponent<UnityEngine.UI.Image>();
             if (img != null) img.raycastTarget = true;
-            Debug.Log($"[OptionsUI] Botón '{b.gameObject.name}' habilitado (listeners={b.onClick.GetPersistentEventCount()})");
+            Debug.Log($"[ConfigPanel] Botón '{b.gameObject.name}' habilitado (listeners={b.onClick.GetPersistentEventCount()})");
         }
 
         var toggles = configurationRoot.GetComponentsInChildren<UnityEngine.UI.Toggle>(true);
@@ -502,7 +502,7 @@ public class ConfigurationPanel : MonoBehaviour
             t.interactable = true;
             var img = t.GetComponent<UnityEngine.UI.Image>();
             if (img != null) img.raycastTarget = true;
-            Debug.Log($"[OptionsUI] Toggle '{t.gameObject.name}' habilitado");
+            Debug.Log($"[ConfigPanel] Toggle '{t.gameObject.name}' habilitado");
         }
     }
 
@@ -562,7 +562,7 @@ public class ConfigurationPanel : MonoBehaviour
             cg.alpha = 1f;
             cg.interactable = true;
             cg.blocksRaycasts = true;
-            Debug.Log($"[OptionsUI] CanvasGroup '{cg.gameObject.name}' en cadena activado");
+            Debug.Log($"[ConfigPanel] CanvasGroup '{cg.gameObject.name}' en cadena activado");
         }
     }
 
@@ -577,7 +577,7 @@ public class ConfigurationPanel : MonoBehaviour
             if (bgImg != null)
             {
                 bgImg.raycastTarget = false;
-                Debug.Log("[OptionsUI] Background general no bloquea raycasts");
+                Debug.Log("[ConfigPanel] Background general no bloquea raycasts");
             }
         }
     }
@@ -637,7 +637,7 @@ public class ConfigurationPanel : MonoBehaviour
         ped.position = screenPos;
         var results = new List<RaycastResult>();
         es.RaycastAll(ped, results);
-        string log = "[OptionsUI] Raycast " + context + " -> ";
+        string log = "[ConfigPanel] Raycast " + context + " -> ";
         for (int i = 0; i < results.Count && i < 5; i++)
         {
             log += results[i].gameObject.name + (i < results.Count - 1 ? ", " : "");

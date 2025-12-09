@@ -207,7 +207,15 @@ public class ElevatorSystem : MonoBehaviour
             if (playerTransform != null)
             {
                 var t = playerTransform;
-                StartCoroutine(UnparentDeferred(t));
+                if (!isActiveAndEnabled || !gameObject.activeInHierarchy)
+                {
+                    if (t != null && t.parent == platformRoot)
+                        t.SetParent(null);
+                }
+                else
+                {
+                    StartCoroutine(UnparentDeferred(t));
+                }
             }
             playerTransform = null;
 

@@ -41,7 +41,7 @@ public class CameraEffectsController : MonoBehaviour
     [SerializeField] private float debugPulseMinVignette = 0.2f;
     [SerializeField] private float debugPulseMaxVignette = 0.4f;
     [SerializeField] private float debugPulsePeriod = 4f;
-    [SerializeField] private bool autoConfigureCameraPostFX = false;
+    [SerializeField] private bool autoConfigureCameraPostFX;
     [SerializeField] private bool enforceVignetteAlpha = false;
     [SerializeField] private bool applyDefaultOnStart = false;
     [SerializeField] private EffectPreset[] presets;
@@ -56,6 +56,18 @@ public class CameraEffectsController : MonoBehaviour
         {
             volume.profile.TryGet(out colorAdj);
             volume.profile.TryGet(out vignette);
+            var profile = volume.profile;
+            if (colorAdj == null)
+            {
+                colorAdj = profile.Add<ColorAdjustments>(true);
+                colorAdj.saturation.Override(defaultSaturation);
+            }
+            if (vignette == null)
+            {
+                vignette = profile.Add<Vignette>(true);
+                vignette.intensity.Override(defaultVignette);
+                var c = vignette.color.value; c.a = 1f; vignette.color.Override(c);
+            }
             if (vignette != null)
             {
                 if (enforceVignetteAlpha)
@@ -77,8 +89,7 @@ public class CameraEffectsController : MonoBehaviour
         if (targetCamera != null)
         {
             baseZoom = useOrthographicZoom ? targetCamera.orthographicSize : targetCamera.fieldOfView;
-            if (autoConfigureCameraPostFX)
-                EnsureURPPostProcessing(targetCamera);
+            EnsureURPPostProcessing(targetCamera);
         }
     }
 
@@ -231,15 +242,15 @@ public class CameraEffectsController : MonoBehaviour
             if (timelineDuration > 0f) t = Mathf.Repeat(t, timelineDuration);
         }
 
-        if (vignette != null && vignetteCurve != null)
-        {
-            float v = vignetteCurve.Evaluate(t);
-            vignette.intensity.Override(Mathf.Clamp01(v));
-        }
-        else if (vignette != null && debugPulse)
+        if (vignette != null && debugPulse)
         {
             float p = Mathf.Clamp01((Mathf.Sin((tGlobal / Mathf.Max(0.001f, debugPulsePeriod)) * Mathf.PI * 2f) * 0.5f) + 0.5f);
             float v = Mathf.Lerp(debugPulseMinVignette, debugPulseMaxVignette, p);
+            vignette.intensity.Override(Mathf.Clamp01(v));
+        }
+        else if (vignette != null && vignetteCurve != null)
+        {
+            float v = vignetteCurve.Evaluate(t);
             vignette.intensity.Override(Mathf.Clamp01(v));
         }
         if (colorAdj != null && saturationCurve != null)

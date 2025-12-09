@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
 
@@ -79,7 +79,7 @@ public class ChangeScene : MonoBehaviour
     {
         if (ExistePartidaGuardada())
         {
-            Debug.Log(" Archivo de guardado encontrado, cargando partida...");
+            Debug.Log("[ChangeScene] Archivo de guardado encontrado, cargando partida");
 
             if (ControladorDatosJuego.Instance != null)
             {
@@ -88,12 +88,12 @@ public class ChangeScene : MonoBehaviour
             }
             else
             {
-                Debug.LogError(" No existe ControladorDatosJuego en la escena");
+                Debug.LogError("[ChangeScene] No existe ControladorDatosJuego en la escena");
             }
         }
         else
         {
-            Debug.LogWarning(" No se encontró ninguna partida guardada.");
+            Debug.LogWarning("[ChangeScene] No se encontró ninguna partida guardada");
         }
     }
 
@@ -101,7 +101,7 @@ public class ChangeScene : MonoBehaviour
     {
         string archivo = Application.persistentDataPath + "/save.json";
         bool existe = File.Exists(archivo);
-        Debug.Log($" Buscando guardado en: {archivo} - {(existe ? "✅ EXISTE" : "❌ NO EXISTE")}");
+        Debug.Log($"[ChangeScene] Buscando guardado en: {archivo} - {(existe ? "EXISTE" : "NO EXISTE")}");
         return existe;
     }
 
@@ -111,7 +111,7 @@ public class ChangeScene : MonoBehaviour
         if (File.Exists(archivo))
         {
             File.Delete(archivo);
-            Debug.Log("🗑 Partida guardada eliminada");
+            Debug.Log("[ChangeScene] Partida guardada eliminada");
         }
     }
 

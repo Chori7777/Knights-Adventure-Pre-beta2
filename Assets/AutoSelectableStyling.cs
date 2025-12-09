@@ -87,7 +87,7 @@ public class AutoSelectableStyling : MonoBehaviour
         if (selectables == null || selectables.Length == 0)
         {
             if (mostrarLogs)
-                Debug.LogWarning($"⚠️ [AutoStyling] No se encontraron selectables en {(root != null ? root.gameObject.name : gameObject.name)}");
+                Debug.LogWarning($"[AutoStyling] No se encontraron selectables en {(root != null ? root.gameObject.name : gameObject.name)}");
             return;
         }
 
@@ -103,7 +103,7 @@ public class AutoSelectableStyling : MonoBehaviour
             if (existente != null)
             {
                 if (mostrarLogs)
-                    Debug.Log($"⏭️ [AutoStyling] {selectable.name} ya tiene MenuSelectionStyling");
+                    Debug.Log($"[AutoStyling] {selectable.name} ya tiene MenuSelectionStyling");
 
                 // Actualizar configuración existente
                 ActualizarConfiguracion(existente);
@@ -122,7 +122,7 @@ public class AutoSelectableStyling : MonoBehaviour
             if (graphic == null)
             {
                 if (mostrarLogs)
-                    Debug.LogWarning($"⚠️ [AutoStyling] {selectable.name} no tiene Graphic");
+                    Debug.LogWarning($"[AutoStyling] {selectable.name} no tiene Graphic");
                 continue;
             }
 
@@ -132,11 +132,11 @@ public class AutoSelectableStyling : MonoBehaviour
             contadorAplicados++;
 
             if (mostrarLogs)
-                Debug.Log($"✅ [AutoStyling] Aplicado a: {selectable.name}");
+                Debug.Log($"[AutoStyling] Aplicado a: {selectable.name}");
         }
 
         if (mostrarLogs)
-            Debug.Log($"🎨 [AutoStyling] Completado: {contadorAplicados}/{selectables.Length} selectables estilizados");
+            Debug.Log($"[AutoStyling] Completado: {contadorAplicados}/{selectables.Length} selectables estilizados");
     }
 
     /// <summary>
@@ -223,7 +223,7 @@ public class AutoSelectableStyling : MonoBehaviour
         }
         else if (mostrarLogs)
         {
-            Debug.LogWarning($"⚠️ Campo '{fieldName}' no encontrado en MenuSelectionStyling");
+            Debug.LogWarning($"[AutoStyling] Campo '{fieldName}' no encontrado en MenuSelectionStyling");
         }
     }
 
@@ -270,7 +270,7 @@ public class AutoSelectableStyling : MonoBehaviour
         }
 
         if (mostrarLogs)
-            Debug.Log($"🗑️ [AutoStyling] Removidos {removidos} estilos");
+            Debug.Log($"[AutoStyling] Removidos {removidos} estilos");
     }
 }
 
