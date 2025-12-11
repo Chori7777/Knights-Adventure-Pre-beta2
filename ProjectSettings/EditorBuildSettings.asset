@@ -18,20 +18,38 @@ EditorBuildSettings:
     path: Assets/Scenes/ALTMenus/CharacterSelectorAlternative.unity
     guid: 26acd2745d60bdd4c8dea67f44a872ed
   - enabled: 1
+    path: Assets/Scenes/Story/StoryPreForest.unity
+    guid: bb85212219d027d419bd541af6117e21
+  - enabled: 1
     path: Assets/Scenes/NormalMaps/TheForest.unity
     guid: c89987071e31b9b42b9e9d5564ecece2
+  - enabled: 1
+    path: Assets/Scenes/Story/StoryPreBossForest.unity
+    guid: 148c4598044fbbd498d8b5af7b4ca6cd
   - enabled: 1
     path: Assets/Scenes/NormalMaps/Bosses/ForestBoss.unity
     guid: 6561868039f692c4383e38cf51282567
   - enabled: 1
+    path: Assets/Scenes/Story/StoryPreTown.unity
+    guid: 842dee71949b66a41a3d81f9466f158e
+  - enabled: 1
     path: Assets/Scenes/NormalMaps/TheTown.unity
     guid: d912ef3a05a144645b611363bf79b13f
+  - enabled: 1
+    path: Assets/Scenes/Story/StoryPreTownBoss.unity
+    guid: aad4244b534990542922281571be459d
   - enabled: 1
     path: Assets/Scenes/NormalMaps/Bosses/TheTownBoss.unity
     guid: d465536b0be1020479d3fa34b07b38c0
   - enabled: 1
+    path: Assets/Scenes/Story/StoryPreTower.unity
+    guid: 6c2b621d3a244d548b81eff6a473ef57
+  - enabled: 1
     path: Assets/Scenes/NormalMaps/TheTower.unity
     guid: b1e2ba5ed3bd4db4c912f0676aead3c7
+  - enabled: 1
+    path: Assets/Scenes/Story/StoryPreFinalBoss.unity
+    guid: ae09449ea04df5d4b8a7c0b2af0fb70e
   - enabled: 1
     path: Assets/Scenes/NormalMaps/Bosses/FinalBoss.unity
     guid: 6823ee85cef7123408524566a3cd8f0c

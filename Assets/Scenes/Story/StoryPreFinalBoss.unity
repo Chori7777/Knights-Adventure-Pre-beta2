@@ -130,7 +130,6 @@ GameObject:
   - component: {fileID: 28226964}
   - component: {fileID: 28226963}
   - component: {fileID: 28226962}
-  - component: {fileID: 28226965}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -195,32 +194,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 119}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &28226965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 28226961}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32c1b49aae24f874bb284f1c9f86e1df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  floatY: 1
-  floatAmplitude: 10
-  floatDuration: 2
-  pulseScale: 0
-  pulseAmount: 0.05
-  pulseDuration: 1.5
-  rotate: 0
-  rotateAmount: 2
-  rotateDuration: 3
-  shake: 0
-  shakeDuration: 0.6
-  shakeStrength: 8
-  shakeVibrato: 20
-  shakeRandomness: 90
 --- !u!1 &1129753162
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,23 +969,24 @@ MonoBehaviour:
   - {fileID: 6615105291565881644, guid: 15d3b6bb690d644a5bc7b540ff55d0bb, type: 3}
   - {fileID: 3879690903547675473, guid: 18d21297a73df473dae04363f1749376, type: 3}
   tiempoPorImagen: 8
-  escenaDestino: MainMenu
+  escenaDestino: FinalBoss
   imagenDisplay: {fileID: 28226962}
   botonSkip: {fileID: 1982325586}
   tiempoFade: 1.5
   canvasGroup: {fileID: 1129753167}
   textos:
-  - Since time immemorial, the Kingdom of L'anbfel has existed, a prosperous realm
-    where its citizens lived in peace
-  - ' However, the evil in the world could not tolerate such prosperity, and so it
-    ravaged L''anbfel, burning and looting everything in its path.'
-  - The king, knowing that time was running out before they reached the castle, led
-    you through a secret passage, where he told you about the golden armor and why
-    you had to retrieve it.
-  - For years you trained, preparing yourself so that one day you could return to
-    L'anbfel and recover the golden armor, thus restoring prosperity to L'anbfel.
-  - That day has arrived. Now you must defeat the hordes of enemies and reclaim the
-    city, eliminating evil from the kingdom and ushering in a new era of prosperity.
+  - 'You are finally here, at the top of the tower, and yet, the most important fight
+    is just around the corner '
+  - ' For a moment you look at yourself, and you see the wounds and scars that both
+    you and your armor have gained'
+  - 'You also realize how you have grown, you feel stronger, more skilled and more
+    mature; you feel you have become the knight you were always meant to be '
+  - Although your equipment and yourself have changed, your goal has always been
+    the same, to find the golden armor and defeat evil
+  - And now, being so close to fulfilling your objective, you finally feel happy
+    for the first time since you started this journey, you feel as your hard work
+    is being compensated; yet it still has not ended, and with a new found energy,
+    you run into the final room
   textoHistoria: {fileID: 2117075771}
 --- !u!224 &2147043160
 RectTransform:

@@ -12644,7 +12644,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 854132199040854177, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
       propertyPath: escenaDestino
-      value: TheTower
+      value: StoryPreTownBoss
       objectReference: {fileID: 0}
     - target: {fileID: 854132199040854177, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
       propertyPath: posicionSpawn.x

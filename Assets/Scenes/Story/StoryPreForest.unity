@@ -988,17 +988,16 @@ MonoBehaviour:
   tiempoFade: 1.5
   canvasGroup: {fileID: 1129753167}
   textos:
-  - Since time immemorial, the Kingdom of L'anbfel has existed, a prosperous realm
-    where its citizens lived in peace
-  - ' However, the evil in the world could not tolerate such prosperity, and so it
-    ravaged L''anbfel, burning and looting everything in its path.'
-  - The king, knowing that time was running out before they reached the castle, led
-    you through a secret passage, where he told you about the golden armor and why
-    you had to retrieve it.
-  - For years you trained, preparing yourself so that one day you could return to
-    L'anbfel and recover the golden armor, thus restoring prosperity to L'anbfel.
-  - That day has arrived. Now you must defeat the hordes of enemies and reclaim the
-    city, eliminating evil from the kingdom and ushering in a new era of prosperity.
+  - 'You are wounded and with no energy, you trained for many, many years, and yet,
+    the enemies in the forest gave you a hard fight '
+  - ' In spite of everything, you keep walking, not without cheking your surroundings
+    every few seconds, as the forest taught you that evil never rests'
+  - ' After walking for what felt like hours, you finally get to the entrance of
+    the city, now overtaken by plants and fungi'
+  - While seeing the ancient entrance in this state, a sense of melancholy drowns
+    you as you start to wonder if the whole city is this way.
+  - After melancholy passes, a strong feeling of determination comes, giving you
+    renewed energy and the hope of ending the evil that did this
   textoHistoria: {fileID: 2117075771}
 --- !u!224 &2147043160
 RectTransform:

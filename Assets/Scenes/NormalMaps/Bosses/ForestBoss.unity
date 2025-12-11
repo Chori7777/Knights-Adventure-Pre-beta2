@@ -23132,7 +23132,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 854132199040854177, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
       propertyPath: escenaDestino
-      value: TheTown
+      value: StoryPreTown
       objectReference: {fileID: 0}
     - target: {fileID: 854132199040854177, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
       propertyPath: posicionSpawn.x
@@ -24422,11 +24422,11 @@ PrefabInstance:
       objectReference: {fileID: 1809535957}
     - target: {fileID: 3354991593770247439, guid: bf5120562dfa0774aa7920329fe131b9, type: 3}
       propertyPath: health
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3354991593770247439, guid: bf5120562dfa0774aa7920329fe131b9, type: 3}
       propertyPath: maxHealth
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3354991593770247439, guid: bf5120562dfa0774aa7920329fe131b9, type: 3}
       propertyPath: dropPrefab

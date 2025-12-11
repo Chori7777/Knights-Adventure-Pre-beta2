@@ -93516,7 +93516,7 @@ PrefabInstance:
     - target: {fileID: 8213783554813428928, guid: 9ae3fe31d21cbd04cb57f81b29dc32e9, type: 3}
       propertyPath: sceneMusic
       value: 
-      objectReference: {fileID: 8300000, guid: d6405b4723a231c43bb70037af8b3eb2, type: 3}
+      objectReference: {fileID: 8300000, guid: c8d7cc3b64634914bbcd54ad97a956eb, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -224372,7 +224372,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 854132199040854177, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
       propertyPath: escenaDestino
-      value: TheTower
+      value: StoryPreTower
       objectReference: {fileID: 0}
     - target: {fileID: 3401322243655379770, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
       propertyPath: m_LocalPosition.x
@@ -227917,11 +227917,11 @@ PrefabInstance:
       objectReference: {fileID: 282097082}
     - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
       propertyPath: health
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
       propertyPath: maxHealth
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
       propertyPath: trialManager

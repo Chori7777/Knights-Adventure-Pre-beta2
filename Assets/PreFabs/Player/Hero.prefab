@@ -247,8 +247,8 @@ MonoBehaviour:
   gameOverSceneDefault: GameOver
   gameOverSceneAlternate: GameOver
   useAlternateGameOverMessagesForThisCharacter: 0
-  healSound: {fileID: 0}
-  potionPickupSound: {fileID: 0}
+  healSound: {fileID: 8300000, guid: 1d44b20800e8a944b9378b893c91dddd, type: 3}
+  potionPickupSound: {fileID: 8300000, guid: d2d9d61ac71fa8e4ca6309d01bc93c6c, type: 3}
 --- !u!114 &7134106177684360171
 MonoBehaviour:
   m_ObjectHideFlags: 0
