@@ -63,15 +63,7 @@ public class ChangeScene : MonoBehaviour
             ControladorDatosJuego.Instance.ResetearDatos();
             ControladorDatosJuego.Instance.datosjuego.jefesDerrotados.Clear();
         }
-
-        if (MainMenuVariation == 0)
-        {
-            CargarEscena("CharacterSelector");
-        }
-        else if (MainMenuVariation == 1)
-        {
-            CargarEscena("CharacterSelectorAlternative");
-        }
+        CargarEscena("StoryPreForest");
     }
 
 

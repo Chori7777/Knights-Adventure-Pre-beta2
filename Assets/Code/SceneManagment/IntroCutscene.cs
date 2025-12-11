@@ -18,9 +18,14 @@ public class IntroCutscene : MonoBehaviour
 
     private int indiceActual = 0;
     private bool estaSaltando = false;
+    private Coroutine rutinaEscritura;
 
     void Start()
     {
+        if (textoHistoria == null)
+        {
+            textoHistoria = GetComponentInChildren<TextMeshProUGUI>(true);
+        }
         if (canvasGroup != null)
         {
             canvasGroup.alpha = 0f;
@@ -70,9 +75,18 @@ public class IntroCutscene : MonoBehaviour
     {
         imagenDisplay.sprite = imagen;
 
-        if (textoHistoria != null && textos.Length > indiceActual)
+        if (textoHistoria != null)
         {
-            textoHistoria.text = textos[indiceActual];
+            if (textos != null && textos.Length > indiceActual)
+            {
+                textoHistoria.text = textos[indiceActual];
+                textoHistoria.maxVisibleCharacters = int.MaxValue;
+            }
+            else
+            {
+                textoHistoria.text = string.Empty;
+                textoHistoria.maxVisibleCharacters = int.MaxValue;
+            }
         }
 
         float tiempo = 0f;
@@ -88,6 +102,10 @@ public class IntroCutscene : MonoBehaviour
 
     private IEnumerator OcultarImagen()
     {
+        if (textoHistoria != null)
+        {
+            textoHistoria.text = string.Empty;
+        }
         float tiempo = 0f;
         while (tiempo < tiempoFade)
         {
@@ -104,6 +122,11 @@ public class IntroCutscene : MonoBehaviour
         if (!estaSaltando)
         {
             estaSaltando = true;
+            if (rutinaEscritura != null)
+            {
+                StopCoroutine(rutinaEscritura);
+                rutinaEscritura = null;
+            }
             StopAllCoroutines();
             StartCoroutine(TransicionAlMenu());
         }
@@ -118,5 +141,26 @@ public class IntroCutscene : MonoBehaviour
     private void IrAlMenu()
     {
         SceneManager.LoadScene(escenaDestino);
+    }
+
+    private IEnumerator EscribirComoMaquina(TextMeshProUGUI destino, string texto)
+    {
+        if (destino == null) yield break;
+        if (string.IsNullOrEmpty(texto)) { destino.text = ""; yield break; }
+        destino.text = texto;
+        destino.maxVisibleCharacters = 0;
+        destino.ForceMeshUpdate();
+        int total = destino.textInfo.characterCount;
+        float velocidad = 0.05f;
+        var tm = TextManager.Instance;
+        if (tm != null)
+        {
+            velocidad = tm.GetTypeSpeed();
+        }
+        while (destino.maxVisibleCharacters < total)
+        {
+            destino.maxVisibleCharacters++;
+            yield return new WaitForSecondsRealtime(velocidad);
+        }
     }
 }
