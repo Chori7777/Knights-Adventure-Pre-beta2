@@ -4858,7 +4858,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: TheTowerALT
+          m_StringArgument: AlternativeTower
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1562901013
@@ -5073,8 +5073,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -704, y: -137}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -704, y: -145.80106}
+  m_SizeDelta: {x: 160, y: 47.6021}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1588011445
 MonoBehaviour:
@@ -5129,7 +5129,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: FinalBossALT
+          m_StringArgument: FinalRealBoss..
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1588011446

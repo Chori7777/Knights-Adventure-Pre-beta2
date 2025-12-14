@@ -48,6 +48,7 @@ using TMPro;
     public void OpenPause()
     {
         Time.timeScale = 0f;
+        if (AudioManager.Instance != null) AudioManager.Instance.StopMusic(true);
         if (pauseGroup != null)
         {
             pauseGroup.alpha = 1f;

@@ -16,6 +16,11 @@ public class triggerDamage : MonoBehaviour
         if (other.CompareTag("Player")) 
         {
             playerLife playerHealth = other.GetComponent<playerLife>();
+            var pm = other.GetComponent<PlayerMovement>();
+            if (pm != null && pm.IsDashing && !string.IsNullOrEmpty(pm.DashDestroyTag) && CompareTag(pm.DashDestroyTag))
+            {
+                return;
+            }
 
             if (playerHealth != null)
             {
@@ -31,10 +36,14 @@ public class triggerDamage : MonoBehaviour
         if (!other.CompareTag("Player")) return;
         if (Time.time < lastDamageTime + damageCooldown) return;
         var playerHealth = other.GetComponent<playerLife>();
+        var pm = other.GetComponent<PlayerMovement>();
+        if (pm != null && pm.IsDashing && !string.IsNullOrEmpty(pm.DashDestroyTag) && CompareTag(pm.DashDestroyTag))
+        {
+            return;
+        }
         if (playerHealth == null) return;
         playerHealth.TakeDamage(transform.position, damage);
         lastDamageTime = Time.time;
     }
 }
-
 

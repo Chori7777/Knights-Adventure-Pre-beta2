@@ -627,6 +627,7 @@ public class PlayerMovement : MonoBehaviour
     public float VerticalVelocity => rb.linearVelocity.y;
     public bool IsBlocking => InputBindings.Get(InputBindings.GameAction.Action2Shield);
     public bool IsWallSliding => isWallSliding;
+    public string DashDestroyTag => dashDestroyTag;
 
     public void SetControlsEnabled(bool enabled)
     {

@@ -75,6 +75,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &904642179130864087
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6171049372980088833}
+  m_Layer: 7
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6171049372980088833
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904642179130864087}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.849, y: 0.221, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1232063694853253268}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5407286007423337658
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,8 +123,8 @@ GameObject:
   - component: {fileID: 3527476235687593427}
   - component: {fileID: 5724456180602391206}
   - component: {fileID: 656354545055968790}
-  - component: {fileID: 8441539338800490037}
   - component: {fileID: 7153805960494185477}
+  - component: {fileID: 9110645720247892963}
   m_Layer: 7
   m_Name: second character_0
   m_TagString: Player
@@ -116,6 +147,8 @@ Transform:
   m_Children:
   - {fileID: 4604669837468981973}
   - {fileID: 3122601687045036572}
+  - {fileID: 6171049372980088833}
+  - {fileID: 5191129259846408299}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &556246369610114617
@@ -160,7 +193,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1262583705
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: 247034515338632906, guid: 983fd55db39d557409610560c17c86d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -197,9 +230,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d4983d86d72a74f95953170d4dd3f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
-  currentHealth: 5
-  defaultStartingHealth: 5
+  maxHealth: 10
+  currentHealth: 10
+  defaultStartingHealth: 10
+  isSecondCharacterMage: 1
   maxPotions: 3
   currentPotions: 3
   potionHealAmount: 1
@@ -207,6 +241,9 @@ MonoBehaviour:
   potionCooldownIndicator: {fileID: 0}
   enableAutoRechargePotions: 1
   autoRechargeInterval: 5
+  tempShieldMax: 2
+  tempShieldCurrent: 0
+  tempShieldDurationDefault: 8
   invincibilityDuration: 1
   deathAnimationName: Death
   deathFallbackDuration: 1
@@ -214,6 +251,8 @@ MonoBehaviour:
   gameOverSceneDefault: GameOver
   gameOverSceneAlternate: GameOverALT
   useAlternateGameOverMessagesForThisCharacter: 1
+  healSound: {fileID: 0}
+  potionPickupSound: {fileID: 0}
 --- !u!114 &6474835378896499795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,10 +275,10 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 1024
-  moveSpeed: 5
-  blockMoveSpeed: 4
+  moveSpeed: 8
+  blockMoveSpeed: 8
   sprintMultiplier: 1.5
-  isSprintMode: 0
+  isSprintMode: 1
   jumpForce: 8
   doubleJumpForce: 8
   fallMultiplier: 2.5
@@ -267,8 +306,8 @@ MonoBehaviour:
   wallJumpCooldown: 0
   attackStepSpeed: 0
   attackStepDelay: 0
-  attackStepDuration: 0
-  attackGroundDuration: 0
+  attackStepDuration: 0.15
+  attackGroundDuration: 0.15
   attackAirDuration: 0
   attackCooldown: 0
   knockbackForce: 0
@@ -276,11 +315,11 @@ MonoBehaviour:
   canMove: 1
   canJump: 1
   canDoubleJump: 0
-  canAttack: 0
+  canAttack: 1
   canDash: 1
   canWallCling: 0
   canBlock: 1
-  canThrowProjectile: 0
+  canThrowProjectile: 1
   groundCheckRay: 0.2
   groundCheckSpacing: 0.3
   wallCheckDistance: 0
@@ -394,12 +433,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 752b91d04b9a81b4497ef09e3c664b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shieldVisual: {fileID: 0}
+  shieldVisual: {fileID: 6520439652101146045}
   useAlternateShield: 1
-  alternateShieldVisual: {fileID: 0}
-  blockSound: {fileID: 0}
-  shieldBreakSound: {fileID: 0}
-  blockAngle: 120
+  alternateShieldVisual: {fileID: 6520439652101146045}
+  blockSound: {fileID: 8300000, guid: d73d16a79a1823745b111b5e98a70019, type: 3}
+  shieldBreakSound: {fileID: 8300000, guid: 08dc7e89585734347b6cdd21e2a6f89b, type: 3}
+  blockAngle: 360
   staminaCost: 0.2
   perfectBlockWindow: 0.2
   maxStamina: 1
@@ -410,35 +449,11 @@ MonoBehaviour:
   blockEffectDuration: 0.3
   blockKnockback: 2
   canParry: 1
---- !u!114 &8441539338800490037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5407286007423337658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2d4983d86d72a74f95953170d4dd3f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 5
-  currentHealth: 5
-  defaultStartingHealth: 3
-  maxPotions: 5
-  currentPotions: 3
-  potionHealAmount: 1
-  potionCooldown: 0.5
-  potionCooldownIndicator: {fileID: 0}
-  enableAutoRechargePotions: 1
-  autoRechargeInterval: 5
-  invincibilityDuration: 0.5
-  deathAnimationName: Death
-  deathFallbackDuration: 1
-  useAlternateDeathDestination: 0
-  gameOverSceneDefault: GameOver
-  gameOverSceneAlternate: GameOver
-  useAlternateGameOverMessagesForThisCharacter: 0
+  useTemporaryHealthShieldForMage: 1
+  tempShieldAmount: 2
+  tempShieldDuration: 8
+  shieldChargesMax: 2
+  shieldChargeCooldown: 15
 --- !u!95 &7153805960494185477
 Animator:
   serializedVersion: 7
@@ -461,6 +476,115 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &9110645720247892963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5407286007423337658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d58957f6ca842541b53dab495d13c0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orbPrefab: {fileID: 5637241251639114472, guid: ed9e98958dcbf4e46bdeed9e86fca4bc, type: 3}
+  firePoint: {fileID: 6171049372980088833}
+  orbCount: 3
+  orbSpeed: 10
+  spreadAngle: 12
+  orbLifetime: 3
+  orbDamage: 1
+  attackCooldown: 0.4
+  animator: {fileID: 7153805960494185477}
+  attackTriggerName: WandAttack
+--- !u!1 &6520439652101146045
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5191129259846408299}
+  - component: {fileID: 7786650612766538987}
+  m_Layer: 7
+  m_Name: Shield
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5191129259846408299
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6520439652101146045}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.0131, y: 0.0853, z: 0}
+  m_LocalScale: {x: 1.4463472, y: 1.4856126, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1232063694853253268}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &7786650612766538987
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6520439652101146045}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 1163054303
+  m_SortingLayer: 10
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.30588236}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &8061201806002372717
 GameObject:
   m_ObjectHideFlags: 0

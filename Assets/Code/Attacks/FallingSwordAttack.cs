@@ -1,6 +1,7 @@
 using UnityEngine;
+using System;
 
-public class FallingSwordAttack : MonoBehaviour
+public class FallingSwordAttack : MonoBehaviour, IAttackPattern
 {
     [SerializeField] private Transform player;
     [SerializeField] private GameObject swordPrefab;
@@ -19,6 +20,8 @@ public class FallingSwordAttack : MonoBehaviour
     private Vector3 targetPos;
     private int state;
     private float nextFireTime;
+    public event Action OnFinished;
+    private bool singleRun;
 
     private void OnEnable()
     {
@@ -34,7 +37,11 @@ public class FallingSwordAttack : MonoBehaviour
 
     public void Fire()
     {
-        if (player == null || swordPrefab == null) return;
+        if (player == null || swordPrefab == null)
+        {
+            if (singleRun) OnFinished?.Invoke();
+            return;
+        }
         targetPos = player.position;
         if (squarePrefab != null) square = Instantiate(squarePrefab, targetPos, Quaternion.identity).transform;
         sword = Instantiate(swordPrefab, targetPos + Vector3.up * spawnHeight, Quaternion.identity).transform;
@@ -72,8 +79,30 @@ public class FallingSwordAttack : MonoBehaviour
                 if (sword != null) Destroy(sword.gameObject);
                 if (square != null) Destroy(square.gameObject);
                 state = 0;
-                nextFireTime = Time.time + loopDelay;
+                if (singleRun)
+                {
+                    singleRun = false;
+                    OnFinished?.Invoke();
+                }
+                else if (loop)
+                {
+                    nextFireTime = Time.time + loopDelay;
+                }
             }
         }
+    }
+
+    public void StartAttack()
+    {
+        singleRun = true;
+        Fire();
+    }
+
+    public void StopAttack()
+    {
+        singleRun = false;
+        if (sword != null) Destroy(sword.gameObject);
+        if (square != null) Destroy(square.gameObject);
+        state = 0;
     }
 }

@@ -15,6 +15,8 @@ public class playerLife : MonoBehaviour
     [SerializeField] private int defaultStartingHealth = 3;
     public int Health => currentHealth;
     public int MaxHealth => maxHealth;
+    [SerializeField] private bool isSecondCharacterMage = false;
+    public bool IsSecondCharacterMage => isSecondCharacterMage;
 
     [Header("Pociones")]
     [SerializeField] private int maxPotions = 5;
@@ -30,6 +32,15 @@ public class playerLife : MonoBehaviour
     [SerializeField] public bool enableAutoRechargePotions = false;
     [SerializeField] private float autoRechargeInterval = 5f;
     private Coroutine autoRechargeRoutine;
+
+    [Header("Escudo Temporal")]
+    [SerializeField] private int tempShieldMax = 2;
+    [SerializeField] private int tempShieldCurrent = 0;
+    [SerializeField] private float tempShieldDurationDefault = 8f;
+    private Coroutine tempShieldRoutine;
+    public float TempShield01 => Mathf.Clamp01((float)tempShieldCurrent / Mathf.Max(1, tempShieldMax));
+    public int TempShield => tempShieldCurrent;
+    public int TempShieldMax => tempShieldMax;
 
     [Header("Sistema de Daño")]
     [SerializeField] private float invincibilityDuration = 1f;
@@ -96,6 +107,11 @@ public class playerLife : MonoBehaviour
         LoadGameData();
 
         IsInitialized = true;
+
+        if (enableAutoRechargePotions && autoRechargeRoutine == null)
+        {
+            autoRechargeRoutine = StartCoroutine(AutoRechargePotionsForever());
+        }
     }
 
     private void LoadGameData()
@@ -198,6 +214,25 @@ public class playerLife : MonoBehaviour
         autoRechargeRoutine = null;
     }
 
+    private IEnumerator AutoRechargePotionsForever()
+    {
+        float tick = 0f;
+        while (true)
+        {
+            tick += Time.deltaTime;
+            if (tick >= autoRechargeInterval)
+            {
+                tick = 0f;
+                if (currentPotions < maxPotions)
+                {
+                    currentPotions = Mathf.Min(currentPotions + 1, maxPotions);
+                    UpdateUI();
+                }
+            }
+            yield return null;
+        }
+    }
+
     private bool CanUsePotion()
     {
         if (Time.time - lastPotionTime < potionCooldown) return false;
@@ -227,6 +262,14 @@ public class playerLife : MonoBehaviour
         if (blocked)
         {
             return;
+        }
+
+        if (tempShieldCurrent > 0)
+        {
+            int absorbed = Mathf.Min(tempShieldCurrent, damage);
+            tempShieldCurrent -= absorbed;
+            damage -= absorbed;
+            UpdateUI();
         }
 
         lastDamageTime = Time.time;
@@ -432,5 +475,27 @@ public class playerLife : MonoBehaviour
         maxPotions = max;
         currentPotions = Mathf.Min(currentPotions, maxPotions);
         UpdateUI();
+    }
+
+    public void AddTemporaryShieldHealth(int amount, float duration)
+    {
+        tempShieldCurrent = Mathf.Clamp(tempShieldCurrent + amount, 0, tempShieldMax);
+        UpdateUI();
+        if (tempShieldRoutine != null)
+        {
+            StopCoroutine(tempShieldRoutine);
+            tempShieldRoutine = null;
+        }
+        float d = duration <= 0f ? tempShieldDurationDefault : duration;
+        tempShieldRoutine = StartCoroutine(ExpireTempShieldAfter(d));
+        Debug.Log($"[playerLife] TempShield añadido: +{amount}, ahora {tempShieldCurrent}/{tempShieldMax} por {d}s");
+    }
+
+    private IEnumerator ExpireTempShieldAfter(float duration)
+    {
+        yield return new WaitForSeconds(Mathf.Max(0.01f, duration));
+        tempShieldCurrent = 0;
+        UpdateUI();
+        tempShieldRoutine = null;
     }
 }

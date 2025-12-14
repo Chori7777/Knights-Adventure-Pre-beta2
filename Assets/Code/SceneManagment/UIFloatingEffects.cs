@@ -7,6 +7,7 @@ public class UIFloatingEffects : MonoBehaviour
     [Header("Target")]
     [SerializeField] private Graphic targetGraphic;
     private RectTransform rt;
+    private Vector3 baseLocalPos;
 
     [Header("Levitar")]
     [SerializeField] private bool levitate;
@@ -37,6 +38,7 @@ public class UIFloatingEffects : MonoBehaviour
     {
         rt = transform as RectTransform;
         baseAnchored = rt != null ? rt.anchoredPosition : Vector2.zero;
+        baseLocalPos = transform.localPosition;
         baseEuler = transform.localEulerAngles;
         baseScale = transform.localScale;
     }
@@ -54,6 +56,7 @@ public class UIFloatingEffects : MonoBehaviour
     private void ResetState()
     {
         if (rt != null) rt.anchoredPosition = baseAnchored;
+        else transform.localPosition = baseLocalPos;
         transform.localEulerAngles = baseEuler;
         transform.localScale = baseScale;
     }
@@ -67,6 +70,13 @@ public class UIFloatingEffects : MonoBehaviour
             float wx = levitateAmplitude.x * Mathf.Sin((t / Mathf.Max(0.001f, levitatePeriod)) * Mathf.PI * 2f);
             float wy = levitateAmplitude.y * Mathf.Sin(((t + levitatePeriod * 0.25f) / Mathf.Max(0.001f, levitatePeriod)) * Mathf.PI * 2f);
             rt.anchoredPosition = baseAnchored + new Vector2(wx, wy);
+        }
+        else if (levitate)
+        {
+            float wx = levitateAmplitude.x * Mathf.Sin((t / Mathf.Max(0.001f, levitatePeriod)) * Mathf.PI * 2f);
+            float wy = levitateAmplitude.y * Mathf.Sin(((t + levitatePeriod * 0.25f) / Mathf.Max(0.001f, levitatePeriod)) * Mathf.PI * 2f);
+            Vector3 offset = new Vector3(wx, wy, 0f);
+            transform.localPosition = baseLocalPos + offset;
         }
 
         if (rotate)
@@ -90,6 +100,12 @@ public class UIFloatingEffects : MonoBehaviour
             Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * (vibrateStrength * f * 0.01f);
             rt.anchoredPosition = baseAnchored + offset;
         }
+        else if (vibrate)
+        {
+            float f = Mathf.PingPong(t * vibrateVibrato, 1f);
+            float angle = Random.Range(-vibrateRandomness, vibrateRandomness) * Mathf.Deg2Rad;
+            Vector3 offset = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0f) * (vibrateStrength * f * 0.01f);
+            transform.localPosition = baseLocalPos + offset;
+        }
     }
 }
-

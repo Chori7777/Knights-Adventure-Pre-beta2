@@ -11,6 +11,11 @@ public class damageCollider : MonoBehaviour
         if (other.gameObject.CompareTag("Player")) 
         {
             playerLife playerHealth = other.gameObject.GetComponent<playerLife>();
+            var pm = other.gameObject.GetComponent<PlayerMovement>();
+            if (pm != null && pm.IsDashing && !string.IsNullOrEmpty(pm.DashDestroyTag) && CompareTag(pm.DashDestroyTag))
+            {
+                return;
+            }
 
             if (playerHealth != null)
             {
@@ -26,6 +31,11 @@ public class damageCollider : MonoBehaviour
         if (!other.gameObject.CompareTag("Player")) return;
         if (Time.time < lastDamageTime + damageCooldown) return;
         var playerHealth = other.gameObject.GetComponent<playerLife>();
+        var pm = other.gameObject.GetComponent<PlayerMovement>();
+        if (pm != null && pm.IsDashing && !string.IsNullOrEmpty(pm.DashDestroyTag) && CompareTag(pm.DashDestroyTag))
+        {
+            return;
+        }
         if (playerHealth == null) return;
         playerHealth.TakeDamage(transform.position, damage);
         lastDamageTime = Time.time;

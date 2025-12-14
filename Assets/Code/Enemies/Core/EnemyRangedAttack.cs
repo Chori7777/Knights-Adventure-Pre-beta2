@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class EnemyRangedAttack : MonoBehaviour
@@ -104,7 +104,25 @@ public class EnemyRangedAttack : MonoBehaviour
         core.SetAttacking(false);
     }
 
-
+    public void ConfigureProjectile(GameObject prefab, float speed, int count = 1, float spread = 15f)
+    {
+        projectilePrefab = prefab;
+        projectileSpeed = speed;
+        projectileCount = Mathf.Max(1, count);
+        spreadAngle = spread;
+    }
+    public void SetRanges(float detection, float attack, float minAttack)
+    {
+        detectionRange = detection;
+        attackRange = attack;
+        minAttackRange = minAttack;
+    }
+    public void TryAttackNow()
+    {
+        StopAllCoroutines();
+        lastAttackTime = Time.time - attackCooldown;
+        StartCoroutine(AttackRoutine());
+    }
     public void ShootProjectiles()
     {
  

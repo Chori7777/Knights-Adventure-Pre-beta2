@@ -1,6 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Sistema de movimiento universal para proyectiles, huesos y ataques del boss
@@ -8,6 +9,20 @@ using System.Collections;
 /// </summary>
 public class UniversalProjectileMover : MonoBehaviour
 {
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoadedDestroy;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoadedDestroy;
+    }
+
+    private void OnSceneLoadedDestroy(Scene scene, LoadSceneMode mode)
+    {
+        Destroy(gameObject);
+    }
     public enum MovementDirection
     {
         Right,          // →
@@ -1187,6 +1202,18 @@ public class UniversalProjectileMover : MonoBehaviour
         {
             activeTween.Play();
         }
+    }
+
+    public void EnableSpiralMovement(Vector2 center, bool useSelfCenter, float radius, float angularSpeed, SpiralType type, float growthRate)
+    {
+        enableSpiral = true;
+        spiralCenter = center;
+        useSelfAsCenter = useSelfCenter;
+        spiralRadius = radius;
+        spiralSpeed = angularSpeed;
+        spiralType = type;
+        spiralGrowthRate = growthRate;
+        SetupSpiral();
     }
 
     // ═══════════════════════════════════════════════════

@@ -12,6 +12,8 @@ public class TrueFinalBossAlterTownAttackController : MonoBehaviour
             var b = attackBehaviours[i];
             if (b == null) continue;
             b.enabled = true;
+            var p = b as IAttackPattern;
+            if (p != null) p.StartAttack();
         }
     }
 
@@ -22,8 +24,9 @@ public class TrueFinalBossAlterTownAttackController : MonoBehaviour
         {
             var b = attackBehaviours[i];
             if (b == null) continue;
+            var p = b as IAttackPattern;
+            if (p != null) p.StopAttack();
             b.enabled = false;
         }
     }
 }
-

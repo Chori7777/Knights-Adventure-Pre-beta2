@@ -33,7 +33,7 @@ TagManager:
   - Pared
   - Sueloenemigo
   - Obstacles
-  - 
+  - Portal
   - 
   - 
   - 
@@ -64,6 +64,9 @@ TagManager:
     locked: 0
   - name: Signs
     uniqueID: 441393395
+    locked: 0
+  - name: BossAttack
+    uniqueID: 837644607
     locked: 0
   - name: Blockes
     uniqueID: 3746132569

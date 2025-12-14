@@ -9,12 +9,19 @@ using UnityEngine.SceneManagement;
 public class PlayerHealthUI : MonoBehaviour
 {
     public static PlayerHealthUI Instance;
+    public static PlayerHealthUI SecondaryInstance;
     private playerLife player;
 
     [Header("Texto")]
     public TextMeshProUGUI potionText;
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI axeText;
+    [SerializeField] private bool useTimeInsteadOfScoreForSecondPlayer = false;
+    [SerializeField] private string timeModeSceneName = "";
+    [SerializeField] private float startingTimeSeconds = 120f;
+    private float currentTimeSeconds = 0f;
+    private bool timeModeActive = false;
+    private int lastPotionCount = -1;
 
     [Header("Espada - Referencias FIJAS")]
     public Image swordHandle;
@@ -45,6 +52,10 @@ public class PlayerHealthUI : MonoBehaviour
     public Sprite knight3HealthSprite;
     public Sprite knight2HealthSprite;
     public Sprite knight1HealthSprite;
+    [Header("Sprites Mago (3 vidas)")]
+    public Sprite mage3HealthSprite;
+    public Sprite mage2HealthSprite;
+    public Sprite mage1HealthSprite;
 
     [Header("Configuración")]
     public float knightMoveDistancePerHealth = 50f;
@@ -72,24 +83,53 @@ public class PlayerHealthUI : MonoBehaviour
     [Header("Visibilidad")]
     [SerializeField] private bool hideWhenNoPlayer = true;
     [SerializeField] private CanvasGroup hudGroup;
+    [Header("Mage HUD")]
+    [SerializeField] private Transform mageContainer;
+    [SerializeField] private GameObject mageOrbPrefab;
+    [SerializeField] private Sprite mageOrbFullSprite;
+    [SerializeField] private Sprite mageOrbEmptySprite;
+    [SerializeField] private float mageOrbSpacing = 28f;
+    private List<Image> mageOrbImages = new List<Image>();
+    [Header("Mage Overshield Bar")]
+    [SerializeField] private float mageOvershieldWidth = 80f;
+    [SerializeField] private float mageOvershieldHeight = 6f;
+    [SerializeField] private Vector2 mageOvershieldOffset = new Vector2(10f, -68f);
+    private Image mageOvershieldImage;
+    private RectTransform mageOvershieldRect;
+
+    [Header("HUD Secundario")]
+    [SerializeField] private bool isSecondaryHUD = false;
+    [SerializeField] private bool hideKnightLife = false;
 
     void Awake()
     {
-        // Singleton persistente
-        if (Instance == null)
+        if (!isSecondaryHUD)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-
-            // ✅ Suscribirse a cambios de escena
-            SceneManager.sceneLoaded += OnSceneLoaded;
-
-            Debug.Log("[PlayerHealthUI] HUD creado y persistente");
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+                SceneManager.sceneLoaded += OnSceneLoaded;
+            }
+            else
+            {
+                Destroy(gameObject);
+                return;
+            }
         }
         else
         {
-            Destroy(gameObject);
-            return;
+            if (SecondaryInstance == null)
+            {
+                SecondaryInstance = this;
+                DontDestroyOnLoad(gameObject);
+                SceneManager.sceneLoaded += OnSceneLoaded;
+            }
+            else
+            {
+                Destroy(gameObject);
+                return;
+            }
         }
 
         // Cachear referencias FIJAS (las que están en el prefab)
@@ -125,8 +165,28 @@ public class PlayerHealthUI : MonoBehaviour
         // Esperar un frame para que el jugador se inicialice
         yield return new WaitForEndOfFrame();
 
-        // Buscar el jugador en la nueva escena
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        GameObject playerObj = null;
+        if (!isSecondaryHUD)
+        {
+            playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj == null)
+            {
+                var pl = FindFirstObjectByType<playerLife>(FindObjectsInactive.Exclude);
+                if (pl != null) playerObj = pl.gameObject;
+            }
+        }
+        else
+        {
+            var players = GameObject.FindObjectsOfType<playerLife>(false);
+            for (int i = 0; i < players.Length; i++)
+            {
+                if (players[i] != null && players[i].IsSecondCharacterMage)
+                {
+                    playerObj = players[i].gameObject;
+                    break;
+                }
+            }
+        }
 
         if (playerObj == null)
         {
@@ -156,6 +216,8 @@ public class PlayerHealthUI : MonoBehaviour
         // ✅ Reconectar
         player = newPlayer;
         Debug.Log("[PlayerHealthUI] Reconectado al nuevo jugador");
+
+        ConfigureTimeModeForScene();
 
         // ✅ Actualizar display completo
         ForceRefresh();
@@ -189,7 +251,25 @@ public class PlayerHealthUI : MonoBehaviour
         player = p;
         Debug.Log($"[PlayerHealthUI] Inicializando con vida {player.Health}/{player.MaxHealth}");
 
-        AdjustSwordSegments(player.MaxHealth);
+        hideKnightLife = player.IsSecondCharacterMage;
+
+        if (player.IsSecondCharacterMage)
+        {
+            HideSwordHUD();
+            EnsureMageOrbsExists();
+        }
+        else
+        {
+            if (hideKnightLife)
+            {
+                HideSwordHUD();
+            }
+            else
+            {
+                ShowSwordHUD();
+                AdjustSwordSegments(player.MaxHealth);
+            }
+        }
         UpdateDisplay();
 
         // Actualizar monedas/hachas si existe el controlador
@@ -213,17 +293,48 @@ public class PlayerHealthUI : MonoBehaviour
             return;
         }
 
-        AdjustSwordSegments(player.MaxHealth);
+        hideKnightLife = player.IsSecondCharacterMage;
+
+        if (player.IsSecondCharacterMage)
+        {
+            HideSwordHUD();
+            EnsureMageOrbsExists();
+        }
+        else
+        {
+            if (hideKnightLife)
+            {
+                HideSwordHUD();
+            }
+            else
+            {
+                ShowSwordHUD();
+                AdjustSwordSegments(player.MaxHealth);
+            }
+        }
         EnsureShieldBarExists();
         UpdateDisplay();
 
         Debug.Log("[PlayerHealthUI] Refresh forzado completado");
     }
 
+    private void Update()
+    {
+        if (timeModeActive)
+        {
+            currentTimeSeconds = Mathf.Max(0f, currentTimeSeconds - Time.deltaTime);
+            UpdateTimeText();
+        }
+    }
+
     private void SetHUDVisible(bool visible)
     {
         if (!hideWhenNoPlayer) return;
         var cg = hudGroup != null ? hudGroup : GetComponentInParent<CanvasGroup>();
+        if (cg == null)
+        {
+            cg = GetComponentInChildren<CanvasGroup>(true);
+        }
         if (cg != null)
         {
             cg.alpha = visible ? 1f : 0f;
@@ -335,11 +446,24 @@ public class PlayerHealthUI : MonoBehaviour
         }
 
         UpdatePotionText();
+        UpdateTimeText();
         UpdateKnightSprite();
-        UpdateSword();
-        UpdateHeadPosition();
+        if (player.IsSecondCharacterMage)
+        {
+            UpdateMageOrbs();
+            UpdateHeadPositionMage();
+        }
+        else
+        {
+            if (!hideKnightLife)
+            {
+                UpdateSword();
+                UpdateHeadPosition();
+            }
+        }
         UpdateKnightPosition();
         UpdateShieldBar();
+        if (player.IsSecondCharacterMage) UpdateMageOvershieldBar();
     }
 
     private void EnsureShieldBarExists()
@@ -367,6 +491,11 @@ public class PlayerHealthUI : MonoBehaviour
             shieldBarImage.enabled = false;
             return;
         }
+        if (player.IsSecondCharacterMage)
+        {
+            shieldBarImage.enabled = false;
+            return;
+        }
         PlayerShield ps = player.GetComponent<PlayerShield>();
         if (ps == null)
         {
@@ -378,11 +507,168 @@ public class PlayerHealthUI : MonoBehaviour
         shieldBarRect.sizeDelta = new Vector2(Mathf.Max(0.0001f, shieldBarWidth * ratio), shieldBarHeight);
     }
 
+    private void EnsureMageOrbsExists()
+    {
+        if (mageContainer == null)
+        {
+            var go = new GameObject("MageContainer");
+            go.transform.SetParent(transform, false);
+            mageContainer = go.transform;
+            var rt = go.AddComponent<RectTransform>();
+            rt.anchorMin = new Vector2(0f, 1f);
+            rt.anchorMax = new Vector2(0f, 1f);
+            rt.pivot = new Vector2(0f, 1f);
+            rt.anchoredPosition = new Vector2(10f, -40f);
+        }
+        int required = 3;
+        if (player != null)
+        {
+            required = Mathf.Clamp(player.MaxHealth + player.TempShieldMax, 1, 20);
+        }
+        if (mageOrbImages.Count != required)
+        {
+            for (int i = 0; i < mageOrbImages.Count; i++)
+            {
+                if (mageOrbImages[i] != null)
+                    Destroy(mageOrbImages[i].gameObject);
+            }
+            mageOrbImages.Clear();
+            for (int i = 0; i < required; i++)
+            {
+                Image img = null;
+                if (mageOrbPrefab != null)
+                {
+                    var o = Instantiate(mageOrbPrefab, mageContainer);
+                    img = o.GetComponent<Image>();
+                    if (img == null) img = o.AddComponent<Image>();
+                }
+                else
+                {
+                    var o = new GameObject("MageOrb_" + i);
+                    o.transform.SetParent(mageContainer, false);
+                    img = o.AddComponent<Image>();
+                }
+                if (img != null)
+                {
+                    img.sprite = mageOrbEmptySprite != null ? mageOrbEmptySprite : middleEmptySprite;
+                    var rt = img.rectTransform;
+                    rt.anchorMin = new Vector2(0f, 1f);
+                    rt.anchorMax = new Vector2(0f, 1f);
+                    rt.pivot = new Vector2(0.5f, 0.5f);
+                    rt.sizeDelta = new Vector2(24f, 24f);
+                    float x = 10f + (i * mageOrbSpacing);
+                    rt.anchoredPosition = new Vector2(x, -40f);
+                    mageOrbImages.Add(img);
+                }
+            }
+        }
+        if (mageContainer != null) mageContainer.gameObject.SetActive(true);
+    }
+
+    private void UpdateMageOrbs()
+    {
+        EnsureMageOrbsExists();
+        int fullCount = Mathf.Clamp(player.Health + player.TempShield, 0, mageOrbImages.Count);
+        for (int i = 0; i < mageOrbImages.Count; i++)
+        {
+            var img = mageOrbImages[i];
+            if (img == null) continue;
+            bool full = i < fullCount;
+            img.sprite = full
+                ? (mageOrbFullSprite != null ? mageOrbFullSprite : middleFullSprite)
+                : (mageOrbEmptySprite != null ? mageOrbEmptySprite : middleEmptySprite);
+        }
+    }
+
+    private void EnsureMageOvershieldBarExists()
+    {
+        if (mageOvershieldImage == null)
+        {
+            GameObject go = new GameObject("MageOvershieldBar");
+            go.transform.SetParent(transform, false);
+            mageOvershieldImage = go.AddComponent<Image>();
+            mageOvershieldImage.color = Color.red;
+            mageOvershieldRect = mageOvershieldImage.rectTransform;
+            mageOvershieldRect.anchorMin = new Vector2(0f, 1f);
+            mageOvershieldRect.anchorMax = new Vector2(0f, 1f);
+            mageOvershieldRect.pivot = new Vector2(0f, 1f);
+            mageOvershieldRect.anchoredPosition = mageOvershieldOffset;
+            mageOvershieldRect.sizeDelta = new Vector2(mageOvershieldWidth, mageOvershieldHeight);
+            go.transform.SetAsLastSibling();
+        }
+    }
+
+    private void UpdateMageOvershieldBar()
+    {
+        EnsureMageOvershieldBarExists();
+        if (player == null || mageOvershieldImage == null)
+        {
+            if (mageOvershieldImage != null) mageOvershieldImage.enabled = false;
+            return;
+        }
+        int tsMax = Mathf.Max(1, player.TempShieldMax);
+        int ts = Mathf.Clamp(player.TempShield, 0, tsMax);
+        if (ts <= 0)
+        {
+            mageOvershieldImage.enabled = false;
+            return;
+        }
+        float ratio = Mathf.Clamp01((float)ts / tsMax);
+        mageOvershieldImage.enabled = true;
+        mageOvershieldRect.sizeDelta = new Vector2(Mathf.Max(0.0001f, mageOvershieldWidth * ratio), mageOvershieldHeight);
+        Debug.Log($"[PlayerHealthUI] Mage overshield: {ts}/{tsMax} ratio={ratio}");
+    }
+
+    private void HideSwordHUD()
+    {
+        if (swordHandle != null) swordHandle.gameObject.SetActive(false);
+        if (swordTip != null) swordTip.gameObject.SetActive(false);
+        if (knightImage != null) knightImage.gameObject.SetActive(false);
+        if (knightHeadImage != null) knightHeadImage.gameObject.SetActive(false);
+        for (int i = 0; i < allSwordMiddleParts.Count; i++)
+        {
+            if (allSwordMiddleParts[i] != null)
+                allSwordMiddleParts[i].gameObject.SetActive(false);
+        }
+    }
+
+    private void ShowSwordHUD()
+    {
+        if (swordHandle != null) swordHandle.gameObject.SetActive(true);
+        if (swordTip != null) swordTip.gameObject.SetActive(true);
+        if (knightImage != null) knightImage.gameObject.SetActive(true);
+        if (knightHeadImage != null) knightHeadImage.gameObject.SetActive(true);
+        for (int i = 0; i < allSwordMiddleParts.Count; i++)
+        {
+            if (allSwordMiddleParts[i] != null)
+                allSwordMiddleParts[i].gameObject.SetActive(true);
+        }
+        if (mageContainer != null) mageContainer.gameObject.SetActive(false);
+    }
+
+    private void UpdateHeadPositionMage()
+    {
+        if (player == null || knightHeadImage == null) return;
+        if (mageOrbImages.Count == 0) return;
+        RectTransform headRect = knightHeadImage.GetComponent<RectTransform>();
+        int index = Mathf.Clamp(player.Health + player.TempShield - 1, 0, mageOrbImages.Count - 1);
+        Vector2 target = mageOrbImages[index].rectTransform.anchoredPosition + new Vector2(headOffsetX, headOffsetY);
+        targetHeadPosition = target;
+        if (headTween != null && headTween.IsActive())
+            headTween.Kill();
+        headTween = headRect.DOAnchorPos(targetHeadPosition, 0.35f).SetEase(Ease.OutQuad);
+    }
+
     void UpdatePotionText()
     {
         if (potionText != null && player != null)
         {
             potionText.text = player.Potions + "/" + player.MaxPotions;
+            if (lastPotionCount >= 0 && player.Potions > lastPotionCount)
+            {
+                PulsePotionText();
+            }
+            lastPotionCount = player.Potions;
         }
     }
 
@@ -410,10 +696,20 @@ public class PlayerHealthUI : MonoBehaviour
         Sprite currentSprite = knight1HealthSprite;
         int h = Mathf.Clamp(player.Health, 0, player.MaxHealth);
 
-        if (h >= 5 && knight5HealthSprite != null) currentSprite = knight5HealthSprite;
-        else if (h == 4 && knight4HealthSprite != null) currentSprite = knight4HealthSprite;
-        else if (h == 3 && knight3HealthSprite != null) currentSprite = knight3HealthSprite;
-        else if (h == 2 && knight2HealthSprite != null) currentSprite = knight2HealthSprite;
+        bool useMage = player != null && player.IsSecondCharacterMage;
+        if (useMage)
+        {
+            if (h >= 3 && mage3HealthSprite != null) currentSprite = mage3HealthSprite;
+            else if (h == 2 && mage2HealthSprite != null) currentSprite = mage2HealthSprite;
+            else if (h == 1 && mage1HealthSprite != null) currentSprite = mage1HealthSprite;
+        }
+        else
+        {
+            if (h >= 5 && knight5HealthSprite != null) currentSprite = knight5HealthSprite;
+            else if (h == 4 && knight4HealthSprite != null) currentSprite = knight4HealthSprite;
+            else if (h == 3 && knight3HealthSprite != null) currentSprite = knight3HealthSprite;
+            else if (h == 2 && knight2HealthSprite != null) currentSprite = knight2HealthSprite;
+        }
 
         if (currentSprite != null)
         {
@@ -497,5 +793,45 @@ public class PlayerHealthUI : MonoBehaviour
         Vector2 newPos = knightRect.anchoredPosition;
         newPos.x = initialKnightX;
         knightRect.anchoredPosition = newPos;
+    }
+
+    private void ConfigureTimeModeForScene()
+    {
+        timeModeActive = false;
+        if (!useTimeInsteadOfScoreForSecondPlayer) return;
+        if (player == null || !player.IsSecondCharacterMage) return;
+        if (!string.IsNullOrEmpty(timeModeSceneName))
+        {
+            var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+            if (scene.name != timeModeSceneName) return;
+        }
+        currentTimeSeconds = startingTimeSeconds;
+        timeModeActive = true;
+        UpdateTimeText();
+    }
+
+    private void UpdateTimeText()
+    {
+        if (!timeModeActive || coinText == null) return;
+        int t = Mathf.RoundToInt(currentTimeSeconds);
+        int minutes = t / 60;
+        int seconds = t % 60;
+        coinText.text = minutes.ToString("00") + ":" + seconds.ToString("00");
+    }
+
+    public void AddTime(float seconds)
+    {
+        currentTimeSeconds = Mathf.Max(0f, currentTimeSeconds + seconds);
+        UpdateTimeText();
+    }
+
+    private void PulsePotionText()
+    {
+        if (potionText == null) return;
+        var cg = potionText.GetComponent<CanvasGroup>();
+        if (cg == null) cg = potionText.gameObject.AddComponent<CanvasGroup>();
+        cg.alpha = 1f;
+        cg.DOFade(0.2f, 0.2f).SetLoops(2, LoopType.Yoyo);
+        potionText.rectTransform.DOPunchScale(new Vector3(0.1f, 0.1f, 0f), 0.3f, 1, 0.5f);
     }
 }

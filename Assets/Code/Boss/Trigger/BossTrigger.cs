@@ -31,6 +31,10 @@ public class BossTrigger : MonoBehaviour
     [SerializeField] private bool useTrialMode = true;
     [SerializeField] private FirstEncounterTrialManager trialManager;
     [SerializeField] private FirstEncounterTeleportManager teleportManager;
+    [SerializeField] private bool forceSingleZoneCombat = true;
+    [SerializeField] private bool enableAllAttackScripts = true;
+    [SerializeField] private TrueFinalBossZoneManager finalBossZoneManager;
+    [SerializeField] private bool disableZones = true;
 
     [Header("Control de Ataques")]
     [SerializeField] private MonoBehaviour attackScriptToControl;
@@ -137,7 +141,16 @@ public class BossTrigger : MonoBehaviour
 
         // Activar jefe y HUD inmediatamente y pausar ataques durante los diálogos
         spawnedBoss.gameObject.SetActive(true);
-        spawnedBoss.SetAttackEnabled(false);
+        if (enableAllAttackScripts)
+        {
+            SetAllBossAttackScriptsEnabled(spawnedBoss, false);
+            spawnedBoss.SetAttackEnabled(false);
+        }
+        else
+        {
+            SetAllBossAttackScriptsEnabled(spawnedBoss, false);
+            spawnedBoss.SetAttackEnabled(false);
+        }
 
         if (AudioManager.Instance != null)
             AudioManager.Instance.StopMusic();
@@ -218,12 +231,33 @@ public class BossTrigger : MonoBehaviour
             musicTimeline.StartTimeline();
         }
 
-        spawnedBoss.SetAttackEnabled(true);
-        if (BossHealthUI.Instance != null)
-            BossHealthUI.Instance.ShowForBoss(spawnedBoss);
+        if (finalBossZoneManager != null) finalBossZoneManager.SetZoneChangesDisabled(disableZones);
+        if (enableAllAttackScripts)
+        {
+            SetAllBossAttackScriptsEnabled(spawnedBoss, true);
+            spawnedBoss.SetAttackEnabled(true);
+        }
+        else
+        {
+            SetAllBossAttackScriptsEnabled(spawnedBoss, false);
+            spawnedBoss.SetAttackEnabled(true);
+        }
+        var bossUI = BossHealthUI.Instance != null 
+            ? BossHealthUI.Instance 
+            : FindFirstObjectByType<BossHealthUI>(FindObjectsInactive.Include);
+        if (bossUI != null)
+        {
+            if (!bossUI.gameObject.activeSelf)
+                bossUI.gameObject.SetActive(true);
+            bossUI.ShowForBoss(spawnedBoss);
+        }
+        else
+        {
+            Debug.LogError("[BossTrigger] BossHealthUI no encontrado en la escena. Agrega el HUD del jefe al Canvas.");
+        }
 
         // Iniciar Trial Mode
-        if (useTrialMode && trialManager != null)
+        if (useTrialMode && trialManager != null && !forceSingleZoneCombat)
         {
             spawnedBoss.trialManager = trialManager;
             spawnedBoss.trialMode = true;
@@ -281,12 +315,24 @@ public class BossTrigger : MonoBehaviour
             ControladorDatosJuego.Instance.GuardarDatos();
         }
 
-        if (trialManager != null)
+        if (trialManager != null && !forceSingleZoneCombat)
         {
             trialManager.TeleportToInitialArea();
         }
 
         gameObject.SetActive(false);
+    }
+
+    private void SetAllBossAttackScriptsEnabled(BossLife boss, bool enabled)
+    {
+        if (boss == null) return;
+        var go = boss.gameObject;
+        var a1 = go.GetComponent<BossScriptAttacks>();
+        if (a1 != null) a1.enabled = enabled;
+        var a2 = go.GetComponent<TheTrueKnightAttackManager>();
+        if (a2 != null) a2.enabled = enabled;
+        var a3 = go.GetComponent<TrueFinalBossController>();
+        if (a3 != null) a3.enabled = enabled;
     }
 
     private IEnumerator ActivarCooldown()

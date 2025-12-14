@@ -32,6 +32,15 @@ public class PlayerShield : MonoBehaviour
     [SerializeField] private float blockKnockback = 2f;    // Empuje al bloquear
     [SerializeField] private bool canParry = true;         // ¿Puede hacer parry?
 
+    [Header("Modo Mago - Vida Temporal")]
+    [SerializeField] private bool useTemporaryHealthShieldForMage = true;
+    [SerializeField] private int tempShieldAmount = 2;
+    [SerializeField] private float tempShieldDuration = 8f;
+    [SerializeField] private int shieldChargesMax = 2;
+    [SerializeField] private float shieldChargeCooldown = 15f;
+    private int shieldCharges;
+    private bool restoringCharge;
+
     private PlayerMovement playerMovement;
     private Rigidbody2D rb;
     private bool isBlocking = false;
@@ -46,6 +55,7 @@ public class PlayerShield : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         rb = GetComponent<Rigidbody2D>();
 
+        shieldCharges = shieldChargesMax;
         if (shieldVisual != null)
             shieldVisual.SetActive(false);
         if (alternateShieldVisual != null)
@@ -140,6 +150,27 @@ public class PlayerShield : MonoBehaviour
     public void OnBlockStart()
     {
         lastBlockTime = Time.time;
+        if (blockEffectPrefab != null)
+        {
+            Vector3 effectPos = transform.position;
+            GameObject effect = Instantiate(blockEffectPrefab, effectPos, Quaternion.identity);
+            Destroy(effect, blockEffectDuration);
+        }
+        var life = GetComponent<playerLife>();
+        if (life != null && life.IsSecondCharacterMage && useTemporaryHealthShieldForMage)
+        {
+            if (shieldCharges > 0)
+            {
+                life.AddTemporaryShieldHealth(tempShieldAmount, tempShieldDuration);
+                shieldCharges = Mathf.Max(0, shieldCharges - 1);
+                if (!restoringCharge) StartCoroutine(RestoreShieldChargeAfterCooldown());
+                Debug.Log($"[PlayerShield] Charge usada. Quedan {shieldCharges}/{shieldChargesMax}");
+            }
+            else
+            {
+                Debug.Log("[PlayerShield] No hay charges para overshield");
+            }
+        }
     }
 
     /// <summary>
@@ -148,6 +179,17 @@ public class PlayerShield : MonoBehaviour
     public float GetMovementMultiplier()
     {
         return isBlocking ? 0.5f : 1f; // 50% de velocidad bloqueando
+    }
+
+    public int ShieldCharges => shieldCharges;
+    public int ShieldChargesMax => shieldChargesMax;
+
+    private IEnumerator RestoreShieldChargeAfterCooldown()
+    {
+        restoringCharge = true;
+        yield return new WaitForSeconds(shieldChargeCooldown);
+        shieldCharges = Mathf.Min(shieldCharges + 1, shieldChargesMax);
+        restoringCharge = false;
     }
 
     private void OnDrawGizmosSelected()

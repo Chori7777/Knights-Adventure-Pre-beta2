@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ParabolicBulletScript : MonoBehaviour
 {
@@ -9,12 +10,27 @@ public class ParabolicBulletScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        // No asignar velocidad aquí, ya viene del enemigo
+        // No asignar velocidad aquï¿½, ya viene del enemigo
         if (rb == null)
         {
-            Debug.LogError("No hay Rigidbody2D en el proyectil parábola");
+            Debug.LogError("No hay Rigidbody2D en el proyectil parï¿½bola");
         }
         Destroy(gameObject, lifetime);
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Destroy(gameObject);
     }
 
     void OnTriggerEnter2D(Collider2D other)

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// Aplica automáticamente efectos de selección a TODOS los selectables
@@ -12,7 +13,8 @@ public class AutoSelectableStyling : MonoBehaviour
     [Header("═══════════════════════════════")]
 
     [SerializeField] private Color colorNormal = Color.white;
-    [SerializeField] private Color colorSeleccionado = new Color(1f, 0.9f, 0.2f); // Amarillo
+    [SerializeField] private Color colorSeleccionado = new Color(1f, 0.9f, 0.2f);
+    [SerializeField] private Color colorHover = new Color(1f, 0.95f, 0.5f);
     [SerializeField] private float escalaNormal = 1f;
     [SerializeField] private float escalaSeleccionado = 1.1f;
     [SerializeField] private float duracionTween = 0.15f;
@@ -114,10 +116,11 @@ public class AutoSelectableStyling : MonoBehaviour
             // ✅ Añadir y configurar
             MenuSelectionStyling styling = selectable.gameObject.AddComponent<MenuSelectionStyling>();
 
-            // Buscar el Graphic (Text, Image, etc.)
-            Graphic graphic = selectable.GetComponent<Graphic>();
-            if (graphic == null)
-                graphic = selectable.GetComponentInChildren<Graphic>();
+            Graphic graphic = null;
+            var tmp = selectable.GetComponentInChildren<TextMeshProUGUI>(true);
+            if (tmp != null) graphic = tmp;
+            if (graphic == null) graphic = selectable.GetComponent<Graphic>();
+            if (graphic == null) graphic = selectable.GetComponentInChildren<Graphic>(true);
 
             if (graphic == null)
             {
@@ -146,19 +149,16 @@ public class AutoSelectableStyling : MonoBehaviour
     {
         var type = typeof(MenuSelectionStyling);
 
-        // Colores
         SetPrivateField(type, styling, "target", graphic);
         SetPrivateField(type, styling, "normalColor", colorNormal);
         SetPrivateField(type, styling, "selectedColor", colorSeleccionado);
+        SetPrivateField(type, styling, "hoverColor", colorHover);
 
-        // Escala
         SetPrivateField(type, styling, "normalScale", escalaNormal);
         SetPrivateField(type, styling, "selectedScale", escalaSeleccionado);
 
-        // Tween
         SetPrivateField(type, styling, "tweenDuration", duracionTween);
 
-        // Efectos opcionales
         SetPrivateField(type, styling, "pulse", usarPulso);
         SetPrivateField(type, styling, "pulseDuration", pulseDuration);
         SetPrivateField(type, styling, "pulseScale", pulseScale);
@@ -181,18 +181,15 @@ public class AutoSelectableStyling : MonoBehaviour
     {
         var type = typeof(MenuSelectionStyling);
 
-        // Colores
         SetPrivateField(type, styling, "normalColor", colorNormal);
         SetPrivateField(type, styling, "selectedColor", colorSeleccionado);
+        SetPrivateField(type, styling, "hoverColor", colorHover);
 
-        // Escala
         SetPrivateField(type, styling, "normalScale", escalaNormal);
         SetPrivateField(type, styling, "selectedScale", escalaSeleccionado);
 
-        // Tween
         SetPrivateField(type, styling, "tweenDuration", duracionTween);
 
-        // Efectos
         SetPrivateField(type, styling, "pulse", usarPulso);
         SetPrivateField(type, styling, "pulseDuration", pulseDuration);
         SetPrivateField(type, styling, "pulseScale", pulseScale);

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 public class FinalBossController : MonoBehaviour
@@ -199,13 +199,29 @@ public class FinalBossController : MonoBehaviour
 
     private IEnumerator Attack3_SummonMages()
     {
-        Instantiate(magePrefab, leftMageSpawn.position, Quaternion.identity);
+        GameObject leftMage = Instantiate(magePrefab, leftMageSpawn.position, Quaternion.identity);
+        var leftCore = leftMage.GetComponent<EnemyCore>();
+        var leftRanged = leftMage.GetComponent<EnemyRangedAttack>();
+        if (leftRanged != null)
+        {
+            if (purpleSphere != null) leftRanged.ConfigureProjectile(purpleSphere, sphereSpeed, 1, 0f);
+            leftRanged.SetRanges(12f, 10f, 1.5f);
+            leftRanged.TryAttackNow();
+        }
         if (summonMageSFX != null)
             AudioManager.Instance.PlaySFX(summonMageSFX);
 
         yield return new WaitForSeconds(0.5f);
 
-        Instantiate(magePrefab, rightMageSpawn.position, Quaternion.identity);
+        GameObject rightMage = Instantiate(magePrefab, rightMageSpawn.position, Quaternion.identity);
+        var rightCore = rightMage.GetComponent<EnemyCore>();
+        var rightRanged = rightMage.GetComponent<EnemyRangedAttack>();
+        if (rightRanged != null)
+        {
+            if (purpleSphere != null) rightRanged.ConfigureProjectile(purpleSphere, sphereSpeed, 1, 0f);
+            rightRanged.SetRanges(12f, 10f, 1.5f);
+            rightRanged.TryAttackNow();
+        }
         if (summonMageSFX != null)
             AudioManager.Instance.PlaySFX(summonMageSFX);
 

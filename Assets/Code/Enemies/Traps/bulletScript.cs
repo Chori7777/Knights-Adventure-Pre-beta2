@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BulletScript : MonoBehaviour
 {
@@ -12,12 +13,27 @@ public class BulletScript : MonoBehaviour
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null && rb.linearVelocity == Vector2.zero)
         {
-            // Si no tiene velocidad asignada, usar la dirección del firepoint
+            // Si no tiene velocidad asignada, usar la direcciï¿½n del firepoint
             Vector2 direction = transform.right;
             rb.linearVelocity = direction * speed;
         }
 
         Destroy(gameObject, lifetime);
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Destroy(gameObject);
     }
 
     void OnTriggerEnter2D(Collider2D other)

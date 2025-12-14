@@ -160,6 +160,15 @@ public class CameraEffectsController : MonoBehaviour
         }
     }
 
+    public void ApplyPresetIndexNoZoom(int index)
+    {
+        if (presets == null || index < 0 || index >= presets.Length) return;
+        var p = presets[index];
+        if (colorAdj != null) StartCoroutine(LerpSaturation(p.saturation, p.duration));
+        if (vignette != null) StartCoroutine(LerpVignette(p.vignetteIntensity, p.duration));
+        // Intencionalmente no ajustar zoom
+    }
+
     private IEnumerator LerpSaturation(float target, float duration)
     {
         float start = colorAdj.saturation.value;

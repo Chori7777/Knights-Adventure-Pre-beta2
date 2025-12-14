@@ -26,6 +26,7 @@ public class TrueFinalBossMusicSync : MonoBehaviour
     public event Action<TrueFinalBossStateMachine.BossState> OnStateEvent;
     public event Action OnMusicPaused;
     public event Action OnMusicResumed;
+    public event Action<float> OnPauseBegin;
 
     private float lastMusicTime;
 
@@ -80,6 +81,7 @@ public class TrueFinalBossMusicSync : MonoBehaviour
             musicSource.Pause();
             OnMusicPaused?.Invoke();
         }
+        OnPauseBegin?.Invoke(e.pauseDuration);
         if (e.sfx != null && AudioManager.Instance != null)
         {
             AudioManager.Instance.PlaySFX(e.sfx, 1f, 1f);
@@ -103,4 +105,3 @@ public class TrueFinalBossMusicSync : MonoBehaviour
         for (int i = 0; i < events.Length; i++) events[i].fired = false;
     }
 }
-
