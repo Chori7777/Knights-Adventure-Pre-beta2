@@ -29,6 +29,7 @@ public class ChaserSpawner : MonoBehaviour
         {
             if (aggressiveOnSpawn) chaser.SetAggressive(true);
             if (phaseThroughWallsOnSpawn) chaser.SetPhaseThroughWalls(true);
+            chaser.SetMoveSpeed(chaserSpeed);
             var sr = go.GetComponent<SpriteRenderer>();
             if (sr == null) sr = go.GetComponentInChildren<SpriteRenderer>();
             if (sr != null)
@@ -41,7 +42,7 @@ public class ChaserSpawner : MonoBehaviour
                 }
             }
             var rb = go.GetComponent<Rigidbody2D>();
-            if (rb != null) rb.isKinematic = true;
+            if (rb != null) rb.bodyType = RigidbodyType2D.Kinematic;
         }
         lastSpawnTime = Time.time;
     }

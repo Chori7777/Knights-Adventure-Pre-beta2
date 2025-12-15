@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using System.Collections;
 
 public class GameOverManager : MonoBehaviour
@@ -38,6 +39,7 @@ public class GameOverManager : MonoBehaviour
     {
         Time.timeScale = 0f; // Pausa el juego al morir
         MostrarTextoMuerte();
+        AutoWireGameOverButtons();
     }
 
     private void MostrarTextoMuerte()
@@ -75,27 +77,26 @@ public class GameOverManager : MonoBehaviour
     }
 
 
-    public void CargarCheckpoint()
+    public void CargarPartida()
     {
         Time.timeScale = 1f;
 
         if (ControladorDatosJuego.Instance == null)
         {
             Debug.LogError("[GameOver] No existe instancia de ControladorDatosJuego");
+            ReiniciarNivel();
             return;
         }
 
         ControladorDatosJuego.Instance.CargarDatos();
-
         string escena = ControladorDatosJuego.Instance.datosjuego.escenaActual;
         if (!string.IsNullOrEmpty(escena))
         {
-            Debug.Log($"[GameOver] Cargando último checkpoint en escena: {escena}");
-            SceneManager.LoadScene(escena);
+            ControladorDatosJuego.Instance.ContinuarPartida();
         }
         else
         {
-            Debug.LogWarning("[GameOver] No hay checkpoint guardado. Se reiniciará el nivel actual");
+            Debug.LogWarning("[GameOver] No hay escena guardada, reiniciando nivel actual");
             ReiniciarNivel();
         }
     }
@@ -119,5 +120,26 @@ public class GameOverManager : MonoBehaviour
     public static void SetVariant2(bool use)
     {
         UseVariant2 = use;
+    }
+
+    private void AutoWireGameOverButtons()
+    {
+        var buttons = GetComponentsInChildren<Button>(true);
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            var b = buttons[i];
+            var n = b.gameObject.name.ToLowerInvariant();
+            string label = null;
+            var t = b.GetComponentInChildren<TMP_Text>();
+            if (t != null) label = t.text.ToLowerInvariant();
+            else
+            {
+                var ut = b.GetComponentInChildren<UnityEngine.UI.Text>();
+                if (ut != null) label = ut.text.ToLowerInvariant();
+            }
+            b.onClick.RemoveAllListeners();
+            b.onClick.AddListener(CargarPartida);
+            Debug.Log("[GameOver] Botón auto-conectado a CargarPartida: " + n + (label != null ? (" (" + label + ")") : ""));
+        }
     }
 }

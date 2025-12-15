@@ -3154,11 +3154,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7960197200281980645, guid: 768c34e50902085458c4c28329b38437, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.8575244
+      value: -0.7
       objectReference: {fileID: 0}
     - target: {fileID: 7960197200281980645, guid: 768c34e50902085458c4c28329b38437, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 151.90298
+      value: 135.5
       objectReference: {fileID: 0}
     - target: {fileID: 7960197200281980645, guid: 768c34e50902085458c4c28329b38437, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3198,7 +3198,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8881892248107932051, guid: 768c34e50902085458c4c28329b38437, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3971,9 +3971,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1549b28ec00af5544899c43e7974b0af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossID: Boss3
-  health: 30
-  maxHealth: 30
+  bossID: FirstFinalBoss
+  health: 1
+  maxHealth: 1
   enableEyeCycle: 0
   eyeOpenDuration: 5
   eyeClosedDuration: 5
@@ -4010,14 +4010,15 @@ MonoBehaviour:
   shakeDuringDeath: 1
   deathShakeIntensity: 0.08
   deathAnimationStateName: Death
-  deathDialogues: []
+  deathDialogues:
+  - You are not going to win...
   objectsToDestroyOnDeath: []
   tilemapsToActivateOnDeath: []
-  detachAmuletOnDeath: 1
+  detachAmuletOnDeath: 0
   amuletGravityScale: 1.2
   amuletDestroyDelay: 3
   spawnPortalOnDeath: 1
-  portalPrefab: {fileID: 0}
+  portalPrefab: {fileID: 1035912417}
   portalSpawnOffset: {x: 1.5, y: 0, z: 0}
   portalLayerName: 
   deathAnimMinimumWait: 1.2
@@ -4030,12 +4031,12 @@ MonoBehaviour:
   applyMapEffectsOnStarSpawn: 1
   stopMusicOnDeath: 0
   playVictoryMusicOnDeath: 1
-  victoryMusicClip: {fileID: 0}
+  victoryMusicClip: {fileID: 8300000, guid: 8c00bba1e1a21f141b76deffb2b006dc, type: 3}
   victoryMusicVolume: 1
-  victoryMusicLoop: 1
-  victoryMusicFade: 1
-  activateNewGamePlusOnDeath: 0
-  newGamePlusStorySceneName: 
+  victoryMusicLoop: 0
+  victoryMusicFade: 0
+  activateNewGamePlusOnDeath: 1
+  newGamePlusStorySceneName: CorruptedGameScene
   bossRoot: {fileID: 0}
 --- !u!114 &1283905301
 MonoBehaviour:

@@ -13,13 +13,18 @@ public class TownStalkerAttackAdapter : MonoBehaviour, IAttackPattern
     private void OnEnable()
     {
         if (controller != null) controller.enabled = true;
-        running = true;
-        startTime = Time.time;
+        running = false;
+        if (autoStartOnEnable) StartAttack();
     }
 
     private void Update()
     {
         if (controller != null && !controller.enabled) controller.enabled = true;
+        if (running && Time.time >= startTime + duration)
+        {
+            running = false;
+            OnFinished?.Invoke();
+        }
     }
 
     public void StartAttack()

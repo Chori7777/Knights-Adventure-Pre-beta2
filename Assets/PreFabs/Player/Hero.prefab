@@ -342,6 +342,11 @@ MonoBehaviour:
   afterimageColor: {r: 1, g: 1, b: 1, a: 0.7}
   doubleJumpAfterimageCount: 6
   doubleJumpAfterimageInterval: 0.03
+  enableRunAfterimage: 1
+  runAfterimageSpeedThreshold: 3
+  runTrailSpawnInterval: 0.12
+  runTrailLifetime: 0.12
+  runAfterimageColor: {r: 1, g: 1, b: 1, a: 0.35}
   limitFallSpeed: 1
   maxFallSpeed: 20
   respawnOnFall: 1
@@ -468,11 +473,11 @@ MonoBehaviour:
   axePrefab: {fileID: 1814113125877117740, guid: 7bba41d5cf7a23a4692019778111ad4e, type: 3}
   throwPoint: {fileID: 5589603784711402807}
   throwSpeed: 10
-  throwCooldown: 15
+  throwCooldown: 5
   currentAxes: 3
   maxAxes: 3
   enableAutoRecharge: 1
-  autoRechargeInterval: 5
+  autoRechargeInterval: 30
   autoRechargeAmount: 1
   throwSound: {fileID: 8300000, guid: bd6a0ebcc53d4bb4faf5c4dc8ae076c9, type: 3}
   emptySound: {fileID: 8300000, guid: 668d4177c90eec1478e77e797fbb1ce9, type: 3}

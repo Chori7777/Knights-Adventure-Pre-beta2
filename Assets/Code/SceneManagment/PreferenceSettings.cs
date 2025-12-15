@@ -162,7 +162,7 @@ public class PreferenceSettings : MonoBehaviour
         var r = availableResolutions[index];
         int hz = Mathf.RoundToInt((float)r.refreshRateRatio.value);
         var mode = Screen.fullScreen ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
-        Screen.SetResolution(r.width, r.height, mode, hz);
+        Screen.SetResolution(r.width, r.height, mode, r.refreshRateRatio);
         PlayerPrefs.SetInt("pref_res_index", index);
         PlayerPrefs.Save();
     }

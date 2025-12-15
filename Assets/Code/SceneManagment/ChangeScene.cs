@@ -176,7 +176,7 @@ public class ChangeScene : MonoBehaviour
             ControladorDatosJuego.Instance.datosjuego.jefesDerrotados.Clear();
             ControladorDatosJuego.Instance.datosjuego.startModeVariant = MainMenuVariation;
         }
-        CargarEscena("StoryPreSnowBoss");
+        CargarEscena("AlternativeForest");
     }
 
     public void ReturnToOriginalGame()

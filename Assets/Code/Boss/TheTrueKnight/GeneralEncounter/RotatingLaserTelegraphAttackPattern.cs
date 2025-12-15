@@ -60,7 +60,7 @@ public class RotatingLaserTelegraphAttackPattern : MonoBehaviour, IAttackPattern
         {
             float ang = (360f / Mathf.Max(1, lines)) * i;
             Vector2 dir = new Vector2(Mathf.Cos(ang * Mathf.Deg2Rad), Mathf.Sin(ang * Mathf.Deg2Rad));
-            Vector3 pos = c + (Vector3)(dir * 0.1f);
+            Vector3 pos = c + (Vector3)(dir * lineDistance);
             GameObject g = Instantiate(telegraphLinePrefab, pos, Quaternion.identity);
             g.transform.right = dir;
             var sr = g.GetComponentInChildren<SpriteRenderer>();

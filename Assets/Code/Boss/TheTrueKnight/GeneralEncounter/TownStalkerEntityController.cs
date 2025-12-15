@@ -105,7 +105,7 @@ public class TownStalkerEntityController : MonoBehaviour
             }
             else
             {
-                if (enableNearRetreat && dist <= nearRetreatDistance)
+                if (enableNearRetreat && dist <= nearRetreatDistance && !dashNonStopToPlayer)
                 {
                     retreatTarget = ChooseRetreatTarget();
                     state = StalkerState.Retreat;

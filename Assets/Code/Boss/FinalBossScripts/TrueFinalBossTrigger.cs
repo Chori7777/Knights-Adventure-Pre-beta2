@@ -31,8 +31,9 @@ public class TrueFinalBossTrigger : MonoBehaviour
             controller.SetBossGlobalAttacksEnabled(enableAllAttackScripts);
             controller.Init();
             controller.OnTransformationComplete += OnTransformationComplete;
-            if (skipIntroDialogues)
+            if (skipIntroDialogues || !waitDialogueToStart)
             {
+                controller.StartPulse();
                 if (musicSource != null) musicSource.Play();
                 controller.EnterCombat();
                 TryShowBossHealthUI();
@@ -65,6 +66,7 @@ public class TrueFinalBossTrigger : MonoBehaviour
             AudioManager.Instance.PlaySFX(bossIntroSound, 0.8f, 1f);
             if (logDebug) Debug.Log("[TrueFinalBossTrigger] SFX de spawn reproducido");
         }
+        if (controller != null) controller.StartPulse();
         if (preMusicDialogues != null && preMusicDialogues.Length > 0)
         {
             if (TextManager.Instance != null)
@@ -86,6 +88,7 @@ public class TrueFinalBossTrigger : MonoBehaviour
 
         if (musicSource != null)
         {
+            if (silenceSeconds > 0f) yield return new UnityEngine.WaitForSecondsRealtime(silenceSeconds);
             musicSource.Play();
             if (logDebug) Debug.Log("[TrueFinalBossTrigger] Música del jefe iniciada tras diálogos");
             if (controller != null) controller.StopPulse();
@@ -96,6 +99,7 @@ public class TrueFinalBossTrigger : MonoBehaviour
             controller.EnterCombat();
             if (logDebug) Debug.Log("[TrueFinalBossTrigger] Combate iniciado manualmente");
             TryShowBossHealthUI();
+            if (transformationDone && logDebug) Debug.Log("[TrueFinalBossTrigger] Transformación completada previamente");
         }
     }
 

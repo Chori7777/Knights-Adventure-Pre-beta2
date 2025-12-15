@@ -189,7 +189,7 @@ public class PlayerHealthUI : MonoBehaviour
         }
         else
         {
-            var players = GameObject.FindObjectsOfType<playerLife>(false);
+            var players = GameObject.FindObjectsByType<playerLife>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
             for (int i = 0; i < players.Length; i++)
             {
                 if (players[i] != null && players[i].IsSecondCharacterMage)

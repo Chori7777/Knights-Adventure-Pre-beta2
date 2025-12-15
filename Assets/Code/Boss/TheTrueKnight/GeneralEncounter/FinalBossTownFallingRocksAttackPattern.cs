@@ -108,7 +108,7 @@ public class FinalBossTownFallingRocksAttackPattern : MonoBehaviour, IAttackPatt
 
     private void TryShakeCamera()
     {
-        var vfx = FindObjectOfType<TrueFinalBossVisualEffects>();
+        var vfx = UnityEngine.Object.FindFirstObjectByType<TrueFinalBossVisualEffects>();
         if (vfx != null)
         {
             vfx.ShakeCamera(shakeDuration, shakeIntensity);

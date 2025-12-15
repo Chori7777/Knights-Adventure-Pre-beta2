@@ -28,6 +28,9 @@ public class TrueFinalBossController : MonoBehaviour
     [SerializeField] private float introShakeIntensity = 0.15f;
     [SerializeField] private bool useGlobalFadeForIntro = false;
     [SerializeField] private float introFadeOutWait = 0.2f;
+    [SerializeField] private GameObject finalBossDropPrefab;
+    [SerializeField] private Vector3 finalBossDropOffset;
+    [SerializeField] private float finalBossDropDelay = 0.5f;
     [System.Serializable] public class ZoneAttackSet { public string zoneName; public MonoBehaviour[] patternBehaviours; public bool randomOrder; }
     [SerializeField] private ZoneAttackSet[] zoneAttackSets;
     [SerializeField] private MonoBehaviour[] bossGlobalBehaviours;
@@ -83,6 +86,11 @@ public class TrueFinalBossController : MonoBehaviour
         {
             stateMachine.OnStateEnter += OnEnterState;
             stateMachine.OnStateExit += OnExitState;
+        }
+        var bl = FindFirstObjectByType<BossLife>(FindObjectsInactive.Include);
+        if (bl != null && finalBossDropPrefab != null)
+        {
+            bl.SetDropOnDeath(finalBossDropPrefab, finalBossDropOffset, finalBossDropDelay);
         }
         if (logDebug) Debug.Log("[TrueFinalBossController] Inicializado y eventos conectados");
     }
@@ -199,6 +207,26 @@ public class TrueFinalBossController : MonoBehaviour
     {
         if (vfx != null) vfx.ShakeCamera(summonShakeDuration, summonShakeIntensity);
         if (logDebug) Debug.Log("[TrueFinalBossController] Shake de spawn ejecutado");
+    }
+
+    public void StartPulse()
+    {
+        if (vfx != null)
+        {
+            vfx.StartBlackPulse(summonPulseMin, summonPulseMax, summonPulsePeriod);
+            if (summonHoldDuration > 0f)
+            {
+                if (summonRoutine != null) StopCoroutine(summonRoutine);
+                summonRoutine = StartCoroutine(StopPulseAfterDelay(summonHoldDuration));
+            }
+        }
+    }
+
+    private IEnumerator StopPulseAfterDelay(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        StopPulse();
+        summonRoutine = null;
     }
 
     public void StartTransformationSequence()

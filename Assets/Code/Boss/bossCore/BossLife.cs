@@ -369,6 +369,19 @@ public class BossLife : MonoBehaviour
         anim.SetBool("damage", false);
     }
 
+    public void SetDropOnDeath(GameObject prefab, Vector3 offset, float delay)
+    {
+        dropPrefab = prefab;
+        dropSpawnOffset = offset;
+        dropSpawnDelay = delay;
+        dropOnDeath = prefab != null;
+    }
+
+    public void SetDropEnabled(bool enabled)
+    {
+        dropOnDeath = enabled;
+    }
+
     private IEnumerator DeathSequence()
     {
         float startTime = Time.unscaledTime;

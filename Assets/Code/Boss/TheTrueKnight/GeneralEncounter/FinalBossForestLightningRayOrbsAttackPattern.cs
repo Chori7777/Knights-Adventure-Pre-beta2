@@ -7,6 +7,7 @@ public class FinalBossForestLightningRayOrbsAttackPattern : MonoBehaviour, IAtta
     public event Action OnFinished;
 
     [SerializeField] private GameObject orbPrefab;
+    [SerializeField] private GameObject rayPrefab;
     [SerializeField] private Transform spawnTopRef;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundCheckDistance = 0.2f;

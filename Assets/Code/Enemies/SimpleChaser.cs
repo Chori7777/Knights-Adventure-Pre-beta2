@@ -40,7 +40,7 @@ public class SimpleChaser : MonoBehaviour
         if (mv != null) mv.SetDetectionRange(chaseRange);
         if (phaseThroughWalls)
         {
-            if (rb != null) rb.isKinematic = true;
+            if (rb != null) rb.bodyType = RigidbodyType2D.Kinematic;
             if (col != null && colliderAsTrigger) col.isTrigger = true;
         }
     }
@@ -101,13 +101,18 @@ public class SimpleChaser : MonoBehaviour
         if (col == null) col = GetComponent<Collider2D>();
         if (phaseThroughWalls)
         {
-            if (rb != null) rb.isKinematic = true;
+            if (rb != null) rb.bodyType = RigidbodyType2D.Kinematic;
             if (col != null && colliderAsTrigger) col.isTrigger = true;
         }
         else
         {
-            if (rb != null) rb.isKinematic = false;
+            if (rb != null) rb.bodyType = RigidbodyType2D.Dynamic;
             if (col != null && colliderAsTrigger) col.isTrigger = false;
         }
+    }
+
+    public void SetMoveSpeed(float speed)
+    {
+        moveSpeed = speed;
     }
 }

@@ -31,7 +31,7 @@ public class PlayerFloatingHealthText : MonoBehaviour
         tmp.color = textColor;
         tmp.fontSize = fontSize;
         tmp.alignment = TextAlignmentOptions.Center;
-        tmp.enableWordWrapping = false;
+        tmp.textWrappingMode = TextWrappingModes.NoWrap;
         if (fontAsset != null) tmp.font = fontAsset;
         var mr = tmp.GetComponent<MeshRenderer>();
         if (mr != null)

@@ -47,7 +47,7 @@ public class ChaserRetreat : MonoBehaviour
         while (timer < retreatDuration)
         {
             Vector2 dirToPlayer = core.DirectionToPlayer();
-            if (core.rb != null && !core.rb.isKinematic)
+            if (core.rb != null && core.rb.bodyType != RigidbodyType2D.Kinematic)
             {
                 float vx = -dirToPlayer.x * retreatSpeed;
                 core.rb.linearVelocity = new Vector2(vx, core.rb.linearVelocity.y);
