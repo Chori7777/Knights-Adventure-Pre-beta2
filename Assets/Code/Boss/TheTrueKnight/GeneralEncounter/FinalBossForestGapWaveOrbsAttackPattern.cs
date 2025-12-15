@@ -73,6 +73,7 @@ public class FinalBossForestGapWaveOrbsAttackPattern : MonoBehaviour, IAttackPat
             float y = verticalCenterY + (i - rows / 2) * spacingY;
             Vector3 pos = new Vector3(startEdge.position.x, y, 0f);
             GameObject o = Instantiate(orbPrefab, pos, Quaternion.identity);
+            AddTrail(o);
             spawned.Add(o);
             StartCoroutine(MoveToEdge(o, endEdge.position, dir));
             yield return null;
@@ -102,6 +103,30 @@ public class FinalBossForestGapWaveOrbsAttackPattern : MonoBehaviour, IAttackPat
         yield return new WaitForSeconds(homingDuration);
         routine = null;
         OnFinished?.Invoke();
+    }
+
+    private void AddTrail(GameObject go)
+    {
+        var tr = go.GetComponent<TrailRenderer>();
+        if (tr == null) tr = go.AddComponent<TrailRenderer>();
+        tr.time = 0.25f;
+        tr.minVertexDistance = 0.08f;
+        tr.autodestruct = false;
+        tr.startWidth = 0.08f;
+        tr.endWidth = 0.056f;
+        tr.material = new Material(Shader.Find("Sprites/Default"));
+        var g = new Gradient();
+        g.SetKeys(
+            new GradientColorKey[] { new GradientColorKey(new Color(1f, 1f, 1f, 0.8f), 0f), new GradientColorKey(new Color(1f, 1f, 1f, 0f), 1f) },
+            new GradientAlphaKey[] { new GradientAlphaKey(0.8f, 0f), new GradientAlphaKey(0f, 1f) }
+        );
+        tr.colorGradient = g;
+        var sr = go.GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            tr.sortingLayerID = sr.sortingLayerID;
+            tr.sortingOrder = sr.sortingOrder - 1;
+        }
     }
 
     private bool AllReachedEndX()

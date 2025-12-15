@@ -523,6 +523,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36c1bec2431c0dc4dbb39159fb2ad623, type: 3}
+--- !u!4 &305065935 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1776710345640356568, guid: dc0dfb65d9dc32d4dbdcf70da0a95762, type: 3}
+  m_PrefabInstance: {fileID: 1995655259}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &391559014 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8206778952272183858, guid: dd98ae5cf0775954288cb916dd450fd9, type: 3}
@@ -1607,7 +1612,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -548834727
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -3818,9 +3823,9 @@ MonoBehaviour:
   rightPyramidSpawn: {fileID: 2035532026}
   pyramidSphereSpeed: 6
   pyramidAttackSFX: {fileID: 8300000, guid: 3f47c601bf776ed4987fe2951ff47bdc, type: 3}
-  player: {fileID: 0}
+  player: {fileID: 305065935}
   animator: {fileID: 1283905297}
-  teleportSFX: {fileID: 0}
+  teleportSFX: {fileID: 8300000, guid: 9183ee93a8759cb4f877c5fc568afba9, type: 3}
   timeBetweenAttacks: 2
   bossLife: {fileID: 1283905300}
 --- !u!212 &1283905295
@@ -3865,7 +3870,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 535337391
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -6832393615415263193, guid: 5b9fee57b32b23b41b9bc5784cf0266f, type: 3}
   m_Color: {r: 0.52156866, g: 0.42745098, b: 1, a: 1}
@@ -3969,6 +3974,24 @@ MonoBehaviour:
   bossID: Boss3
   health: 30
   maxHealth: 30
+  enableEyeCycle: 0
+  eyeOpenDuration: 5
+  eyeClosedDuration: 5
+  eyeCenter: {fileID: 0}
+  hitCirclePrefab: {fileID: 0}
+  hitCircleFadeDuration: 0.35
+  hitShakeDuration: 0.15
+  hitShakeIntensity: 0.08
+  amuletAnimator: {fileID: 0}
+  collarRenderer: {fileID: 0}
+  makeCollarBlackOnDamage: 0
+  collarBlackDuration: 0.35
+  enableCollarDriftBelowHalfHealth: 0
+  collarDriftSpeed: 4
+  collarDriftPadding: 0.5
+  bringCollarToFrontOnDrift: 0
+  collarSortingLayer: 
+  collarSortingOrder: 9999
   savePointPrefab: {fileID: 1035912417}
   savePointSpawnPosition: {x: -4.65, y: 151.9, z: 0}
   spawnSavePointOnDeath: 1
@@ -3977,11 +4000,43 @@ MonoBehaviour:
   scriptAtaque: {fileID: 0}
   trialManager: {fileID: 0}
   trialMode: 0
+  forceSingleZoneCombat: 1
   triggerInitialAreaAtHalfHealth: 1
   scoreReward: 0
   dropPrefab: {fileID: 0}
   dropSpawnOffset: {x: 0, y: 0, z: 0}
   dropOnDeath: 0
+  dropSpawnDelay: 1.5
+  shakeDuringDeath: 1
+  deathShakeIntensity: 0.08
+  deathAnimationStateName: Death
+  deathDialogues: []
+  objectsToDestroyOnDeath: []
+  tilemapsToActivateOnDeath: []
+  detachAmuletOnDeath: 1
+  amuletGravityScale: 1.2
+  amuletDestroyDelay: 3
+  spawnPortalOnDeath: 1
+  portalPrefab: {fileID: 0}
+  portalSpawnOffset: {x: 1.5, y: 0, z: 0}
+  portalLayerName: 
+  deathAnimMinimumWait: 1.2
+  finalDespawnDelay: 0.3
+  maxDeathSequenceDuration: 5
+  spawnStarOnDeath: 0
+  starPrefab: {fileID: 0}
+  starSpawnOffset: {x: 0, y: 1.5, z: 0}
+  starSpawnDelay: 2
+  applyMapEffectsOnStarSpawn: 1
+  stopMusicOnDeath: 0
+  playVictoryMusicOnDeath: 1
+  victoryMusicClip: {fileID: 0}
+  victoryMusicVolume: 1
+  victoryMusicLoop: 1
+  victoryMusicFade: 1
+  activateNewGamePlusOnDeath: 0
+  newGamePlusStorySceneName: 
+  bossRoot: {fileID: 0}
 --- !u!114 &1283905301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4007,6 +4062,7 @@ MonoBehaviour:
   IsVulnerable: 1
   CanMove: 1
   CurrentPhase: 1
+  enableAutoFlip: 1
 --- !u!61 &1283905302
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4352,7 +4408,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -548834727
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -11661,6 +11717,103 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9614743d9cbc631468eb73f9bb465e37, type: 3}
+--- !u!1001 &1928698718
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2412315401939821283, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
+      propertyPath: m_Name
+      value: BossHUDMaximusPrime
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435135885741700631, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435135885741700631, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435135885741700631, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435135885741700631, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435135885741700631, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435135885741700631, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435135885741700631, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435135885741700631, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435135885741700631, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435135885741700631, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435135885741700631, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435135885741700631, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435135885741700631, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435135885741700631, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435135885741700631, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435135885741700631, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435135885741700631, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435135885741700631, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435135885741700631, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435135885741700631, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 33d72310112e5ef4da3da0956b32a864, type: 3}
 --- !u!1001 &1962340616
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12044,6 +12197,7 @@ SceneRoots:
   - {fileID: 87969325}
   - {fileID: 196913688}
   - {fileID: 1135197294}
+  - {fileID: 1928698718}
   - {fileID: 1064979019}
   - {fileID: 1174858219}
   - {fileID: 1995655259}

@@ -73,6 +73,7 @@ public class FinalBossForestCenterOrbExplosionAttackPattern : MonoBehaviour, IAt
         }
         Vector3 c = center != null ? center.position : transform.position;
         GameObject core = Instantiate(orbPrefab, c, Quaternion.identity);
+        AddTrail(core);
         Vector3 baseScale = core.transform.localScale;
         float t = 0f;
         while (t < chargeDuration)
@@ -127,6 +128,7 @@ public class FinalBossForestCenterOrbExplosionAttackPattern : MonoBehaviour, IAt
             float ang = step * i + UnityEngine.Random.Range(-10f, 10f);
             Vector2 dir = new Vector2(Mathf.Cos(ang * Mathf.Deg2Rad), Mathf.Sin(ang * Mathf.Deg2Rad)).normalized;
             GameObject o = Instantiate(orbPrefab, pos, Quaternion.identity);
+            AddTrail(o);
             var rb = o.GetComponent<Rigidbody2D>();
             float spd = UnityEngine.Random.Range(preSpeedMin, preSpeedMax);
             if (rb != null)
@@ -170,6 +172,7 @@ public class FinalBossForestCenterOrbExplosionAttackPattern : MonoBehaviour, IAt
             float ang = step * i + UnityEngine.Random.Range(-10f, 10f);
             Vector2 dir = new Vector2(Mathf.Cos(ang * Mathf.Deg2Rad), Mathf.Sin(ang * Mathf.Deg2Rad)).normalized;
             GameObject o = Instantiate(orbPrefab, pos, Quaternion.identity);
+            AddTrail(o);
             var rb = o.GetComponent<Rigidbody2D>();
             float spd = UnityEngine.Random.Range(speedMin, speedMax);
             if (rb != null)
@@ -189,5 +192,29 @@ public class FinalBossForestCenterOrbExplosionAttackPattern : MonoBehaviour, IAt
             yield return null;
         }
         if (o != null) Destroy(o);
+    }
+
+    private void AddTrail(GameObject go)
+    {
+        var tr = go.GetComponent<TrailRenderer>();
+        if (tr == null) tr = go.AddComponent<TrailRenderer>();
+        tr.time = 0.25f;
+        tr.minVertexDistance = 0.08f;
+        tr.autodestruct = false;
+        tr.startWidth = 0.08f;
+        tr.endWidth = 0.056f;
+        tr.material = new Material(Shader.Find("Sprites/Default"));
+        var g = new Gradient();
+        g.SetKeys(
+            new GradientColorKey[] { new GradientColorKey(new Color(1f, 1f, 1f, 0.8f), 0f), new GradientColorKey(new Color(1f, 1f, 1f, 0f), 1f) },
+            new GradientAlphaKey[] { new GradientAlphaKey(0.8f, 0f), new GradientAlphaKey(0f, 1f) }
+        );
+        tr.colorGradient = g;
+        var sr = go.GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            tr.sortingLayerID = sr.sortingLayerID;
+            tr.sortingOrder = sr.sortingOrder - 1;
+        }
     }
 }

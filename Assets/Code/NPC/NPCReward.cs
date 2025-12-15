@@ -3,7 +3,7 @@ using UnityEngine;
 [System.Serializable]
 public class NPCReward
 {
-    public enum RewardType { Potion, Axe, MaxHealth, MaxAxes, MaxPotions, AttackDamage }
+    public enum RewardType { Potion, Axe, MaxHealth, MaxAxes, MaxPotions, AttackDamage, ChanceShield }
 
     public RewardType type;
     public int amount = 1;
@@ -62,6 +62,11 @@ public class NPCReward
                 datos.attackDamageUpgrades += amount;
                 ControladorDatosJuego.Instance.GuardarDatos(false);
                 Debug.Log($"[NPCReward] +{amount} daño de ataque (total upgrades: {datos.attackDamageUpgrades})");
+                break;
+            case RewardType.ChanceShield:
+                datos.chanceNegateHitPercent = Mathf.Max(datos.chanceNegateHitPercent, amount);
+                ControladorDatosJuego.Instance.GuardarDatos(false);
+                Debug.Log($"[NPCReward] Escudo de probabilidad configurado a {datos.chanceNegateHitPercent}%");
                 break;
         }
     }

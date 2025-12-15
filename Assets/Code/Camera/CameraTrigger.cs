@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class CameraTrigger : MonoBehaviour
@@ -8,19 +8,27 @@ public class CameraTrigger : MonoBehaviour
     [SerializeField] private float cooldownTiempo = 1f;
     private float zoomAnterior;
     private bool enCooldown = false;
+    private CameraManager cm;
+
+    void Awake()
+    {
+        cm = CameraManager.instance != null ? CameraManager.instance : FindFirstObjectByType<CameraManager>(FindObjectsInactive.Include);
+    }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") && !enCooldown)
         {
-            // Guarda el zoom anterior
-            zoomAnterior = CameraManager.instance.GetCameraSize();
+            if (cm == null)
+            {
+                cm = CameraManager.instance != null ? CameraManager.instance : FindFirstObjectByType<CameraManager>(FindObjectsInactive.Include);
+                if (cm == null) return;
+            }
+            zoomAnterior = cm.GetCameraSize();
 
-            // Va al checkpoint especificado
-            CameraManager.instance.IrAlCheckpoint(targetCheckpoint);
+            cm.IrAlCheckpoint(targetCheckpoint);
 
-            // Cambia el zoom
-            CameraManager.instance.SetCameraSize(nuevoZoom);
+            cm.SetCameraSize(nuevoZoom);
 
             Debug.Log("Cámara movida al checkpoint " + targetCheckpoint + " | Zoom: " + nuevoZoom);
 

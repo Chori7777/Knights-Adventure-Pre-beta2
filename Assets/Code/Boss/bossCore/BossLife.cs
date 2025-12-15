@@ -329,7 +329,6 @@ public class BossLife : MonoBehaviour
 
         var pause = PauseMenuController.Instance;
         if (pause != null) pause.SetPauseEnabled(false);
-        if (PlayerHealthUI.Instance != null) PlayerHealthUI.Instance.SetHUDVisibility(false);
  
         GiveScore();
 
@@ -344,6 +343,12 @@ public class BossLife : MonoBehaviour
         var fxStop = FindFirstObjectByType<CameraEffectsController>(FindObjectsInactive.Include);
         if (fxStop != null)
             fxStop.StopVignettePulse();
+        var bossSpawned = FindObjectsByType<BossSpawnedAutoCleanup>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        for (int i = 0; i < bossSpawned.Length; i++)
+        {
+            var t = bossSpawned[i];
+            if (t != null) Destroy(t.gameObject);
+        }
 
         StartCoroutine(DeathSequence());
         StopCollarDrift();
@@ -393,7 +398,18 @@ public class BossLife : MonoBehaviour
                 else
                 {
                     Vector3 dropPos = transform.position + dropSpawnOffset;
-                    Instantiate(dropPrefab, dropPos, Quaternion.identity);
+                    if (dropPrefab != null)
+                    {
+                        var mark = dropPrefab.GetComponent<BossSpawnedAutoCleanup>();
+                        if (mark != null)
+                        {
+                            Debug.Log("[BossLife] Drop omitido: prefab marcado para limpieza de jefe");
+                        }
+                        else
+                        {
+                            Instantiate(dropPrefab, dropPos, Quaternion.identity);
+                        }
+                    }
                 }
             }
         }
@@ -623,6 +639,21 @@ public class BossLife : MonoBehaviour
             {
                 try { pat.StopAttack(); } catch { }
                 mb.StopAllCoroutines();
+                mb.CancelInvoke();
+                mb.enabled = false;
+            }
+        }
+        var all = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        for (int i = 0; i < all.Length; i++)
+        {
+            var mb = all[i];
+            if (mb == null) continue;
+            var pat = mb as IAttackPattern;
+            if (pat != null)
+            {
+                try { pat.StopAttack(); } catch { }
+                mb.StopAllCoroutines();
+                mb.CancelInvoke();
                 mb.enabled = false;
             }
         }
@@ -671,7 +702,18 @@ public class BossLife : MonoBehaviour
             yield return null;
         }
         Vector3 dropPos = transform.position + dropSpawnOffset;
-        Instantiate(dropPrefab, dropPos, Quaternion.identity);
+        if (dropPrefab != null)
+        {
+            var mark = dropPrefab.GetComponent<BossSpawnedAutoCleanup>();
+            if (mark != null)
+            {
+                Debug.Log("[BossLife] Drop omitido: prefab marcado para limpieza de jefe");
+            }
+            else
+            {
+                Instantiate(dropPrefab, dropPos, Quaternion.identity);
+            }
+        }
     }
 
     private IEnumerator EyeCycleRoutine()

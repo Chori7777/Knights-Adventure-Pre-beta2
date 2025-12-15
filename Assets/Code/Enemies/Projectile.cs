@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float tiempoDeVida = 10f;
     [Header("Visual")]
     [SerializeField] private bool addTrail = true;
-    [SerializeField] private bool useAfterimage = true;
+    [SerializeField] private bool useAfterimage = false;
     [SerializeField] private float trailTime = 0.25f;
     [SerializeField] private float trailWidth = 0.08f;
     [SerializeField] private Color trailStartColor = new Color(1f, 1f, 1f, 0.8f);

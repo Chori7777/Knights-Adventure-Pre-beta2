@@ -26,7 +26,7 @@ public class EnemyRangedAttack : MonoBehaviour
     [SerializeField] private float projTrailWidth = 0.08f;
     [SerializeField] private Color projTrailStartColor = new Color(1f, 1f, 1f, 0.8f);
     [SerializeField] private Color projTrailEndColor = new Color(1f, 1f, 1f, 0f);
-    [SerializeField] private bool useProjectileAfterimage = true;
+    [SerializeField] private bool useProjectileAfterimage = false;
     [SerializeField] private float projAfterimageInterval = 0.045f;
     [SerializeField] private float projAfterimageLifetime = 0.22f;
     [SerializeField] private Color projAfterimageColor = new Color(1f, 1f, 1f, 0.7f);
@@ -38,6 +38,12 @@ public class EnemyRangedAttack : MonoBehaviour
     {
         core = enemyCore;
         CreateFirePointIfNeeded();
+    }
+
+    private void Awake()
+    {
+        addTrailToProjectiles = true;
+        useProjectileAfterimage = false;
     }
 
     private void CreateFirePointIfNeeded()
@@ -173,7 +179,7 @@ public class EnemyRangedAttack : MonoBehaviour
         float t = lifetime;
         while (t > 0f && c != null)
         {
-            t -= Time.deltaTime;
+            t -= Time.unscaledDeltaTime;
             var col = c.color;
             col.a = Mathf.Clamp01(t / lifetime);
             c.color = col;

@@ -6,7 +6,6 @@ public class FinalBossForestLightningRayOrbsAttackPattern : MonoBehaviour, IAtta
 {
     public event Action OnFinished;
 
-    [SerializeField] private GameObject rayPrefab;
     [SerializeField] private GameObject orbPrefab;
     [SerializeField] private Transform spawnTopRef;
     [SerializeField] private LayerMask groundLayer;
@@ -114,6 +113,7 @@ public class FinalBossForestLightningRayOrbsAttackPattern : MonoBehaviour, IAtta
     {
         if (orbPrefab == null) return;
         GameObject o = Instantiate(orbPrefab, origin, Quaternion.identity);
+        AddTrail(o);
         var rb = o.GetComponent<Rigidbody2D>();
         if (rb != null) rb.linearVelocity = Vector2.down * orbFallSpeed;
         StartCoroutine(OrbFallLifetime(o));
@@ -131,5 +131,29 @@ public class FinalBossForestLightningRayOrbsAttackPattern : MonoBehaviour, IAtta
             yield return null;
         }
         if (o != null) Destroy(o);
+    }
+
+    private void AddTrail(GameObject go)
+    {
+        var tr = go.GetComponent<TrailRenderer>();
+        if (tr == null) tr = go.AddComponent<TrailRenderer>();
+        tr.time = 0.25f;
+        tr.minVertexDistance = 0.08f;
+        tr.autodestruct = false;
+        tr.startWidth = 0.08f;
+        tr.endWidth = 0.056f;
+        tr.material = new Material(Shader.Find("Sprites/Default"));
+        var g = new Gradient();
+        g.SetKeys(
+            new GradientColorKey[] { new GradientColorKey(new Color(1f, 1f, 1f, 0.8f), 0f), new GradientColorKey(new Color(1f, 1f, 1f, 0f), 1f) },
+            new GradientAlphaKey[] { new GradientAlphaKey(0.8f, 0f), new GradientAlphaKey(0f, 1f) }
+        );
+        tr.colorGradient = g;
+        var sr = go.GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            tr.sortingLayerID = sr.sortingLayerID;
+            tr.sortingOrder = sr.sortingOrder - 1;
+        }
     }
 }

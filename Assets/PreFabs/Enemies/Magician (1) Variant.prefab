@@ -9,9 +9,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1053782507519466554, guid: b51cf8c89933a9944bcb4c44997e52da, type: 3}
+      propertyPath: restingSpot
+      value: 
+      objectReference: {fileID: 252466179852004534}
+    - target: {fileID: 1053782507519466554, guid: b51cf8c89933a9944bcb4c44997e52da, type: 3}
       propertyPath: detectionRange
       value: 23.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1053782507519466554, guid: b51cf8c89933a9944bcb4c44997e52da, type: 3}
+      propertyPath: 'patrolPoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 252466179852004534}
     - target: {fileID: 1949244507984761261, guid: b51cf8c89933a9944bcb4c44997e52da, type: 3}
       propertyPath: m_Color.g
       value: 0.4481132
@@ -28,6 +36,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4205751994730285146, guid: b51cf8c89933a9944bcb4c44997e52da, type: 3}
+      propertyPath: Dust
+      value: 
+      objectReference: {fileID: 8300000, guid: 42ae3beb092d45c4d9349c81570926a3, type: 3}
     - target: {fileID: 5980106674432881344, guid: b51cf8c89933a9944bcb4c44997e52da, type: 3}
       propertyPath: m_LocalPosition.x
       value: -17.3
@@ -85,3 +97,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b51cf8c89933a9944bcb4c44997e52da, type: 3}
+--- !u!4 &252466179852004534 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8592868133758997895, guid: b51cf8c89933a9944bcb4c44997e52da, type: 3}
+  m_PrefabInstance: {fileID: 8412988731050064177}
+  m_PrefabAsset: {fileID: 0}

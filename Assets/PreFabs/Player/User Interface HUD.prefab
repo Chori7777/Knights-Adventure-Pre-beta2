@@ -664,6 +664,8 @@ MonoBehaviour:
   forceInteractive: 1
   disableInMainMenu: 1
   mainMenuSceneName: MainMenu
+  toggleCooldown: 0.3
+  pauseEnabled: 1
 --- !u!114 &3189191587605704775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2019,7 +2021,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 697.4, y: 513.1}
+  m_AnchoredPosition: {x: 697.4, y: 474}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6372157312662973067
@@ -2233,7 +2235,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 697, y: 472}
+  m_AnchoredPosition: {x: 697, y: 422}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &387309110825819377
@@ -2967,6 +2969,10 @@ MonoBehaviour:
   potionText: {fileID: 3397887943210274885}
   coinText: {fileID: 8384722583510572950}
   axeText: {fileID: 1048842068834527112}
+  axeHud: {fileID: 0}
+  useTimeInsteadOfScoreForSecondPlayer: 0
+  timeModeSceneName: 
+  startingTimeSeconds: 120
   swordHandle: {fileID: 7462227936747458847}
   swordMiddle0: {fileID: 4898705907014394574}
   swordMiddle1: {fileID: 9017679344109960384}
@@ -2987,6 +2993,9 @@ MonoBehaviour:
   knight3HealthSprite: {fileID: 3106341853739790030, guid: 54bfecb9a47a16b428cd0c0c9525dae2, type: 3}
   knight2HealthSprite: {fileID: 94058731202090889, guid: 54bfecb9a47a16b428cd0c0c9525dae2, type: 3}
   knight1HealthSprite: {fileID: 1222221480408444849, guid: 54bfecb9a47a16b428cd0c0c9525dae2, type: 3}
+  mage3HealthSprite: {fileID: 0}
+  mage2HealthSprite: {fileID: 0}
+  mage1HealthSprite: {fileID: 0}
   knightMoveDistancePerHealth: 100
   headOffsetX: 0
   headOffsetY: 0
@@ -2996,6 +3005,20 @@ MonoBehaviour:
   particleSpawnPoint: {fileID: 0}
   shieldBarWidth: 0
   shieldBarHeight: 0
+  shieldBarImageRef: {fileID: 0}
+  shieldImageObjectName: Shield Image
+  hideWhenNoPlayer: 1
+  hudGroup: {fileID: 0}
+  mageContainer: {fileID: 0}
+  mageOrbPrefab: {fileID: 0}
+  mageOrbFullSprite: {fileID: 0}
+  mageOrbEmptySprite: {fileID: 0}
+  mageOrbSpacing: 28
+  mageOvershieldWidth: 80
+  mageOvershieldHeight: 6
+  mageOvershieldOffset: {x: 10, y: -68}
+  isSecondaryHUD: 0
+  hideKnightLife: 0
 --- !u!225 &6229586796568341798
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -3666,7 +3689,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1163054303
-  m_SortingLayer: 9
+  m_SortingLayer: 10
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4417,7 +4440,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 879, y: 450.9}
+  m_AnchoredPosition: {x: 880, y: 426.2}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6528383653114815718

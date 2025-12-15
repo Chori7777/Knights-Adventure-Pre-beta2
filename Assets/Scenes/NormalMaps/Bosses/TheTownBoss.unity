@@ -94632,6 +94632,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 854919871}
     - target: {fileID: 1389528301241978512, guid: b005660f348248645ac5e0cf691f8b56, type: 3}
+      propertyPath: disableZones
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1389528301241978512, guid: b005660f348248645ac5e0cf691f8b56, type: 3}
       propertyPath: trialManager
       value: 
       objectReference: {fileID: 1669121972}
@@ -94655,6 +94659,10 @@ PrefabInstance:
       propertyPath: teleportManager
       value: 
       objectReference: {fileID: 282097082}
+    - target: {fileID: 1389528301241978512, guid: b005660f348248645ac5e0cf691f8b56, type: 3}
+      propertyPath: forceSingleZoneCombat
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1389528301241978512, guid: b005660f348248645ac5e0cf691f8b56, type: 3}
       propertyPath: introLines.Array.size
       value: 12
@@ -95409,8 +95417,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 579.6191, y: 240.96297}
-  m_SizeDelta: {x: 3192.5312, y: 1669.2516}
+  m_AnchoredPosition: {x: 579.6191, y: 287.87915}
+  m_SizeDelta: {x: 3192.5312, y: 2071.9517}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &769900017
 MonoBehaviour:
@@ -224120,11 +224128,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1776710345640356568, guid: dc0dfb65d9dc32d4dbdcf70da0a95762, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.9
+      value: 11.5
       objectReference: {fileID: 0}
     - target: {fileID: 1776710345640356568, guid: dc0dfb65d9dc32d4dbdcf70da0a95762, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.12
+      value: 11.14
       objectReference: {fileID: 0}
     - target: {fileID: 1776710345640356568, guid: dc0dfb65d9dc32d4dbdcf70da0a95762, type: 3}
       propertyPath: m_LocalPosition.z
@@ -224161,6 +224169,10 @@ PrefabInstance:
     - target: {fileID: 5671156133088508336, guid: dc0dfb65d9dc32d4dbdcf70da0a95762, type: 3}
       propertyPath: m_Name
       value: Hero
+      objectReference: {fileID: 0}
+    - target: {fileID: 7134106177684360171, guid: dc0dfb65d9dc32d4dbdcf70da0a95762, type: 3}
+      propertyPath: fallYLimit
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 7134106177684360171, guid: dc0dfb65d9dc32d4dbdcf70da0a95762, type: 3}
       propertyPath: cameraHolder
@@ -227843,6 +227855,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 282097082}
     - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
+      propertyPath: bossID
+      value: BossTown
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
       propertyPath: health
       value: 25
       objectReference: {fileID: 0}
@@ -227850,6 +227866,10 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
+      propertyPath: dropPrefab
+      value: 
+      objectReference: {fileID: 1717931497227015380, guid: 011a9b076e855fc4d962fa7140194c5d, type: 3}
     - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
       propertyPath: trialManager
       value: 
@@ -227885,6 +227905,18 @@ PrefabInstance:
     - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
       propertyPath: bringCollarToFrontOnDrift
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
+      propertyPath: deathDialogues.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
+      propertyPath: 'deathDialogues.Array.data[0]'
+      value: 'Heh.. sure you are ready.. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
+      propertyPath: 'deathDialogues.Array.data[1]'
+      value: Good...Luck...
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

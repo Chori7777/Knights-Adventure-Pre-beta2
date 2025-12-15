@@ -70,6 +70,7 @@ public class FinalBossTownOrbBurstAttackPattern : MonoBehaviour, IAttackPattern
             float ang = Mathf.Lerp(-half, half, t);
             Vector2 dir = Rotate(baseDir, ang);
             GameObject o = Instantiate(orbPrefab, origin, Quaternion.identity);
+            AddTrail(o);
             var rb = o.GetComponent<Rigidbody2D>();
             if (rb != null) rb.linearVelocity = dir * orbSpeed;
         }
@@ -81,5 +82,29 @@ public class FinalBossTownOrbBurstAttackPattern : MonoBehaviour, IAttackPattern
         float ca = Mathf.Cos(rad);
         float sa = Mathf.Sin(rad);
         return new Vector2(ca * v.x - sa * v.y, sa * v.x + ca * v.y);
+    }
+
+    private void AddTrail(GameObject go)
+    {
+        var tr = go.GetComponent<TrailRenderer>();
+        if (tr == null) tr = go.AddComponent<TrailRenderer>();
+        tr.time = 0.25f;
+        tr.minVertexDistance = 0.08f;
+        tr.autodestruct = false;
+        tr.startWidth = 0.08f;
+        tr.endWidth = 0.056f;
+        tr.material = new Material(Shader.Find("Sprites/Default"));
+        var g = new Gradient();
+        g.SetKeys(
+            new GradientColorKey[] { new GradientColorKey(new Color(1f, 1f, 1f, 0.8f), 0f), new GradientColorKey(new Color(1f, 1f, 1f, 0f), 1f) },
+            new GradientAlphaKey[] { new GradientAlphaKey(0.8f, 0f), new GradientAlphaKey(0f, 1f) }
+        );
+        tr.colorGradient = g;
+        var sr = go.GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            tr.sortingLayerID = sr.sortingLayerID;
+            tr.sortingOrder = sr.sortingOrder - 1;
+        }
     }
 }

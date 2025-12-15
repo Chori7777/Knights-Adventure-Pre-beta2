@@ -98,7 +98,7 @@ public class ShopItem : MonoBehaviour
                 sr.color = new Color(0.4f, 0.4f, 0.4f, 0.6f);
 
             if (priceText != null)
-                priceText.text = "¡COMPRADO!";
+                priceText.text = "Purchased";
 
             Debug.Log($"[ShopItem] Compra exitosa: {itemName}");
 

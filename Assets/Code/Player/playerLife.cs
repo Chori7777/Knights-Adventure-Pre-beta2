@@ -264,6 +264,20 @@ public class playerLife : MonoBehaviour
             return;
         }
 
+        var ctrl = ControladorDatosJuego.Instance;
+        if (ctrl != null && ctrl.datosjuego != null)
+        {
+            int pct = Mathf.Clamp(ctrl.datosjuego.chanceNegateHitPercent, 0, 100);
+            if (pct > 0)
+            {
+                int roll = Random.Range(0, 100);
+                if (roll < pct)
+                {
+                    return;
+                }
+            }
+        }
+
         if (tempShieldCurrent > 0)
         {
             int absorbed = Mathf.Min(tempShieldCurrent, damage);

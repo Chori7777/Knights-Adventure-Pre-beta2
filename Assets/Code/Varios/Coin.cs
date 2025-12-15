@@ -12,7 +12,17 @@ public class Coin : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            ControladorDatosJuego.Instance.AgregarMonedas(10);
+            var datos = ControladorDatosJuego.Instance != null
+                ? ControladorDatosJuego.Instance
+                : FindFirstObjectByType<ControladorDatosJuego>(FindObjectsInactive.Include);
+            if (datos != null)
+            {
+                datos.AgregarMonedas(10);
+            }
+            else
+            {
+                Debug.LogWarning("[Coin] ControladorDatosJuego no disponible, ignorando agregar monedas");
+            }
             if (pickupSound != null && AudioManager.Instance != null)
             {
                 AudioManager.Instance.PlaySFX(pickupSound, 0.7f);

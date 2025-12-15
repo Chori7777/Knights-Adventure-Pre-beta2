@@ -192,6 +192,11 @@ public class BossScriptAttacks : MonoBehaviour
         GameObject p = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
         if (p != null)
         {
+            var marker = p.GetComponent<BossSpawnedAutoCleanup>();
+            if (marker == null) marker = p.AddComponent<BossSpawnedAutoCleanup>();
+        }
+        if (p != null)
+        {
             var rb = p.GetComponent<Rigidbody2D>();
             if (rb != null)
             {

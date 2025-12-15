@@ -125,8 +125,16 @@ public class BossTrigger : MonoBehaviour
                 ? bossSpawnPoint.position
                 : transform.position + new Vector3(2f, 0, 0);
 
-            GameObject bossObj = Instantiate(bossPrefab, spawnPosition, Quaternion.identity);
-            spawnedBoss = bossObj.GetComponent<BossLife>();
+            BossLife existing = FindFirstObjectByType<BossLife>(FindObjectsInactive.Include);
+            if (existing != null)
+            {
+                spawnedBoss = existing;
+            }
+            else
+            {
+                GameObject bossObj = Instantiate(bossPrefab, spawnPosition, Quaternion.identity);
+                spawnedBoss = bossObj.GetComponent<BossLife>();
+            }
 
             if (spawnedBoss == null)
             {
@@ -167,6 +175,7 @@ public class BossTrigger : MonoBehaviour
 
             for (int i = 0; i < introLines.Length; i++)
             {
+                if (spawnedBoss != null && spawnedBoss.IsDead) break;
                 string line = introLines[i];
                 TextManager.Instance.ShowDialogue(line);
 

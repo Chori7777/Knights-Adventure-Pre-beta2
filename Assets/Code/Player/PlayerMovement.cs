@@ -162,6 +162,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         ApplyBetterFalling();
+        UpdateRunAfterimage();
 
         UpdateShieldRecharge(Time.deltaTime);
         UpdateShieldUI();
@@ -349,9 +350,6 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(Vector2.up * doubleJumpForce, ForceMode2D.Impulse);
         hasDoubleJumped = true;
         animController?.TriggerDoubleJump();
-        var mage = GetComponent<MageWandAttack>();
-        if (mage != null) mage.TriggerSelfAfterimage();
-        StartCoroutine(DoubleJumpAfterimageBurst());
     }
 
     private void PerformDashUpJump()
@@ -687,6 +685,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float doubleJumpAfterimageInterval = 0.03f;
     private float dashTrailTimer = 0f;
     private SpriteRenderer playerSpriteRenderer;
+    [SerializeField] private bool enableRunAfterimage = true;
+    [SerializeField] private float runAfterimageSpeedThreshold = 3f;
+    [SerializeField] private float runTrailSpawnInterval = 0.12f;
+    [SerializeField] private float runTrailLifetime = 0.12f;
+    [SerializeField] private Color runAfterimageColor = new Color(1f, 1f, 1f, 0.35f);
+    private float runTrailTimer = 0f;
     [Header("Caída")]
     [SerializeField] private bool limitFallSpeed = true;
     [SerializeField] private float maxFallSpeed = 20f;
@@ -737,6 +741,20 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(FadeAndDestroy(c, dashTrailLifetime));
     }
 
+    private void SpawnRunAfterimage()
+    {
+        if (playerSpriteRenderer == null) return;
+        var go = new GameObject("PlayerRunAfterimage");
+        var c = go.AddComponent<SpriteRenderer>();
+        c.sprite = playerSpriteRenderer.sprite;
+        c.flipX = playerSpriteRenderer.flipX;
+        c.color = runAfterimageColor;
+        c.sortingLayerID = playerSpriteRenderer.sortingLayerID;
+        c.sortingOrder = playerSpriteRenderer.sortingOrder - 1;
+        go.transform.position = transform.position;
+        StartCoroutine(FadeAndDestroy(c, runTrailLifetime));
+    }
+
     private IEnumerator FadeAndDestroy(SpriteRenderer c, float lifetime)
     {
         float t = lifetime;
@@ -749,6 +767,25 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
         if (c != null) Destroy(c.gameObject);
+    }
+
+    private void UpdateRunAfterimage()
+    {
+        if (!enableRunAfterimage) return;
+        bool running = isGrounded && Mathf.Abs(rb.linearVelocity.x) > runAfterimageSpeedThreshold && Mathf.Abs(horizontalInput) > inputDeadzone && !isAttacking && !isDashing;
+        if (running)
+        {
+            runTrailTimer += Time.deltaTime;
+            if (runTrailTimer >= runTrailSpawnInterval)
+            {
+                runTrailTimer = 0f;
+                SpawnRunAfterimage();
+            }
+        }
+        else
+        {
+            runTrailTimer = 0f;
+        }
     }
 
     private IEnumerator DoubleJumpAfterimageBurst()

@@ -71,9 +71,9 @@ public class FinalBossController : MonoBehaviour
 
                 if (bossLife != null && bossLife.health > bossLife.maxHealth / 2)
                 {
-                    // Vida normal: repetir ataques 3 veces excepto magos
                     int attackNumber = Random.Range(1, 6);
-                    int repeatCount = (attackNumber == 3) ? 1 : 3;
+                    while (attackNumber == 3) attackNumber = Random.Range(1, 6);
+                    int repeatCount = 3;
 
                     for (int i = 0; i < repeatCount; i++)
                     {
@@ -146,7 +146,6 @@ public class FinalBossController : MonoBehaviour
         {
             case 1: yield return StartCoroutine(Attack1_DirectSpheres()); break;
             case 2: yield return StartCoroutine(Attack2_MeteorRain()); break;
-            case 3: yield return StartCoroutine(Attack3_SummonMages()); break;
             case 4: yield return StartCoroutine(Attack4_FollowingSphere()); break;
             case 5: yield return StartCoroutine(Attack5_InvertedPyramid()); break;
         }

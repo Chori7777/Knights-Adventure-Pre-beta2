@@ -99,6 +99,7 @@ public class PlayerHealthUI : MonoBehaviour
     [SerializeField] private Vector2 mageOvershieldOffset = new Vector2(10f, -68f);
     private Image mageOvershieldImage;
     private RectTransform mageOvershieldRect;
+    private TextMeshProUGUI mageShieldText;
 
     [Header("HUD Secundario")]
     [SerializeField] private bool isSecondaryHUD = false;
@@ -137,6 +138,14 @@ public class PlayerHealthUI : MonoBehaviour
 
         // Cachear referencias FIJAS (las que están en el prefab)
         CacheFixedReferences();
+        if (hudGroup == null)
+        {
+            hudGroup = GetComponent<CanvasGroup>();
+            if (hudGroup == null)
+            {
+                hudGroup = gameObject.AddComponent<CanvasGroup>();
+            }
+        }
         SetHUDVisible(false);
 
         if (knightImage != null)
@@ -337,21 +346,11 @@ public class PlayerHealthUI : MonoBehaviour
     private void SetHUDVisible(bool visible)
     {
         if (!hideWhenNoPlayer) return;
-        var cg = hudGroup != null ? hudGroup : GetComponentInParent<CanvasGroup>();
-        if (cg == null)
-        {
-            cg = GetComponentInChildren<CanvasGroup>(true);
-        }
-        if (cg != null)
-        {
-            cg.alpha = visible ? 1f : 0f;
-            cg.interactable = visible;
-            cg.blocksRaycasts = visible;
-        }
-        else
-        {
-            gameObject.SetActive(visible);
-        }
+        var cg = hudGroup != null ? hudGroup : null;
+        if (cg == null) return;
+        cg.alpha = visible ? 1f : 0f;
+        cg.interactable = visible;
+        cg.blocksRaycasts = visible;
     }
 
     public void SetHUDVisibility(bool visible)
@@ -475,7 +474,7 @@ public class PlayerHealthUI : MonoBehaviour
         }
         UpdateKnightPosition();
         UpdateShieldBar();
-        if (player.IsSecondCharacterMage) UpdateMageOvershieldBar();
+        if (player.IsSecondCharacterMage) UpdateMageShieldText();
     }
 
     private void EnsureShieldBarExists()
@@ -628,22 +627,46 @@ public class PlayerHealthUI : MonoBehaviour
     private void UpdateMageOvershieldBar()
     {
         EnsureMageOvershieldBarExists();
-        if (player == null || mageOvershieldImage == null)
+        if (mageOvershieldImage != null) mageOvershieldImage.enabled = false;
+    }
+
+    private void EnsureMageShieldTextExists()
+    {
+        if (mageShieldText != null) return;
+        GameObject go = new GameObject("MageShieldText");
+        go.transform.SetParent(transform, false);
+        mageShieldText = go.AddComponent<TextMeshProUGUI>();
+        var rt = mageShieldText.rectTransform;
+        rt.anchorMin = new Vector2(0f, 1f);
+        rt.anchorMax = new Vector2(0f, 1f);
+        rt.pivot = new Vector2(0f, 1f);
+        rt.anchoredPosition = mageOvershieldOffset;
+        rt.sizeDelta = new Vector2(160f, 30f);
+        mageShieldText.fontSize = 18f;
+        mageShieldText.alignment = TextAlignmentOptions.Left;
+        mageShieldText.color = Color.white;
+    }
+
+    private void UpdateMageShieldText()
+    {
+        EnsureMageShieldTextExists();
+        if (player == null)
         {
-            if (mageOvershieldImage != null) mageOvershieldImage.enabled = false;
+            mageShieldText.enabled = false;
             return;
         }
         int tsMax = Mathf.Max(1, player.TempShieldMax);
         int ts = Mathf.Clamp(player.TempShield, 0, tsMax);
-        if (ts <= 0)
+        if (ts > 0)
         {
-            mageOvershieldImage.enabled = false;
-            return;
+            mageShieldText.enabled = true;
+            mageShieldText.text = "Shield " + ts + "/" + tsMax;
         }
-        float ratio = Mathf.Clamp01((float)ts / tsMax);
-        mageOvershieldImage.enabled = true;
-        mageOvershieldRect.sizeDelta = new Vector2(Mathf.Max(0.0001f, mageOvershieldWidth * ratio), mageOvershieldHeight);
-        Debug.Log($"[PlayerHealthUI] Mage overshield: {ts}/{tsMax} ratio={ratio}");
+        else
+        {
+            mageShieldText.enabled = true;
+            mageShieldText.text = "Life " + player.Health + "/" + player.MaxHealth;
+        }
     }
 
     private void HideSwordHUD()

@@ -3219,7 +3219,7 @@ MonoBehaviour:
   destroyTilemap: 1
   tilemapToDestroy: {fileID: 1741910971}
   isCorpse: 1
-  npcID: npc_001
+  npcID: KnightCorpse
   levelUpSound: {fileID: 8300000, guid: 8c00bba1e1a21f141b76deffb2b006dc, type: 3}
 --- !u!212 &193705040
 SpriteRenderer:
@@ -159149,6 +159149,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 108116836}
     - target: {fileID: 4432267139222217577, guid: ce72ca652ca55d04ea43443ea24c3c96, type: 3}
+      propertyPath: 'objectsToDestroy.Array.data[1]'
+      value: 
+      objectReference: {fileID: 108116836}
+    - target: {fileID: 4432267139222217577, guid: ce72ca652ca55d04ea43443ea24c3c96, type: 3}
       propertyPath: 'tilemapsToDestroy.Array.data[0]'
       value: 
       objectReference: {fileID: 53827388}
@@ -159156,6 +159160,10 @@ PrefabInstance:
       propertyPath: 'tilemapsToDestroy.Array.data[1]'
       value: 
       objectReference: {fileID: 53827388}
+    - target: {fileID: 4432267139222217577, guid: ce72ca652ca55d04ea43443ea24c3c96, type: 3}
+      propertyPath: onPickedUp.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4432267139222217577, guid: ce72ca652ca55d04ea43443ea24c3c96, type: 3}
       propertyPath: onPickedUp.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

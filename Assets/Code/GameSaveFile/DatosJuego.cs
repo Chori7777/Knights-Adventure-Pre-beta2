@@ -44,6 +44,7 @@ public class DatosJuego
     public bool hasDoubleJump = true;    
     public bool hasDash = true;           
     public bool hasRangedAttack = true;
+    public int chanceNegateHitPercent = 0;
 
     //  MEJORAS DE STATS 
     public int maxPotionsUpgrades = 0;    

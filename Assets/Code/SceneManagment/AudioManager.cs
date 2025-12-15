@@ -22,7 +22,7 @@ public class AudioManager : MonoBehaviour
 
     private Coroutine musicFadeCoroutine;
     [Header("Scene Settings")]
-    [SerializeField] public bool preserveMusicAcrossScenes = true;
+    [SerializeField] public bool preserveMusicAcrossScenes = false;
 
     private void Awake()
     {
@@ -62,7 +62,11 @@ public class AudioManager : MonoBehaviour
 
     private void OnSceneLoadedKeepMusic(Scene scene, LoadSceneMode mode)
     {
-        if (!preserveMusicAcrossScenes) return;
+        if (!preserveMusicAcrossScenes)
+        {
+            StopMusicImmediately();
+            return;
+        }
         if (musicSource != null && musicSource.clip != null && !musicSource.isPlaying)
         {
             musicSource.Play();

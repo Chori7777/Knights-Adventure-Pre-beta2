@@ -74,6 +74,8 @@ public class shootingTrap : MonoBehaviour
         if (proj != null)
         {
             proj.speed = projectileSpeed;
+            proj.SetAddTrail(true);
+            proj.SetUseAfterimage(false);
         }
     }
 

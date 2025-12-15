@@ -270,6 +270,7 @@ public class FirstEncounterTrialManager : MonoBehaviour
 
     public void EndSequenceVictory()
     {
+        if (!sequenceActive) return;
         sequenceActive = false;
         running = false;
         if (timerRoutine != null)

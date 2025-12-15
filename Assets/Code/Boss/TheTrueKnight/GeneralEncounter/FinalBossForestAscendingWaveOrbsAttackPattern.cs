@@ -65,6 +65,7 @@ public class FinalBossForestAscendingWaveOrbsAttackPattern : MonoBehaviour, IAtt
             float x = transform.position.x + UnityEngine.Random.Range(-spawnWidth * 0.5f, spawnWidth * 0.5f);
             Vector3 pos = new Vector3(x, y, 0f);
             GameObject o = Instantiate(orbPrefab, pos, Quaternion.identity);
+            AddTrail(o);
             spawned.Add(o);
             StartCoroutine(MoveVertical(o, topYRef.position.y, ascendSpeed));
             yield return null;
@@ -113,5 +114,29 @@ public class FinalBossForestAscendingWaveOrbsAttackPattern : MonoBehaviour, IAtt
             yield return null;
         }
         if (o != null) Destroy(o);
+    }
+
+    private void AddTrail(GameObject go)
+    {
+        var tr = go.GetComponent<TrailRenderer>();
+        if (tr == null) tr = go.AddComponent<TrailRenderer>();
+        tr.time = 0.25f;
+        tr.minVertexDistance = 0.08f;
+        tr.autodestruct = false;
+        tr.startWidth = 0.08f;
+        tr.endWidth = 0.056f;
+        tr.material = new Material(Shader.Find("Sprites/Default"));
+        var g = new Gradient();
+        g.SetKeys(
+            new GradientColorKey[] { new GradientColorKey(new Color(1f, 1f, 1f, 0.8f), 0f), new GradientColorKey(new Color(1f, 1f, 1f, 0f), 1f) },
+            new GradientAlphaKey[] { new GradientAlphaKey(0.8f, 0f), new GradientAlphaKey(0f, 1f) }
+        );
+        tr.colorGradient = g;
+        var sr = go.GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            tr.sortingLayerID = sr.sortingLayerID;
+            tr.sortingOrder = sr.sortingOrder - 1;
+        }
     }
 }

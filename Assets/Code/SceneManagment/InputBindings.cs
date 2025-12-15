@@ -90,7 +90,7 @@ public class InputBindings : MonoBehaviour
         secundarios[(int)GameAction.MoveRight] = KeyCode.RightArrow;
         primarios[(int)GameAction.Jump] = KeyCode.Space;
         secundarios[(int)GameAction.Jump] = KeyCode.UpArrow;
-        primarios[(int)GameAction.UseItem] = KeyCode.E;
+        primarios[(int)GameAction.UseItem] = KeyCode.R;
         secundarios[(int)GameAction.UseItem] = KeyCode.None;
         primarios[(int)GameAction.Action1Attack] = KeyCode.Z;
         secundarios[(int)GameAction.Action1Attack] = KeyCode.None;

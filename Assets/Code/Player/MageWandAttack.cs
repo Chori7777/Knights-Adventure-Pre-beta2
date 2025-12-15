@@ -21,7 +21,7 @@ public class MageWandAttack : MonoBehaviour
     [SerializeField] private Color orbTrailStartColor = new Color(1f, 1f, 1f, 0.8f);
     [SerializeField] private Color orbTrailEndColor = new Color(1f, 1f, 1f, 0f);
     [Header("Afterimage Orbs")]
-    [SerializeField] private bool useOrbAfterimage = true;
+    [SerializeField] private bool useOrbAfterimage = false;
     [SerializeField] private float orbAfterimageInterval = 0.045f;
     [SerializeField] private float orbAfterimageLifetime = 0.22f;
     [SerializeField] private Color orbAfterimageColor = new Color(1f, 1f, 1f, 0.7f);
@@ -43,6 +43,8 @@ public class MageWandAttack : MonoBehaviour
         if (animator == null) animator = GetComponent<Animator>();
         if (firePoint == null) firePoint = transform;
         pm = GetComponent<PlayerMovement>();
+        addTrailToOrbs = true;
+        useOrbAfterimage = false;
     }
 
     private void Update()

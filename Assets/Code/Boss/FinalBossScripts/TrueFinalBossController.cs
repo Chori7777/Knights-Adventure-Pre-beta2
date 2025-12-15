@@ -590,6 +590,12 @@ public class TrueFinalBossController : MonoBehaviour
             var p = parab[i];
             if (p != null) Destroy(p.gameObject);
         }
+        var bossSpawned = FindObjectsByType<BossSpawnedAutoCleanup>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        for (int i = 0; i < bossSpawned.Length; i++)
+        {
+            var t = bossSpawned[i];
+            if (t != null) Destroy(t.gameObject);
+        }
     }
     private IEnumerator ZoneAttackTimeout()
     {
