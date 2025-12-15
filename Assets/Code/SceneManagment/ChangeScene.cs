@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
+using UnityEngine.UI;
+using TMPro;
 
 public class ChangeScene : MonoBehaviour
 {
@@ -30,16 +32,7 @@ public class ChangeScene : MonoBehaviour
                 variant = ControladorDatosJuego.Instance.datosjuego.startModeVariant;
                 MainMenuVariation = variant;
             }
-            if (variant == 1)
-            {
-                NewGamePlus();
-                return;
-            }
-            if (variant == 2)
-            {
-                CargarEscena("TheEnd");
-                return;
-            }
+            AutoWireMainMenuButtons();
         }
     }
 
@@ -97,6 +90,16 @@ public class ChangeScene : MonoBehaviour
 
     public void NewGame()
     {
+        int variant = MainMenuVariation;
+        if (ControladorDatosJuego.Instance != null)
+        {
+            variant = ControladorDatosJuego.Instance.datosjuego.startModeVariant;
+        }
+        if (variant == 1)
+        {
+            NewGamePlus();
+            return;
+        }
         BorrarPartidaGuardada();
         if (ControladorDatosJuego.Instance != null)
         {
@@ -114,6 +117,12 @@ public class ChangeScene : MonoBehaviour
         }
 
         CargarEscena("TheForest");
+    }
+    
+    public void GoToMainMenuVariant(int variation)
+    {
+        SetMenuVariation(variation);
+        MainMenu();
     }
 
 
@@ -204,5 +213,61 @@ public class ChangeScene : MonoBehaviour
             return;
         }
         NewGame();
+    }
+    
+    public void NewGameForcePlus()
+    {
+        NewGamePlus();
+    }
+    public void NewGameForceOriginal()
+    {
+        SetMenuVariation(0);
+        NewGame();
+    }
+
+    private void AutoWireMainMenuButtons()
+    {
+        var scene = SceneManager.GetActiveScene();
+        var roots = scene.GetRootGameObjects();
+        for (int i = 0; i < roots.Length; i++)
+        {
+            var buttons = roots[i].GetComponentsInChildren<Button>(true);
+            for (int j = 0; j < buttons.Length; j++)
+            {
+                var b = buttons[j];
+                var n = b.gameObject.name.ToLowerInvariant();
+                string label = null;
+                var t = b.GetComponentInChildren<TMP_Text>();
+                if (t != null) label = t.text.ToLowerInvariant();
+                else
+                {
+                    var ut = b.GetComponentInChildren<Text>();
+                    if (ut != null) label = ut.text.ToLowerInvariant();
+                }
+                bool isNewGame =
+                    n.Contains("newgame") || n.Contains("new game") || n.Contains("nuevo") || n.Contains("juego") ||
+                    (label != null && (label.Contains("new game") || label.Contains("nuevo juego")));
+                if (isNewGame)
+                {
+                    b.onClick.RemoveAllListeners();
+                    if (MainMenuVariation == 1)
+                        b.onClick.AddListener(NewGameForcePlus);
+                    else
+                        b.onClick.AddListener(NewGame);
+                }
+                bool isNewGameOriginal =
+                    n.Contains("newgamenormal") || n.Contains("new game normal") || n.Contains("newgameoriginal") || n.Contains("original") ||
+                    (label != null && (label.Contains("new game normal") || label.Contains("juego original") || label.Contains("original")));
+                if (isNewGameOriginal)
+                {
+                    b.onClick.RemoveAllListeners();
+                    b.onClick.AddListener(NewGameForceOriginal);
+                    bool unlocked = false;
+                    if (ControladorDatosJuego.Instance != null)
+                        unlocked = ControladorDatosJuego.Instance.EstaNewGameNormalDesbloqueado();
+                    b.gameObject.SetActive(unlocked);
+                }
+            }
+        }
     }
 }

@@ -15,6 +15,9 @@ public class EnemyAnimationController : MonoBehaviour
     private bool hasDeathBoolParam;
     private bool hasDeathTriggerParam;
     private bool hasAttackTrigger;
+    private string attackTriggerParamName;
+    private bool hasAltAttackTrigger; // e.g., WandAttack
+    private string altAttackTriggerParamName;
     private bool hasIsAttackingParam;
 
     // Nombres reales de parámetros detectados
@@ -95,7 +98,18 @@ public class EnemyAnimationController : MonoBehaviour
                     }
                     break;
                 case "Attack":
-                    hasAttackTrigger = true;
+                    if (param.type == AnimatorControllerParameterType.Trigger)
+                    {
+                        hasAttackTrigger = true;
+                        attackTriggerParamName = "Attack";
+                    }
+                    break;
+                case "WandAttack":
+                    if (param.type == AnimatorControllerParameterType.Trigger)
+                    {
+                        hasAltAttackTrigger = true;
+                        altAttackTriggerParamName = "WandAttack";
+                    }
                     break;
                 case "isAttacking":
                     hasIsAttackingParam = true;
@@ -164,7 +178,13 @@ public class EnemyAnimationController : MonoBehaviour
     {
         if (hasAttackTrigger)
         {
-            anim.SetTrigger("Attack");
+            anim.SetTrigger(attackTriggerParamName);
+            return;
+        }
+        if (hasAltAttackTrigger)
+        {
+            anim.SetTrigger(altAttackTriggerParamName);
+            return;
         }
     }
 
@@ -172,7 +192,11 @@ public class EnemyAnimationController : MonoBehaviour
     {
         if (hasAttackTrigger)
         {
-            anim.ResetTrigger("Attack");
+            anim.ResetTrigger(attackTriggerParamName);
+        }
+        if (hasAltAttackTrigger)
+        {
+            anim.ResetTrigger(altAttackTriggerParamName);
         }
 
         if (hasIsAttackingParam)

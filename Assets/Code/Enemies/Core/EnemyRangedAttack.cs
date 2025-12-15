@@ -242,7 +242,17 @@ public class EnemyRangedAttack : MonoBehaviour
             float rotationAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             projectile.transform.rotation = Quaternion.Euler(0, 0, rotationAngle);
             if (addTrailToProjectiles) AddTrail(projectile);
-            if (useProjectileAfterimage) StartCoroutine(ProjectileAfterimageRoutine(projectile));
+            var projComp = projectile.GetComponent<Projectile>();
+            if (projComp != null)
+            {
+                projComp.SetAddTrail(true);
+                projComp.SetUseAfterimage(false);
+                projComp.SetTrailStyle(projTrailTime, projTrailWidth, projTrailStartColor, projTrailEndColor);
+            }
+            else if (useProjectileAfterimage)
+            {
+                StartCoroutine(ProjectileAfterimageRoutine(projectile));
+            }
 
             Debug.Log("disparando proyectil");
         }

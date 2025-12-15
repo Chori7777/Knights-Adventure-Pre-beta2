@@ -343,6 +343,15 @@ MonoBehaviour:
   afterimageColor: {r: 0, g: 0, b: 0, a: 0.7}
   doubleJumpAfterimageCount: 6
   doubleJumpAfterimageInterval: 0.03
+  enableRunAfterimage: 1
+  runAfterimageSpeedThreshold: 3
+  runTrailSpawnInterval: 0.12
+  runTrailLifetime: 0.12
+  runAfterimageColor: {r: 1, g: 1, b: 1, a: 0.35}
+  limitFallSpeed: 1
+  maxFallSpeed: 20
+  respawnOnFall: 1
+  fallYLimit: -50
 --- !u!50 &2323940080219901551
 Rigidbody2D:
   serializedVersion: 5
@@ -515,6 +524,14 @@ MonoBehaviour:
   orbTrailWidth: 0.08
   orbTrailStartColor: {r: 1, g: 1, b: 1, a: 0.8}
   orbTrailEndColor: {r: 1, g: 1, b: 1, a: 0}
+  useOrbAfterimage: 0
+  orbAfterimageInterval: 0.045
+  orbAfterimageLifetime: 0.22
+  orbAfterimageColor: {r: 1, g: 1, b: 1, a: 0.7}
+  useSelfAfterimageOnAttack: 1
+  selfAfterimageDuration: 0.22
+  selfAfterimageInterval: 0.035
+  selfAfterimageColor: {r: 1, g: 1, b: 1, a: 0.7}
   animator: {fileID: 7153805960494185477}
   attackTriggerName: WandAttack
 --- !u!114 &5631681452761751739

@@ -7807,6 +7807,9 @@ MonoBehaviour:
   introShakeIntensity: 0.15
   useGlobalFadeForIntro: 1
   introFadeOutWait: 0.2
+  finalBossDropPrefab: {fileID: 0}
+  finalBossDropOffset: {x: 0, y: 0, z: 0}
+  finalBossDropDelay: 0.5
   zoneAttackSets:
   - zoneName: Forest
     patternBehaviours: []
@@ -8144,7 +8147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1549b28ec00af5544899c43e7974b0af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossID: FinalBoss
+  bossID: TheRealRealRealFinalBoss
   health: 50
   maxHealth: 50
   enableEyeCycle: 1
@@ -8245,6 +8248,7 @@ MonoBehaviour:
   IsVulnerable: 1
   CanMove: 1
   CurrentPhase: 1
+  enableAutoFlip: 1
 --- !u!50 &1242371511
 Rigidbody2D:
   serializedVersion: 5
@@ -14820,8 +14824,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a4e88b3061826d41b6aceceb0240163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayPrefab: {fileID: 807021113598658824, guid: 3f7c4fffa158beb4ebde1e1ab4598511, type: 3}
   orbPrefab: {fileID: 8552078095061905579, guid: cb1e92e3ba263294e9e5bc8ad34db0f9, type: 3}
+  rayPrefab: {fileID: 807021113598658824, guid: 3f7c4fffa158beb4ebde1e1ab4598511, type: 3}
   spawnTopRef: {fileID: 473811116}
   groundLayer:
     serializedVersion: 2

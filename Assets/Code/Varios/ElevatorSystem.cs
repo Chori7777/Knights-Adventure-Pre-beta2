@@ -45,6 +45,7 @@ public class ElevatorSystem : MonoBehaviour
     private bool isMoving = false;
     private bool playerOnElevator = false;
     private Tween currentTween;
+    private Sequence loopSequence;
 
     private Transform playerTransform;
     private Rigidbody2D rb;
@@ -126,18 +127,18 @@ public class ElevatorSystem : MonoBehaviour
                     float durationBA = Vector3.Distance(worldB, worldA) / speed;
                     float waitInterval = useBPM ? (beatsWaitAtFloor * (60f / bpm)) : waitTimeAtFloor;
 
-                    Sequence seq = DOTween.Sequence();
+                    loopSequence = DOTween.Sequence();
                     if (rb != null)
-                        seq.Append(rb.DOMove((Vector2)worldB, durationAB).SetEase(easeType));
+                        loopSequence.Append(rb.DOMove((Vector2)worldB, durationAB).SetEase(easeType));
                     else
-                        seq.Append(platformRoot.DOMove(worldB, durationAB).SetEase(easeType));
-                    seq.AppendInterval(waitInterval);
+                        loopSequence.Append(platformRoot.DOMove(worldB, durationAB).SetEase(easeType));
+                    loopSequence.AppendInterval(waitInterval);
                     if (rb != null)
-                        seq.Append(rb.DOMove((Vector2)worldA, durationBA).SetEase(easeType));
+                        loopSequence.Append(rb.DOMove((Vector2)worldA, durationBA).SetEase(easeType));
                     else
-                        seq.Append(platformRoot.DOMove(worldA, durationBA).SetEase(easeType));
-                    seq.AppendInterval(waitInterval);
-                    seq.SetLoops(-1);
+                        loopSequence.Append(platformRoot.DOMove(worldA, durationBA).SetEase(easeType));
+                    loopSequence.AppendInterval(waitInterval);
+                    loopSequence.SetLoops(-1).SetTarget(platformRoot);
                 }
                 else
                 {
@@ -174,7 +175,7 @@ public class ElevatorSystem : MonoBehaviour
                 // Solo parentear si el jugador esta sobre la plataforma (Y mayor o igual)
                 if (playerTransform.position.y >= platformRoot.position.y - stickYOffsetThreshold)
                 {
-                    playerTransform.SetParent(platformRoot);
+                    SafeParentToPlatform(playerTransform);
                 }
             }
 
@@ -194,7 +195,7 @@ public class ElevatorSystem : MonoBehaviour
         {
             if (playerTransform.parent != platformRoot)
             {
-                playerTransform.SetParent(platformRoot);
+                SafeParentToPlatform(playerTransform);
             }
         }
     }
@@ -207,7 +208,14 @@ public class ElevatorSystem : MonoBehaviour
             if (playerTransform != null)
             {
                 var t = playerTransform;
-                StartCoroutine(UnparentDeferred(t));
+                if (!isActiveAndEnabled || !gameObject.activeInHierarchy)
+                {
+                    if (t != null && t.parent == platformRoot) t.SetParent(null);
+                }
+                else
+                {
+                    StartCoroutine(UnparentDeferred(t));
+                }
             }
             playerTransform = null;
 
@@ -229,12 +237,16 @@ public class ElevatorSystem : MonoBehaviour
     public void MoveToPointA()
     {
         if (isMoving || isAtPointA) return;
+        if (!isActiveAndEnabled || !gameObject.activeInHierarchy) return;
+        if (platformRoot == null || pointA == null) return;
         StartMove(pointA.position, true);
     }
 
     public void MoveToPointB()
     {
         if (isMoving || !isAtPointA) return;
+        if (!isActiveAndEnabled || !gameObject.activeInHierarchy) return;
+        if (platformRoot == null || pointB == null) return;
         StartMove(pointB.position, false);
     }
 
@@ -324,7 +336,7 @@ public class ElevatorSystem : MonoBehaviour
                 DOVirtual.DelayedCall(waitInterval, () =>
                 {
                     if (!isMoving) MoveToPointB();
-                });
+                }).SetTarget(this);
             }
         }
         else
@@ -335,11 +347,11 @@ public class ElevatorSystem : MonoBehaviour
                 DOVirtual.DelayedCall(waitInterval, () =>
                 {
                     if (!isMoving) MoveToPointB();
-                });
+                }).SetTarget(this);
             }
             else
             {
-                DOVirtual.DelayedCall(waitInterval, () => { });
+                DOVirtual.DelayedCall(waitInterval, () => { }).SetTarget(this);
             }
         }
 
@@ -421,9 +433,28 @@ public class ElevatorSystem : MonoBehaviour
             autoReturnScheduled = false;
             if (!playerOnElevator && !isMoving && !isAtPointA)
             {
+                if (!isActiveAndEnabled || !gameObject.activeInHierarchy) return;
+                if (platformRoot == null || pointA == null) return;
                 MoveToPointA();
             }
-        });
+        }).SetTarget(this);
+    }
+
+    private void SafeParentToPlatform(Transform t)
+    {
+        if (t == null) return;
+        if (!platformRoot.gameObject.activeInHierarchy)
+        {
+            StartCoroutine(SetParentDeferred(t));
+            return;
+        }
+        t.SetParent(platformRoot);
+    }
+
+    private IEnumerator SetParentDeferred(Transform t)
+    {
+        yield return new WaitForEndOfFrame();
+        if (t != null) t.SetParent(platformRoot);
     }
 
     private IEnumerator UnparentDeferred(Transform t)
@@ -435,6 +466,37 @@ public class ElevatorSystem : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        if (currentTween != null)
+        {
+            currentTween.Kill();
+            currentTween = null;
+        }
+        if (loopSequence != null)
+        {
+            loopSequence.Kill();
+            loopSequence = null;
+        }
+        StopAllCoroutines();
+        isMoving = false;
+        DOTween.Kill(this);
+    }
+
+    private void OnDestroy()
+    {
+        if (currentTween != null)
+        {
+            currentTween.Kill();
+            currentTween = null;
+        }
+        if (loopSequence != null)
+        {
+            loopSequence.Kill();
+            loopSequence = null;
+        }
+        DOTween.Kill(this);
+    }
     private void OnDrawGizmos()
     {
         if (pointA == null || pointB == null) return;

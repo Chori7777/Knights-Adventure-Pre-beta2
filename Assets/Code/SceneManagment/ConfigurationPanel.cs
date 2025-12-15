@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class ConfigurationPanel : MonoBehaviour
 {
@@ -607,6 +608,10 @@ public class ConfigurationPanel : MonoBehaviour
             {
                 if (existing == 0) b.onClick.AddListener(ConfirmChanges);
             }
+            else if (n.Contains("newgameplus") || n.Contains("ngplus") || n.Contains("ng+") || n.Contains("reiniciar ng") || n.Contains("reiniciar new game plus"))
+            {
+                if (existing == 0) b.onClick.AddListener(ResetNewGamePlusProgressButton);
+            }
         }
     }
 
@@ -684,6 +689,35 @@ public class ConfigurationPanel : MonoBehaviour
     public void MusicDown() { AdjustMusic(-volumeStep); }
     public void SFXUp() { AdjustSFX(volumeStep); }
     public void SFXDown() { AdjustSFX(-volumeStep); }
+    public void ResetNewGamePlusProgressButton()
+    {
+        var ctrl = ControladorDatosJuego.Instance;
+        if (ctrl != null)
+        {
+            ctrl.ResetNewGamePlusProgress();
+            ctrl.SetStartModeVariant(0);
+        }
+        ChangeScene.MainMenuVariation = 0;
+        SceneManager.LoadScene("MainMenu");
+    }
+    public void StartNewGameOriginalButton()
+    {
+        var cs = FindFirstObjectByType<ChangeScene>(FindObjectsInactive.Include);
+        if (cs != null)
+        {
+            cs.NewGameForceOriginal();
+            return;
+        }
+        var ctrl = ControladorDatosJuego.Instance;
+        if (ctrl != null)
+        {
+            ctrl.SetStartModeVariant(0);
+            ctrl.ResetearDatos();
+            ctrl.datosjuego.jefesDerrotados.Clear();
+        }
+        ChangeScene.MainMenuVariation = 0;
+        SceneManager.LoadScene("TheForest");
+    }
 
     private void LogRaycastAt(RectTransform rt, string context)
     {

@@ -229874,6 +229874,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1717931497227015380, guid: 011a9b076e855fc4d962fa7140194c5d, type: 3}
     - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
+      propertyPath: scoreReward
+      value: 3000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
       propertyPath: trialManager
       value: 
       objectReference: {fileID: 1669121972}

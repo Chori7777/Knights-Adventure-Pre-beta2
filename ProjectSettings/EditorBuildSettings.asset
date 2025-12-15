@@ -84,9 +84,6 @@ EditorBuildSettings:
     path: Assets/Scenes/ALTMaps/ALTBosses/FinalRealBoss...unity
     guid: 0f3a44a8c2b7dad41aa83f6c55bc0b74
   - enabled: 1
-    path: Assets/Scenes/ALTMaps/ALTBosses/TheEndMenu.unity
-    guid: b19cbc4abeaa2cc49bd9d6f9519e90fb
-  - enabled: 1
     path: Assets/Scenes/ALTMenus/GameOverALT.unity
     guid: 3f38a9f42d387034bb064ac63072b6ee
   - enabled: 1
@@ -99,8 +96,14 @@ EditorBuildSettings:
     path: Assets/Scenes/AllMenus/Debug.unity
     guid: bb12b0033d40a485e84cae23a426ee90
   - enabled: 1
+    path: Assets/Scenes/AllMenus/Credits.unity
+    guid: 198b47aa30df63046896d566e472f149
+  - enabled: 1
     path: Assets/Scenes/Story/TheEnd.unity
     guid: b90889564e6f8374ab64b375e0886a36
+  - enabled: 1
+    path: Assets/Scenes/ALTMaps/ALTBosses/TheEndMenu.unity
+    guid: b19cbc4abeaa2cc49bd9d6f9519e90fb
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

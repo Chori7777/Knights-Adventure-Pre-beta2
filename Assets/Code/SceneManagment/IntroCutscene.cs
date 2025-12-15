@@ -15,6 +15,8 @@ public class IntroCutscene : MonoBehaviour
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private string[] textos;
     [SerializeField] private TextMeshProUGUI textoHistoria;
+    [SerializeField] private bool setStartModeVariantOnEnd = false;
+    [SerializeField] private int startModeVariantValue = 1;
 
     private int indiceActual = 0;
     private bool estaSaltando = false;
@@ -117,6 +119,19 @@ public class IntroCutscene : MonoBehaviour
 
     private void IrAlMenu()
     {
+        if (setStartModeVariantOnEnd)
+        {
+            if (ControladorDatosJuego.Instance == null)
+            {
+                var go = new GameObject("ControladorDatosJuego");
+                go.AddComponent<ControladorDatosJuego>();
+            }
+            if (ControladorDatosJuego.Instance != null)
+            {
+                ControladorDatosJuego.Instance.SetStartModeVariant(startModeVariantValue);
+                ControladorDatosJuego.Instance.DesbloquearNewGameNormal();
+            }
+        }
         SceneManager.LoadScene(escenaDestino);
     }
 }

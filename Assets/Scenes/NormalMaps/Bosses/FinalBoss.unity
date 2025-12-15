@@ -3972,8 +3972,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossID: FirstFinalBoss
-  health: 1
-  maxHealth: 1
+  health: 30
+  maxHealth: 30
   enableEyeCycle: 0
   eyeOpenDuration: 5
   eyeClosedDuration: 5
@@ -4012,6 +4012,7 @@ MonoBehaviour:
   deathAnimationStateName: Death
   deathDialogues:
   - You are not going to win...
+  - You are not going to see the light..
   objectsToDestroyOnDeath: []
   tilemapsToActivateOnDeath: []
   detachAmuletOnDeath: 0

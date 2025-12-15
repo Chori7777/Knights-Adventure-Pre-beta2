@@ -347,8 +347,28 @@ public class ControladorDatosJuego : MonoBehaviour
     public void SetStartModeVariant(int variant)
     {
         datosjuego.startModeVariant = Mathf.Clamp(variant, 0, 1);
-        GuardarDatos(false);
+        EscribirArchivo();
         ChangeScene.MainMenuVariation = datosjuego.startModeVariant;
         Debug.Log("[Save] startModeVariant actualizado a " + datosjuego.startModeVariant);
+    }
+
+    public void ResetNewGamePlusProgress()
+    {
+        if (datosjuego == null) datosjuego = new DatosJuego();
+        if (datosjuego.jefesDerrotados != null) datosjuego.jefesDerrotados.Clear();
+        EscribirArchivo();
+        Debug.Log("[Save] New Game Plus progress reset");
+    }
+
+    public void DesbloquearNewGameNormal()
+    {
+        PlayerPrefs.SetInt("unlock_new_game_normal", 1);
+        PlayerPrefs.Save();
+        Debug.Log("[Save] New Game Normal desbloqueado");
+    }
+
+    public bool EstaNewGameNormalDesbloqueado()
+    {
+        return PlayerPrefs.GetInt("unlock_new_game_normal", 0) == 1;
     }
 }

@@ -157,8 +157,9 @@ public class PlayerHealthUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        // ✅ Limpiar eventos
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        if (headTween != null && headTween.IsActive())
+            headTween.Kill();
     }
 
     // ✅ NUEVO: Se llama cada vez que cambia la escena
@@ -342,6 +343,13 @@ public class PlayerHealthUI : MonoBehaviour
             UpdateTimeText();
         }
     }
+
+    private void OnDisable()
+    {
+        if (headTween != null && headTween.IsActive())
+            headTween.Kill();
+    }
+
 
     private void SetHUDVisible(bool visible)
     {
@@ -551,7 +559,19 @@ public class PlayerHealthUI : MonoBehaviour
         {
             required = Mathf.Clamp(player.MaxHealth + player.TempShieldMax, 1, 20);
         }
-        if (mageOrbImages.Count != required)
+        bool invalid = false;
+        if (mageOrbImages.Count > 0)
+        {
+            for (int i = 0; i < mageOrbImages.Count; i++)
+            {
+                if (mageOrbImages[i] == null)
+                {
+                    invalid = true;
+                    break;
+                }
+            }
+        }
+        if (mageOrbImages.Count != required || invalid)
         {
             for (int i = 0; i < mageOrbImages.Count; i++)
             {
@@ -702,7 +722,9 @@ public class PlayerHealthUI : MonoBehaviour
         if (mageOrbImages.Count == 0) return;
         RectTransform headRect = knightHeadImage.GetComponent<RectTransform>();
         int index = Mathf.Clamp(player.Health + player.TempShield - 1, 0, mageOrbImages.Count - 1);
-        Vector2 target = mageOrbImages[index].rectTransform.anchoredPosition + new Vector2(headOffsetX, headOffsetY);
+        var orb = mageOrbImages[index];
+        if (orb == null) return;
+        Vector2 target = orb.rectTransform.anchoredPosition + new Vector2(headOffsetX, headOffsetY);
         targetHeadPosition = target;
         if (headTween != null && headTween.IsActive())
             headTween.Kill();

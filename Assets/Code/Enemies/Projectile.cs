@@ -192,4 +192,20 @@ public class Projectile : MonoBehaviour
         }
         if (c != null) Destroy(c.gameObject);
     }
+
+    public void SetAddTrail(bool value)
+    {
+        addTrail = value;
+    }
+    public void SetUseAfterimage(bool value)
+    {
+        useAfterimage = value;
+    }
+    public void SetTrailStyle(float time, float width, Color start, Color end)
+    {
+        trailTime = time;
+        trailWidth = width;
+        trailStartColor = start;
+        trailEndColor = end;
+    }
 }

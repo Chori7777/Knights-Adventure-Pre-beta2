@@ -192,7 +192,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 119}
+  m_AnchoredPosition: {x: 2534.36, y: 111.88345}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &28226965
@@ -995,7 +995,7 @@ MonoBehaviour:
   - {fileID: 6320489845321787489, guid: cfebaa6b9f94f41cb999eac0229bb2aa, type: 3}
   - {fileID: 6615105291565881644, guid: 15d3b6bb690d644a5bc7b540ff55d0bb, type: 3}
   - {fileID: 3879690903547675473, guid: 18d21297a73df473dae04363f1749376, type: 3}
-  tiempoPorImagen: 8
+  tiempoPorImagen: 4
   escenaDestino: TheTower
   imagenDisplay: {fileID: 28226962}
   botonSkip: {fileID: 1982325586}
