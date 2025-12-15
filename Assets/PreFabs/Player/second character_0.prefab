@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 656354545055968790}
   - component: {fileID: 7153805960494185477}
   - component: {fileID: 9110645720247892963}
+  - component: {fileID: 5631681452761751739}
   m_Layer: 7
   m_Name: second character_0
   m_TagString: Player
@@ -335,7 +336,13 @@ MonoBehaviour:
   shieldTickCost: 2
   shieldRechargeDelay: 1.5
   shieldRechargeRate: 25
-  shieldBarFill: {fileID: 3111439494422802132}
+  shieldBarFill: {fileID: 0}
+  enableDashAfterimage: 1
+  dashTrailSpawnInterval: 0.035
+  dashTrailLifetime: 0.25
+  afterimageColor: {r: 0, g: 0, b: 0, a: 0.7}
+  doubleJumpAfterimageCount: 6
+  doubleJumpAfterimageInterval: 0.03
 --- !u!50 &2323940080219901551
 Rigidbody2D:
   serializedVersion: 5
@@ -454,6 +461,13 @@ MonoBehaviour:
   tempShieldDuration: 8
   shieldChargesMax: 2
   shieldChargeCooldown: 15
+  matchShieldSortingToPlayer: 1
+  shieldSortingOffset: 1
+  mageShieldBarRoot: {fileID: 0}
+  mageShieldBarImage: {fileID: 0}
+  mageShieldBarOffset: {x: 0, y: 1.5}
+  mageShieldBarObjectName: Shield Image
+  shieldHitWhileActiveSound: {fileID: 0}
 --- !u!95 &7153805960494185477
 Animator:
   serializedVersion: 7
@@ -496,8 +510,35 @@ MonoBehaviour:
   orbLifetime: 3
   orbDamage: 1
   attackCooldown: 0.4
+  addTrailToOrbs: 1
+  orbTrailTime: 0.25
+  orbTrailWidth: 0.08
+  orbTrailStartColor: {r: 1, g: 1, b: 1, a: 0.8}
+  orbTrailEndColor: {r: 1, g: 1, b: 1, a: 0}
   animator: {fileID: 7153805960494185477}
   attackTriggerName: WandAttack
+--- !u!114 &5631681452761751739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5407286007423337658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1561eac5721390c45895f8192ed4eb41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldOffset: {x: 0, y: 1.5, z: 0}
+  textColor: {r: 1, g: 1, b: 1, a: 1}
+  fontSize: 7
+  showMaxHealth: 1
+  includeTemporaryShieldForMage: 1
+  prefix: Life
+  sortingLayerName: front
+  sortingOrder: 2000
+  fontAsset: {fileID: 11400000, guid: c5ca11c032dbe7e4abb142915231dba2, type: 2}
+  keepConstantWorldScale: 1
 --- !u!1 &6520439652101146045
 GameObject:
   m_ObjectHideFlags: 0

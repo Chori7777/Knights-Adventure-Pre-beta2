@@ -3,12 +3,15 @@ using TMPro;
 
 public class FloatingInteractable : MonoBehaviour
 {
-    [Header("Configuración")]
+    [Header("ConfiguraciÃ³n")]
     public GameObject floatingText; // Texto 3D (TextMeshPro)
     public KeyCode interactKey = KeyCode.E;
+    [SerializeField] private bool useDistanceCheck = false;
+    [SerializeField] private float interactionDistance = 2f;
 
     private bool playerInRange = false;
     private Camera mainCamera;
+    private Transform player;
 
     void Start()
     {
@@ -16,15 +19,24 @@ public class FloatingInteractable : MonoBehaviour
             floatingText.SetActive(false);
 
         mainCamera = Camera.main;
+        var playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null) player = playerObj.transform;
     }
 
     void Update()
     {
+        if (useDistanceCheck && player != null)
+        {
+            playerInRange = Vector3.Distance(transform.position, player.position) <= interactionDistance;
+            if (floatingText != null)
+                floatingText.SetActive(playerInRange);
+        }
+
         if (floatingText != null && mainCamera != null)
         {
-            // Hace que el texto siempre mire a la cámara
+            // Hace que el texto siempre mire a la cï¿½mara
             floatingText.transform.LookAt(mainCamera.transform);
-            floatingText.transform.Rotate(0, 180, 0); // Corrige la orientación
+            floatingText.transform.Rotate(0, 180, 0); // Corrige la orientaciï¿½n
         }
 
         if (playerInRange && Input.GetKeyDown(interactKey))
@@ -35,6 +47,7 @@ public class FloatingInteractable : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (useDistanceCheck) return;
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
@@ -45,6 +58,7 @@ public class FloatingInteractable : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        if (useDistanceCheck) return;
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
@@ -55,7 +69,7 @@ public class FloatingInteractable : MonoBehaviour
 
     void Interact()
     {
-        Debug.Log("El jugador interactuó con " + gameObject.name);
-        // Acá podés poner lo que quieras: abrir puerta, recolectar ítem, etc.
+        Debug.Log("El jugador interactuï¿½ con " + gameObject.name);
+        // Acï¿½ podï¿½s poner lo que quieras: abrir puerta, recolectar ï¿½tem, etc.
     }
 }

@@ -12,8 +12,11 @@ using TMPro;
     [SerializeField] private bool forceInteractive = true;
     [SerializeField] private bool disableInMainMenu = true;
     [SerializeField] private string mainMenuSceneName = "MainMenu";
+    [SerializeField] private float toggleCooldown = 0.3f;
 
     private bool paused;
+    [SerializeField] private bool pauseEnabled = true;
+    private float lastToggleTime = -10f;
 
     private void Awake()
     {
@@ -34,9 +37,11 @@ using TMPro;
 
     private void Update()
     {
-        if (Input.GetKeyDown(toggleKey))
+        if (!pauseEnabled) return;
+        if (Input.GetKeyDown(toggleKey) && Time.time >= lastToggleTime + toggleCooldown)
         {
             TogglePause();
+            lastToggleTime = Time.time;
         }
     }
 
@@ -48,7 +53,7 @@ using TMPro;
     public void OpenPause()
     {
         Time.timeScale = 0f;
-        if (AudioManager.Instance != null) AudioManager.Instance.StopMusic(true);
+        if (AudioManager.Instance != null) AudioManager.Instance.PauseMusic();
         if (pauseGroup != null)
         {
             pauseGroup.alpha = 1f;
@@ -77,6 +82,7 @@ using TMPro;
             pauseGroup.blocksRaycasts = false;
         }
         Time.timeScale = 1f;
+        if (AudioManager.Instance != null) AudioManager.Instance.ResumeMusic();
         paused = false;
     }
 
@@ -285,6 +291,15 @@ using TMPro;
         if (tr == null) return;
         var img = tr.GetComponent<UnityEngine.UI.Image>();
         if (img != null) img.raycastTarget = false;
+    }
+
+    public void SetPauseEnabled(bool enabled)
+    {
+        pauseEnabled = enabled;
+        if (!enabled && paused)
+        {
+            ClosePause();
+        }
     }
 
     public void RestartLevel()

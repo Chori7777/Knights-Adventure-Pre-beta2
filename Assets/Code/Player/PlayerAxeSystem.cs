@@ -149,6 +149,7 @@ public class PlayerAxeSystem : MonoBehaviour
             // Rotar sprite
             float rotation = facingRight ? 0f : 180f;
             axe.transform.rotation = Quaternion.Euler(0, rotation, 0);
+            if (axeUseAfterimage) StartCoroutine(AxeAfterimageRoutine(axe)); else AddTrail(axe);
         }
 
         // Sonido
@@ -181,6 +182,87 @@ public class PlayerAxeSystem : MonoBehaviour
         UpdateUI();
         SaveAxeCount();
         Debug.Log($"🪓 +{amount} hachas! Total: {currentAxes}/{maxAxes}");
+    }
+
+    [Header("Trail")]
+    [SerializeField] private bool addTrailToAxes = true;
+    [SerializeField] private float axeTrailTime = 0.25f;
+    [SerializeField] private float axeTrailWidth = 0.08f;
+    [SerializeField] private Color axeTrailStartColor = new Color(1f, 1f, 1f, 0.8f);
+    [SerializeField] private Color axeTrailEndColor = new Color(1f, 1f, 1f, 0f);
+    [Header("Afterimage Axe")]
+    [SerializeField] private bool axeUseAfterimage = true;
+    [SerializeField] private float axeAfterimageInterval = 0.045f;
+    [SerializeField] private float axeAfterimageLifetime = 0.22f;
+    [SerializeField] private Color axeAfterimageColor = new Color(1f, 1f, 1f, 0.7f);
+
+    private void AddTrail(GameObject axe)
+    {
+        if (!addTrailToAxes || axe == null) return;
+        var tr = axe.GetComponent<TrailRenderer>();
+        if (tr == null) tr = axe.AddComponent<TrailRenderer>();
+        tr.time = axeTrailTime;
+        tr.minVertexDistance = 0.08f;
+        tr.autodestruct = false;
+        tr.startWidth = axeTrailWidth;
+        tr.endWidth = axeTrailWidth * 0.7f;
+        tr.material = new Material(Shader.Find("Sprites/Default"));
+        var g = new Gradient();
+        g.SetKeys(
+            new GradientColorKey[] { new GradientColorKey(axeTrailStartColor, 0f), new GradientColorKey(axeTrailEndColor, 1f) },
+            new GradientAlphaKey[] { new GradientAlphaKey(axeTrailStartColor.a, 0f), new GradientAlphaKey(axeTrailEndColor.a, 1f) }
+        );
+        tr.colorGradient = g;
+        var sr = axe.GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            tr.sortingLayerID = sr.sortingLayerID;
+            tr.sortingOrder = sr.sortingOrder - 1;
+        }
+    }
+
+    private IEnumerator AxeAfterimageRoutine(GameObject axe)
+    {
+        SpriteRenderer sr = null;
+        if (axe != null)
+        {
+            sr = axe.GetComponent<SpriteRenderer>();
+            if (sr == null) sr = axe.GetComponentInChildren<SpriteRenderer>(true);
+        }
+        float t = 0f;
+        while (axe != null && sr != null && t < 3f)
+        {
+            SpawnAfterimage(sr, axeAfterimageLifetime);
+            t += axeAfterimageInterval;
+            yield return new WaitForSeconds(axeAfterimageInterval);
+        }
+    }
+
+    private void SpawnAfterimage(SpriteRenderer source, float lifetime)
+    {
+        var go = new GameObject("AxeAfterimage");
+        var c = go.AddComponent<SpriteRenderer>();
+        c.sprite = source.sprite;
+        c.flipX = source.flipX;
+        c.color = axeAfterimageColor;
+        c.sortingLayerID = source.sortingLayerID;
+        c.sortingOrder = source.sortingOrder - 1;
+        go.transform.position = source.transform.position;
+        StartCoroutine(FadeAndDestroy(c, lifetime));
+    }
+
+    private IEnumerator FadeAndDestroy(SpriteRenderer c, float lifetime)
+    {
+        float t = lifetime;
+        while (t > 0f && c != null)
+        {
+            t -= Time.deltaTime;
+            var col = c.color;
+            col.a = Mathf.Clamp01(t / lifetime);
+            c.color = col;
+            yield return null;
+        }
+        if (c != null) Destroy(c.gameObject);
     }
 
     /// <summary>

@@ -46,6 +46,10 @@ public class NPCRewardSystem : MonoBehaviour
     [SerializeField] private bool unlockWallCling = false;
     [SerializeField] private bool unlockShield = false;
 
+    [Header("Recompensas - Daño")]
+    [SerializeField] private bool increaseAttackDamage = false;
+    [SerializeField] private int attackDamageUpgradeAmount = 1;
+
     [Header("Efectos Visuales")]
     [SerializeField] private GameObject rewardParticles;
     [SerializeField] private AudioClip rewardSound;
@@ -239,6 +243,13 @@ public class NPCRewardSystem : MonoBehaviour
                 datos.hasShield = true;
                 Debug.Log("[NPC] Desbloqueada: Escudo");
             }
+        }
+
+        // Recompensa: Daño de ataque
+        if (increaseAttackDamage)
+        {
+            datos.attackDamageUpgrades = Mathf.Max(0, datos.attackDamageUpgrades + attackDamageUpgradeAmount);
+            Debug.Log($"[NPC] Daño de ataque aumentado en {attackDamageUpgradeAmount}. Total upgrades: {datos.attackDamageUpgrades}");
         }
 
         // Guardar cambios

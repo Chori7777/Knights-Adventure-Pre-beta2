@@ -16,6 +16,11 @@ public class PreferenceSettings : MonoBehaviour
     {
         PopulateResolutions();
         PopulateFpsOptions();
+        if (textSpeedSlider != null)
+        {
+            textSpeedSlider.minValue = 0.01f;
+            textSpeedSlider.maxValue = 0.20f;
+        }
         LoadPrefs();
         ApplyAll();
         HookEvents();
@@ -53,6 +58,7 @@ public class PreferenceSettings : MonoBehaviour
     private void PopulateFpsOptions()
     {
         if (fpsDropdown == null) return;
+        fpsDropdown.ClearOptions();
         var fpsOptions = new System.Collections.Generic.List<string>
         {
             "30 FPS",
@@ -61,7 +67,10 @@ public class PreferenceSettings : MonoBehaviour
             "144 FPS",
             "240 FPS"
         };
-        fpsDropdown.ClearOptions();
+        if (fpsDropdown.options == null || fpsDropdown.options.Count == 0)
+        {
+            fpsDropdown.ClearOptions();
+        }
         fpsDropdown.AddOptions(fpsOptions);
         fpsDropdown.RefreshShownValue();
     }
@@ -151,7 +160,9 @@ public class PreferenceSettings : MonoBehaviour
         if (availableResolutions == null || availableResolutions.Length == 0) return;
         index = Mathf.Clamp(index, 0, availableResolutions.Length - 1);
         var r = availableResolutions[index];
-        Screen.SetResolution(r.width, r.height, Screen.fullScreen);
+        int hz = Mathf.RoundToInt((float)r.refreshRateRatio.value);
+        var mode = Screen.fullScreen ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
+        Screen.SetResolution(r.width, r.height, mode, hz);
         PlayerPrefs.SetInt("pref_res_index", index);
         PlayerPrefs.Save();
     }

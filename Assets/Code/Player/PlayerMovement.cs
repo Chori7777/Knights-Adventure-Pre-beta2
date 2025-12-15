@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -164,13 +165,19 @@ public class PlayerMovement : MonoBehaviour
 
         UpdateShieldRecharge(Time.deltaTime);
         UpdateShieldUI();
+        if (respawnOnFall && transform.position.y < fallYLimit)
+        {
+            var ctrl = ControladorDatosJuego.Instance;
+            if (ctrl != null) ctrl.RespawnearJugadorEnCheckpoint();
+            else SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     private void FixedUpdate()
     {
         if (isTakingDamage && !allowControlsWhileDamaged) return;
 
-        bool isBlocking = Input.GetKey(KeyCode.X);
+        bool isBlocking = canBlock && InputBindings.Get(InputBindings.GameAction.Action2Shield);
         bool isHoldingCtrl = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
 
         if (attackStepActive && attackMoveTimer > 0)
@@ -342,6 +349,9 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(Vector2.up * doubleJumpForce, ForceMode2D.Impulse);
         hasDoubleJumped = true;
         animController?.TriggerDoubleJump();
+        var mage = GetComponent<MageWandAttack>();
+        if (mage != null) mage.TriggerSelfAfterimage();
+        StartCoroutine(DoubleJumpAfterimageBurst());
     }
 
     private void PerformDashUpJump()
@@ -387,6 +397,10 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.gravityScale = originalGravity;
         }
+        if (limitFallSpeed && rb.linearVelocity.y < -Mathf.Abs(maxFallSpeed))
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, -Mathf.Abs(maxFallSpeed));
+        }
     }
 
     private void HandleDash()
@@ -409,6 +423,7 @@ public class PlayerMovement : MonoBehaviour
             isDashing = true;
             dashTimer = dashDuration;
             lastDashTime = Time.time;
+            dashTrailTimer = 0f;
 
             Vector2 dir = facingRight ? Vector2.right : Vector2.left;
             if (enable4WayDash)
@@ -443,6 +458,8 @@ public class PlayerMovement : MonoBehaviour
                         aura.transform.right = Vector3.up;
                         Destroy(aura, dashAuraLifetime);
                     }
+                    var mage2 = GetComponent<MageWandAttack>();
+                    if (mage2 != null) mage2.TriggerSelfAfterimage();
                     return;
                 }
             }
@@ -455,11 +472,22 @@ public class PlayerMovement : MonoBehaviour
                 aura.transform.right = new Vector3(dir.x, dir.y, 0f);
                 Destroy(aura, dashAuraLifetime);
             }
+            var mage3 = GetComponent<MageWandAttack>();
+            if (mage3 != null) mage3.TriggerSelfAfterimage();
         }
 
         if (isDashing)
         {
             rb.linearVelocity = currentDashDir * dashSpeed;
+            if (enableDashAfterimage)
+            {
+                dashTrailTimer += Time.deltaTime;
+                if (dashTrailTimer >= dashTrailSpawnInterval)
+                {
+                    dashTrailTimer = 0f;
+                    SpawnAfterimage();
+                }
+            }
         }
     }
 
@@ -610,6 +638,12 @@ public class PlayerMovement : MonoBehaviour
         cameraHolder.localPosition = originalPos;
     }
 
+    public void TriggerCameraShake()
+    {
+        if (cameraHolder != null)
+            StartCoroutine(CameraShake());
+    }
+
     private IEnumerator DamageRecoveryCoroutine()
     {
         yield return new WaitForSeconds(damageRecoveryTime);
@@ -625,7 +659,7 @@ public class PlayerMovement : MonoBehaviour
     public bool IsTakingDamage => isTakingDamage;
     public float HorizontalInput => horizontalInput;
     public float VerticalVelocity => rb.linearVelocity.y;
-    public bool IsBlocking => InputBindings.Get(InputBindings.GameAction.Action2Shield);
+    public bool IsBlocking => canBlock && InputBindings.Get(InputBindings.GameAction.Action2Shield);
     public bool IsWallSliding => isWallSliding;
     public string DashDestroyTag => dashDestroyTag;
 
@@ -644,6 +678,20 @@ public class PlayerMovement : MonoBehaviour
     public bool FacingRight => facingRight;
 
     private Vector2 currentDashDir = Vector2.right;
+    [Header("Afterimage")]
+    [SerializeField] private bool enableDashAfterimage = true;
+    [SerializeField] private float dashTrailSpawnInterval = 0.035f;
+    [SerializeField] private float dashTrailLifetime = 0.25f;
+    [SerializeField] private Color afterimageColor = new Color(1f, 1f, 1f, 0.7f);
+    [SerializeField] private int doubleJumpAfterimageCount = 6;
+    [SerializeField] private float doubleJumpAfterimageInterval = 0.03f;
+    private float dashTrailTimer = 0f;
+    private SpriteRenderer playerSpriteRenderer;
+    [Header("Caída")]
+    [SerializeField] private bool limitFallSpeed = true;
+    [SerializeField] private float maxFallSpeed = 20f;
+    [SerializeField] private bool respawnOnFall = true;
+    [SerializeField] private float fallYLimit = -50f;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -667,6 +715,49 @@ public class PlayerMovement : MonoBehaviour
         {
             bLife.RecibeDanio(transform.position, dashDamage);
             return;
+        }
+    }
+
+    private void Awake()
+    {
+        playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    }
+
+    private void SpawnAfterimage()
+    {
+        if (playerSpriteRenderer == null) return;
+        var go = new GameObject("PlayerAfterimage");
+        var c = go.AddComponent<SpriteRenderer>();
+        c.sprite = playerSpriteRenderer.sprite;
+        c.flipX = playerSpriteRenderer.flipX;
+        c.color = afterimageColor;
+        c.sortingLayerID = playerSpriteRenderer.sortingLayerID;
+        c.sortingOrder = playerSpriteRenderer.sortingOrder - 1;
+        go.transform.position = transform.position;
+        StartCoroutine(FadeAndDestroy(c, dashTrailLifetime));
+    }
+
+    private IEnumerator FadeAndDestroy(SpriteRenderer c, float lifetime)
+    {
+        float t = lifetime;
+        while (t > 0f && c != null)
+        {
+            t -= Time.deltaTime;
+            var col = c.color;
+            col.a = Mathf.Clamp01(t / lifetime);
+            c.color = col;
+            yield return null;
+        }
+        if (c != null) Destroy(c.gameObject);
+    }
+
+    private IEnumerator DoubleJumpAfterimageBurst()
+    {
+        int count = Mathf.Max(1, doubleJumpAfterimageCount);
+        for (int i = 0; i < count; i++)
+        {
+            SpawnAfterimage();
+            yield return new WaitForSeconds(doubleJumpAfterimageInterval);
         }
     }
 

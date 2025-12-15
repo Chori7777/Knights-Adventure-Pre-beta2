@@ -16,6 +16,7 @@ public class PlayerHealthUI : MonoBehaviour
     public TextMeshProUGUI potionText;
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI axeText;
+    [SerializeField] private GameObject axeHud;
     [SerializeField] private bool useTimeInsteadOfScoreForSecondPlayer = false;
     [SerializeField] private string timeModeSceneName = "";
     [SerializeField] private float startingTimeSeconds = 120f;
@@ -71,6 +72,8 @@ public class PlayerHealthUI : MonoBehaviour
     [Header("Escudo")]
     public float shieldBarWidth = 60f;
     public float shieldBarHeight = 6f;
+    [SerializeField] private Image shieldBarImageRef;
+    [SerializeField] private string shieldImageObjectName = "Shield Image";
     private Image shieldBarImage;
     private RectTransform shieldBarRect;
 
@@ -257,6 +260,7 @@ public class PlayerHealthUI : MonoBehaviour
         {
             HideSwordHUD();
             EnsureMageOrbsExists();
+            SetAxeHUDVisible(false);
         }
         else
         {
@@ -269,6 +273,7 @@ public class PlayerHealthUI : MonoBehaviour
                 ShowSwordHUD();
                 AdjustSwordSegments(player.MaxHealth);
             }
+            SetAxeHUDVisible(true);
         }
         UpdateDisplay();
 
@@ -299,6 +304,7 @@ public class PlayerHealthUI : MonoBehaviour
         {
             HideSwordHUD();
             EnsureMageOrbsExists();
+            SetAxeHUDVisible(false);
         }
         else
         {
@@ -311,6 +317,7 @@ public class PlayerHealthUI : MonoBehaviour
                 ShowSwordHUD();
                 AdjustSwordSegments(player.MaxHealth);
             }
+            SetAxeHUDVisible(true);
         }
         EnsureShieldBarExists();
         UpdateDisplay();
@@ -345,6 +352,11 @@ public class PlayerHealthUI : MonoBehaviour
         {
             gameObject.SetActive(visible);
         }
+    }
+
+    public void SetHUDVisibility(bool visible)
+    {
+        SetHUDVisible(visible);
     }
 
     private void AdjustSwordSegments(int maxHealth)
@@ -468,19 +480,34 @@ public class PlayerHealthUI : MonoBehaviour
 
     private void EnsureShieldBarExists()
     {
-        if (shieldBarImage == null)
+        if (shieldBarImage != null) return;
+        if (shieldBarImageRef != null)
         {
-            GameObject go = new GameObject("ShieldBar");
-            go.transform.SetParent(transform, false);
-            shieldBarImage = go.AddComponent<Image>();
-            shieldBarImage.color = Color.cyan;
+            shieldBarImage = shieldBarImageRef;
             shieldBarRect = shieldBarImage.rectTransform;
-            shieldBarRect.anchorMin = new Vector2(0f, 1f);
-            shieldBarRect.anchorMax = new Vector2(0f, 1f);
-            shieldBarRect.pivot = new Vector2(0f, 1f);
-            shieldBarRect.anchoredPosition = new Vector2(10f, -10f);
-            shieldBarRect.sizeDelta = new Vector2(shieldBarWidth, shieldBarHeight);
+            return;
         }
+        Transform child = !string.IsNullOrEmpty(shieldImageObjectName) ? transform.Find(shieldImageObjectName) : null;
+        if (child != null)
+        {
+            var img = child.GetComponent<Image>();
+            if (img != null)
+            {
+                shieldBarImage = img;
+                shieldBarRect = img.rectTransform;
+                return;
+            }
+        }
+        GameObject go = new GameObject("ShieldBar");
+        go.transform.SetParent(transform, false);
+        shieldBarImage = go.AddComponent<Image>();
+        shieldBarImage.color = Color.cyan;
+        shieldBarRect = shieldBarImage.rectTransform;
+        shieldBarRect.anchorMin = new Vector2(0f, 1f);
+        shieldBarRect.anchorMax = new Vector2(0f, 1f);
+        shieldBarRect.pivot = new Vector2(0f, 1f);
+        shieldBarRect.anchoredPosition = new Vector2(10f, -10f);
+        shieldBarRect.sizeDelta = new Vector2(shieldBarWidth, shieldBarHeight);
     }
 
     private void UpdateShieldBar()
@@ -749,6 +776,12 @@ public class PlayerHealthUI : MonoBehaviour
         {
             swordHandle.sprite = (h >= 1) ? handleFullSprite : handleEmptySprite;
         }
+    }
+
+    private void SetAxeHUDVisible(bool visible)
+    {
+        if (axeHud != null) axeHud.SetActive(visible);
+        if (axeText != null) axeText.gameObject.SetActive(visible);
     }
 
     void UpdateHeadPosition()

@@ -12,16 +12,14 @@ public class TownStalkerAttackAdapter : MonoBehaviour, IAttackPattern
 
     private void OnEnable()
     {
-        if (autoStartOnEnable) StartAttack();
+        if (controller != null) controller.enabled = true;
+        running = true;
+        startTime = Time.time;
     }
 
     private void Update()
     {
-        if (running && Time.time - startTime >= duration)
-        {
-            StopAttack();
-            OnFinished?.Invoke();
-        }
+        if (controller != null && !controller.enabled) controller.enabled = true;
     }
 
     public void StartAttack()
@@ -34,6 +32,6 @@ public class TownStalkerAttackAdapter : MonoBehaviour, IAttackPattern
     public void StopAttack()
     {
         running = false;
-        if (controller != null) controller.enabled = false;
+        if (controller != null) controller.enabled = true;
     }
 }

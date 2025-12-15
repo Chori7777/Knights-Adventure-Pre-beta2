@@ -61,7 +61,7 @@ public class ControladorDatosJuego : MonoBehaviour
             StartCoroutine(SaveInitialCheckpointAfterLoad(scene.name));
         }
 
-        
+        StartCoroutine(ApplyAbilityLocksAfterLoad());
     }
 
     // 🔹 REPOSICIONAMIENTO UNIFICADO
@@ -143,6 +143,19 @@ public class ControladorDatosJuego : MonoBehaviour
         IsLoadingFromCheckpoint = false;
         IsLoadingFromContinue = false;
         Debug.Log("[Save] Flags reseteados");
+    }
+    private IEnumerator ApplyAbilityLocksAfterLoad()
+    {
+        yield return new WaitForSeconds(0.1f);
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null) yield break;
+        var pm = player.GetComponent<PlayerMovement>();
+        if (pm == null) yield break;
+        pm.canBlock = datosjuego.hasShield;
+        pm.canWallCling = datosjuego.hasWallCling;
+        pm.canDoubleJump = datosjuego.hasDoubleJump;
+        pm.canDash = datosjuego.hasDash;
+        pm.canThrowProjectile = datosjuego.hasRangedAttack;
     }
 
     // ═══════════════════════════════════════════════════
@@ -328,5 +341,14 @@ public class ControladorDatosJuego : MonoBehaviour
             datosjuego.objetosDestruidos.Add(objetoID);
             GuardarDatos(false);
         }
+    }
+
+    // VARIANTE DE INICIO (Original vs NewGamePlus)
+    public void SetStartModeVariant(int variant)
+    {
+        datosjuego.startModeVariant = Mathf.Clamp(variant, 0, 1);
+        GuardarDatos(false);
+        ChangeScene.MainMenuVariation = datosjuego.startModeVariant;
+        Debug.Log("[Save] startModeVariant actualizado a " + datosjuego.startModeVariant);
     }
 }

@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7122209632354133482
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2331378152008374985, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 613594893210079028, guid: d31f394e6bcc8f240a7f1f7e2443bd22, type: 3}
+    - target: {fileID: 7928909626965100518, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_Name
+      value: Explorer Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925962398805234337, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: npcID
+      value: fallen01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925962398805234337, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: isCorpse
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925962398805234337, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: giveRewards
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925962398805234337, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: rewards.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925962398805234337, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: dialogueLines.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925962398805234337, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: rewards.Array.data[0].type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925962398805234337, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: 'dialogueLines.Array.data[1]'
+      value: What would have happened if the world had been saved?
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925962398805234337, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: 'dialogueLines.Array.data[2]'
+      value: Would we still have eyes? Would we still have freedom?
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925962398805234337, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: 'dialogueLines.Array.data[3]'
+      value: '*The body writhes, awaiting its end'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925962398805234337, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: 'dialogueLines.Array.data[4]'
+      value: '*you devour it, you gain one life. life'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925962398805234337, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: rewards.Array.data[0].amount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189561057991911118, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -24.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189561057991911118, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -18.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189561057991911118, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189561057991911118, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189561057991911118, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189561057991911118, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189561057991911118, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189561057991911118, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189561057991911118, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189561057991911118, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}

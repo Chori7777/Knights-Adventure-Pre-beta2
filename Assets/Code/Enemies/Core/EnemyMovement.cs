@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     [Header("Patrulla")]
@@ -129,5 +129,15 @@ public class EnemyMovement : MonoBehaviour
             Vector3 rayOrigin = groundCheck.position + offset;
             Gizmos.DrawLine(rayOrigin, rayOrigin + Vector3.down * groundCheckDistance);
         }
+    }
+
+    public void SetDetectionRange(float range)
+    {
+        detectionRange = range;
+    }
+
+    public void SetCanChase(bool value)
+    {
+        canChasePlayer = value;
     }
 }

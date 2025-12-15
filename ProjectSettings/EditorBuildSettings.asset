@@ -12,12 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/AllMenus/MainMenu.unity
     guid: 2f1206038a7dad647ae9b2ef6601aeb9
   - enabled: 1
-    path: Assets/Scenes/AllMenus/CharacterSelector.unity
-    guid: fc0c62bc2f735ad469fa547ec48ffc5b
-  - enabled: 1
-    path: Assets/Scenes/ALTMenus/CharacterSelectorAlternative.unity
-    guid: 26acd2745d60bdd4c8dea67f44a872ed
-  - enabled: 1
     path: Assets/Scenes/Story/StoryPreForest.unity
     guid: bb85212219d027d419bd541af6117e21
   - enabled: 1
@@ -31,7 +25,7 @@ EditorBuildSettings:
     guid: 6561868039f692c4383e38cf51282567
   - enabled: 1
     path: Assets/Scenes/Story/StoryPreTown.unity
-    guid: 842dee71949b66a41a3d81f9466f158e
+    guid: 2bedac7750e3faa4b847cdc210eea70f
   - enabled: 1
     path: Assets/Scenes/NormalMaps/TheTown.unity
     guid: d912ef3a05a144645b611363bf79b13f
@@ -63,17 +57,35 @@ EditorBuildSettings:
     path: Assets/Scenes/ALTMaps/AlternativeForest.unity
     guid: cceb932bd0aa4bc45ae95a631ace4e52
   - enabled: 1
+    path: Assets/Scenes/Story/StoryPreSnowBoss.unity
+    guid: c3b06d9cefd8d0d4aa59bdb22c701422
+  - enabled: 1
     path: Assets/Scenes/ALTMaps/ALTBosses/SnowBoss.unity
     guid: 4d0a16dbe3e27a14789e8ed0cd944462
   - enabled: 1
+    path: Assets/Scenes/Story/StoryPostSnowBoss.unity
+    guid: d1a771ec753f87245891d3302e6a4a45
+  - enabled: 1
+    path: Assets/Scenes/Story/StoryPreAltTown.unity
+    guid: 4ec0234923732054ca78601cba85b01f
+  - enabled: 1
     path: Assets/Scenes/ALTMaps/AlternativeTown.unity
     guid: 18c47db67cb8258468df008485171931
-  - enabled: 0
-    path: Assets/Scenes/ALTMaps/ALTBosses/AlchemyBoss.unity
-    guid: 71f8189ad6df23841ae68b71fc86e979
+  - enabled: 1
+    path: Assets/Scenes/Story/StoryPreFinalZone.unity
+    guid: dd0d01aa50c823f43b5f4fb43e3a0784
+  - enabled: 1
+    path: Assets/Scenes/ALTMaps/AlternativeTower.unity
+    guid: 61229675fb3f51e45997343158b65dfb
+  - enabled: 1
+    path: Assets/Scenes/Story/StoryPreFinalRealBoss.unity
+    guid: b6f658c730027ca41b6368893ea51fa3
   - enabled: 1
     path: Assets/Scenes/ALTMaps/ALTBosses/FinalRealBoss...unity
     guid: 0f3a44a8c2b7dad41aa83f6c55bc0b74
+  - enabled: 1
+    path: Assets/Scenes/ALTMaps/ALTBosses/TheEndMenu.unity
+    guid: b19cbc4abeaa2cc49bd9d6f9519e90fb
   - enabled: 1
     path: Assets/Scenes/ALTMenus/GameOverALT.unity
     guid: 3f38a9f42d387034bb064ac63072b6ee

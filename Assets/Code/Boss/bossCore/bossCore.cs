@@ -25,6 +25,7 @@ public class bossCore : MonoBehaviour
     public int CurrentPhase = 1;
 
     public Vector2 PlayerPosition => player != null ? (Vector2)player.position : Vector2.zero;
+    [SerializeField] private bool enableAutoFlip = true;
 
     private void Awake()
     {
@@ -90,6 +91,7 @@ public class bossCore : MonoBehaviour
 
     public void FacePlayer()
     {
+        if (!enableAutoFlip) return;
         if (player == null) return;
 
         transform.localScale = player.position.x < transform.position.x
@@ -186,6 +188,11 @@ public class bossCore : MonoBehaviour
     public bool CanTakeDamage()
     {
         return !IsDead && IsVulnerable;
+    }
+
+    public void SetAutoFlip(bool enabled)
+    {
+        enableAutoFlip = enabled;
     }
 
     // ========== GIZMOS ==========

@@ -207,20 +207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32c1b49aae24f874bb284f1c9f86e1df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floatY: 1
-  floatAmplitude: 10
-  floatDuration: 2
-  pulseScale: 0
-  pulseAmount: 0.05
-  pulseDuration: 1.5
-  rotate: 0
-  rotateAmount: 2
-  rotateDuration: 3
-  shake: 0
-  shakeDuration: 0.6
-  shakeStrength: 8
-  shakeVibrato: 20
-  shakeRandomness: 90
 --- !u!1 &1129753162
 GameObject:
   m_ObjectHideFlags: 0
@@ -1002,16 +988,16 @@ MonoBehaviour:
   tiempoFade: 1.5
   canvasGroup: {fileID: 1129753167}
   textos:
-  - 'Still, you feel invigorated knowing you are getting closer and closer to your
-    goal, and closer to the acclaimed golden armor '
-  - You look upwards to the towering castle, you had forgotten how big it was
-  - The king, knowing that time was running out before they reached the castle, led
-    you through a secret passage, where he told you about the golden armor and why
-    you had to retrieve it.
-  - Slowly, you start to make your way into the tower, getting closer to the origin
-    of the evil that plagues the land
-  - 'You are finally here, at the top of the tower, and yet, the most important fight
-    is just around the corner '
+  - 'You are wounded and with no energy, you trained for many, many years, and yet,
+    the enemies in the forest gave you a hard fight '
+  - ' In spite of everything, you keep walking, not without cheking your surroundings
+    every few seconds, as the forest taught you that evil never rests'
+  - ' After walking for what felt like hours, you finally get to the entrance of
+    the city, now overtaken by plants and fungi'
+  - While seeing the ancient entrance in this state, a sense of melancholy drowns
+    you as you start to wonder if the whole city is this way.
+  - After melancholy passes, a strong feeling of determination comes, giving you
+    renewed energy and the hope of ending the evil that did this
   textoHistoria: {fileID: 2117075771}
 --- !u!224 &2147043160
 RectTransform:

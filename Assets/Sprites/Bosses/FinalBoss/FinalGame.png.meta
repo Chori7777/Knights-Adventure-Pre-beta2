@@ -112,12 +112,12 @@ TextureImporter:
       name: FinalGame_0
       rect:
         serializedVersion: 2
-        x: 40
+        x: 0
         y: 0
-        width: 106
+        width: 192
         height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -134,12 +134,12 @@ TextureImporter:
       name: FinalGame_1
       rect:
         serializedVersion: 2
-        x: 249
-        y: 11
-        width: 77
-        height: 68
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 192
+        y: 0
+        width: 192
+        height: 96
+      alignment: 9
+      pivot: {x: 0.2752942, y: 0.50946105}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -156,42 +156,20 @@ TextureImporter:
       name: FinalGame_2
       rect:
         serializedVersion: 2
-        x: 447
-        y: 15
-        width: 64
-        height: 62
+        x: 576
+        y: 0
+        width: 192
+        height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 6922477b85666d450800000000000000
-      internalID: 6113186075423023766
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: FinalGame_3
-      rect:
-        serializedVersion: 2
-        x: 631
-        y: 6
-        width: 78
-        height: 76
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1b4789bed049873e0800000000000000
-      internalID: -2055730442386508623
+      spriteID: d0c01a621eb06d34b82770dd2fd23be1
+      internalID: -1286522315
       vertices: []
       indices: 
       edges: []
@@ -200,7 +178,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 8fe7797969ac90c4b879ab6e98cc17fe
     internalID: 0
     vertices: []
     indices: 
@@ -212,8 +190,7 @@ TextureImporter:
     nameFileIdTable:
       FinalGame_0: 1617330937528377661
       FinalGame_1: -6701442206409933694
-      FinalGame_2: 6113186075423023766
-      FinalGame_3: -2055730442386508623
+      FinalGame_2: -1286522315
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

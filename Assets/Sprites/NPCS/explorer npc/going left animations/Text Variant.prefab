@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7918342298463005566
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2331378152008374985, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2331378152008374985, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928909626965100518, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_Name
+      value: Text Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925962398805234337, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: dialogueLines.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925962398805234337, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: 'dialogueLines.Array.data[0]'
+      value: Locked, perhaps a key will allow access to the corpse
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925962398805234337, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: 'dialogueLines.Array.data[1]'
+      value: '"So the king has entrusted you with saving the world!"'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925962398805234337, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: 'dialogueLines.Array.data[2]'
+      value: '"I wish I were in your position! But I can barely hold my own against
+        a gnome... "'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925962398805234337, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: 'dialogueLines.Array.data[3]'
+      value: '"We were sent with you to provide you with equipment! "'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925962398805234337, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: 'dialogueLines.Array.data[4]'
+      value: '"Obviously, at a cost... But you''ll see that as you progress!"'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925962398805234337, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: 'dialogueLines.Array.data[5]'
+      value: '"The kingdom''s witch is waiting for you at the back to give you your
+        new equipment. "'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925962398805234337, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: 'dialogueLines.Array.data[6]'
+      value: '"The king thought your tools were a bit crude. Go to the back with
+        her!"'
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189561057991911118, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 124.492096
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189561057991911118, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -24.972038
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189561057991911118, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189561057991911118, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189561057991911118, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189561057991911118, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189561057991911118, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189561057991911118, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189561057991911118, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189561057991911118, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 72630b16283a27548bfdb9ee1e8cad29, type: 3}

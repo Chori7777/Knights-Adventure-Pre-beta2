@@ -5,6 +5,43 @@ using System.IO;
 public class ChangeScene : MonoBehaviour
 {
     public static int MainMenuVariation = 0;
+    private void Start()
+    {
+        string escenaActual = SceneManager.GetActiveScene().name;
+        if (escenaActual == "MainMenu")
+        {
+            if (ControladorDatosJuego.Instance == null)
+            {
+                var go = new GameObject("ControladorDatosJuego");
+                go.AddComponent<ControladorDatosJuego>();
+            }
+            else
+            {
+                ControladorDatosJuego.Instance.CargarDatos();
+            }
+            if (AudioManager.Instance == null)
+            {
+                var go2 = new GameObject("AudioManager");
+                go2.AddComponent<AudioManager>();
+            }
+            int variant = MainMenuVariation;
+            if (ControladorDatosJuego.Instance != null)
+            {
+                variant = ControladorDatosJuego.Instance.datosjuego.startModeVariant;
+                MainMenuVariation = variant;
+            }
+            if (variant == 1)
+            {
+                NewGamePlus();
+                return;
+            }
+            if (variant == 2)
+            {
+                CargarEscena("TheEnd");
+                return;
+            }
+        }
+    }
 
     private void CargarEscena(string nombreEscena)
     {
@@ -51,7 +88,10 @@ public class ChangeScene : MonoBehaviour
 
     public void MainMenu()
     {
-        MainMenuVariation = 0;
+        if (ControladorDatosJuego.Instance != null)
+        {
+            MainMenuVariation = ControladorDatosJuego.Instance.datosjuego.startModeVariant;
+        }
         CargarEscena("MainMenu");
     }
 
@@ -62,16 +102,18 @@ public class ChangeScene : MonoBehaviour
         {
             ControladorDatosJuego.Instance.ResetearDatos();
             ControladorDatosJuego.Instance.datosjuego.jefesDerrotados.Clear();
+            ControladorDatosJuego.Instance.datosjuego.startModeVariant = MainMenuVariation;
+        }
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.SetMasterVolume(1f);
+            AudioManager.Instance.SetMusicVolume(1f);
+            AudioManager.Instance.SetSFXVolume(1f);
         }
 
-        if (MainMenuVariation == 0)
-        {
-            CargarEscena("CharacterSelector");
-        }
-        else if (MainMenuVariation == 1)
-        {
-            CargarEscena("CharacterSelectorAlternative");
-        }
+        CargarEscena("TheForest");
     }
 
 
@@ -118,5 +160,49 @@ public class ChangeScene : MonoBehaviour
     public void SetMenuVariation(int variation)
     {
         MainMenuVariation = variation;
+        if (ControladorDatosJuego.Instance != null)
+        {
+            ControladorDatosJuego.Instance.SetStartModeVariant(variation);
+        }
+    }
+
+    public void NewGamePlus()
+    {
+        SetMenuVariation(1);
+        BorrarPartidaGuardada();
+        if (ControladorDatosJuego.Instance != null)
+        {
+            ControladorDatosJuego.Instance.ResetearDatos();
+            ControladorDatosJuego.Instance.datosjuego.jefesDerrotados.Clear();
+            ControladorDatosJuego.Instance.datosjuego.startModeVariant = MainMenuVariation;
+        }
+        CargarEscena("StoryPreSnowBoss");
+    }
+
+    public void ReturnToOriginalGame()
+    {
+        SetMenuVariation(0);
+        MainMenu();
+    }
+
+    public void StartGame()
+    {
+        int variant = MainMenuVariation;
+        if (ControladorDatosJuego.Instance != null)
+        {
+            variant = ControladorDatosJuego.Instance.datosjuego.startModeVariant;
+            MainMenuVariation = variant;
+        }
+        if (variant == 1)
+        {
+            NewGamePlus();
+            return;
+        }
+        if (variant == 2)
+        {
+            CargarEscena("TheEnd");
+            return;
+        }
+        NewGame();
     }
 }

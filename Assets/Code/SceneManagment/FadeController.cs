@@ -105,7 +105,7 @@ public class FadeController : MonoBehaviour
         Debug.Log(" Fade out iniciado");
 
         // 2. Esperar a que termine la animación
-        yield return new WaitForSeconds(duracionFadeOut);
+        yield return new WaitForSecondsRealtime(duracionFadeOut);
 
         // 3. Cambiar de escena
         Debug.Log(" Cambiando a escena: " + nombreEscena);

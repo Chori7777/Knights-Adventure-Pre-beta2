@@ -1,5 +1,7 @@
 using UnityEngine;
+using System.Collections;
 using UnityEngine.Tilemaps;
+using UnityEngine.Events;
 
 public class KeyPickup : MonoBehaviour
 {
@@ -9,7 +11,13 @@ public class KeyPickup : MonoBehaviour
 
     [Header("Efectos opcionales")]
     [SerializeField] private AudioClip pickupSound;
+    [SerializeField] private float pickupVolume = 0.7f;
     [SerializeField] private GameObject pickupEffect;
+    [Header("Trigger")]
+    [SerializeField] private UnityEvent onPickedUp;
+    [Header("Shake del objeto")]
+    [SerializeField] private float objectShakeDuration = 0.15f;
+    [SerializeField] private float objectShakeIntensity = 0.1f;
 
     private AudioSource audioSource;
 
@@ -24,33 +32,63 @@ public class KeyPickup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Verifica si el jugador entró al trigger
-        if (collision.CompareTag("Player"))
+        if (!collision.CompareTag("Player")) return;
+        StartCoroutine(PickupSequence(collision));
+    }
+
+    private IEnumerator PickupSequence(Collider2D collision)
+    {
+        if (pickupSound != null)
         {
-            // Reproduce sonido
-            if (audioSource != null && pickupSound != null)
-                audioSource.PlayOneShot(pickupSound);
-
-            // Efecto visual
-            if (pickupEffect != null)
-                Instantiate(pickupEffect, transform.position, Quaternion.identity);
-
-            // Destruye los Tilemaps
-            foreach (Tilemap tm in tilemapsToDestroy)
+            float randomPitch = Random.Range(0.9f, 1.1f);
+            if (AudioManager.Instance != null)
             {
-                if (tm != null)
-                    Destroy(tm.gameObject);
+                AudioManager.Instance.PlaySFX(pickupSound, pickupVolume, randomPitch);
             }
-
-            // Destruye objetos adicionales (puertas, bloques, etc)
-            foreach (GameObject obj in objectsToDestroy)
+            else if (audioSource != null)
             {
-                if (obj != null)
-                    Destroy(obj);
+                audioSource.pitch = randomPitch;
+                audioSource.PlayOneShot(pickupSound, pickupVolume);
             }
-
-            // Destruye la llave (el propio objeto)
-            Destroy(gameObject);
         }
+
+        if (pickupEffect != null)
+            Instantiate(pickupEffect, transform.position, Quaternion.identity);
+
+        yield return StartCoroutine(ShakeObject());
+
+        var pm = collision.GetComponent<PlayerMovement>();
+        if (pm != null)
+        {
+            pm.TriggerCameraShake();
+        }
+
+        foreach (Tilemap tm in tilemapsToDestroy)
+        {
+            if (tm != null)
+                Destroy(tm.gameObject);
+        }
+        foreach (GameObject obj in objectsToDestroy)
+        {
+            if (obj != null)
+                Destroy(obj);
+        }
+        onPickedUp?.Invoke();
+        Destroy(gameObject);
+    }
+
+    private IEnumerator ShakeObject()
+    {
+        Vector3 original = transform.localPosition;
+        float t = 0f;
+        while (t < objectShakeDuration)
+        {
+            float x = Random.Range(-1f, 1f) * objectShakeIntensity;
+            float y = Random.Range(-1f, 1f) * objectShakeIntensity;
+            transform.localPosition = original + new Vector3(x, y, 0f);
+            t += Time.deltaTime;
+            yield return null;
+        }
+        transform.localPosition = original;
     }
 }

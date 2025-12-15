@@ -43,11 +43,14 @@ public class DatosJuego
     public bool hasWallCling = true;      
     public bool hasDoubleJump = true;    
     public bool hasDash = true;           
-    public bool hasRangedAttack = false;
+    public bool hasRangedAttack = true;
 
     //  MEJORAS DE STATS 
-    public int maxHealthUpgrades = 0;    
+    public int maxPotionsUpgrades = 0;    
     public int attackDamageUpgrades = 0; 
     public int maxAxesUpgrades = 0;       
-    public int maxPotionsUpgrades = 0;    
+
+
+    // VARIANTE DE INICIO (0=Original, 1=NewGamePlus)
+    public int startModeVariant = 0;
 }

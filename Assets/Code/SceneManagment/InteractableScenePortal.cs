@@ -19,6 +19,13 @@ public class InteractableScenePortal : MonoBehaviour
     [SerializeField] public bool showWindowsDialogOnInteract = false;
     [SerializeField] public string windowsDialogMessage = "¿Ir al final del juego?";
     [SerializeField] public bool goToLastSceneInBuild = true;
+    [Header("Secuencia de final")]
+    [SerializeField] public bool enableEndGameSequence = false;
+    [SerializeField] public string storySceneName = "";
+    [SerializeField] public float storyDurationSeconds = 6f;
+    [SerializeField] public string creditsSceneName = "";
+    [SerializeField] public float creditsDurationSeconds = 10f;
+    [SerializeField] public string endScreenSceneName = "";
 
     [Header("Transformaciones al interactuar")]
     [SerializeField] public bool enlargeOnInteract = true;
@@ -79,6 +86,14 @@ public class InteractableScenePortal : MonoBehaviour
         if (showWindowsDialogOnInteract)
         {
             yield return ShowWindowsDialogAndWait();
+        }
+
+        if (enableEndGameSequence)
+        {
+            if (PauseMenuController.Instance != null) PauseMenuController.Instance.SetPauseEnabled(false);
+            if (PlayerHealthUI.Instance != null) PlayerHealthUI.Instance.SetHUDVisibility(false);
+            yield return StartCoroutine(RunEndGameSequence());
+            yield break;
         }
 
         if (goToLastSceneInBuild)
@@ -177,5 +192,42 @@ public class InteractableScenePortal : MonoBehaviour
         }
         Destroy(canvasGO);
         yield return null;
+    }
+
+    private IEnumerator RunEndGameSequence()
+    {
+        if (!string.IsNullOrEmpty(storySceneName))
+        {
+            if (FadeController.Instance != null && useFade)
+                FadeController.Instance.CambiarEscenaConFade(storySceneName);
+            else
+                SceneManager.LoadScene(storySceneName);
+            float t = 0f;
+            while (t < Mathf.Max(0f, storyDurationSeconds))
+            {
+                t += Time.unscaledDeltaTime;
+                yield return null;
+            }
+        }
+        if (!string.IsNullOrEmpty(creditsSceneName))
+        {
+            if (FadeController.Instance != null && useFade)
+                FadeController.Instance.CambiarEscenaConFade(creditsSceneName);
+            else
+                SceneManager.LoadScene(creditsSceneName);
+            float t = 0f;
+            while (t < Mathf.Max(0f, creditsDurationSeconds))
+            {
+                t += Time.unscaledDeltaTime;
+                yield return null;
+            }
+        }
+        if (!string.IsNullOrEmpty(endScreenSceneName))
+        {
+            if (FadeController.Instance != null && useFade)
+                FadeController.Instance.CambiarEscenaConFade(endScreenSceneName);
+            else
+                SceneManager.LoadScene(endScreenSceneName);
+        }
     }
 }

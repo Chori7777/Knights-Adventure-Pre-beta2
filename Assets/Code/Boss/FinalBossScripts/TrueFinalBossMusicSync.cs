@@ -38,6 +38,7 @@ public class TrueFinalBossMusicSync : MonoBehaviour
     private void Update()
     {
         if (musicSource == null || events == null) return;
+        if (musicSource.clip == null) { lastMusicTime = 0f; return; }
         float t = musicSource.time;
         if (autoStartOnMusicPlay && !enabled && musicSource.isPlaying)
         {

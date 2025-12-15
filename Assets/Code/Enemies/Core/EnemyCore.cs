@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class EnemyCore : MonoBehaviour
 {
@@ -22,6 +22,7 @@ public class EnemyCore : MonoBehaviour
 
     public bool FacingRight { get; private set; } = true;
     public Vector2 FacingDirection => FacingRight ? Vector2.right : Vector2.left;
+    [SerializeField] private bool enableAutoFlip = true;
 
     private void Awake()
     {
@@ -68,6 +69,7 @@ public class EnemyCore : MonoBehaviour
 
     public void FaceDirection(Vector2 direction)
     {
+        if (!enableAutoFlip) return;
         if (direction.x > 0 && !FacingRight)
         {
             Flip();
@@ -87,6 +89,7 @@ public class EnemyCore : MonoBehaviour
 
     private void Flip()
     {
+        if (!enableAutoFlip) return;
         FacingRight = !FacingRight;
         Vector3 scale = transform.localScale;
         scale.x *= -1;
@@ -132,5 +135,10 @@ public class EnemyCore : MonoBehaviour
     {
         if (player == null) return Vector2.zero;
         return (player.position - transform.position).normalized;
+    }
+
+    public void SetAutoFlip(bool enabled)
+    {
+        enableAutoFlip = enabled;
     }
 }

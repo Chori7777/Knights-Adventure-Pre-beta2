@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class BossLife : MonoBehaviour
 {
@@ -67,6 +68,7 @@ public class BossLife : MonoBehaviour
     [SerializeField] private GameObject dropPrefab;
     [SerializeField] private Vector3 dropSpawnOffset;
     [SerializeField] private bool dropOnDeath = true;
+    [SerializeField] private float dropSpawnDelay = 1.5f;
 
     [Header("Muerte - Diálogo y acciones")]
     [SerializeField] private bool shakeDuringDeath = true;
@@ -87,6 +89,8 @@ public class BossLife : MonoBehaviour
     [SerializeField] private string portalLayerName = "";
     [Header("Muerte - Tiempos")]
     [SerializeField] private float deathAnimMinimumWait = 1.2f;
+    [SerializeField] private float finalDespawnDelay = 0.3f;
+    [SerializeField] private float maxDeathSequenceDuration = 5f;
     [Header("Muerte - Estrella y efectos")]
     [SerializeField] private bool spawnStarOnDeath = false;
     [SerializeField] private GameObject starPrefab;
@@ -94,6 +98,20 @@ public class BossLife : MonoBehaviour
     [SerializeField] private float starSpawnDelay = 2f;
     [SerializeField] private bool applyMapEffectsOnStarSpawn = true;
     private bool starSpawned = false;
+    [Header("Muerte - Música")]
+    [SerializeField] private bool stopMusicOnDeath = false;
+    [SerializeField] private bool playVictoryMusicOnDeath = true;
+    [SerializeField] private AudioClip victoryMusicClip;
+    [SerializeField] private float victoryMusicVolume = 1f;
+    [SerializeField] private bool victoryMusicLoop = true;
+    [SerializeField] private bool victoryMusicFade = true;
+    [Header("New Game Plus")]
+    [SerializeField] private bool activateNewGamePlusOnDeath = false;
+    [SerializeField] private string newGamePlusStorySceneName = "";
+    [Header("Root del jefe")]
+    [SerializeField] private Transform bossRoot;
+    public bool IsDead => isDead;
+    public System.Action OnDeathDialoguesComplete;
 
 
     private void Awake()
@@ -254,26 +272,64 @@ public class BossLife : MonoBehaviour
 
         isDead = true;
         recibiendoDanio = false;
+        Debug.Log("[BossLife] Inicio de Die()");
 
+        var controller = FindFirstObjectByType<TrueFinalBossController>(FindObjectsInactive.Include);
+        if (controller != null)
+        {
+            controller.ForceStopAllBossAttacks();
+            Debug.Log("[BossLife] ForceStopAllBossAttacks ejecutado");
+        }
+        StopChildAttackBehaviours();
+        Debug.Log("[BossLife] StopChildAttackBehaviours ejecutado");
         if (scriptAtaque != null)
         {
             scriptAtaque.StopAllCoroutines();
             scriptAtaque.enabled = false;
+            Debug.Log("[BossLife] scriptAtaque deshabilitado");
         }
+        if (eyeRoutine != null)
+        {
+            StopCoroutine(eyeRoutine);
+            eyeRoutine = null;
+            Debug.Log("[BossLife] EyeCycle detenido");
+        }
+        enableEyeCycle = false;
 
         if (anim != null)
         {
             anim.SetBool("damage", false);
             anim.SetBool("Death", true);
+            if (!string.IsNullOrEmpty(deathAnimationStateName))
+            {
+                anim.Play(deathAnimationStateName, 0, 0f);
+                Debug.Log("[BossLife] Animación Death forzada");
+            }
         }
 
         if (rb != null)
+        {
             rb.linearVelocity = Vector2.zero;
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
 
         Collider2D col = GetComponent<Collider2D>();
         if (col != null)
             col.enabled = false;
+        FreezeChildRigidbodiesAndColliders();
+        var audios = GetComponentsInChildren<AudioSource>(true);
+        for (int i = 0; i < audios.Length; i++)
+        {
+            var a = audios[i];
+            if (a == null) continue;
+            if (a.isPlaying) a.Stop();
+            a.clip = null;
+        }
+        Debug.Log("[BossLife] Música detenida (AudioSource local)");
 
+        var pause = PauseMenuController.Instance;
+        if (pause != null) pause.SetPauseEnabled(false);
+        if (PlayerHealthUI.Instance != null) PlayerHealthUI.Instance.SetHUDVisibility(false);
  
         GiveScore();
 
@@ -310,6 +366,8 @@ public class BossLife : MonoBehaviour
 
     private IEnumerator DeathSequence()
     {
+        float startTime = Time.unscaledTime;
+        float deadline = startTime + Mathf.Max(0f, maxDeathSequenceDuration);
         if (bossTrigger != null)
             bossTrigger.JefeDerrotado();
 
@@ -323,11 +381,29 @@ public class BossLife : MonoBehaviour
 
         if (dropOnDeath && dropPrefab != null)
         {
-            Vector3 dropPos = transform.position + dropSpawnOffset;
-            Instantiate(dropPrefab, dropPos, Quaternion.identity);
+            bool sameAsStar = spawnStarOnDeath && starPrefab != null && dropPrefab == starPrefab;
+            if (sameAsStar)
+            {
+                Debug.Log("[BossLife] Drop omitido: mismo prefab que Star");
+            }
+            else
+            {
+                float d = Mathf.Max(0f, dropSpawnDelay);
+                if (d > 0f) yield return SpawnDropWithDelay(d);
+                else
+                {
+                    Vector3 dropPos = transform.position + dropSpawnOffset;
+                    Instantiate(dropPrefab, dropPos, Quaternion.identity);
+                }
+            }
         }
 
-        AudioManager.Instance.StopMusic(true);
+        if (AudioManager.Instance != null && stopMusicOnDeath)
+            AudioManager.Instance.StopMusic(true);
+        if (playVictoryMusicOnDeath && victoryMusicClip != null && AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayMusic(victoryMusicClip, Mathf.Clamp01(victoryMusicVolume), victoryMusicLoop, victoryMusicFade);
+        }
 
         if (shakeDuringDeath)
         {
@@ -343,8 +419,12 @@ public class BossLife : MonoBehaviour
         {
             yield return TextManager.Instance.PlaySequenceAndWait(deathDialogues);
         }
+        OnDeathDialoguesComplete?.Invoke();
 
-        yield return WaitForDeathAnimationEndOrTimeout(5f);
+        float remainingForAnim = Mathf.Max(0f, deadline - Time.unscaledTime - finalDespawnDelay);
+        float animTimeout = Mathf.Min(5f, remainingForAnim);
+        if (animTimeout > 0f)
+            yield return WaitForDeathAnimationEndOrTimeout(animTimeout);
 
         if (objectsToDestroyOnDeath != null)
         {
@@ -368,9 +448,26 @@ public class BossLife : MonoBehaviour
         }
         if (spawnStarOnDeath)
         {
-            yield return StartCoroutine(StarSpawnTimer(starSpawnDelay));
+            var external = FindFirstObjectByType<StarSpawnOnDialogueEnd>(FindObjectsInactive.Include);
+            if (external == null)
+            {
+                float remainingForStar = Mathf.Max(0f, deadline - Time.unscaledTime - finalDespawnDelay);
+                float delay = Mathf.Min(Mathf.Max(starSpawnDelay, 0.5f), remainingForStar);
+                yield return StartCoroutine(StarSpawnTimer(delay));
+            }
         }
-        yield return new WaitForSeconds(0.3f);
+        if (activateNewGamePlusOnDeath && ControladorDatosJuego.Instance != null)
+        {
+            ControladorDatosJuego.Instance.SetStartModeVariant(1);
+            if (!string.IsNullOrEmpty(newGamePlusStorySceneName))
+            {
+                SceneManager.LoadScene(newGamePlusStorySceneName);
+                yield break;
+            }
+        }
+        float finalWait = Mathf.Max(0f, deadline - Time.unscaledTime);
+        yield return new WaitForSecondsRealtime(finalWait);
+        Debug.Log("[BossLife] Destruyendo GameObject del jefe");
         Destroy(gameObject);
     }
 
@@ -467,7 +564,16 @@ public class BossLife : MonoBehaviour
 
     public void TriggerStarSpawnNow()
     {
-        if (starSpawned) return;
+        if (!spawnStarOnDeath)
+        {
+            Debug.Log("[BossLife] spawnStarOnDeath==false, no se genera estrella");
+            return;
+        }
+        if (starSpawned)
+        {
+            Debug.Log("[BossLife] Estrella ya fue generada, ignorando llamada duplicada");
+            return;
+        }
         if (applyMapEffectsOnStarSpawn)
         {
             var vfx = FindFirstObjectByType<TrueFinalBossVisualEffects>(FindObjectsInactive.Include);
@@ -488,7 +594,11 @@ public class BossLife : MonoBehaviour
 
     private IEnumerator StarSpawnTimer(float delay)
     {
-        if (starSpawned) yield break;
+        if (!spawnStarOnDeath || starSpawned)
+        {
+            Debug.Log("[BossLife] StarSpawnTimer cancelado por flags");
+            yield break;
+        }
         float d = Mathf.Max(0f, delay);
         float elapsed = 0f;
         while (elapsed < d)
@@ -498,6 +608,70 @@ public class BossLife : MonoBehaviour
         }
         TriggerStarSpawnNow();
         yield return null;
+    }
+
+    private void StopChildAttackBehaviours()
+    {
+        Transform root = bossRoot != null ? bossRoot : transform;
+        var mbs = root.GetComponentsInChildren<MonoBehaviour>(true);
+        for (int i = 0; i < mbs.Length; i++)
+        {
+            var mb = mbs[i];
+            if (mb == null) continue;
+            var pat = mb as IAttackPattern;
+            if (pat != null)
+            {
+                try { pat.StopAttack(); } catch { }
+                mb.StopAllCoroutines();
+                mb.enabled = false;
+            }
+        }
+        var bullets = FindObjectsByType<BulletScript>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        for (int i = 0; i < bullets.Length; i++) { var b = bullets[i]; if (b != null) Destroy(b.gameObject); }
+        var movers = FindObjectsByType<UniversalProjectileMover>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        for (int i = 0; i < movers.Length; i++) { var m = movers[i]; if (m != null) Destroy(m.gameObject); }
+        var parab = FindObjectsByType<ParabolicBulletScript>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        for (int i = 0; i < parab.Length; i++) { var p = parab[i]; if (p != null) Destroy(p.gameObject); }
+    }
+    private void FreezeChildRigidbodiesAndColliders()
+    {
+        Transform root = bossRoot != null ? bossRoot : transform;
+        var rbs = root.GetComponentsInChildren<Rigidbody2D>(true);
+        for (int i = 0; i < rbs.Length; i++)
+        {
+            var rb2d = rbs[i];
+            if (rb2d == null) continue;
+            rb2d.linearVelocity = Vector2.zero;
+        }
+        var cols = root.GetComponentsInChildren<Collider2D>(true);
+        for (int i = 0; i < cols.Length; i++)
+        {
+            var c = cols[i];
+            if (c == null) continue;
+            c.enabled = false;
+        }
+    }
+
+    public void StopAllActiveAttacks()
+    {
+        var controller = FindFirstObjectByType<TrueFinalBossController>(FindObjectsInactive.Include);
+        if (controller != null)
+        {
+            controller.ForceStopAllBossAttacks();
+        }
+        StopChildAttackBehaviours();
+    }
+
+    private IEnumerator SpawnDropWithDelay(float delay)
+    {
+        float t = 0f;
+        while (t < delay)
+        {
+            t += Time.unscaledDeltaTime;
+            yield return null;
+        }
+        Vector3 dropPos = transform.position + dropSpawnOffset;
+        Instantiate(dropPrefab, dropPos, Quaternion.identity);
     }
 
     private IEnumerator EyeCycleRoutine()

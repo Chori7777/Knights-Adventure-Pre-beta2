@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private float musicPitch = 1f;
 
     private Coroutine musicFadeCoroutine;
+    [Header("Scene Settings")]
+    [SerializeField] public bool preserveMusicAcrossScenes = true;
 
     private void Awake()
     {
@@ -49,6 +52,37 @@ public class AudioManager : MonoBehaviour
 
         LoadVolumes();
         UpdateVolumes();
+        SceneManager.sceneLoaded += OnSceneLoadedKeepMusic;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoadedKeepMusic;
+    }
+
+    private void OnSceneLoadedKeepMusic(Scene scene, LoadSceneMode mode)
+    {
+        if (!preserveMusicAcrossScenes) return;
+        if (musicSource != null && musicSource.clip != null && !musicSource.isPlaying)
+        {
+            musicSource.Play();
+        }
+        var sources = FindObjectsByType<AudioSource>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        for (int i = 0; i < sources.Length; i++)
+        {
+            var src = sources[i];
+            if (src == null || src == musicSource) continue;
+            if (src.playOnAwake && src.loop)
+            {
+                src.playOnAwake = false;
+                if (src.isPlaying) src.Stop();
+            }
+        }
+    }
+
+    public void SetPreserveMusicAcrossScenes(bool enabled)
+    {
+        preserveMusicAcrossScenes = enabled;
     }
 
     public void PlaySFX(AudioClip clip, float volume = 1f, float pitch = 1f)
@@ -56,7 +90,7 @@ public class AudioManager : MonoBehaviour
         if (clip == null) return;
 
         sfxSource.pitch = pitch;
-        sfxSource.PlayOneShot(clip, volume * sfxVolume * masterVolume);
+        sfxSource.PlayOneShot(clip, volume);
         sfxSource.pitch = 1f;
     }
 

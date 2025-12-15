@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8737191162813594119}
   - component: {fileID: 5731565477139079106}
   - component: {fileID: 6021557916580493554}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: InteractableObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 5134330244366205205}
   - component: {fileID: 5212250132301241058}
   - component: {fileID: 8195596097586780849}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,8 +172,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1163054303
+  m_SortingLayer: 10
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8195596097586780849

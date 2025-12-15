@@ -105,7 +105,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1163054303
-  m_SortingLayer: 9
+  m_SortingLayer: 10
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0, g: 0.7942071, b: 1, a: 0.09411765}
@@ -205,7 +205,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1262583705
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: 2743055858919256353, guid: 4691816a068c7e44c9317d20077349a2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -233,6 +233,7 @@ MonoBehaviour:
   maxHealth: 5
   currentHealth: 5
   defaultStartingHealth: 5
+  isSecondCharacterMage: 0
   maxPotions: 5
   currentPotions: 3
   potionHealAmount: 1
@@ -240,6 +241,9 @@ MonoBehaviour:
   potionCooldownIndicator: {fileID: 0}
   enableAutoRechargePotions: 0
   autoRechargeInterval: 5
+  tempShieldMax: 2
+  tempShieldCurrent: 0
+  tempShieldDurationDefault: 8
   invincibilityDuration: 1
   deathAnimationName: Death
   deathFallbackDuration: 0.7
@@ -285,9 +289,9 @@ MonoBehaviour:
   dashCooldown: 0.5
   dashKey: 304
   enable4WayDash: 0
-  dashUpAsExtraJump: 1
+  dashUpAsExtraJump: 0
   dashUpJumpForce: 12
-  dashUpConsumesAirDash: 1
+  dashUpConsumesAirDash: 0
   dashUpConsumesDoubleJump: 0
   dashAuraPrefab: {fileID: 0}
   dashAuraLifetime: 0.25
@@ -332,6 +336,16 @@ MonoBehaviour:
   shieldRechargeDelay: 1.5
   shieldRechargeRate: 25
   shieldBarFill: {fileID: 0}
+  enableDashAfterimage: 1
+  dashTrailSpawnInterval: 0.035
+  dashTrailLifetime: 0.25
+  afterimageColor: {r: 1, g: 1, b: 1, a: 0.7}
+  doubleJumpAfterimageCount: 6
+  doubleJumpAfterimageInterval: 0.03
+  limitFallSpeed: 1
+  maxFallSpeed: 20
+  respawnOnFall: 1
+  fallYLimit: -50
 --- !u!50 &5419059314384228200
 Rigidbody2D:
   serializedVersion: 5
@@ -460,8 +474,17 @@ MonoBehaviour:
   enableAutoRecharge: 1
   autoRechargeInterval: 5
   autoRechargeAmount: 1
-  throwSound: {fileID: 0}
-  emptySound: {fileID: 0}
+  throwSound: {fileID: 8300000, guid: bd6a0ebcc53d4bb4faf5c4dc8ae076c9, type: 3}
+  emptySound: {fileID: 8300000, guid: 668d4177c90eec1478e77e797fbb1ce9, type: 3}
+  addTrailToAxes: 1
+  axeTrailTime: 0.25
+  axeTrailWidth: 0.08
+  axeTrailStartColor: {r: 1, g: 1, b: 1, a: 0.8}
+  axeTrailEndColor: {r: 1, g: 1, b: 1, a: 0}
+  axeUseAfterimage: 1
+  axeAfterimageInterval: 0.045
+  axeAfterimageLifetime: 0.22
+  axeAfterimageColor: {r: 1, g: 1, b: 1, a: 0.7}
 --- !u!114 &1657270733753478340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -474,7 +497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 752b91d04b9a81b4497ef09e3c664b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shieldVisual: {fileID: 0}
+  shieldVisual: {fileID: 3230430081567901213}
   useAlternateShield: 0
   alternateShieldVisual: {fileID: 0}
   blockSound: {fileID: 8300000, guid: 1bfa73a5741d7bb479036c658e12a0dd, type: 3}
@@ -490,6 +513,18 @@ MonoBehaviour:
   blockEffectDuration: 0.3
   blockKnockback: 2
   canParry: 1
+  useTemporaryHealthShieldForMage: 0
+  tempShieldAmount: 2
+  tempShieldDuration: 8
+  shieldChargesMax: 2
+  shieldChargeCooldown: 15
+  matchShieldSortingToPlayer: 1
+  shieldSortingOffset: 1
+  mageShieldBarRoot: {fileID: 0}
+  mageShieldBarImage: {fileID: 0}
+  mageShieldBarOffset: {x: 0, y: 1.5}
+  mageShieldBarObjectName: Shield Image
+  shieldHitWhileActiveSound: {fileID: 0}
 --- !u!1 &6035785815265924650
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3163057975659256225
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1651766606303554220, guid: 9fcf5ce55495fe742b08a18d645fc3e3, type: 3}
+      propertyPath: m_Name
+      value: Shop Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408532883481872222, guid: 9fcf5ce55495fe742b08a18d645fc3e3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 75.41988
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408532883481872222, guid: 9fcf5ce55495fe742b08a18d645fc3e3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -17.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408532883481872222, guid: 9fcf5ce55495fe742b08a18d645fc3e3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408532883481872222, guid: 9fcf5ce55495fe742b08a18d645fc3e3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408532883481872222, guid: 9fcf5ce55495fe742b08a18d645fc3e3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408532883481872222, guid: 9fcf5ce55495fe742b08a18d645fc3e3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408532883481872222, guid: 9fcf5ce55495fe742b08a18d645fc3e3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408532883481872222, guid: 9fcf5ce55495fe742b08a18d645fc3e3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408532883481872222, guid: 9fcf5ce55495fe742b08a18d645fc3e3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408532883481872222, guid: 9fcf5ce55495fe742b08a18d645fc3e3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3540525149563628432, guid: 9fcf5ce55495fe742b08a18d645fc3e3, type: 3}
+      propertyPath: dialogueLines.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3540525149563628432, guid: 9fcf5ce55495fe742b08a18d645fc3e3, type: 3}
+      propertyPath: rewards.Array.data[0].type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3540525149563628432, guid: 9fcf5ce55495fe742b08a18d645fc3e3, type: 3}
+      propertyPath: 'dialogueLines.Array.data[1]'
+      value: 'What would happen if evil hadn''t won? '
+      objectReference: {fileID: 0}
+    - target: {fileID: 3540525149563628432, guid: 9fcf5ce55495fe742b08a18d645fc3e3, type: 3}
+      propertyPath: 'dialogueLines.Array.data[2]'
+      value: Would we still be human? Would our souls ever find rest?
+      objectReference: {fileID: 0}
+    - target: {fileID: 3540525149563628432, guid: 9fcf5ce55495fe742b08a18d645fc3e3, type: 3}
+      propertyPath: 'dialogueLines.Array.data[3]'
+      value: At the top of the tower dwells the end
+      objectReference: {fileID: 0}
+    - target: {fileID: 3540525149563628432, guid: 9fcf5ce55495fe742b08a18d645fc3e3, type: 3}
+      propertyPath: 'dialogueLines.Array.data[4]'
+      value: The remains of a guide point your way; devour its remains and gain 1
+        extra potion!
+      objectReference: {fileID: 0}
+    - target: {fileID: 3540525149563628432, guid: 9fcf5ce55495fe742b08a18d645fc3e3, type: 3}
+      propertyPath: rewards.Array.data[0].amount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8203214972006067729, guid: 9fcf5ce55495fe742b08a18d645fc3e3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 5399313962175331825, guid: c1eddb8c15934c441b35cbb495ee3399, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9fcf5ce55495fe742b08a18d645fc3e3, type: 3}

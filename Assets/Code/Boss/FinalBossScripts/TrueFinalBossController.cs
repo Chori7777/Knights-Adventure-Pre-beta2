@@ -628,7 +628,6 @@ public class TrueFinalBossController : MonoBehaviour
             if (AudioManager.Instance != null) AudioManager.Instance.StopMusic(true);
             TextManager.Instance.ShowDialogue(endCombatDialogue);
             if (logDebug) Debug.Log("[TrueFinalBossController] Diálogo de fin de combate mostrado");
-            StartCoroutine(WaitDialogueAndSpawnStarIfConfigured());
         }
     }
 
@@ -727,14 +726,13 @@ public class TrueFinalBossController : MonoBehaviour
         slideRoutine = null;
     }
 
-    private IEnumerator WaitDialogueAndSpawnStarIfConfigured()
+    public void ForceStopAllBossAttacks()
     {
-        while (TextManager.IsOpen) yield return null;
-        var life = FindFirstObjectByType<BossLife>(FindObjectsInactive.Include);
-        if (life != null)
-        {
-            life.TriggerStarSpawnNow();
-        }
+        if (attackTimeoutRoutine != null) { StopCoroutine(attackTimeoutRoutine); attackTimeoutRoutine = null; }
+        if (bossAttackTimeoutRoutine != null) { StopCoroutine(bossAttackTimeoutRoutine); bossAttackTimeoutRoutine = null; }
+        StopZoneAttacks();
+        StopBossGlobalAttacks();
+        CleanupTransientBossObjects();
     }
 
     private IEnumerator HorizontalSlideLoop()

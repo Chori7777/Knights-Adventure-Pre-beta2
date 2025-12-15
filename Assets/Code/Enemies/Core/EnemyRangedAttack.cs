@@ -20,6 +20,16 @@ public class EnemyRangedAttack : MonoBehaviour
     [Header("Múltiples Proyectiles (Opcional)")]
     [SerializeField] private int projectileCount = 1;
     [SerializeField] private float spreadAngle = 15f; // Ángulo de dispersión
+    [Header("Visual")]
+    [SerializeField] private bool addTrailToProjectiles = true;
+    [SerializeField] private float projTrailTime = 0.25f;
+    [SerializeField] private float projTrailWidth = 0.08f;
+    [SerializeField] private Color projTrailStartColor = new Color(1f, 1f, 1f, 0.8f);
+    [SerializeField] private Color projTrailEndColor = new Color(1f, 1f, 1f, 0f);
+    [SerializeField] private bool useProjectileAfterimage = true;
+    [SerializeField] private float projAfterimageInterval = 0.045f;
+    [SerializeField] private float projAfterimageLifetime = 0.22f;
+    [SerializeField] private Color projAfterimageColor = new Color(1f, 1f, 1f, 0.7f);
 
     private EnemyCore core;
     private float lastAttackTime = -Mathf.Infinity;
@@ -104,6 +114,73 @@ public class EnemyRangedAttack : MonoBehaviour
         core.SetAttacking(false);
     }
 
+    private void AddTrail(GameObject go)
+    {
+        var tr = go.GetComponent<TrailRenderer>();
+        if (tr == null) tr = go.AddComponent<TrailRenderer>();
+        tr.time = projTrailTime;
+        tr.minVertexDistance = 0.08f;
+        tr.autodestruct = false;
+        tr.startWidth = projTrailWidth;
+        tr.endWidth = projTrailWidth * 0.7f;
+        tr.material = new Material(Shader.Find("Sprites/Default"));
+        var g = new Gradient();
+        g.SetKeys(
+            new GradientColorKey[] { new GradientColorKey(projTrailStartColor, 0f), new GradientColorKey(projTrailEndColor, 1f) },
+            new GradientAlphaKey[] { new GradientAlphaKey(projTrailStartColor.a, 0f), new GradientAlphaKey(projTrailEndColor.a, 1f) }
+        );
+        tr.colorGradient = g;
+        var sr = go.GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            tr.sortingLayerID = sr.sortingLayerID;
+            tr.sortingOrder = sr.sortingOrder - 1;
+        }
+    }
+
+    private IEnumerator ProjectileAfterimageRoutine(GameObject go)
+    {
+        SpriteRenderer sr = null;
+        if (go != null)
+        {
+            sr = go.GetComponent<SpriteRenderer>();
+            if (sr == null) sr = go.GetComponentInChildren<SpriteRenderer>(true);
+        }
+        float t = 0f;
+        while (go != null && sr != null && t < 3f)
+        {
+            SpawnAfterimage(sr, projAfterimageLifetime);
+            t += projAfterimageInterval;
+            yield return new WaitForSeconds(projAfterimageInterval);
+        }
+    }
+
+    private void SpawnAfterimage(SpriteRenderer source, float lifetime)
+    {
+        var go = new GameObject("ProjectileAfterimage");
+        var c = go.AddComponent<SpriteRenderer>();
+        c.sprite = source.sprite;
+        c.flipX = source.flipX;
+        c.color = projAfterimageColor;
+        c.sortingLayerID = source.sortingLayerID;
+        c.sortingOrder = source.sortingOrder - 1;
+        go.transform.position = source.transform.position;
+        StartCoroutine(FadeAndDestroy(c, lifetime));
+    }
+
+    private IEnumerator FadeAndDestroy(SpriteRenderer c, float lifetime)
+    {
+        float t = lifetime;
+        while (t > 0f && c != null)
+        {
+            t -= Time.deltaTime;
+            var col = c.color;
+            col.a = Mathf.Clamp01(t / lifetime);
+            c.color = col;
+            yield return null;
+        }
+        if (c != null) Destroy(c.gameObject);
+    }
     public void ConfigureProjectile(GameObject prefab, float speed, int count = 1, float spread = 15f)
     {
         projectilePrefab = prefab;
@@ -158,6 +235,8 @@ public class EnemyRangedAttack : MonoBehaviour
             // Opcional: Rotar sprite del proyectil
             float rotationAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             projectile.transform.rotation = Quaternion.Euler(0, 0, rotationAngle);
+            if (addTrailToProjectiles) AddTrail(projectile);
+            if (useProjectileAfterimage) StartCoroutine(ProjectileAfterimageRoutine(projectile));
 
             Debug.Log("disparando proyectil");
         }

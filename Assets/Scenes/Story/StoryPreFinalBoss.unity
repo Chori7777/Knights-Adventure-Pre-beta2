@@ -312,6 +312,71 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!1001 &1167701308
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 360312399037869647, guid: 9ae3fe31d21cbd04cb57f81b29dc32e9, type: 3}
+      propertyPath: m_Name
+      value: SceneMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005300023490547578, guid: 9ae3fe31d21cbd04cb57f81b29dc32e9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.955755
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005300023490547578, guid: 9ae3fe31d21cbd04cb57f81b29dc32e9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 158.70975
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005300023490547578, guid: 9ae3fe31d21cbd04cb57f81b29dc32e9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.025372008
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005300023490547578, guid: 9ae3fe31d21cbd04cb57f81b29dc32e9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005300023490547578, guid: 9ae3fe31d21cbd04cb57f81b29dc32e9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005300023490547578, guid: 9ae3fe31d21cbd04cb57f81b29dc32e9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005300023490547578, guid: 9ae3fe31d21cbd04cb57f81b29dc32e9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005300023490547578, guid: 9ae3fe31d21cbd04cb57f81b29dc32e9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005300023490547578, guid: 9ae3fe31d21cbd04cb57f81b29dc32e9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005300023490547578, guid: 9ae3fe31d21cbd04cb57f81b29dc32e9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8213783554813428928, guid: 9ae3fe31d21cbd04cb57f81b29dc32e9, type: 3}
+      propertyPath: volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8213783554813428928, guid: 9ae3fe31d21cbd04cb57f81b29dc32e9, type: 3}
+      propertyPath: sceneMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: fe214b6cc04eba6439a9a0e0e60b8edd, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9ae3fe31d21cbd04cb57f81b29dc32e9, type: 3}
 --- !u!1 &1243841396
 GameObject:
   m_ObjectHideFlags: 0
@@ -977,8 +1042,8 @@ MonoBehaviour:
   textos:
   - 'You are finally here, at the top of the tower, and yet, the most important fight
     is just around the corner '
-  - ' For a moment you look at yourself, and you see the wounds and scars that both
-    you and your armor have gained'
+  - For a moment you look at yourself, and you see the wounds and scars that both
+    you and your armor have gained
   - 'You also realize how you have grown, you feel stronger, more skilled and more
     mature; you feel you have become the knight you were always meant to be '
   - Although your equipment and yourself have changed, your goal has always been
@@ -1014,3 +1079,4 @@ SceneRoots:
   - {fileID: 1877366703}
   - {fileID: 1129753166}
   - {fileID: 1243841399}
+  - {fileID: 1167701308}

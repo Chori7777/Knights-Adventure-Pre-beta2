@@ -360,7 +360,7 @@ public class ConfigurationPanel : MonoBehaviour
         {
             am.SetMasterVolume(1f);
             am.SetMusicVolume(1f);
-            am.SetSFXVolume(0.7f);
+            am.SetSFXVolume(1f);
         }
 
         if (audioPanel != null)
@@ -487,6 +487,19 @@ public class ConfigurationPanel : MonoBehaviour
             }
 
             LogRaycastAt(s.GetComponent<RectTransform>(), "Slider");
+        }
+        var am = AudioManager.Instance;
+        if (am != null)
+        {
+            for (int i = 0; i < sliders.Length; i++)
+            {
+                var s = sliders[i];
+                var n = s.gameObject.name.ToLowerInvariant();
+                if (n.Contains("master")) s.value = am.masterVolume;
+                else if (n.Contains("music")) s.value = am.musicVolume;
+                else if (n.Contains("sfx") || n.Contains("effects")) s.value = am.sfxVolume;
+            }
+            UpdateAudioLabels();
         }
 
         var buttons = audioPanel.GetComponentsInChildren<UnityEngine.UI.Button>(true);

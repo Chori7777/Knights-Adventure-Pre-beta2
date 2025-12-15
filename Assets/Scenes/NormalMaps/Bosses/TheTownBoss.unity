@@ -2850,7 +2850,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2034471483
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -98942,7 +98942,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -548834727
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -221151,83 +221151,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 481654831800271065, guid: d7c50c686c0f6b34bb4b44e06357feac, type: 3}
   m_PrefabInstance: {fileID: 2827883616903006208}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1554474656
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 854132199040854177, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
-      propertyPath: nombreEscena
-      value: TheTower
-      objectReference: {fileID: 0}
-    - target: {fileID: 918641206855347865, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
-      propertyPath: m_Size.x
-      value: 9.59665
-      objectReference: {fileID: 0}
-    - target: {fileID: 918641206855347865, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
-      propertyPath: m_Size.y
-      value: 1.2810917
-      objectReference: {fileID: 0}
-    - target: {fileID: 918641206855347865, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
-      propertyPath: m_Offset.x
-      value: -1.125051
-      objectReference: {fileID: 0}
-    - target: {fileID: 918641206855347865, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
-      propertyPath: m_Offset.y
-      value: 2.7927322
-      objectReference: {fileID: 0}
-    - target: {fileID: 3401322243655379770, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -10.49
-      objectReference: {fileID: 0}
-    - target: {fileID: 3401322243655379770, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -15.61
-      objectReference: {fileID: 0}
-    - target: {fileID: 3401322243655379770, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 6.580069
-      objectReference: {fileID: 0}
-    - target: {fileID: 3401322243655379770, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3401322243655379770, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3401322243655379770, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3401322243655379770, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3401322243655379770, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3401322243655379770, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3401322243655379770, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4220109036501087483, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
-      propertyPath: m_Name
-      value: TriggerChangeScene
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
 --- !u!4 &1557275564 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5659704011579786513, guid: 30ef241437f58624eb14f699427be5e4, type: 3}
@@ -221562,7 +221485,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -548834727
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -226365,7 +226288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3401322243655379770, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.4
+      value: 1.56
       objectReference: {fileID: 0}
     - target: {fileID: 3401322243655379770, guid: ab838617277ceac47bd6f572b828ec24, type: 3}
       propertyPath: m_LocalPosition.y
@@ -227908,6 +227831,10 @@ PrefabInstance:
       value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7204285430496838318, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
+      propertyPath: musicaFase2
+      value: 
+      objectReference: {fileID: 8300000, guid: 22cd59d4e9051cf49936200e05291e5e, type: 3}
+    - target: {fileID: 7204285430496838318, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
       propertyPath: gestorTrials
       value: 
       objectReference: {fileID: 1669121972}
@@ -227917,16 +227844,48 @@ PrefabInstance:
       objectReference: {fileID: 282097082}
     - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
       propertyPath: health
-      value: 20
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
       propertyPath: maxHealth
-      value: 20
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
       propertyPath: trialManager
       value: 
       objectReference: {fileID: 1669121972}
+    - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
+      propertyPath: enableEyeCycle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
+      propertyPath: victoryMusicClip
+      value: 
+      objectReference: {fileID: 8300000, guid: d6405b4723a231c43bb70037af8b3eb2, type: 3}
+    - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
+      propertyPath: spawnPortalOnDeath
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
+      propertyPath: detachAmuletOnDeath
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
+      propertyPath: forceSingleZoneCombat
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
+      propertyPath: makeCollarBlackOnDamage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
+      propertyPath: playVictoryMusicOnDeath
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316361765053764207, guid: 474ed850adc47c4418615ac8d3e4e0ff, type: 3}
+      propertyPath: bringCollarToFrontOnDrift
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -228051,7 +228010,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 944934905}
-  - {fileID: 1554474656}
   - {fileID: 1617647681}
   - {fileID: 477095332}
   - {fileID: 711176941}

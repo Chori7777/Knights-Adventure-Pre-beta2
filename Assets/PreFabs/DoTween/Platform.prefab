@@ -77,7 +77,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -548834727
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -5113850848988359095, guid: 10d2067b79dc58c4c88214ee3c2eae11, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -122,10 +122,13 @@ MonoBehaviour:
   stepIntervalSeconds: 0.2
   stepDistanceUnits: 0.5
   stickPlayerToPlatform: 1
+  stickYOffsetThreshold: 0.15
   teleportToAOnArriveB: 0
   teleportLoopSMB: 0
-  moveSound: {fileID: 8300000, guid: dcc383f17dc24eb4d9e2fec3a67f96be, type: 3}
-  arriveSound: {fileID: 0}
+  autoReturnToAWhenEmpty: 1
+  autoReturnDelay: 1
+  moveSound: {fileID: 0}
+  arriveSound: {fileID: 8300000, guid: 8d14356e4634446419027bcabb89b902, type: 3}
   platformRoot: {fileID: 481654831800271065}
   lockToParentSpace: 0
 --- !u!50 &2117446494634985479

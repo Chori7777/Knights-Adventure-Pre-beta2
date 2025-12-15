@@ -1,10 +1,21 @@
 using UnityEngine;
+using System.Collections;
 
 
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private float velocidad = 5f;
     [SerializeField] private float tiempoDeVida = 10f;
+    [Header("Visual")]
+    [SerializeField] private bool addTrail = true;
+    [SerializeField] private bool useAfterimage = true;
+    [SerializeField] private float trailTime = 0.25f;
+    [SerializeField] private float trailWidth = 0.08f;
+    [SerializeField] private Color trailStartColor = new Color(1f, 1f, 1f, 0.8f);
+    [SerializeField] private Color trailEndColor = new Color(1f, 1f, 1f, 0f);
+    [SerializeField] private float afterimageInterval = 0.045f;
+    [SerializeField] private float afterimageLifetime = 0.22f;
+    [SerializeField] private Color afterimageColor = new Color(1f, 1f, 1f, 0.7f);
 
     private Vector3 direccion;
     private Transform objetivo;
@@ -15,6 +26,8 @@ public class Projectile : MonoBehaviour
 
     void Start()
     {
+        if (addTrail) EnsureTrail();
+        if (useAfterimage) StartCoroutine(AfterimageRoutine());
         Destroy(gameObject, tiempoDeVida);
     }
 
@@ -58,10 +71,10 @@ public class Projectile : MonoBehaviour
         transform.rotation = Quaternion.AngleAxis(angulo, Vector3.forward);
     }
 
-    // TIPO 2: Patrón (círculo, espiral, onda)
+    // TIPO 2: Patrï¿½n (cï¿½rculo, espiral, onda)
     private void Patron()
     {
-        // Patrón circular
+        // Patrï¿½n circular
         float x = Mathf.Cos(tiempoTranscurrido * 3f) * 3f;
         float y = Mathf.Sin(tiempoTranscurrido * 3f) * 3f;
 
@@ -75,7 +88,7 @@ public class Projectile : MonoBehaviour
     {
         transform.Translate(direccion * velocidad * Time.deltaTime);
 
-        // Límites de rebote (ajusta según tu escena)
+        // Lï¿½mites de rebote (ajusta segï¿½n tu escena)
         float minX = -10f;
         float maxX = 10f;
         float minY = -5f;
@@ -93,7 +106,7 @@ public class Projectile : MonoBehaviour
             rebotes++;
         }
 
-        // Se destruye después de X rebotes
+        // Se destruye despuï¿½s de X rebotes
         if (rebotes > maxRebotes)
         {
             Destroy(gameObject);
@@ -111,8 +124,72 @@ public class Projectile : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("¡Projectil golpeó al jugador!");
+            Debug.Log("ï¿½Projectil golpeï¿½ al jugador!");
             Destroy(gameObject);
         }
+    }
+
+    private void EnsureTrail()
+    {
+        var tr = GetComponent<TrailRenderer>();
+        if (tr == null) tr = gameObject.AddComponent<TrailRenderer>();
+        tr.time = trailTime;
+        tr.minVertexDistance = 0.08f;
+        tr.autodestruct = false;
+        tr.startWidth = trailWidth;
+        tr.endWidth = trailWidth * 0.7f;
+        tr.material = new Material(Shader.Find("Sprites/Default"));
+        var g = new Gradient();
+        g.SetKeys(
+            new GradientColorKey[] { new GradientColorKey(trailStartColor, 0f), new GradientColorKey(trailEndColor, 1f) },
+            new GradientAlphaKey[] { new GradientAlphaKey(trailStartColor.a, 0f), new GradientAlphaKey(trailEndColor.a, 1f) }
+        );
+        tr.colorGradient = g;
+        var sr = GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            tr.sortingLayerID = sr.sortingLayerID;
+            tr.sortingOrder = sr.sortingOrder - 1;
+        }
+    }
+
+    private IEnumerator AfterimageRoutine()
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr == null) sr = GetComponentInChildren<SpriteRenderer>(true);
+        float t = 0f;
+        while (this != null && sr != null && t < tiempoDeVida)
+        {
+            SpawnAfterimage(sr, afterimageLifetime);
+            t += afterimageInterval;
+            yield return new WaitForSeconds(afterimageInterval);
+        }
+    }
+
+    private void SpawnAfterimage(SpriteRenderer source, float life)
+    {
+        var go = new GameObject("ProjectileAfterimage");
+        var c = go.AddComponent<SpriteRenderer>();
+        c.sprite = source.sprite;
+        c.flipX = source.flipX;
+        c.color = afterimageColor;
+        c.sortingLayerID = source.sortingLayerID;
+        c.sortingOrder = source.sortingOrder - 1;
+        go.transform.position = source.transform.position;
+        StartCoroutine(FadeAndDestroy(c, life));
+    }
+
+    private IEnumerator FadeAndDestroy(SpriteRenderer c, float life)
+    {
+        float t = life;
+        while (t > 0f && c != null)
+        {
+            t -= Time.deltaTime;
+            var col = c.color;
+            col.a = Mathf.Clamp01(t / life);
+            c.color = col;
+            yield return null;
+        }
+        if (c != null) Destroy(c.gameObject);
     }
 }
